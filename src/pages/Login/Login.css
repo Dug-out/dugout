@@ -1,0 +1,128 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-height: 100dvh;
+    padding: 0 24px;
+    background: var(--surface);
+    color: var(--text-900);
+}
+
+.login__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 100px 0 40px;
+}
+
+.login__brand {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2px;
+}
+
+.login__logo {
+    display: block;
+    width: 180px;
+    height: auto;
+    margin-bottom: 6px;
+}
+
+.login__peek {
+    display: block;
+    width: 96px;
+    height: auto;
+    margin-right: -24px;
+}
+
+.login__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.login__tagline {
+    margin: 0;
+    font-family: var(--font-emotion), serif;
+    font-size: 21px;
+    color: var(--navy-500);
+}
+
+.login__sub {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-500);
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.login__keep {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    font-size: 14px;
+    color: var(--text-700);
+    cursor: pointer;
+}
+
+.login__keep input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: var(--navy-500);
+}
+
+.login__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.login__forgot {
+    display: flex;
+    align-self: center;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 8px;
+    font-size: 13px;
+    color: var(--text-500);
+    text-decoration: none;
+}
+
+.login__signup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin: auto 0 0;
+    padding: 0 0 calc(36px + env(safe-area-inset-bottom));
+    font-size: 14px;
+    color: var(--text-500);
+}
+
+.login__signup a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 6px;
+    font-weight: 700;
+    color: var(--navy-500);
+    text-decoration: none;
+}
+
+.login__forgot:focus-visible,
+.login__signup a:focus-visible {
+    border-radius: var(--radius-btn-sm);
+    outline: 2px solid var(--navy-300);
+    outline-offset: -2px;
+}

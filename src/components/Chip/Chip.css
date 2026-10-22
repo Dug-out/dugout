@@ -1,0 +1,135 @@
+.chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0;
+    border: 0;
+    font-family: var(--font-base), sans-serif;
+    white-space: nowrap;
+}
+
+.chip--interactive {
+    cursor: pointer;
+}
+
+/* 터치 영역을 44px로 확장 */
+.chip--interactive::after {
+    content: '';
+    position: absolute;
+    inset: -6px -2px;
+}
+
+.chip:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: 2px;
+}
+
+/* 필터 · 정렬 칩 · 32px · radius 999 */
+.chip--filter {
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    color: var(--text-700);
+    font-size: 13px;
+}
+
+.chip--filter.chip--selected {
+    border-color: var(--text-900);
+    background: var(--text-900);
+    color: var(--surface);
+    font-weight: 600;
+}
+
+/* 선택 칩 · 38px */
+.chip--select {
+    height: 38px;
+    padding: 0 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    color: var(--text-700);
+    font-size: 14px;
+}
+
+.chip--select.chip--selected {
+    border-color: var(--navy-500);
+    background: var(--navy-500);
+    color: var(--surface);
+    font-weight: 700;
+}
+
+/* 출처 · 종류 칩 · radius 6 */
+.chip--label {
+    padding: 2px 7px;
+    border-radius: var(--radius-chip-sm);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.chip--label.chip--navy {
+    background: var(--navy-50);
+    color: var(--navy-500);
+}
+
+.chip--label.chip--outline {
+    border: 1px solid var(--border-strong);
+    color: var(--text-700);
+}
+
+/* 상태 배지 */
+.chip--badge {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.chip--badge.chip--win,
+.chip--badge.chip--lose {
+    height: 26px;
+    padding: 0 10px;
+    border-radius: var(--radius-badge);
+    font-size: 13px;
+}
+
+.chip--badge.chip--win {
+    background: var(--red-500);
+    color: var(--surface);
+}
+
+.chip--badge.chip--lose {
+    background: var(--gray-100);
+    color: var(--text-500);
+}
+
+.chip--badge.chip--open,
+.chip--badge.chip--closed {
+    padding: 4px 10px;
+    border-radius: var(--radius-chip-sm);
+}
+
+.chip--badge.chip--open {
+    background: var(--navy-50);
+    color: var(--navy-500);
+}
+
+.chip--badge.chip--closed {
+    background: var(--red-50);
+    color: var(--red-text);
+}
+
+.chip--badge.chip--dday {
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    background: var(--red-600);
+    color: var(--surface);
+}
+
+/* 매너 구간 칩 (3할 타자 등) */
+.chip--badge.chip--tier {
+    padding: 2px 8px;
+    border-radius: var(--radius-chip-sm);
+    background: var(--red-50);
+    color: var(--red-text);
+}

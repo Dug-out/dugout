@@ -1,0 +1,26 @@
+.inline-msg {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-base), sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.inline-msg svg {
+    flex: none;
+}
+
+.inline-msg--success {
+    color: var(--navy-500);
+    font-weight: 600;
+}
+
+.inline-msg--error {
+    color: var(--red-text);
+    font-weight: 600;
+}
+
+.inline-msg--hint {
+    color: var(--text-500);
+}

@@ -1,0 +1,68 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-sizing: border-box;
+    padding: 12px 12px 8px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-900);
+}
+
+.header__back {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-900);
+    cursor: pointer;
+}
+
+.header__title {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    font-size: 17px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.header__right {
+    display: flex;
+    flex: none;
+    align-items: center;
+}
+
+/* 탭 화면 · 큰 제목 + 오른쪽 아이콘 */
+.header--large {
+    justify-content: space-between;
+    min-height: 65px;
+    padding: 12px 20px 8px;
+}
+
+.header--large .header__title {
+    font-family: var(--font-emotion);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--navy-500);
+}
+
+.header--large .header__right {
+    margin-right: -10px;
+}
+
+.header__back:focus-visible {
+    border-radius: var(--radius-input);
+    outline: 2px solid var(--navy-300);
+    outline-offset: -2px;
+}

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>직관 기록하기</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="display: flex; align-items: center; gap: 4px; padding: 12px 12px 8px; border-bottom: 1px solid #EEF0F6">
+<a href="Record.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; flex: none; color: #141B33; display: flex; align-items: center; justify-content: center; border-radius: 12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a>
+<h1 style="margin: 0; font-size: 17px; font-weight: 700">직관 기록하기</h1>
+</header>
+
+<main style="flex: 1; display: flex; flex-direction: column; gap: 22px; padding: 18px 20px 24px">
+<section style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: baseline; justify-content: space-between"><span style="font-size: 14px; font-weight: 700">다녀온 경기</span><span style="font-size: 12px; color: #5A6380">LG 트윈스 최근 경기</span></div>
+<div role="radiogroup" aria-label="다녀온 경기" style="display: flex; flex-direction: column; border: 1px solid #E3E6F0; border-radius: 14px; overflow: hidden">
+<sc-for list="{{games}}" as="g" hint-placeholder-count="4">
+<sc-if value="{{g.done}}" hint-placeholder-val="{{false}}"><div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-top: 1px solid #EEF0F6; background: #F7F8FC; color: #6B7390"><span style="width: 22px; height: 22px; flex: none"></span><span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">{{g.date}} · vs {{g.opp}}</span><span style="font-size: 12px">{{g.park}}</span></span><span style="font-size: 12px; font-weight: 700; background: #EEF0F6; padding: 3px 8px; border-radius: 6px">이미 기록됨</span></div></sc-if>
+<sc-if value="{{g.on}}" hint-placeholder-val="{{false}}"><button role="radio" aria-checked="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: none; border-top: 1px solid #EEF0F6; background: #F4F6FC; text-align: left; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; cursor: pointer"><span style="width: 22px; height: 22px; flex: none; border-radius: 50%; border: 6px solid #1B2A5C; box-sizing: border-box; background: #FFFFFF"></span><span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">{{g.date}} · vs {{g.opp}}</span><span style="font-size: 12px; color: #5A6380">{{g.park}}</span></span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 15px">{{g.score}}</span></button></sc-if>
+<sc-if value="{{g.off}}" hint-placeholder-val="{{true}}"><button role="radio" aria-checked="false" onClick="{{g.pick}}" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: none; border-top: 1px solid #EEF0F6; background: #FFFFFF; text-align: left; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; cursor: pointer"><span style="width: 22px; height: 22px; flex: none; border-radius: 50%; border: 1.5px solid #B4BBD0; box-sizing: border-box; background: #FFFFFF"></span><span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">{{g.date}} · vs {{g.opp}}</span><span style="font-size: 12px; color: #5A6380">{{g.park}}</span></span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 15px; color: #5A6380">{{g.score}}</span></button></sc-if>
+</sc-for>
+</div>
+<a href="Record-write.dc.html" style="align-self: flex-start; display: flex; align-items: center; gap: 4px; min-height: 36px; font-size: 13px; font-weight: 600; color: #5A6380">달력에서 다른 날짜 고르기 ›</a>
+</section>
+
+<section aria-label="불러온 경기 결과" style="border-radius: 16px; background: #1B2A5C; color: #FFFFFF; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #C9D1EA"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>경기 결과를 자동으로 불러왔어요</span>
+<div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center">
+<span style="display: flex; flex-direction: column; align-items: center; gap: 2px"><span style="font-size: 14px; font-weight: 700">LG <span style="font-size: 10px; background: #D62839; padding: 1px 5px; border-radius: 5px; vertical-align: 2px">MY</span></span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 34px; line-height: 1.1">{{us}}</span></span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 4px"><span style="font-size: 12px; color: #C9D1EA">{{selDate}}</span><sc-if value="{{selWin}}" hint-placeholder-val="{{true}}"><span style="font-size: 13px; font-weight: 700; color: #1B2A5C; background: #FFFFFF; padding: 3px 12px; border-radius: 999px">승</span></sc-if><sc-if value="{{selLose}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; font-weight: 700; color: #FFFFFF; border: 1px solid rgba(255,255,255,0.6); padding: 2px 12px; border-radius: 999px">패</span></sc-if><span style="font-size: 12px; color: #C9D1EA">{{selPark}}</span></span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{selOpp}}</span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 34px; line-height: 1.1; color: #C9D1EA">{{them}}</span></span>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: baseline; justify-content: space-between"><label for="memo" style="font-size: 14px; font-weight: 700">한 줄 메모</label><span style="font-size: 12px; color: #5A6380">{{memoLen}}/100</span></div>
+<textarea id="memo" rows="2" maxlength="100" value="{{memo}}" onChange="{{onMemo}}" placeholder="예) 9회말 역전! 응원가 목이 쉬도록 불렀다" style="box-sizing: border-box; border: 1px solid #D5DAE8; border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.6; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; resize: none"></textarea>
+</section>
+
+</main>
+
+<div style="padding: 12px 20px 28px; border-top: 1px solid #EEF0F6">
+<button onClick="{{save}}" style="width: 100%; height: 54px; border: none; border-radius: 14px; background: #1B2A5C; color: #FFFFFF; font-size: 16px; font-weight: 700; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">기록 저장하기</button>
+</div>
+
+<sc-if value="{{saved}}" hint-placeholder-val="{{false}}">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(15,26,61,0.55)"></div>
+<div role="dialog" aria-modal="true" aria-labelledby="savedTitle" style="position: absolute; left: 28px; right: 28px; top: 50%; transform: translateY(-50%); background: #FFFFFF; border-radius: 22px; padding: 26px 20px 18px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; box-shadow: 0 20px 48px rgba(15,26,61,0.35)">
+<sc-if value="{{selWin}}" hint-placeholder-val="{{true}}"><img src="assets/rate-up.png" alt="" width="70" height="76" style="display: block; width: 70px; height: 76px; margin: -8px 0 -6px"></sc-if><sc-if value="{{selLose}}" hint-placeholder-val="{{false}}"><img src="assets/rate-down.png" alt="" width="84" height="76" style="display: block; width: 84px; height: 76px; margin: -8px 0 -6px"></sc-if>
+<h2 id="savedTitle" style="margin: 4px 0 0; font-size: 19px; font-weight: 700">{{savedTitle}}</h2>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6380">직관 승률 <strong style="color: #141B33">{{before}}</strong> → <strong style="color: #C21F31">{{after}}</strong></p>
+<div style="width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px">
+<a href="Record.dc.html" style="height: 50px; border-radius: 14px; border: 1px solid #D5DAE8; color: #2F3756; font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center">승률 카드 보기</a>
+<a href="Record.dc.html" style="height: 50px; border-radius: 14px; background: #1B2A5C; color: #FFFFFF; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center">확인</a>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"initialSaved":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const list = [
+      { id: 'a', date: '10.17 (토)', opp: 'NC', park: '잠실 · 17:00', us: 7, them: 5 },
+      { id: 'x', date: '10.16 (금)', opp: 'NC', park: '잠실 · 18:30', us: 5, them: 3, done: true },
+      { id: 'b', date: '10.14 (수)', opp: '키움', park: '고척 · 18:30', us: 2, them: 4 },
+      { id: 'c', date: '10.13 (화)', opp: '키움', park: '고척 · 18:30', us: 6, them: 3 }
+    ];
+    const sel = st.sel || 'a';
+    const g = list.find((x) => x.id === sel);
+    const win = g.us > g.them;
+    const W = 8 + (win ? 1 : 0), N = 13;
+    const fmt = (r) => '.' + String(Math.round(r * 1000)).padStart(3, '0');
+    const memo = st.memo !== undefined ? st.memo : '';
+    const w = st.w || 'mate';
+    return {
+      games: list.map((x) => ({ date: x.date, opp: x.opp, park: x.park, score: x.done ? '' : x.us + ' : ' + x.them, done: !!x.done, on: !x.done && x.id === sel, off: !x.done && x.id !== sel, pick: () => this.setState({ sel: x.id }) })),
+      us: g.us, them: g.them, selDate: g.date, selOpp: g.opp, selPark: g.park.split(' · ')[0], selWin: win, selLose: !win,
+      withs: [['solo', '혼자'], ['etc', '친구·가족'], ['mate', '덕아웃 메이트']].map((o) => ({ label: o[1], on: o[0] === w, off: o[0] !== w, pick: () => this.setState({ w: o[0] }) })),
+      isMate: w === 'mate',
+      mates: ['잠실직관러', '응원가장인', '쌍둥이팬'].map((n, i) => { const tg = st.tg || [true, false, false]; return { name: n, on: tg[i], pressed: tg[i] ? 'true' : 'false', toggle: () => { const t = tg.slice(); t[i] = !t[i]; this.setState({ tg: t }); } }; }),
+      memo: memo, memoLen: memo.length, onMemo: (e) => this.setState({ memo: e.target.value.slice(0, 100) }),
+      saved: st.saved !== undefined ? st.saved : !!this.props.initialSaved,
+      save: () => this.setState({ saved: true }),
+      savedTitle: win ? '승리요정 출격 성공!' : '아쉽지만 다음엔 꼭 이길 거야',
+      before: '.667', after: fmt(W / N)
+    };
+  }
+}
+</script>
+</body>
+</html>

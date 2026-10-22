@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>스플래시 (간소화)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}
+@keyframes spDrop{0%{transform:translateY(-460px) rotate(0)}38%{transform:translateY(0) rotate(0)}50%{transform:translateY(0) rotate(7deg)}62%{transform:rotate(-5deg)}74%{transform:rotate(3deg)}85%{transform:rotate(-1.4deg)}93%{transform:rotate(.6deg)}100%{transform:rotate(0)}}
+@keyframes spPeek{0%{transform:translateY(100%)}65%{transform:translateY(-6%)}82%{transform:translateY(2%)}100%{transform:translateY(0)}}
+@keyframes spTilt{0%,100%{transform:rotate(0)}30%{transform:rotate(-4deg)}70%{transform:rotate(3deg)}}
+@keyframes spFlag{0%{opacity:0;transform:scaleX(0)}20%{opacity:1}60%{transform:scaleX(1.12) skewY(-3deg)}100%{opacity:1;transform:none}}
+@keyframes spUp{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes spLine{from{stroke-dashoffset:130}to{stroke-dashoffset:0}}
+@keyframes spBall{0%{transform:translate(-140px,40px) rotate(0);opacity:0}20%{opacity:1}100%{transform:translate(140px,-30px) rotate(540deg);opacity:0}}
+@keyframes spBar{0%{transform:scaleX(0)}60%{transform:scaleX(.72)}100%{transform:scaleX(1)}}
+.sp-sign{transform-origin:50% 0;animation:spDrop 1.5s cubic-bezier(.3,1,.5,1) .15s both}
+.sp-peek{animation:spPeek .7s cubic-bezier(.3,1.3,.5,1) .55s both}
+.sp-tilt{transform-origin:50% 100%;animation:spTilt 1.1s ease-in-out 1.3s both}
+.sp-flag{transform-origin:79% 26%;animation:spFlag .5s cubic-bezier(.3,1.4,.5,1) 1.15s both}
+.sp-tag{animation:spUp .45s ease-out 1.05s both}
+.sp-line{stroke-dasharray:130;animation:spLine .5s ease-out 1.35s both}
+.sp-ball{animation:spBall 1.4s ease-in-out .4s both}
+.sp-bar{animation:spBar 1.8s cubic-bezier(.4,0,.2,1) .3s both}
+@media (prefers-reduced-motion: reduce){.sp-sign,.sp-peek,.sp-tilt,.sp-flag,.sp-tag,.sp-line,.sp-ball,.sp-bar{animation:none}}
+</style>
+</helmet>
+<a href="Login.dc.html" aria-label="덕아웃 시작하기" style="position: relative; display: block; width: 390px; height: 844px; box-sizing: border-box; background: linear-gradient(#F7F8FC 0%, #EEF1F9 100%); font-family: 'IBM Plex Sans KR', sans-serif; color: #1B2A5C; overflow: hidden">
+
+<svg width="390" height="844" viewBox="0 0 390 844" aria-hidden="true" style="position: absolute; inset: 0">
+<g opacity="0.55"><path d="M48 420l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#1B2A5C"></path><path d="M336 396l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z" fill="#E63946"></path><path d="M318 520l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#1B2A5C"></path><circle cx="74" cy="530" r="3" fill="#E63946"></circle></g>
+</svg>
+
+<div class="sp-ball" aria-hidden="true" style="position: absolute; top: 420px; left: 184px; width: 22px; height: 22px">
+<svg width="22" height="22" viewBox="0 0 28 28"><circle cx="14" cy="14" r="13" fill="#FFFFFF" stroke="#1B2A5C" stroke-width="1.8"></circle><path d="M8 5.5c2.6 2.4 2.6 14.6 0 17M20 5.5c-2.6 2.4-2.6 14.6 0 17" fill="none" stroke="#E63946" stroke-width="1.8" stroke-linecap="round"></path></svg>
+</div>
+
+<div class="sp-sign" style="position: absolute; left: 0; right: 0; top: 0; height: 320px">
+<svg width="390" height="206" viewBox="0 0 390 206" aria-hidden="true" style="position: absolute; left: 0; top: 0">
+<path d="M120 0 L120 206 M270 0 L270 206" stroke="#8A93B0" stroke-width="2.4"></path>
+<circle cx="120" cy="204" r="5" fill="#1B2A5C"></circle><circle cx="270" cy="204" r="5" fill="#1B2A5C"></circle>
+</svg>
+<div style="position: absolute; left: 75px; top: 200px; width: 240px; height: 96px; box-sizing: border-box; border-radius: 18px; background: #FFFFFF; border: 4px solid #1B2A5C; box-shadow: 0 14px 28px rgba(27,42,92,0.18); display: flex; align-items: center; justify-content: center">
+<div style="position: relative; width: 192px; height: 64px">
+<img src="assets/logo-base.png" alt="DUGOUT" width="192" height="64" style="position: absolute; inset: 0; width: 192px; height: 64px">
+<img class="sp-flag" src="assets/logo-flag.png" alt="" aria-hidden="true" width="192" height="64" style="position: absolute; inset: 0; width: 192px; height: 64px">
+</div>
+</div>
+</div>
+
+<div class="sp-tag" style="position: absolute; left: 0; right: 0; top: 324px; display: flex; flex-direction: column; align-items: center">
+<p style="margin: 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 22px; line-height: 1.3; color: #1B2A5C">오늘, 같이 응원할래?</p>
+<svg width="130" height="10" viewBox="0 0 130 10" aria-hidden="true" style="display: block; margin-top: 2px"><path class="sp-line" d="M4 7 Q55 1 126 4" fill="none" stroke="#E63946" stroke-width="3.5" stroke-linecap="round"></path></svg>
+</div>
+
+<div aria-hidden="true" style="position: absolute; left: 50%; top: 408px; width: 300px; height: 244px; margin-left: -150px; overflow: hidden">
+<div class="sp-peek" style="position: absolute; inset: 0">
+<img class="sp-tilt" src="assets/char-peek.png" alt="" width="270" height="212" style="position: absolute; left: 15px; bottom: 0; display: block; width: 270px; height: 212px">
+</div>
+</div>
+
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 654px; bottom: 0; background: linear-gradient(#1B2A5C, #0F1A3D)">
+<div style="position: absolute; left: -10px; right: -10px; top: -6px; height: 16px; border-radius: 8px; background: #24356B; box-shadow: inset 0 3px 0 rgba(255,255,255,0.14), 0 6px 12px rgba(15,26,61,0.35)"></div>
+<div style="position: absolute; left: 0; right: 0; top: 14px; height: 3px; background: #E63946"></div>
+<svg width="390" height="90" viewBox="0 0 390 90" style="position: absolute; left: 0; top: 34px; opacity: .14"><path d="M-10 70 Q195 10 400 70" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="3 9" stroke-linecap="round"></path></svg>
+<div style="position: absolute; left: 0; right: 0; bottom: 58px; display: flex; flex-direction: column; align-items: center; gap: 10px">
+<div style="position: relative; width: 132px; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.14); overflow: hidden"><span class="sp-bar" style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 999px; background: #E63946; transform-origin: 0 50%"></span></div>
+<span style="font-size: 12px; font-weight: 600; letter-spacing: .2px; color: #C9D1EA">경기장 입장 중…</span>
+</div>
+</div>
+</a>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

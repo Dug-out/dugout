@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>직관 기록 · 통계</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 992px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="flex: none; display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 12px 20px 8px; background: #FFFFFF"><h1 style="margin: 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 24px; font-weight: 400; color: #1B2A5C">직관 기록</h1><button type="button" aria-label="승률 카드 공유" style="width: 44px; height: 44px; margin-right: -10px; border: none; background: transparent; color: #141B33; display: flex; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"></path><path d="M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"></path></svg></button></header>
+
+<section aria-label="2026 시즌 직관 승률 {{rate}}, {{total}}경기 {{W}}승 {{L}}패, {{moodName}}" style="position: relative; margin: 8px 16px 0">
+<div style="position: relative; border-radius: 22px; overflow: hidden; background: linear-gradient(160deg, #22346E 0%, #1B2A5C 60%, #162250 100%); color: #FFFFFF; padding: 20px 20px 18px; box-shadow: 0 10px 24px rgba(27,42,92,0.22)">
+<svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true" style="position: absolute; right: -80px; bottom: -96px; opacity: 0.07"><path d="M100 12 L188 100 L100 188 L12 100 Z" fill="none" stroke="#FFFFFF" stroke-width="10"></path><path d="M100 60 L140 100 L100 140 L60 100 Z" fill="#FFFFFF"></path></svg>
+<sc-if value="{{moodWin}}" hint-placeholder-val="{{true}}"><img src="assets/rate-up.png" alt="엄지 척 하는 승리요정" width="120" height="132" style="position: absolute; right: 8px; bottom: 6px; width: 120px; height: 132px"></sc-if><sc-if value="{{moodLow}}" hint-placeholder-val="{{false}}"><img src="assets/rate-down.png" alt="눈물 흘리는 눈물요정" width="144" height="130" style="position: absolute; right: 0; bottom: 0; width: 144px; height: 130px"></sc-if>
+<div style="position: relative; display: flex; align-items: center; gap: 8px"><span style="font-size: 12px; font-weight: 600; color: #C9D1EA">2026 시즌 직관 승률</span><span style="font-size: 11px; font-weight: 700; background: #D62839; padding: 2px 7px; border-radius: 6px">LG 트윈스</span></div>
+<div style="position: relative; display: flex; align-items: flex-end; gap: 12px; margin-top: 6px"><span style="font-family: 'Black Han Sans', sans-serif; font-size: 64px; line-height: 0.95; letter-spacing: -1px">{{rate}}</span><span style="margin-bottom: 8px; font-size: 13px; font-weight: 700; color: #1B2A5C; background: #FFD58A; padding: 4px 10px; border-radius: 999px">{{moodName}}</span></div>
+<p style="position: relative; margin: 8px 0 0; font-size: 13px; color: #C9D1EA">{{moodLine}}</p>
+<div style="position: relative; margin-top: 18px; margin-right: 132px; display: flex; height: 10px; border-radius: 10px; overflow: hidden; background: rgba(255,255,255,0.16)"><span style="width: {{wPct}}; background: #E63946; border-radius: 10px"></span></div>
+<div style="position: relative; margin-top: 8px; margin-right: 132px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; font-weight: 700"><span style="display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #E63946"></span>{{W}}승</span><span style="font-weight: 500; color: #C9D1EA">{{total}}경기</span><span style="display: flex; align-items: center; gap: 6px; color: #C9D1EA">{{L}}패<span style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.35)"></span></span></div>
+</div>
+</section>
+
+<div role="tablist" aria-label="직관 기록 보기" style="margin: 16px 16px 0; display: grid; grid-template-columns: 1fr 1fr; background: #EEF0F6; border-radius: 12px; padding: 4px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="2"><sc-if value="{{t.on}}" hint-placeholder-val="{{false}}"><button type="button" role="tab" aria-selected="true" style="height: 40px; border: none; background: #FFFFFF; border-radius: 9px; font-size: 14px; font-weight: 700; color: #1B2A5C; box-shadow: 0 1px 3px rgba(20,27,51,0.12); font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">{{t.label}}</button></sc-if><sc-if value="{{t.off}}" hint-placeholder-val="{{true}}"><button type="button" role="tab" aria-selected="false" onClick="{{t.pick}}" style="height: 40px; border: none; background: transparent; font-size: 14px; font-weight: 500; color: #5A6380; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">{{t.label}}</button></sc-if></sc-for>
+</div>
+
+<sc-if value="{{isList}}" hint-placeholder-val="{{true}}">
+<section aria-label="경기 기록" style="padding: 24px 16px 100px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 0 4px">
+<h2 style="margin: 0; font-size: 19px; font-weight: 700">경기 기록</h2>
+<div style="display: flex; gap: 2px; margin-right: -6px"><sc-for list="{{filters}}" as="f" hint-placeholder-count="3"><sc-if value="{{f.on}}" hint-placeholder-val="{{false}}"><button aria-pressed="true" style="height: 32px; padding: 0 12px; border: none; border-radius: 999px; background: #141B33; color: #FFFFFF; font-size: 13px; font-weight: 600; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">{{f.label}}</button></sc-if><sc-if value="{{f.off}}" hint-placeholder-val="{{true}}"><button aria-pressed="false" onClick="{{f.pick}}" style="height: 32px; padding: 0 12px; border: none; border-radius: 999px; background: transparent; color: #6B7390; font-size: 13px; font-weight: 500; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">{{f.label}}</button></sc-if></sc-for></div>
+</div>
+<p style="margin: -4px 4px 2px; display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6B7390"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg><span>메이트와 함께 간 경기는 자동으로 기록돼요</span></p>
+<sc-for list="{{list}}" as="g" hint-placeholder-count="5">
+<a href="Record-detail.dc.html" aria-label="vs {{g.vs}} {{g.md}} 기록 보기" style="color: #141B33; display: flex; flex-direction: column; gap: 10px; padding: 16px; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px">
+<div style="display: flex; align-items: center; gap: 8px">
+<sc-if value="{{g.win}}" hint-placeholder-val="{{true}}"><span style="height: 26px; padding: 0 10px; border-radius: 8px; background: #E63946; color: #FFFFFF; font-size: 13px; font-weight: 700; display: flex; align-items: center">승리</span></sc-if>
+<sc-if value="{{g.lose}}" hint-placeholder-val="{{false}}"><span style="height: 26px; padding: 0 10px; border-radius: 8px; background: #EEF0F6; color: #5A6380; font-size: 13px; font-weight: 700; display: flex; align-items: center">패배</span></sc-if>
+<span style="flex: 1; font-size: 13px; color: #6B7390">{{g.md}} ({{g.dow}}) · {{g.park}}</span>
+<sc-if value="{{g.isMate}}" hint-placeholder-val="{{false}}"><span style="height: 26px; padding: 0 9px; border-radius: 8px; background: #E8ECF7; color: #1B2A5C; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5"></path><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"></path></svg>메이트</span></sc-if><sc-if value="{{g.isBolt}}" hint-placeholder-val="{{false}}"><span style="height: 26px; padding: 0 9px; border-radius: 8px; background: #E8ECF7; color: #1B2A5C; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"></path></svg>번개</span></sc-if><sc-if value="{{g.isClub}}" hint-placeholder-val="{{false}}"><span style="height: 26px; padding: 0 9px; border-radius: 8px; background: #E8ECF7; color: #1B2A5C; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h11l-2 4 2 4H5"></path></svg>모임</span></sc-if>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<span style="font-size: 18px; font-weight: 700">vs {{g.vs}}</span>
+<span style="font-family: 'Black Han Sans', sans-serif; font-size: 26px; line-height: 1; color: #141B33">{{g.us}} : {{g.them}}</span>
+</div>
+<sc-if value="{{g.hasWho}}" hint-placeholder-val="{{true}}"><div style="display: flex; align-items: center; gap: 8px; margin-top: -2px"><span style="display: flex"><img src="assets/profile-default.png" alt="" width="22" height="22" style="display: block; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #FFFFFF"><img src="assets/profile-default.png" alt="" width="22" height="22" style="display: block; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #FFFFFF; margin-left: -8px"></span><span style="font-size: 13px; color: #2F3756">함께 · <strong style="font-weight: 600">{{g.who}}</strong></span></div></sc-if>
+<sc-if value="{{g.hasExtra}}" hint-placeholder-val="{{true}}"><div style="display: flex; align-items: center; gap: 12px; padding-top: 10px; border-top: 1px dashed #E3E6F0">
+<span style="flex: 1; min-width: 0; font-size: 14px; line-height: 1.45; color: #2F3756">{{g.memo}}</span>
+</div></sc-if>
+</a>
+</sc-for>
+</section>
+</sc-if>
+
+<sc-if value="{{isStats}}" hint-placeholder-val="{{false}}">
+<section aria-label="상대팀별 승률" style="margin: 16px 16px 90px; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 20px; padding: 20px 20px 10px; display: flex; flex-direction: column">
+<h2 style="margin: 0 0 4px; font-size: 19px; font-weight: 700">상대팀별 승률</h2>
+<p style="margin: 0 0 6px; font-size: 13px; color: #6B7390">내가 직관 간 경기 기준이에요</p>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 14px 0; border-top: 1px solid #F1F2F6">
+<div style="display: flex; align-items: baseline; gap: 8px">
+<span style="font-size: 17px; font-weight: 700">{{r.label}}</span>
+<span style="flex: 1; font-size: 13px; color: #6B7390">{{r.wl}}</span>
+<sc-if value="{{r.hi}}" hint-placeholder-val="{{true}}"><span style="font-family: 'Black Han Sans', sans-serif; font-size: 24px; line-height: 1; color: #C21F31">{{r.rate}}</span></sc-if>
+<sc-if value="{{r.lo}}" hint-placeholder-val="{{false}}"><span style="font-family: 'Black Han Sans', sans-serif; font-size: 24px; line-height: 1; color: #141B33">{{r.rate}}</span></sc-if>
+</div>
+<div aria-hidden="true" style="display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: #EEF0F6"><sc-for list="{{r.seg}}" as="x" hint-placeholder-count="10"><sc-if value="{{x.on}}" hint-placeholder-val="{{true}}"><span style="flex: 1; background: #E63946"></span></sc-if><sc-if value="{{x.off}}" hint-placeholder-val="{{false}}"><span style="flex: 1"></span></sc-if></sc-for></div>
+</div>
+</sc-for>
+</section>
+</sc-if>
+
+<a href="Record-write.dc.html" style="position: absolute; left: 20px; right: 20px; bottom: 96px; height: 54px; border-radius: 14px; background: #1B2A5C; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 16px; font-weight: 700; box-shadow: 0 8px 20px rgba(27,42,92,0.24)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>직관 기록하기</a>
+<nav aria-label="하단 메뉴" style="flex: none; margin-top: auto; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); background: #FFFFFF; border-top: 1px solid #E3E6F0; padding: 6px 4px 22px"><a href="Home.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg>홈</a><a href="Mate.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5"></path><circle cx="17" cy="9" r="2.8"></circle><path d="M16.5 14.6c2.6.2 4.4 2 5 5.4"></path></svg>메이트 찾기</a><a href="Record.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #1B2A5C; font-size: 11px; font-weight: 700"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg>직관 기록</a><a href="Trade.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg>거래</a><a href="My.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c.8-4 4-6.5 8-6.5s7.2 2.5 8 6.5"></path></svg>마이</a></nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"initialTab":{"editor":"enum","options":["list","stats"],"default":"stats"},"$preview":{"width":390,"height":992}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const games = [
+      { id: 1, src: 'mate', who: '잠실직관러, 응원가장인', md: '10.16', dow: '금', opp: 'NC', vs: 'NC 다이노스', park: '잠실', us: 5, them: 3, with: '메이트 2명', auto: true, memo: '9회말 끝내기! 다 같이 소리 질렀다' },
+      { id: 2, src: 'mate', who: '잠실직관러', md: '10.10', dow: '토', opp: '삼성', vs: '삼성 라이온즈', park: '대구', us: 3, them: 7, with: '메이트 1명', auto: true, memo: '첫 원정 응원, 졌지만 재밌었다' },
+      { id: 3, md: '10.08', dow: '목', opp: 'KIA', vs: 'KIA 타이거즈', park: '잠실', us: 4, them: 1, with: '혼자', auto: false, memo: '퇴근하고 7회부터 봤는데 이김' },
+      { id: 4, src: 'club', who: '엘린이, 응원가장인 외 2명', md: '09.27', dow: '일', opp: '두산', vs: '두산 베어스', park: '잠실', us: 6, them: 2, with: '모임 5명', auto: true, memo: '잠실 더비 완승! 뒷풀이까지 완벽' },
+      { id: 5, md: '09.20', dow: '일', opp: 'KT', vs: 'KT 위즈', park: '수원', us: 2, them: 5, with: '혼자', auto: false, memo: '' },
+      { id: 6, src: 'mate', who: '응원가장인', md: '09.13', dow: '일', opp: 'NC', vs: 'NC 다이노스', park: '잠실', us: 7, them: 4, with: '메이트 1명', auto: true, memo: '홈런 두 방' },
+      { id: 7, src: 'bolt', who: '야구는9회말, 직관요정', md: '08.30', dow: '일', opp: 'NC', vs: 'NC 다이노스', park: '창원', us: 8, them: 3, with: '번개 3명', auto: true, memo: '원정 번개로 처음 만난 분들이랑 대승' },
+      { id: 8, md: '08.15', dow: '토', opp: '두산', vs: '두산 베어스', park: '잠실', us: 1, them: 3, with: '혼자', auto: false, memo: '' },
+      { id: 9, src: 'mate', who: '잠실직관러', md: '07.26', dow: '일', opp: 'KIA', vs: 'KIA 타이거즈', park: '잠실', us: 5, them: 2, with: '메이트 1명', auto: true, memo: '' },
+      { id: 10, md: '06.21', dow: '일', opp: '삼성', vs: '삼성 라이온즈', park: '잠실', us: 3, them: 2, with: '혼자', auto: false, memo: '1점 차 신승' },
+      { id: 11, md: '05.05', dow: '화', opp: 'NC', vs: 'NC 다이노스', park: '잠실', us: 4, them: 6, with: '혼자', auto: false, memo: '어린이날 매진 경기, 아깝게 짐' },
+      { id: 12, md: '04.12', dow: '일', opp: '두산', vs: '두산 베어스', park: '잠실', us: 9, them: 1, with: '혼자', auto: false, memo: '시즌 첫 직관 대승!' }
+    ];
+    const W = games.filter((g) => g.us > g.them).length;
+    const L = games.length - W;
+    const rate = W / games.length;
+    const fmt = (r) => (r >= 1 ? '1.000' : '.' + String(Math.round(r * 1000)).padStart(3, '0'));
+    const mood = rate >= 0.5 ? 'win' : 'low';
+    const moodName = { win: '승리요정', low: '눈물요정' }[mood];
+    const moodLine = { win: '내가 가면 이긴다! 오늘도 출격', low: '다음 직관은 꼭 이길 거야…' }[mood];
+    const st = this.state || {};
+    const flt = st.flt || 'all';
+    const m = {};
+    games.forEach((g) => { const k = g.opp; m[k] = m[k] || { label: k, w: 0, n: 0 }; m[k].n++; if (g.us > g.them) m[k].w++; });
+    const rows = Object.values(m).sort((a, b) => b.w / b.n - a.w / a.n || b.n - a.n).map((x) => { const r = x.w / x.n; return { label: x.label, rate: fmt(r), wl: x.n + '경기 ' + x.w + '승 ' + (x.n - x.w) + '패', hi: r >= 0.5, lo: r < 0.5, seg: [0,1,2,3,4,5,6,7,8,9].map((i) => ({ on: i < Math.round(r * 10), off: i >= Math.round(r * 10) })) }; });
+    const filters = [['all', '전체'], ['w', '승'], ['l', '패']].map((f) => ({ label: f[1], on: f[0] === flt, off: f[0] !== flt, pick: () => this.setState({ flt: f[0], more: false }) }));
+    const list = games.filter((g) => flt === 'all' || (flt === 'w' ? g.us > g.them : g.us < g.them)).map((g) => Object.assign({}, g, { win: g.us > g.them, lose: g.us < g.them, hasMemo: !!g.memo, hasExtra: !!g.memo, isMate: !!g.src, isBolt: false, isClub: false, hasWho: !!g.who }));
+    const tab = st.tab || this.props.initialTab || 'list';
+    const LIMIT = 3;
+    const more = !!st.more;
+    const shown = more ? list : list.slice(0, LIMIT);
+    return {
+      canMore: !more && list.length > LIMIT, canLess: more && list.length > LIMIT, restCount: Math.max(0, list.length - LIMIT) + '개',
+      toggleMore: () => this.setState({ more: !more }),
+      total: games.length, W: W, L: L, rate: fmt(rate),
+      moodLine: moodLine, wPct: Math.round(rate * 100) + '%',
+      moodWin: mood === 'win', moodLow: mood === 'low', moodName: moodName,
+      dots: games.slice().reverse().map((g) => ({ w: g.us > g.them, l: g.us < g.them })),
+      rows: rows, filters: filters, list: shown,
+      isList: tab === 'list', isStats: tab === 'stats',
+      tabs: [['list', '기록'], ['stats', '통계']].map((t) => ({ label: t[1], on: t[0] === tab, off: t[0] !== tab, pick: () => this.setState({ tab: t[0] }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

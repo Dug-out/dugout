@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>메이트 평가</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="flex: none; display: flex; align-items: center; gap: 4px; padding: 12px 12px 8px; background: #FFFFFF; border-bottom: 1px solid #E3E6F0"><a href="Review-list.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; flex: none; color: #141B33; display: flex; align-items: center; justify-content: center; border-radius: 12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a><h1 style="margin: 0; flex: 1; font-size: 17px; font-weight: 700">메이트 평가</h1></header>
+<main style="flex: 1; display: flex; flex-direction: column; gap: 26px; padding: 20px 20px 24px">
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 16px; background: #F7F8FC">
+<img src="assets/profile-default.png" alt="" width="48" height="48" style="display: block; width: 48px; height: 48px; border-radius: 50%; border: 1px solid #E3E6F0">
+<span style="flex: 1; display: flex; flex-direction: column; gap: 3px"><span style="display: flex; align-items: center; gap: 6px"><span style="font-size: 16px; font-weight: 700">엘린이</span><span style="font-size: 11px; font-weight: 700; color: #1B2A5C; background: #E8ECF7; padding: 2px 7px; border-radius: 6px">LG 트윈스</span></span><span style="font-size: 13px; color: #5A6380">10.22 (목) 잠실 · LG vs 두산</span></span>
+</div>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700">실제로 만났나요?</h2>
+<div role="radiogroup" aria-label="만남 여부" style="display: flex; gap: 8px"><sc-if value="{{metOn}}" hint-placeholder-val="{{true}}"><button role="radio" aria-checked="true" style="flex: 1; height: 48px; border-radius: 12px; border: 1.5px solid #1B2A5C; background: #E8ECF7; color: #1B2A5C; font-size: 15px; font-weight: 700; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">만났어요</button></sc-if><sc-if value="{{metOff}}" hint-placeholder-val="{{false}}"><button role="radio" aria-checked="false" onClick="{{pick_met}}" style="flex: 1; height: 48px; border-radius: 12px; border: 1px solid #D5DAE8; background: #FFFFFF; color: #2F3756; font-size: 15px; font-weight: 500; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">만났어요</button></sc-if><sc-if value="{{noshowOn}}" hint-placeholder-val="{{false}}"><button role="radio" aria-checked="true" style="flex: 1; height: 48px; border-radius: 12px; border: 1.5px solid #1B2A5C; background: #E8ECF7; color: #1B2A5C; font-size: 15px; font-weight: 700; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">상대가 안 왔어요</button></sc-if><sc-if value="{{noshowOff}}" hint-placeholder-val="{{true}}"><button role="radio" aria-checked="false" onClick="{{pick_noshow}}" style="flex: 1; height: 48px; border-radius: 12px; border: 1px solid #D5DAE8; background: #FFFFFF; color: #2F3756; font-size: 15px; font-weight: 500; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">상대가 안 왔어요</button></sc-if></div>
+</section>
+
+<sc-if value="{{isMet}}" hint-placeholder-val="{{true}}">
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 21px; font-weight: 400; line-height: 1.35; color: #1B2A5C">엘린이님과의 직관,<br>몇 점인가요?</h2>
+<div style="display: flex; align-items: center; justify-content: center; gap: 10px">
+<sc-if value="{{mGood}}" hint-placeholder-val="{{true}}"><img src="assets/rate-good.png" alt="" width="72" height="72" style="display: block; width: 72px; height: 72px"></sc-if><sc-if value="{{mSoso}}" hint-placeholder-val="{{false}}"><img src="assets/rate-soso.png" alt="" width="72" height="72" style="display: block; width: 72px; height: 72px"></sc-if><sc-if value="{{mBad}}" hint-placeholder-val="{{false}}"><img src="assets/rate-bad.png" alt="" width="72" height="72" style="display: block; width: 72px; height: 72px"></sc-if>
+<span style="display: flex; align-items: baseline; gap: 2px"><span style="font-family: 'Black Han Sans', sans-serif; font-size: 56px; line-height: 1; color: #E63946">{{sc}}</span><span style="font-size: 18px; font-weight: 700; color: #2F3756">점</span></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<input type="range" min="1" max="10" step="1" value="{{sc}}" onChange="{{onScore}}" aria-label="점수 1점부터 10점" style="width: 100%; height: 32px; margin: 0; accent-color: #E63946; cursor: pointer">
+<div aria-hidden="true" style="display: flex; justify-content: space-between; padding: 0 4px; font-size: 12px; color: #6B7390"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
+</div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: baseline; justify-content: space-between"><label for="hugi" style="font-size: 16px; font-weight: 700">한 줄 후기</label><span style="font-size: 12px; color: #5A6380">{{len}}/100</span></div>
+<textarea id="hugi" rows="2" maxlength="100" value="{{text}}" onChange="{{onText}}" placeholder="예) 시간 약속 잘 지키시고 응원도 정말 열정적이에요!" style="box-sizing: border-box; border: 1px solid #D5DAE8; border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.6; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; resize: none"></textarea>
+<p style="margin: -2px 0 0; display: flex; align-items: flex-start; gap: 6px; font-size: 12px; line-height: 1.5; color: #6B7390"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none; margin-top: 2px"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg><span>누가 썼는지는 공개되지 않아요. 점수와 후기는 상대 프로필에 보여요.</span></p>
+</section>
+</sc-if>
+
+<sc-if value="{{isNoshow}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; background: #FCE8EA">
+<img src="assets/pose-sad.png" alt="" width="56" height="56" style="display: block; width: 56px; height: 56px; flex: none">
+<span style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 15px; font-weight: 700; color: #C21F31">노쇼로 접수돼요</span><span style="font-size: 13px; line-height: 1.5; color: #5A6380">확인 후 상대의 매너 타율이 내려가요. 직관 기록에서도 이 만남은 빠져요.</span></span>
+</div>
+</sc-if>
+
+</main>
+<div style="padding: 12px 20px 28px; border-top: 1px solid #EEF0F6">
+<a href="Review-done.dc.html" style="height: 54px; border-radius: 14px; background: #1B2A5C; color: #FFFFFF; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center">평가 보내기</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const met = st.met !== undefined ? st.met : true;
+    const sc = st.sc || 9;
+    const text = st.text !== undefined ? st.text : '';
+    const m = sc >= 8 ? 'good' : sc >= 5 ? 'soso' : 'bad';
+    const T = { good: ['최고의 직관 메이트!', '다음에도 같이 가고 싶어요'], soso: ['무난한 직관이었어요', '나쁘지 않았어요'], bad: ['조금 아쉬웠어요', '다음엔 더 잘 맞는 메이트를 찾아봐요'] }[m];
+    return {
+      metOn: met, metOff: !met, noshowOn: !met, noshowOff: met,
+      pick_met: () => this.setState({ met: true }), pick_noshow: () => this.setState({ met: false }),
+      isMet: met, isNoshow: !met,
+      sc: sc, onScore: (e) => this.setState({ sc: Number(e.target.value) }),
+      mGood: m === 'good', mSoso: m === 'soso', mBad: m === 'bad', moodTitle: T[0], moodSub: T[1],
+      text: text, len: text.length, onText: (e) => this.setState({ text: e.target.value.slice(0, 100) })
+    };
+  }
+}
+</script>
+</body>
+</html>

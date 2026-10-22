@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>이미지 에셋 (간소화)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+@keyframes wob{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes ld{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.wob{animation:wob 1s ease-in-out infinite}
+.ld{animation:ld 1.2s infinite both}
+@media (prefers-reduced-motion: reduce){.wob,.ld{animation:none}}
+</style>
+</helmet>
+<div style="width: 1200px; height: 2910px; box-sizing: border-box; padding: 48px; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; display: flex; flex-direction: column; gap: 44px; overflow: hidden">
+<header style="display: flex; align-items: center; gap: 18px">
+<img src="assets/app-icon.png" alt="" width="64" height="64" style="display: block; border-radius: 18px">
+<div><h1 style="margin: 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 34px; font-weight: 400; color: #1B2A5C">덕아웃 이미지 에셋 · 간소화</h1>
+<p style="margin: 4px 0 0; font-size: 14px; color: #5A6380">간소화 버전 화면에 실제로 쓰는 앱 아이콘 · 캐릭터 · 상태 이미지만 모았어요 · 모두 배경이 투명한 PNG예요</p></div>
+</header>
+<section style="display: flex; flex-direction: column; gap: 14px">
+<div><h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #141B33">앱 아이콘 · 로고</h2><p style="margin: 4px 0 0; font-size: 13px; color: #5A6380">앱 아이콘 하나만 써요. 로고는 스플래시 · 로그인 · 가입 완료 멤버 카드에 써요.</p></div>
+<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px"><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/app-icon.png" alt="앱 아이콘 (기본)" style="display: block; max-width: 110px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">앱 아이콘 (기본)</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">홈 화면 · 스플래시 · PWA 아이콘</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/app-icon.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/logo.png" alt="DUGOUT 로고" style="display: block; max-width: 190px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">DUGOUT 로고</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">로그인 상단 · 멤버 카드</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/logo.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/logo-base.png" alt="로고 · 베이스" style="display: block; max-width: 190px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">로고 · 베이스</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">스플래시 · 큰 화면 로고</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/logo-base.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #1B2A5C; display: flex; align-items: center; justify-content: center"><img src="assets/logo-flag.png" alt="로고 · 깃발" style="display: block; max-width: 190px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">로고 · 깃발</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">공유 이미지 · 이벤트</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/logo-flag.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/char-peek.png" alt="빼꼼 캐릭터" style="display: block; max-width: 120px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">빼꼼 캐릭터</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">로그인 로고 옆 마스코트</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/char-peek.png</code></figcaption>
+</figure></div>
+<div style="display: flex; align-items: center; gap: 28px; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; padding: 18px 22px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><img src="assets/app-icon.png" alt="" width="60" height="60" style="display: block; width: 60px; height: 60px; border-radius: 14px; box-shadow: 0 4px 10px rgba(27,42,92,0.18)"><span style="font-size: 12px; color: #2F3756">덕아웃</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><img src="assets/app-icon.png" alt="" width="40" height="40" style="display: block; width: 40px; height: 40px; border-radius: 10px"><span style="font-size: 12px; color: #6B7390">알림 40</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><img src="assets/app-icon.png" alt="" width="24" height="24" style="display: block; width: 24px; height: 24px; border-radius: 6px"><span style="font-size: 12px; color: #6B7390">파비콘 24</span></div>
+<div style="flex: 1; font-size: 13px; line-height: 1.6; color: #5A6380">PWA 매니페스트에는 <code style="font-family: ui-monospace, monospace; color: #1B2A5C">app-icon.png</code>를 192 · 512px로 내보내 넣어요. 모서리는 OS가 잘라주니 원본은 정사각 그대로 둬요.<br>홈 화면 이름은 <strong style="color: #141B33">덕아웃</strong>, 스플래시 배경은 <code style="font-family: ui-monospace, monospace; color: #1B2A5C">#1B2A5C</code>예요.</div>
+</div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 14px">
+<div><h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #141B33">기본 프로필 이미지</h2><p style="margin: 4px 0 0; font-size: 13px; color: #5A6380">프로필 사진을 올리지 않은 사용자에게 자동으로 보여줘요.</p></div>
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 14px">
+<figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/profile-default.png" alt="기본 프로필 이미지" style="display: block; max-width: 118px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">기본 프로필 이미지</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">사진을 등록하지 않은 사용자 전부</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/profile-default.png</code></figcaption>
+</figure>
+<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 14px; font-weight: 700; color: #141B33">크기별 사용 예시</span>
+<div style="display: flex; align-items: flex-end; gap: 22px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><img src="assets/profile-default.png" alt="" width="96" height="96" style="display: block; border-radius: 50%"><span style="font-size: 12px; color: #5A6380">96 · 프로필 상세</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><img src="assets/profile-default.png" alt="" width="56" height="56" style="display: block; border-radius: 50%"><span style="font-size: 12px; color: #5A6380">56 · 친구 카드</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><img src="assets/profile-default.png" alt="" width="40" height="40" style="display: block; border-radius: 50%"><span style="font-size: 12px; color: #5A6380">40 · 채팅</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><img src="assets/profile-default.png" alt="" width="28" height="28" style="display: block; border-radius: 50%"><span style="font-size: 12px; color: #5A6380">28 · 참여자</span></div>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 14px; background: #F7F8FC">
+<img src="assets/profile-default.png" alt="" width="48" height="48" style="display: block; border-radius: 50%">
+<div style="flex: 1"><div style="font-size: 15px; font-weight: 700; color: #141B33">직관요정</div><div style="font-size: 13px; color: #5A6380">20대 · 여성 · LG 트윈스</div></div>
+<span style="font-size: 11px; font-weight: 700; color: #FFFFFF; background: #E63946; padding: 2px 6px; border-radius: 6px">MY</span>
+</div>
+</div>
+</div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 14px">
+<div><h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #141B33">캐릭터 표정 · 포즈</h2><p style="margin: 4px 0 0; font-size: 13px; color: #5A6380">채팅 스티커와 반응 화면에 써요.</p></div>
+<div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px"><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/pose-cheer.png" alt="응원하기" style="display: block; max-width: 120px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">응원하기</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">채팅 스티커 · 경기 당일 안내</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/pose-cheer.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/pose-love.png" alt="좋아해요" style="display: block; max-width: 120px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">좋아해요</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">좋아요 완료 · 관심 메이트</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/pose-love.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/pose-sad.png" alt="아쉬워.." style="display: block; max-width: 120px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">아쉬워..</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">패배 기록 · 신청 거절 · 오류</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/pose-sad.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/pose-yay.png" alt="신난다!" style="display: block; max-width: 120px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">신난다!</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">승리 기록 · 약속 확정</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/pose-yay.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/pose-hi.png" alt="안녕!" style="display: block; max-width: 120px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">안녕!</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">첫 대화 · 환영 · 로그인</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/pose-hi.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/pose-shy.png" alt="안녕!" style="display: block; max-width: 120px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">두근두근</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">신청 대기 · 수락 기다릴 때</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/pose-shy.png</code></figcaption>
+</figure></div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 14px">
+<div><h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #141B33">직관 승률 캐릭터</h2><p style="margin: 4px 0 0; font-size: 13px; color: #5A6380">직관 기록 승률 카드와 기록 저장 완료 창에 써요. 승률 .500을 기준으로 두 가지로 나눠요.</p></div>
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px"><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 220px; background: linear-gradient(160deg, #22346E, #1B2A5C 60%); display: flex; align-items: center; justify-content: center"><img src="assets/rate-up.png" alt="승리요정" style="display: block; max-width: 210px; max-height: 190px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 15px; font-weight: 700; color: #141B33">승리요정 <span style="font-size: 12px; font-weight: 600; color: #5A6380">승률 .500 이상</span></span><span style="font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 15px; color: #1B2A5C">“내가 가면 이긴다! 오늘도 출격”</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/rate-up.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 220px; background: linear-gradient(160deg, #22346E, #1B2A5C 60%); display: flex; align-items: center; justify-content: center"><img src="assets/rate-down.png" alt="눈물요정" style="display: block; max-width: 210px; max-height: 190px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 15px; font-weight: 700; color: #141B33">눈물요정 <span style="font-size: 12px; font-weight: 600; color: #5A6380">.500 미만</span></span><span style="font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 15px; color: #1B2A5C">“다음 직관은 꼭 이길 거야…”</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/rate-down.png</code></figcaption>
+</figure></div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 14px">
+<div><h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #141B33">메이트 평가 표정</h2><p style="margin: 4px 0 0; font-size: 13px; color: #5A6380">메이트 평가 점수 구간에 따라 캐릭터가 바뀌어요. 평가 완료 화면과 지난 평가 목록에 써요.</p></div>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px"><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column"><div style="height: 170px; background: #FCE8EA; display: flex; align-items: center; justify-content: center"><img src="assets/rate-good.png" alt="추천해요" width="140" height="140" style="display: block; width: 140px; height: 140px"></div><figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 15px; font-weight: 700; color: #141B33">최고의 메이트</span><span style="font-size: 12px; color: #5A6380">8점 이상 · rate-good</span></figcaption></figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column"><div style="height: 170px; background: #EEF0F6; display: flex; align-items: center; justify-content: center"><img src="assets/rate-soso.png" alt="그저 그래요" width="140" height="140" style="display: block; width: 140px; height: 140px"></div><figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 15px; font-weight: 700; color: #141B33">괜찮았어요</span><span style="font-size: 12px; color: #5A6380">5 ~ 7점 · rate-soso</span></figcaption></figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column"><div style="height: 170px; background: #EEF0F6; display: flex; align-items: center; justify-content: center"><img src="assets/rate-bad.png" alt="별로예요" width="140" height="140" style="display: block; width: 140px; height: 140px"></div><figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 15px; font-weight: 700; color: #141B33">아쉬웠어요</span><span style="font-size: 12px; color: #5A6380">4점 이하 · rate-bad</span></figcaption></figure></div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 14px">
+<div><h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #141B33">상태 · 기능 이미지</h2><p style="margin: 4px 0 0; font-size: 13px; color: #5A6380">빈 화면과 로딩 상태에 쓰는 이미지예요.</p></div>
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px"><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/empty-sleep.png" alt="빈 화면" style="display: block; max-width: 150px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">빈 화면</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">모집 글 · 직관 약속이 없을 때</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/empty-sleep.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/loading.png" alt="로딩" style="display: block; max-width: 150px; max-height: 118px; width: auto; height: auto"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">로딩</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">데이터 불러오는 중 (흔들림 모션)</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/loading.png</code></figcaption>
+</figure></div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 14px">
+<div><h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #141B33">모집 글 기본 이미지</h2><p style="margin: 4px 0 0; font-size: 13px; color: #5A6380">방장이 대표 이미지를 올리지 않았을 때 자동으로 들어가요. 연한 배경에 마스코트를 가운데 두어 카드(2.5:1) · 상세(16:9) · 정사각 썸네일 어디서 잘려도 캐릭터가 보여요. 메이트 화면은 모두 이 이미지를 써요.</p></div>
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px"><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 180px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/mate-default.png" alt="모집 글 기본 이미지" style="display: block; max-width: 300px; max-height: 148px; width: auto; height: auto; border-radius: 12px"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">모집 글 기본 이미지</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">목록 카드 · 상세 상단 · 썸네일 (1200×680)</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/mate-default.png</code></figcaption>
+</figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 180px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/mate-photo-sample.png" alt="대표 이미지 예시" style="display: block; max-width: 300px; max-height: 148px; width: auto; height: auto; border-radius: 12px"></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">대표 이미지 예시</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">방장이 사진을 올렸을 때 보이는 예시</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/mate-photo-sample.png</code></figcaption>
+</figure></div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":2910}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

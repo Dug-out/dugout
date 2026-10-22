@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>로그인</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<div style="flex: 1; display: flex; flex-direction: column; background: #FFFFFF; padding: 0 24px">
+<div style="padding: 100px 0 40px; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<div style="display: flex; align-items: flex-end; justify-content: center; gap: 2px">
+<img src="assets/logo.png" alt="DUGOUT" width="180" height="60" style="display: block; width: 180px; height: auto; margin-bottom: 6px">
+<img src="assets/char-peek.png" alt="" width="96" height="75" style="display: block; width: 96px; height: auto; margin-right: -24px">
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center"><p style="margin: 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 21px; color: #1B2A5C">오늘, 같이 응원할래?</p><p style="margin: 0; font-size: 15px; color: #5A6380">오늘도 같이 직관 갈 메이트가 기다리고 있어요.</p></div>
+</div>
+<form style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="lem" style="font-size: 14px; font-weight: 700">이메일</label><input id="lem" type="email" placeholder="가입한 이메일을 입력해 주세요" style="width: 100%; height: 50px; box-sizing: border-box; border: 1px solid #D5DAE8; border-radius: 12px; padding: 0 14px; font-size: 15px; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; background: #FFFFFF"></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="lpw" style="font-size: 14px; font-weight: 700">비밀번호</label><input id="lpw" type="password" placeholder="비밀번호를 입력해 주세요" style="width: 100%; height: 50px; box-sizing: border-box; border: 1px solid #D5DAE8; border-radius: 12px; padding: 0 14px; font-size: 15px; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; background: #FFFFFF"></div>
+<label style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #2F3756; min-height: 44px; cursor: pointer"><input type="checkbox" checked="" style="width: 20px; height: 20px; accent-color: #1B2A5C; margin: 0">로그인 상태 유지</label>
+</form>
+<div style="margin-top: 8px; display: flex; flex-direction: column; gap: 10px">
+<a href="Home.dc.html" style="width: 100%; height: 54px; box-sizing: border-box; border-radius: 14px; background: #1B2A5C; color: #FFFFFF; border: none; font-family: 'IBM Plex Sans KR', sans-serif; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer">로그인</a>
+<a href="Login.dc.html" style="align-self: center; display: flex; align-items: center; min-height: 44px; padding: 0 8px; font-size: 13px; color: #5A6380">비밀번호를 잊으셨나요?</a>
+</div>
+<div style="margin-top: auto; padding: 0 0 36px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<p style="margin: 0; display: flex; align-items: center; gap: 4px; font-size: 14px; color: #5A6380">아직 덕아웃 회원이 아니신가요?<a href="Signup.dc.html" style="display: flex; align-items: center; min-height: 44px; padding: 0 6px; font-weight: 700; color: #1B2A5C">회원가입</a></p>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 390, "height": 844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

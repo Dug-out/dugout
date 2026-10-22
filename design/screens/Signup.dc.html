@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>회원가입</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1186px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="flex: none; display: flex; align-items: center; gap: 4px; padding: 12px 12px 8px; background: #FFFFFF; border-bottom: 1px solid #E3E6F0"><a href="Login.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; color: #141B33; display: flex; align-items: center; justify-content: center; border-radius: 12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a><h1 style="margin: 0; flex: 1; font-size: 17px; font-weight: 700">회원가입</h1></header>
+<form style="flex: 1; display: flex; flex-direction: column; gap: 22px; padding: 24px 24px 0; background: #FFFFFF">
+<div style="display: flex; align-items: center; gap: 8px; margin-right: -4px">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 26px; font-weight: 400; line-height: 1.3; color: #1B2A5C">반가워요!<br>계정을 만들어요</p>
+<p style="margin: 0; font-size: 14px; color: #5A6380; line-height: 1.5">같은 팀 팬과 함께하는 즐거운 직관</p>
+</div>
+<img src="assets/pose-hi.png" alt="손을 흔드는 덕아웃 캐릭터" width="88" height="88" style="flex: none; display: block; width: 88px; height: 88px; object-fit: contain">
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="em" style="font-size: 14px; font-weight: 700">이메일</label>
+<sc-if value="{{ok}}" hint-placeholder-val="{{true}}"><input id="em" type="email" value="fairy@dugout.kr" style="width: 100%; height: 50px; box-sizing: border-box; border-radius: 12px; padding: 0 14px; font-size: 15px; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; background: #FFFFFF; border: 1px solid #D5DAE8">
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; color: #1B2A5C; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>사용할 수 있는 이메일이에요</span></sc-if>
+<sc-if value="{{bad}}" hint-placeholder-val="{{false}}"><input id="em" type="email" value="twins@dugout.kr" aria-invalid="true" style="width: 100%; height: 50px; box-sizing: border-box; border-radius: 12px; padding: 0 14px; font-size: 15px; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; background: #FFFFFF; border: 1.5px solid #E63946">
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; color: #C21F31; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.5v.5"></path></svg>이미 가입된 이메일이에요</span></sc-if>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="pw" style="font-size: 14px; font-weight: 700">비밀번호</label><input id="pw" type="password" value="duckout2026" style="width: 100%; height: 50px; box-sizing: border-box; border-radius: 12px; padding: 0 14px; font-size: 15px; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; background: #FFFFFF; border: 1px solid #D5DAE8"><span style="font-size: 12px; color: #5A6380">영문과 숫자를 섞어 8자 이상</span></div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="pw2" style="font-size: 14px; font-weight: 700">비밀번호 확인</label>
+<sc-if value="{{ok}}" hint-placeholder-val="{{true}}"><input id="pw2" type="password" value="duckout2026" style="width: 100%; height: 50px; box-sizing: border-box; border-radius: 12px; padding: 0 14px; font-size: 15px; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; background: #FFFFFF; border: 1px solid #D5DAE8">
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; color: #1B2A5C; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>비밀번호가 일치해요</span></sc-if>
+<sc-if value="{{bad}}" hint-placeholder-val="{{false}}"><input id="pw2" type="password" value="duckout2025" aria-invalid="true" style="width: 100%; height: 50px; box-sizing: border-box; border-radius: 12px; padding: 0 14px; font-size: 15px; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; background: #FFFFFF; border: 1.5px solid #E63946">
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; color: #C21F31; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.5v.5"></path></svg>비밀번호가 일치하지 않아요</span></sc-if>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="nk" style="font-size: 14px; font-weight: 700">닉네임</label>
+<sc-if value="{{ok}}" hint-placeholder-val="{{true}}"><input id="nk" type="text" value="직관요정" style="width: 100%; height: 50px; box-sizing: border-box; border-radius: 12px; padding: 0 14px; font-size: 15px; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; background: #FFFFFF; border: 1px solid #D5DAE8">
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; color: #1B2A5C; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>멋진 닉네임이에요!</span></sc-if>
+<sc-if value="{{bad}}" hint-placeholder-val="{{false}}"><input id="nk" type="text" value="엘린이" aria-invalid="true" style="width: 100%; height: 50px; box-sizing: border-box; border-radius: 12px; padding: 0 14px; font-size: 15px; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; background: #FFFFFF; border: 1.5px solid #E63946">
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; color: #C21F31; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.5v.5"></path></svg>이미 사용 중인 닉네임이에요</span></sc-if>
+</div>
+
+<fieldset style="margin: 0; padding: 0; border: none">
+<legend style="padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 700">성별</legend>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+<sc-for list="{{genders}}" as="g" hint-placeholder-count="2">
+<sc-if value="{{g.on}}" hint-placeholder-val="{{false}}"><button type="button" aria-pressed="true" onClick="{{g.pick}}" style="width: 100%; height: 48px; border-radius: 12px; border: 2px solid #1B2A5C; background: #E8ECF7; color: #1B2A5C; font-size: 15px; font-weight: 700; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">{{g.label}}</button></sc-if>
+<sc-if value="{{g.off}}" hint-placeholder-val="{{true}}"><button type="button" aria-pressed="false" onClick="{{g.pick}}" style="width: 100%; height: 48px; border-radius: 12px; border: 1px solid #D5DAE8; background: #FFFFFF; color: #2F3756; font-size: 15px; font-weight: 500; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">{{g.label}}</button></sc-if>
+</sc-for>
+</div>
+</fieldset>
+
+<fieldset style="margin: 0; padding: 0; border: none; display: flex; flex-direction: column; gap: 8px">
+<legend style="padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 700">나이대</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{ages}}" as="a" hint-placeholder-count="5">
+<sc-if value="{{a.on}}" hint-placeholder-val="{{false}}"><button type="button" aria-pressed="true" onClick="{{a.pick}}" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid #1B2A5C; background: #1B2A5C; color: #FFFFFF; font-size: 14px; font-weight: 600; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">{{a.label}}</button></sc-if>
+<sc-if value="{{a.off}}" hint-placeholder-val="{{true}}"><button type="button" aria-pressed="false" onClick="{{a.pick}}" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid #D5DAE8; background: #FFFFFF; color: #2F3756; font-size: 14px; font-weight: 500; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">{{a.label}}</button></sc-if>
+</sc-for>
+</div>
+</fieldset>
+
+<fieldset style="margin: 0; padding: 0; border: none">
+<legend style="padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 700">응원팀</legend>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{teams}}" as="t" hint-placeholder-count="10">
+<sc-if value="{{t.on}}" hint-placeholder-val="{{false}}"><button type="button" aria-pressed="true" onClick="{{t.pick}}" style="width: 100%; height: 80px; box-sizing: border-box; border-radius: 14px; border: 2px solid #1B2A5C; background: #E8ECF7; color: #1B2A5C; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 0; font-family: 'IBM Plex Sans KR', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer"><span style="width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; border: 1px dashed #1B2A5C; display: flex; align-items: center; justify-content: center; overflow: hidden"><sc-if value="{{t.hasLogo}}" hint-placeholder-val="{{false}}"><img src="{{t.logo}}" alt="" width="32" height="32" style="display: block; width: 32px; height: 32px; object-fit: contain"></sc-if><sc-if value="{{t.noLogo}}" hint-placeholder-val="{{true}}"><span style="font-size: 9px; font-weight: 600; letter-spacing: .3px; color: #8A93B0">LOGO</span></sc-if></span>{{t.label}}</button></sc-if>
+<sc-if value="{{t.off}}" hint-placeholder-val="{{true}}"><button type="button" aria-pressed="false" onClick="{{t.pick}}" style="width: 100%; height: 80px; box-sizing: border-box; border-radius: 14px; border: 1px solid #D5DAE8; background: #FFFFFF; color: #2F3756; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 0; font-family: 'IBM Plex Sans KR', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer"><span style="width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; border: 1px dashed #E3E6F0; display: flex; align-items: center; justify-content: center; overflow: hidden"><sc-if value="{{t.hasLogo}}" hint-placeholder-val="{{false}}"><img src="{{t.logo}}" alt="" width="32" height="32" style="display: block; width: 32px; height: 32px; object-fit: contain"></sc-if><sc-if value="{{t.noLogo}}" hint-placeholder-val="{{true}}"><span style="font-size: 9px; font-weight: 600; letter-spacing: .3px; color: #8A93B0">LOGO</span></sc-if></span>{{t.label}}</button></sc-if>
+</sc-for>
+</div>
+</fieldset>
+
+</form>
+<div style="flex: none; padding: 16px 24px 28px; background: #FFFFFF"><a href="Signup-done.dc.html" style="width: 100%; height: 54px; box-sizing: border-box; border-radius: 14px; background: #1B2A5C; color: #FFFFFF; border: none; font-family: 'IBM Plex Sans KR', sans-serif; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer">가입하고 시작하기</a></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"initialCheck": {"editor": "enum", "options": ["ok", "error"], "default": "ok"}, "$preview": {"width": 390, "height": 1186}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = Object.assign({}, this.state || {});
+    const bad = this.props.initialCheck === 'error';
+    const age = st.age || '20대';
+    const team = st.team || 'LG';
+    const gender = st.gender || '여성';
+    return {
+      ok: !bad, bad: bad,
+      genders: ['여성', '남성'].map((l) => ({ label: l, on: l === gender, off: l !== gender, pick: () => this.setState({ gender: l }) })),
+      ages: ["10대", "20대", "30대", "40대 이상"].map((l) => ({ label: l, on: l === age, off: l !== age, pick: () => this.setState({ age: l }) })),
+      teams: [
+        { label: 'LG', logo: '' }, { label: '두산', logo: '' }, { label: 'KIA', logo: '' }, { label: '삼성', logo: '' }, { label: '롯데', logo: '' },
+        { label: '한화', logo: '' }, { label: 'SSG', logo: '' }, { label: 'NC', logo: '' }, { label: 'KT', logo: '' }, { label: '키움', logo: '' }
+      ].map((t) => ({ label: t.label, logo: t.logo, hasLogo: !!t.logo, noLogo: !t.logo, on: t.label === team, off: t.label !== team, pick: () => this.setState({ team: t.label }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

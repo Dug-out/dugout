@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>모집 채팅방 (방장)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="flex: none; display: flex; align-items: center; gap: 8px; padding: 12px 8px 8px 12px; background: #FFFFFF; border-bottom: 1px solid #E3E6F0">
+<a href="Mate-manage.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; flex: none; color: #141B33; display: flex; align-items: center; justify-content: center; border-radius: 12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a>
+<img src="assets/mate-default.png" alt="" width="40" height="40" style="display: block; width: 40px; height: 40px; border-radius: 12px; flex: none">
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">목요일 퇴근 직관 같이 가요!</span><span style="font-size: 12px; color: #5A6380; display: flex; align-items: center; gap: 6px">멤버 3명<sc-if value="{{closed}}" hint-placeholder-val="{{false}}"><span style="font-size: 10px; font-weight: 700; color: #FFFFFF; background: #5A6380; padding: 1px 6px; border-radius: 5px">모집 마감</span></sc-if></span></span>
+<button type="button" aria-label="메뉴" onClick="{{openMenu}}" style="width: 44px; height: 44px; flex: none; border: none; background: transparent; color: #141B33; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 12px"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+</header>
+<a href="Mate-detail.dc.html" style="flex: none; display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: #1B2A5C; color: #FFFFFF">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 13px; font-weight: 600">10.22 (목) 18:30 LG vs 두산</span><span style="font-size: 12px; color: rgb(201, 209, 234)">잠실야구장&nbsp;</span></span>
+<span style="font-size: 11px; font-weight: 700; background: #E63946; padding: 3px 8px; border-radius: 999px; flex: none">D-1</span>
+</a>
+<div style="flex: 1; min-height: 0; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<p style="align-self: center; margin: 0; max-width: 310px; text-align: center; font-size: 12px; line-height: 1.5; color: #5A6380; background: #EEF0F6; padding: 6px 12px; border-radius: 10px">엘린이님의 참여를 수락했어요</p>
+<div style="align-self: flex-end; display: flex; align-items: flex-end; gap: 6px; max-width: 330px"><span style="font-size: 11px; color: #6B7390; flex: none">오후 8:02</span><p style="margin: 0; font-size: 14px; line-height: 1.55; color: #FFFFFF; background: #1B2A5C; padding: 10px 14px; border-radius: 18px 18px 4px 18px">반가워요! 목요일에 같이 응원해요 🙌</p></div>
+<div style="align-self: flex-start; display: flex; gap: 8px; max-width: 336px"><a href="Profile-view.dc.html" aria-label="프로필 보기" style="width: 36px; height: 36px; flex: none; border-radius: 12px; background: #E8ECF7; overflow: hidden; display: flex"><img src="assets/profile-default.png" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover"></a><span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #2F3756; font-weight: 600">엘린이</span><span style="display: flex; align-items: flex-end; gap: 6px"><p style="margin: 0; font-size: 14px; line-height: 1.55; background: #FFFFFF; border: 1px solid #E3E6F0; padding: 10px 14px; border-radius: 4px 18px 18px 18px">잘 부탁드려요! 응원봉 챙겨갈게요</p><span style="font-size: 11px; color: #6B7390; flex: none">오후 8:05</span></span></span></div>
+<p style="align-self: center; margin: 0; max-width: 310px; text-align: center; font-size: 12px; line-height: 1.5; color: #5A6380; background: #EEF0F6; padding: 6px 12px; border-radius: 10px">야구는9회말님의 참여를 수락했어요</p>
+<div style="align-self: flex-start; display: flex; gap: 8px; max-width: 336px"><a href="Profile-view.dc.html" aria-label="프로필 보기" style="width: 36px; height: 36px; flex: none; border-radius: 12px; background: #E8ECF7; overflow: hidden; display: flex"><img src="assets/profile-default.png" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover"></a><span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #2F3756; font-weight: 600">야구는9회말</span><span style="display: flex; align-items: flex-end; gap: 6px"><p style="margin: 0; font-size: 14px; line-height: 1.55; background: #FFFFFF; border: 1px solid #E3E6F0; padding: 10px 14px; border-radius: 4px 18px 18px 18px">안녕하세요! 다들 반갑습니다 🙌</p><span style="font-size: 11px; color: #6B7390; flex: none">오후 9:15</span></span></span></div>
+<div style="align-self: flex-start; display: flex; gap: 8px; max-width: 336px"><a href="Profile-view.dc.html" aria-label="프로필 보기" style="width: 36px; height: 36px; flex: none; border-radius: 12px; background: #E8ECF7; overflow: hidden; display: flex"><img src="assets/profile-default.png" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover"></a><span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #2F3756; font-weight: 600">엘린이</span><span style="display: flex; align-items: flex-end; gap: 6px"><p style="margin: 0; font-size: 14px; line-height: 1.55; background: #FFFFFF; border: 1px solid #E3E6F0; padding: 10px 14px; border-radius: 4px 18px 18px 18px">반가워요! 끝나고 치킨 먹죠? 🍗</p><span style="font-size: 11px; color: #6B7390; flex: none">오후 9:18</span></span></span></div>
+<div style="align-self: flex-end; display: flex; align-items: flex-end; gap: 6px; max-width: 330px"><span style="font-size: 11px; color: #6B7390; flex: none">오후 9:20</span><p style="margin: 0; font-size: 14px; line-height: 1.55; color: #FFFFFF; background: #1B2A5C; padding: 10px 14px; border-radius: 18px 18px 4px 18px">17:50에 2번 게이트 앞에서 만나요</p></div>
+<sc-if value="{{closed}}" hint-placeholder-val="{{false}}"><p style="align-self: center; margin: 0; max-width: 310px; text-align: center; font-size: 12px; line-height: 1.5; color: #5A6380; background: #EEF0F6; padding: 6px 12px; border-radius: 10px">방장이 모집을 마감했어요<br>더 이상 참여 신청을 받지 않아요</p></sc-if>
+</div>
+<form style="flex: none; display: flex; align-items: center; gap: 8px; padding: 10px 12px 28px; background: #FFFFFF; border-top: 1px solid #E3E6F0">
+<label for="cmsg" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">메시지</label>
+<input id="cmsg" type="text" placeholder="메시지를 입력하세요" style="flex: 1; min-width: 0; height: 46px; box-sizing: border-box; border: 1px solid #D5DAE8; border-radius: 999px; padding: 0 16px; font-size: 15px; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; background: #F7F8FC">
+<button type="button" aria-label="보내기" style="width: 46px; height: 46px; flex: none; border: none; border-radius: 50%; background: #1B2A5C; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l16-8-6 16-2.5-6.5z"></path></svg></button>
+</form>
+<sc-if value="{{menuOpen}}" hint-placeholder-val="{{false}}">
+<div aria-hidden="true" onClick="{{closeMenu}}" style="position: absolute; inset: 0; background: rgba(15,26,61,0.55)"></div>
+<div role="dialog" aria-modal="true" aria-label="방장 메뉴" style="position: absolute; left: 0; right: 0; bottom: 0; background: #FFFFFF; border-radius: 24px 24px 0 0; padding: 10px 20px 28px; display: flex; flex-direction: column; gap: 2px">
+<span aria-hidden="true" style="align-self: center; width: 40px; height: 4px; border-radius: 4px; background: #D5DAE8; margin-bottom: 8px"></span>
+<span style="font-size: 12px; font-weight: 700; color: #6B7390; padding: 0 4px 4px">방장 메뉴</span>
+<button type="button" onClick="{{toggleClose}}" style="display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 4px; border: none; background: transparent; color: #141B33; font-size: 16px; font-weight: 600; text-align: left; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>{{closeLabel}}</button>
+<a href="Mate-write.dc.html" style="display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 4px; color: #141B33; font-size: 16px; font-weight: 600"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13.5 6.5l4 4"></path></svg>모집 글 수정하기</a>
+<span aria-hidden="true" style="height: 1px; background: #EEF0F6; margin: 4px 0"></span>
+<button type="button" onClick="{{askDelete}}" style="display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 4px; border: none; background: transparent; color: #C21F31; font-size: 16px; font-weight: 600; text-align: left; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6"></path><path d="M6 7l1 13h10l1-13M9 7V4h6v3"></path></svg>모임 삭제하기</button>
+<button type="button" onClick="{{closeMenu}}" style="margin-top: 8px; height: 52px; border: none; border-radius: 14px; background: #EEF0F6; color: #2F3756; font-size: 15px; font-weight: 600; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">닫기</button>
+</div>
+</sc-if>
+<sc-if value="{{deleteOpen}}" hint-placeholder-val="{{false}}">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(15,26,61,0.55)"></div>
+<div role="alertdialog" aria-modal="true" aria-labelledby="delTitle" style="position: absolute; left: 28px; right: 28px; top: 50%; transform: translateY(-50%); background: #FFFFFF; border-radius: 22px; padding: 26px 20px 18px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; box-shadow: 0 20px 48px rgba(15,26,61,0.35)">
+<img src="assets/pose-sad.png" alt="" width="76" height="76" style="display: block; width: 76px; height: 76px; margin: -8px 0 -6px">
+<h2 id="delTitle" style="margin: 4px 0 0; font-size: 19px; font-weight: 700">모임을 삭제할까요?</h2>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #5A6380">모집 글과 채팅방이 사라지고<br>멤버들에게 알림이 가요.</p>
+<div style="width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px">
+<button type="button" onClick="{{closeDelete}}" style="height: 50px; border: 1px solid #D5DAE8; background: #FFFFFF; color: #2F3756; border-radius: 14px; font-size: 15px; font-weight: 600; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">취소</button>
+<a href="Mate.dc.html" style="height: 50px; border-radius: 14px; background: #D62839; color: #FFFFFF; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center">삭제하기</a>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"initialStep": {"editor": "enum", "options": ["chat", "menu", "delete", "closed"], "default": "chat"}, "$preview": {"width": 390, "height": 844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const step = this.props.initialStep || 'chat';
+    const menu = st.menu !== undefined ? st.menu : step === 'menu';
+    const del = st.del !== undefined ? st.del : step === 'delete';
+    const closed = st.closed !== undefined ? st.closed : step === 'closed';
+    return {
+      closed: closed,
+      closeLabel: closed ? '모집 다시 열기' : '모집 마감하기',
+      menuOpen: menu && !del, deleteOpen: del,
+      openMenu: () => this.setState({ menu: true }),
+      closeMenu: () => this.setState({ menu: false }),
+      toggleClose: () => this.setState({ menu: false, closed: !closed }),
+      askDelete: () => this.setState({ menu: false, del: true }),
+      closeDelete: () => this.setState({ del: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

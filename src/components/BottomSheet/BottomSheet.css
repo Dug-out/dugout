@@ -1,0 +1,53 @@
+.sheet {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 20px calc(22px + env(safe-area-inset-bottom));
+}
+
+.sheet__handle {
+    align-self: center;
+    width: 40px;
+    height: 4px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    background: var(--border-strong);
+}
+
+.sheet__item {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    padding: 0 4px;
+    border: 0;
+    background: none;
+    font-family: var(--font-base), sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+    color: var(--text-900);
+    cursor: pointer;
+}
+
+.sheet__item--danger {
+    color: var(--red-text);
+}
+
+.sheet__close {
+    height: 50px;
+    margin-top: 6px;
+    border: 0;
+    border-radius: var(--radius-btn);
+    background: var(--gray-100);
+    font-family: var(--font-base), sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-700);
+    cursor: pointer;
+}
+
+.sheet__item:focus-visible,
+.sheet__close:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: 2px;
+}

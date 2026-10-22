@@ -1,0 +1,316 @@
+.splash {
+    --splash-ms: 3500ms; /* 기본값 · Splash.jsx의 SPLASH_MS가 인라인으로 덮어쓴다 */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-height: 100dvh;
+    overflow: hidden;
+    background: linear-gradient(var(--bg) 0%, var(--navy-50) 100%);
+    color: var(--navy-500);
+    text-decoration: none;
+}
+
+.splash__sparkles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.splash__navy {
+    fill: var(--navy-500);
+}
+
+.splash__red {
+    fill: var(--red-500);
+}
+
+/* ── 간판 ── */
+.splash__sign {
+    position: relative;
+    flex: none;
+    height: 296px;
+    transform-origin: 50% 0;
+    animation: splash-drop 1.5s cubic-bezier(0.3, 1, 0.5, 1) 0.15s both;
+}
+
+.splash__rope {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 206px;
+    margin-left: -1px;
+    background: var(--gray-500);
+}
+
+.splash__rope::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: -4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--navy-500);
+}
+
+.splash__rope--left { left: 30.77%; }
+.splash__rope--right { left: 69.23%; }
+
+.splash__board {
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 240px;
+    height: 96px;
+    margin-left: -120px;
+    border: 4px solid var(--navy-500);
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: var(--shadow-sign);
+}
+
+.splash__logo {
+    position: relative;
+    width: 192px;
+    height: 64px;
+}
+
+.splash__logo img {
+    position: absolute;
+    inset: 0;
+    width: 192px;
+    height: 64px;
+}
+
+.splash__flag {
+    transform-origin: 79% 26%;
+    animation: splash-flag 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) 1.15s both;
+}
+
+/* ── 문구 ── */
+.splash__tagline {
+    position: relative;
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 28px;
+    animation: splash-up 0.45s ease-out 1.05s both;
+}
+
+.splash__tagline p {
+    margin: 0;
+    font-family: var(--font-emotion), serif;
+    font-size: 22px;
+    line-height: 1.3;
+}
+
+.splash__tagline svg {
+    display: block;
+    margin-top: 2px;
+}
+
+.splash__tagline path {
+    stroke: var(--red-500);
+    stroke-dasharray: 130;
+    animation: splash-line 0.5s ease-out 1.35s both;
+}
+
+/* ── 캐릭터 · 공 ── */
+.splash__field {
+    position: relative;
+    flex: 1;
+    min-height: 196px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.splash__peek {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 270px;
+    height: 212px;
+    margin-left: -135px;
+    animation: splash-peek 0.7s cubic-bezier(0.3, 1.3, 0.5, 1) 0.55s both;
+}
+
+.splash__peek img {
+    display: block;
+    width: 270px;
+    height: 212px;
+    transform-origin: 50% 100%;
+    animation: splash-tilt 1.1s ease-in-out 1.3s both;
+}
+
+.splash__ball {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    width: 22px;
+    height: 22px;
+    margin-left: -11px;
+    animation: splash-ball 1.4s ease-in-out 0.4s both;
+}
+
+.splash__ball circle {
+    fill: var(--surface);
+    stroke: var(--navy-500);
+}
+
+.splash__ball path {
+    stroke: var(--red-500);
+}
+
+/* ── 경기장 바닥 · 로딩 ── */
+.splash__stage {
+    position: relative;
+    flex: none;
+    height: 190px;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: linear-gradient(var(--navy-500), var(--navy-700));
+}
+
+.splash__ledge {
+    position: absolute;
+    top: -6px;
+    left: -10px;
+    right: -10px;
+    height: 16px;
+    border-radius: 8px;
+    background: var(--splash-ledge);
+    box-shadow: var(--shadow-ledge);
+}
+
+.splash__stripe {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--red-500);
+}
+
+.splash__arc {
+    position: absolute;
+    top: 34px;
+    left: 0;
+    opacity: 0.14;
+}
+
+.splash__arc path {
+    stroke: var(--surface);
+}
+
+.splash__loading {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(58px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.splash__track {
+    position: relative;
+    width: 132px;
+    height: 6px;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    background: var(--on-navy-track);
+}
+
+/* 진행 바는 스플래시 시간(--splash-ms)에 맞춰 끝난다 */
+.splash__bar {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-full);
+    background: var(--red-500);
+    transform-origin: 0 50%;
+    animation: splash-bar calc(var(--splash-ms) - 0.3s) cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+}
+
+.splash__loading-text {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--on-navy-sub);
+}
+
+@keyframes splash-drop {
+    0% { transform: translateY(-460px) rotate(0); }
+    38% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(0) rotate(7deg); }
+    62% { transform: rotate(-5deg); }
+    74% { transform: rotate(3deg); }
+    85% { transform: rotate(-1.4deg); }
+    93% { transform: rotate(0.6deg); }
+    100% { transform: rotate(0); }
+}
+
+@keyframes splash-peek {
+    0% { transform: translateY(100%); }
+    65% { transform: translateY(-6%); }
+    82% { transform: translateY(2%); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes splash-tilt {
+    0%, 100% { transform: rotate(0); }
+    30% { transform: rotate(-4deg); }
+    70% { transform: rotate(3deg); }
+}
+
+@keyframes splash-flag {
+    0% { opacity: 0; transform: scaleX(0); }
+    20% { opacity: 1; }
+    60% { transform: scaleX(1.12) skewY(-3deg); }
+    100% { opacity: 1; transform: none; }
+}
+
+@keyframes splash-up {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes splash-line {
+    from { stroke-dashoffset: 130; }
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes splash-ball {
+    0% { opacity: 0; transform: translate(-140px, 40px) rotate(0); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translate(140px, -30px) rotate(540deg); }
+}
+
+@keyframes splash-bar {
+    0% { transform: scaleX(0); }
+    60% { transform: scaleX(0.72); }
+    100% { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .splash__sign,
+    .splash__flag,
+    .splash__tagline,
+    .splash__tagline path,
+    .splash__peek,
+    .splash__peek img,
+    .splash__ball,
+    .splash__bar {
+        animation: none;
+    }
+
+    .splash__ball {
+        display: none;
+    }
+}
