@@ -49,9 +49,9 @@
 - 별도 서버 없음. `@supabase/supabase-js`로만 통신한다. 클라이언트는 `src/lib/supabase.js` 하나만 만든다.
 - 환경 변수: `VITE_SUPABASE_URL`, `VITE_SUPABASE_KEY`(publishable/anon key). `.env`는 git에 올리지 않는다(`.env.example`만 올림). service_role/secret key는 프론트에 절대 넣지 않는다.
 - 회원가입(`Signup`): 이메일 중복 확인 → 비밀번호(영문+숫자 8자 이상)와 확인 → 닉네임 중복 확인 → 성별 → 나이대 → 응원팀 → `supabase.auth.signUp({ email, password })` 후 `profiles` insert. Supabase에서 "Confirm email"은 끈다.
-- 이메일 중복 확인은 `check_email_available` RPC, 닉네임은 `profiles` 조회로 확인한다 (`supabase/schema.sql`).
+- 이메일 중복 확인은 `check_email_available` RPC, 닉네임은 `profiles` 조회로 확인한다 (`supabase/schema/`).
 - 로그인: `supabase.auth.signInWithPassword({ email, password })`. "비밀번호 찾기"만 있다.
-- 테이블과 RLS: `supabase/schema.sql`. 후기 작성자(`reviewer_id`)는 다른 사람에게 내려주지 않는다 → `public_reviews` 뷰만 조회.
+- 테이블과 RLS: `supabase/schema/`. 후기 작성자(`reviewer_id`)는 다른 사람에게 내려주지 않는다 → `public_reviews` 뷰만 조회.
 - 서비스 워커에 개인정보·로그인 응답을 캐시하지 않는다. 정적 파일만 캐시.
 
 ## 아직 디자인 없는 화면
