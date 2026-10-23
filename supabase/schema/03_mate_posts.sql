@@ -1,3 +1,4 @@
+-- 메이트 모집 글 · 목록용 뷰 (실행 순서: 02 다음 · profiles, games 가 있어야 한다)
 ------------------------------------------
 -- 3. 모집 글 테이블 · 글쓰기 화면의 입력칸 하나가 컬럼 하나
 ------------------------------------------
@@ -31,8 +32,7 @@ revoke all on public.mate_posts from anon, authenticated;
 grant select on public.mate_posts to authenticated;
 
 create policy "mate_posts_select_same_team" on public.mate_posts
-  for select to authenticated
-  using (team = (select team from public.profiles where id = auth.uid()));
+  for select to authenticated using (team = (select team from public.profiles where id = auth.uid()));
 
 -- 쓰기: 방장은 나, 팀은 내 응원팀, 경기는 "내 팀이 뛰는 아직 시작 안 한 경기"만 고를 수 있다
 grant insert (team, game_id, title, seat, capacity, ages, gender, description, image_url) on public.mate_posts to authenticated;
@@ -55,8 +55,7 @@ create policy "mate_posts_insert_own" on public.mate_posts
 grant update (title, seat, capacity, ages, gender, description, image_url, status) on public.mate_posts to authenticated;
 
 create policy "mate_posts_update_host" on public.mate_posts
-  for update to authenticated
-  using (host_id = auth.uid()) with check (host_id = auth.uid());
+  for update to authenticated using (host_id = auth.uid()) with check (host_id = auth.uid());
 
 -- 삭제: 방장만 모입 삭제 가능하다.
 grant delete on public.mate_posts to authenticated;
@@ -66,7 +65,7 @@ create policy "mate_posts_delete_host" on public.mate_posts
   using (host_id = auth.uid());
 
 create view public.mate_post_list with (security_invoker = true) as
-  select
+select
     p.id,
     p.team,
     p.title,
@@ -87,9 +86,9 @@ create view public.mate_post_list with (security_invoker = true) as
     h.nickname as host_nickname,
     null::text as host_avatar_url,
     h.manner_avg as host_manner
-  from public.mate_posts p
-  join public.games g on g.id = p.game_id
-  join public.profiles h on h.id = p.host_id;
+from public.mate_posts p
+         join public.games g on g.id = p.game_id
+         join public.profiles h on h.id = p.host_id;
 
 revoke all on public.mate_post_list from anon, authenticated;
 
