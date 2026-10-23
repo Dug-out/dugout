@@ -106,13 +106,14 @@
 }
 
 .signup__team[aria-pressed='true'] {
-    border: 2px solid var(--navy-500);
+    border: 2px solid var(--team-color, var(--navy-500));
     background: var(--navy-50);
+    background: color-mix(in srgb, var(--team-color, var(--navy-500)) 8%, var(--surface));
     font-weight: 700;
-    color: var(--navy-500);
+    color: var(--team-color, var(--navy-500));
 }
 
-/* 구단 로고 자리 · 로고 이미지가 준비되면 이 안에 넣는다 */
+/* 구단 로고 */
 .signup__logo {
     display: flex;
     align-items: center;
@@ -124,14 +125,17 @@
     border: 1px dashed var(--border);
     border-radius: 50%;
     background: var(--surface);
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    color: var(--gray-500);
+}
+
+.signup__logo img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
 }
 
 .signup__team[aria-pressed='true'] .signup__logo {
-    border-color: var(--navy-500);
+    border-color: var(--team-color, var(--navy-500));
 }
 
 .signup__team:focus-visible {

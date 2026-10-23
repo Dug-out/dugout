@@ -38,6 +38,8 @@ export const RECORD = {
 export const MATE_POST = {
   MEMBERS_MIN: 2, // 본인 포함
   MEMBERS_MAX: 10,
+  TITLE_MAX: 50,
+  DESCRIPTION_MAX: 500,
   SEATS: ['응원석', '테이블석', '내야석', '외야석'], // 하나만
   AGES: ['10대', '20대', '30대', '40대 이상'], // 여러 개, 선택 안 하면 무관
   GENDERS: ['여성', '남성', '무관'], // 하나만
@@ -52,17 +54,17 @@ export const SIGNUP = {
   PASSWORD_RULE: /^(?=.*[A-Za-z])(?=.*\d).{8,}$/, // 영문 + 숫자 8자 이상
   GENDERS: ['여성', '남성'],
   AGES: ['10대', '20대', '30대', '40대 이상'],
-  // 화면 표시는 짧은 이름, 저장은 code
+  // 화면 표시는 짧은 이름, 저장은 code. 선택하면 테두리 · 글자가 color로 바뀜
   TEAMS: [
-    { code: 'LG', label: 'LG', name: 'LG 트윈스' },
-    { code: 'DOOSAN', label: '두산', name: '두산 베어스' },
-    { code: 'KIA', label: 'KIA', name: 'KIA 타이거즈' },
-    { code: 'SAMSUNG', label: '삼성', name: '삼성 라이온즈' },
-    { code: 'LOTTE', label: '롯데', name: '롯데 자이언츠' },
-    { code: 'HANWHA', label: '한화', name: '한화 이글스' },
-    { code: 'SSG', label: 'SSG', name: 'SSG 랜더스' },
-    { code: 'NC', label: 'NC', name: 'NC 다이노스' },
-    { code: 'KT', label: 'KT', name: 'KT 위즈' },
-    { code: 'KIWOOM', label: '키움', name: '키움 히어로즈' },
+    { code: 'LG', label: 'LG', name: 'LG 트윈스' , icon: '/assets/team-lg.png', color: '#C30452' },
+    { code: '두산', label: '두산', name: '두산 베어스' , icon: '/assets/team-doosan.png', color: '#131230' },
+    { code: 'KIA', label: 'KIA', name: 'KIA 타이거즈' , icon: '/assets/team-kia.png', color: '#EA0029' },
+    { code: '삼성', label: '삼성', name: '삼성 라이온즈' , icon: '/assets/team-samsung.png', color: '#0066B3' },
+    { code: '롯데', label: '롯데', name: '롯데 자이언츠' , icon: '/assets/team-lotte.png', color: '#042445' },
+    { code: '한화', label: '한화', name: '한화 이글스' , icon: '/assets/team-hanwha.png', color: '#FC4E00' },
+    { code: 'SSG', label: 'SSG', name: 'SSG 랜더스' , icon: '/assets/team-ssg.png', color: '#CE0E2D' },
+    { code: 'NC', label: 'NC', name: 'NC 다이노스' , icon: '/assets/team-nc.png', color: '#1D467D' },
+    { code: 'KT', label: 'KT', name: 'KT 위즈' , icon: '/assets/team-kt.png', color: '#000000' },
+    { code: '키움', label: '키움', name: '키움 히어로즈' , icon: '/assets/team-kiwoom.png', color: '#820024' },
   ],
 };

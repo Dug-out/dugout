@@ -7,8 +7,7 @@ export function signIn({email, password, keep}) {
 }
 
 /**
- * 가입 · 프로필(공개)과 비공개 정보(성별·나이대)는 DB 트리거가 한 번에 만든다 (supabase/schema.sql)
- * Confirm email이 꺼져 있으면 가입 직후 세션이 만들어져 로그인된 상태가 된다.
+ * 가입 · 닉네임·응원팀·성별·나이대를 함께 넘기면 DB 트리거가 profiles 행을 만든다.
  * 가입 세션은 sessionStorage에 저장한다 (탭을 닫으면 로그아웃, 다음부터는 로그인 화면에서 유지 여부를 고른다).
  */
 export function signUp({email, password, nickname, team, gender, age}) {
