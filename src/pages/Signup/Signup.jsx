@@ -27,6 +27,9 @@ function availabilityProps(kind, result) {
     return {}
 }
 
+// 구단 색을 CSS 변수로 넘긴다 (CSS 변수는 CSSProperties 타입에 없어서 캐스팅)
+const teamStyle = (color) => /** @type {import('react').CSSProperties} */ ({'--team-color': color})
+
 /** 회원가입 · 한 화면 (이메일 → 비밀번호 → 닉네임 → 성별 · 나이대 · 응원팀) */
 function Signup() {
     const navigate = useNavigate()
@@ -134,9 +137,11 @@ function Signup() {
                     <div className="signup__teams">
                         {SIGNUP.TEAMS.map((team) => (
                             <button key={team.code} type="button" className="signup__team"
-                                    aria-pressed={form.team === team.code}
+                                    style={teamStyle(team.color)} aria-pressed={form.team === team.code}
                                     onClick={() => pick('team', team.code)}>
-                                <span className="signup__logo">LOGO</span>
+                                <span className="signup__logo">
+                                    <img src={team.icon} alt="" width="240" height="240"/>
+                                </span>
                                 {team.label}
                             </button>
                         ))}
