@@ -1,0 +1,255 @@
+/* ─────────────────────────────────────────────
+   헤더 · Mate.dc.html
+   ───────────────────────────────────────────── */
+.mate-head {
+    display: flex;
+    flex-direction: column; /* [제목 줄] [날짜 버튼] [필터 줄] 세로로 */
+    gap: 14px;
+    padding: 18px 20px 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+}
+
+/* 제목 + 팀 배지 · 양쪽 끝으로 */
+.mate-head__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* "메이트 찾기" · 이 화면만 22px 굵게 (다른 탭은 Jua 24px) · 디자인 그대로 */
+.mate-head__title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* "LG 트윈스 팬만 보여요" 배지 */
+.mate-head__team {
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: var(--navy-50);
+    color: var(--navy-500);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* 날짜 버튼 · 높이 44 · 테두리 상자 */
+.mate-head__date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-input);
+    background: var(--surface);
+    color: var(--navy-500); /* 달력 아이콘 색 */
+    font-family: var(--font-base);
+    cursor: pointer;
+}
+
+.mate-head__date:disabled {
+    cursor: default; /* 팀 정보를 불러오기 전 */
+}
+
+.mate-head__date > svg:last-child {
+    color: var(--text-400); /* 오른쪽 ∨ 아이콘만 회색 */
+}
+
+.mate-head__date-label {
+    flex: 1; /* 남은 너비를 차지해 ∨ 아이콘을 오른쪽 끝으로 민다 */
+    overflow: hidden;
+    color: var(--text-900);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+    text-overflow: ellipsis; /* 너무 길면 … */
+    white-space: nowrap;
+}
+
+/* 모집 중만 보기 · 정렬 줄 */
+.mate-head__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 모집 중인 글만 보기 버튼 · 보이는 높이 32px */
+.mate-head__open-only {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text-700);
+    font-family: var(--font-base);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* 터치 영역을 44px로 넓힌다 (CLAUDE.md: 최소 터치 영역 44×44) · 보이는 크기는 그대로 */
+.mate-head__open-only::after,
+.mate-head__sort-btn::after {
+    content: '';
+    position: absolute;
+    inset: -6px 0;
+}
+
+/* 체크 상자 · 꺼짐: 회색 테두리 */
+.mate-head__check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-chip-sm);
+    background: var(--surface);
+}
+
+/* 체크 상자 · 켜짐: 남색 채움 + 흰 체크 */
+.mate-head__check--on {
+    border-color: var(--navy-500);
+    background: var(--navy-500);
+    color: var(--surface);
+}
+
+.mate-head__sort {
+    display: flex;
+    margin-right: -8px; /* 버튼 안쪽 여백만큼 당겨서 글자 끝을 화면 여백에 맞춘다 */
+}
+
+/* 최신순 · 오래된순 · 고르지 않은 쪽은 회색 */
+.mate-head__sort-btn {
+    position: relative;
+    height: 32px;
+    padding: 0 8px;
+    border: 0;
+    background: transparent;
+    color: var(--text-400);
+    font-family: var(--font-base);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* 고른 쪽은 남색 굵게 · aria-checked 값을 보고 모양을 바꾼다 */
+.mate-head__sort-btn[aria-checked='true'] {
+    color: var(--navy-500);
+    font-weight: 700;
+}
+
+.mate-head__date:focus-visible,
+.mate-head__open-only:focus-visible,
+.mate-head__sort-btn:focus-visible,
+.mate-list__fab:focus-visible {
+    outline: 2px solid var(--navy-300); /* 키보드로 이동할 때 보이는 테두리 */
+    outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────
+   목록
+   ───────────────────────────────────────────── */
+.mate-list {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 20px 16px;
+}
+
+/* 카드 목록 · <ul> 기본 점·여백을 없애고 카드 사이 10px */
+.mate-list__items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* 불러오는 중 · 실패 · 글 없음 · 디자인 Empty-mate는 위에서 32px 아래 */
+.mate-list__state {
+    margin-top: 32px;
+}
+
+/* 무한 스크롤 감지용 빈 칸 · 높이 1px이면 충분하다 */
+.mate-list__sentinel {
+    height: 1px;
+}
+
+/* "더 불러오는 중…" */
+.mate-list__more {
+    margin: 12px 0 0;
+    color: var(--text-400);
+    font-size: 13px;
+    text-align: center;
+}
+
+.mate-list__more-retry {
+    align-self: center;
+    margin-top: 8px;
+}
+
+/* ─────────────────────────────────────────────
+   모집 마감 카드 흑백 처리 · 기존 MateCard.css는 고치지 않고 여기서 덮어쓴다
+   .mate-list 안에서만 적용되므로 다른 화면의 MateCard에는 영향이 없다.
+   :has(…) = "안에 … 가 들어 있는 카드" → 모집 마감 배지가 있는 카드만 고른다
+   ───────────────────────────────────────────── */
+
+/* 대표 이미지를 흑백 느낌으로 · 디자인 filter: grayscale(.7); opacity: .75 */
+.mate-list .mate-card:has(.mate-card__status--closed) .mate-card__image img {
+    filter: grayscale(0.7);
+    opacity: 0.75;
+}
+
+/* "모집 마감" 배지 · 디자인 rgba(20,27,51,.72) = --text-900 을 72%만 진하게 */
+.mate-list .mate-card__status--closed {
+    background: color-mix(in srgb, var(--text-900) 72%, transparent);
+}
+
+/* 인원 막대와 "3/3" 숫자를 회색으로 · 디자인 #8A93B0 = --gray-500 */
+.mate-list .mate-card:has(.mate-card__status--closed) .mate-card__bar span {
+    background: var(--gray-500);
+}
+
+.mate-list .mate-card:has(.mate-card__status--closed) .mate-card__count strong {
+    color: var(--gray-500);
+}
+
+/* ─────────────────────────────────────────────
+   모집 글 쓰기 버튼 · 빨간 알약 · 높이 52
+   ───────────────────────────────────────────── */
+
+/* sticky: 목록과 함께 흐르다가 화면 아래에 닿으면 그 자리에 멈춰 떠 있다
+   bottom: 탭바 높이(약 78px) + 간격 24px · 아이폰 홈 막대가 있으면 그만큼 더 위로
+   앱 틀(탭바)이 아직 없어서 지금은 탭바 자리만큼 떠 보인다 → 앱 틀이 붙으면 디자인 위치와 맞는다 */
+.mate-list__fab-wrap {
+    position: sticky;
+    bottom: calc(102px + max(0px, env(safe-area-inset-bottom) - 22px));
+    z-index: 5;
+    display: flex;
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    margin-top: 16px;
+    pointer-events: none; /* 버튼 바깥 빈 곳은 아래 카드가 눌리도록 */
+}
+
+.mate-list__fab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 52px;
+    padding: 0 20px;
+    border-radius: var(--radius-full);
+    background: var(--red-500);
+    color: var(--surface);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--red-500) 32%, transparent); /* 디자인 rgba(230,57,70,.32) */
+    pointer-events: auto; /* 버튼 자체는 눌린다 */
+}
