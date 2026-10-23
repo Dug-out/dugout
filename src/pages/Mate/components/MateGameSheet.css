@@ -1,0 +1,105 @@
+/* 경기 선택 시트 안쪽 · 시트 테두리·핸들·여백·맨 아래 "닫기"는 기존 BottomSheet가 그린다 */
+.mate-game {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.mate-game__title {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.mate-game__desc {
+    margin: -4px 0 0;
+    color: var(--text-500);
+    font-size: 13px;
+}
+
+/* 불러오는 중 · 오류 · 경기 없음 */
+.mate-game__state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 28px 0;
+    color: var(--text-500);
+    font-size: 14px;
+    text-align: center;
+}
+
+/* 경기 목록 · 테두리 상자 radius 14 (Record-write) · 너무 길면 시트 안에서 스크롤 */
+.mate-game__list {
+    display: flex;
+    flex-direction: column;
+    max-height: 52dvh;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-btn);
+}
+
+/* 경기 한 줄 · [동그라미] [날짜·상대 / 구장·시간] */
+.mate-game__item {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 12px;
+    min-height: 60px;
+    padding: 12px 14px;
+    border: 0;
+    border-top: 1px solid var(--gray-100);
+    background: var(--surface);
+    color: var(--text-900);
+    font-family: var(--font-base);
+    text-align: left;
+    cursor: pointer;
+}
+
+.mate-game__item:first-child {
+    border-top: 0;
+}
+
+/* 고른 경기 줄 · 연한 배경 (Record-write #F4F6FC = --row-selected) */
+.mate-game__item[aria-checked='true'] {
+    background: var(--row-selected);
+}
+
+.mate-game__item:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: -2px;
+}
+
+/* 동그라미 22px · 안 고름: 회색 테두리 */
+.mate-game__radio {
+    flex: none;
+    box-sizing: border-box;
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 50%;
+    background: var(--surface);
+}
+
+/* 고름: 남색 두꺼운 테두리 (가운데 흰 점처럼 보인다) */
+.mate-game__item[aria-checked='true'] .mate-game__radio {
+    border: 6px solid var(--navy-500);
+}
+
+.mate-game__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.mate-game__main {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.mate-game__sub {
+    color: var(--text-500);
+    font-size: 12px;
+}

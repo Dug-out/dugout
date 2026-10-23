@@ -1,0 +1,253 @@
+/* 글쓰기 화면 전체 · 흰 배경 (Mate-write.dc.html) */
+.mate-write {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh; /* CLAUDE.md: 높이는 100dvh */
+    background: var(--surface);
+}
+
+/* 헤더 · 기존 Header와 같은 높이 64 (패딩 12 12 8 · 버튼 44) · ✕ + 제목 17px · 아래 구분선 */
+.mate-write__header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 12px 8px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.mate-write__close {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-input);
+    background: none;
+    color: var(--text-900);
+    cursor: pointer;
+}
+
+.mate-write__heading {
+    flex: 1;
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+/* 입력 칸들 · 칸 사이 24px · 맨 아래 버튼까지 하나의 <form> */
+.mate-write__form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 24px;
+    padding: 20px 20px 0;
+}
+
+/* 라벨 + 내용 묶음 */
+.mate-write__group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mate-write__label {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* 라벨 옆 작은 설명 '(선택)' '(본인 포함)' */
+.mate-write__label small {
+    margin-left: 4px;
+    color: var(--text-500);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+/* ─── 대표 이미지 ─── */
+.mate-write__image-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* 사진 추가 버튼 · 88×88 점선 상자 */
+.mate-write__add-photo {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 88px;
+    height: 88px;
+    border: 1.5px dashed var(--gray-300);
+    border-radius: var(--radius-card-sm);
+    background: var(--bg);
+    color: var(--text-500);
+    font-family: var(--font-base);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* 사진 올리기 준비 중 · 흐리게 */
+.mate-write__add-photo:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.mate-write__image-hint {
+    flex: 1;
+    color: var(--text-500);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* ─── 경기 선택 버튼 · 높이 56 ─── */
+.mate-write__game {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 56px;
+    padding: 6px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-input);
+    background: var(--surface);
+    color: var(--navy-500); /* 달력 아이콘 */
+    font-family: var(--font-base);
+    text-align: left;
+    cursor: pointer;
+}
+
+.mate-write__game > svg:last-child {
+    flex: none;
+    color: var(--text-400); /* 오른쪽 › */
+}
+
+.mate-write__game-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.mate-write__game-placeholder {
+    color: var(--placeholder);
+    font-size: 15px;
+}
+
+/* 고른 경기 · '10.22 (목) 18:30 · LG vs 두산' / 구장 */
+.mate-write__game-main {
+    color: var(--text-900);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.mate-write__game-sub {
+    color: var(--text-500);
+    font-size: 12px;
+}
+
+/* ─── 칩 · 줄바꿈하며 나열 ─── */
+.mate-write__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* ─── 모집 인원 · [라벨 ……… − 2명 +] ─── */
+.mate-write__count-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mate-write__stepper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-input);
+}
+
+.mate-write__stepper button {
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: transparent;
+    color: var(--navy-500);
+    font-family: var(--font-base);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* 2명 아래 · 10명 위로는 못 가게 흐리게 */
+.mate-write__stepper button:disabled {
+    color: var(--gray-300);
+    cursor: default;
+}
+
+.mate-write__count {
+    width: 40px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* ─── 소개 · 5줄 · 글자 16px (iOS 확대 방지 · 디자인은 15px) ─── */
+.mate-write__description {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-input);
+    font-family: var(--font-base);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-900);
+    resize: none; /* 사용자가 크기를 바꾸지 못하게 */
+}
+
+.mate-write__description::placeholder {
+    color: var(--placeholder);
+}
+
+.mate-write__description:focus {
+    border-color: var(--navy-500);
+    outline: none;
+}
+
+/* 소개 글자 수 '0/500' · 오른쪽 */
+.mate-write__count-text {
+    align-self: flex-end;
+    margin-top: -4px;
+    color: var(--text-400);
+    font-size: 12px;
+}
+
+.mate-write__close:focus-visible,
+.mate-write__game:focus-visible,
+.mate-write__stepper button:focus-visible,
+.mate-write__description:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: 2px;
+}
+
+/* ─── 아래 고정 버튼 · sticky (CLAUDE.md 하단 고정 버튼 규칙) ─── */
+.mate-write__bottom {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: auto -20px 0; /* 폼 좌우 여백을 넘어 화면 끝까지 흰 배경 · 내용이 짧으면 맨 아래로 */
+    padding: 12px 20px max(28px, env(safe-area-inset-bottom)); /* 아이폰 홈 막대만큼 아래 여백 */
+    background: var(--surface);
+}

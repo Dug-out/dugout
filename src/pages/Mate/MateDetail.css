@@ -1,0 +1,318 @@
+/* 상세 화면 전체 · 세로로 [헤더] [이미지] [위 영역] [본문] (Mate-detail.dc.html) */
+.mate-detail {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh; /* CLAUDE.md: 높이는 100dvh */
+    background: var(--bg);
+}
+
+/* 헤더 · 기존 Header를 쓰고 디자인처럼 아래 구분선만 없앤다 (Header.css는 고치지 않음) */
+.mate-detail .header {
+    border-bottom: 0;
+}
+
+/* 공유 버튼 · 기존 뒤로가기 버튼과 같은 44×44 */
+.mate-detail__share {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-input);
+    background: transparent;
+    color: var(--text-900);
+    cursor: pointer;
+}
+
+.mate-detail__share:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: -2px;
+}
+
+/* 대표 이미지 · 높이 220 · 가로는 화면 너비 (비율이 달라도 잘라서 채움) */
+.mate-detail__hero {
+    display: block;
+    flex: none;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+/* ─── 배지 · 제목 · 방장 (흰 영역) ─── */
+.mate-detail__top {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 20px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+}
+
+/* "모집 중" 배지 · 빨강 · radius 6 */
+.mate-detail__badge {
+    align-self: flex-start; /* 글자 길이만큼만 */
+    padding: 4px 10px;
+    border-radius: var(--radius-chip-sm);
+    background: var(--red-500);
+    color: var(--surface);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* "모집 마감" 배지 · 진한 회색 (목록 카드 마감 배지 rgba(20,27,51,.72) = --text-900 72%) */
+.mate-detail__badge--closed {
+    background: color-mix(in srgb, var(--text-900) 72%, transparent);
+}
+
+.mate-detail__title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.4;
+    overflow-wrap: anywhere; /* 띄어쓰기 없는 긴 제목도 줄바꿈 */
+}
+
+/* 방장 줄 · [사진 40] [닉네임 + 방장 / 매너 타율] */
+.mate-detail__host {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mate-detail__host img {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.mate-detail__host-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.mate-detail__host-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* 닉네임 옆 빨간 "방장" */
+.mate-detail__host-tag {
+    margin-left: 4px;
+    color: var(--red-text);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.mate-detail__host-manner {
+    color: var(--text-500);
+    font-size: 12px;
+}
+
+.mate-detail__host-manner strong {
+    color: var(--navy-500);
+}
+
+/* ─── 본문 ─── */
+.mate-detail__body {
+    display: flex;
+    flex: 1; /* 내용이 짧아도 화면 아래까지 회색 배경 */
+    flex-direction: column;
+    gap: 18px;
+    padding: 16px 20px max(28px, env(safe-area-inset-bottom)); /* 아래 버튼이 없어서 아이폰 홈 막대만큼 여백 */
+}
+
+/* 정보 카드 · 흰 카드 radius 16 */
+.mate-detail__info {
+    margin: 0;
+    padding: 4px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card-sm);
+    background: var(--surface);
+}
+
+/* 한 줄 · [아이콘] [이름] [값] · 줄 사이 연한 구분선 */
+.mate-detail__info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--navy-500); /* 아이콘 색 */
+}
+
+.mate-detail__info-row:last-child {
+    border-bottom: 0;
+}
+
+.mate-detail__info-row > svg {
+    flex: none;
+}
+
+.mate-detail__info-label {
+    flex: none;
+    width: 52px; /* 이름 칸 너비를 맞춰서 값이 세로로 줄 맞춤 */
+    color: var(--text-500);
+    font-size: 13px;
+}
+
+.mate-detail__info-value {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 12px;
+    margin: 0;
+    color: var(--text-900);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* 경기 줄 아래 구장 이름 · 다음 줄로 */
+.mate-detail__info-sub {
+    flex-basis: 100%;
+    color: var(--text-500);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* 인원 막대 · 남은 너비를 채운다 */
+.mate-detail__bar {
+    display: flex;
+    flex: 1;
+    height: 6px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: var(--gray-100);
+}
+
+.mate-detail__bar span {
+    border-radius: 6px;
+    background: var(--navy-500);
+}
+
+/* 소개 · 함께 가는 메이트 */
+.mate-detail__section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mate-detail__h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.mate-detail__description {
+    margin: 0;
+    color: var(--text-700);
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-line; /* 방장이 넣은 줄바꿈(\n)을 그대로 보여 준다 */
+    overflow-wrap: anywhere;
+}
+
+/* 함께 가는 메이트 · 사진 48 + 이름, 가로로 나열 (넘치면 다음 줄) */
+.mate-detail__members {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    margin: 2px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.mate-detail__member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 56px; /* 긴 닉네임이 옆 사람을 밀지 않게 */
+}
+
+.mate-detail__avatar {
+    position: relative;
+    display: block;
+}
+
+.mate-detail__avatar img {
+    display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+/* 나 · 남색 테두리 */
+.mate-detail__member--me .mate-detail__avatar img {
+    box-shadow: 0 0 0 2px var(--navy-500);
+}
+
+/* "나" 표시 · 사진 오른쪽 아래 */
+.mate-detail__me-tag {
+    position: absolute;
+    right: -4px;
+    bottom: -2px;
+    padding: 1px 5px;
+    border-radius: var(--radius-chip-sm);
+    background: var(--navy-500);
+    color: var(--surface);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.mate-detail__member-name {
+    max-width: 100%;
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis; /* 너무 긴 닉네임은 … */
+    white-space: nowrap;
+}
+
+.mate-detail__member--me .mate-detail__member-name {
+    color: var(--navy-500);
+    font-weight: 700;
+}
+
+/* 빈 자리 · 점선 원 "+3" */
+.mate-detail__empty-seat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    border: 1.5px dashed var(--gray-300);
+    border-radius: 50%;
+    color: var(--text-400);
+    font-size: 13px;
+}
+
+.mate-detail__member-name--empty {
+    color: var(--text-500);
+}
+
+/* "링크를 복사했어요" · 화면 아래쪽에 잠깐 떠 있는 검은 알약 */
+.mate-detail__toast {
+    position: fixed;
+    bottom: calc(40px + env(safe-area-inset-bottom));
+    left: 50%;
+    z-index: 20;
+    margin: 0;
+    padding: 10px 16px;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--text-900) 88%, transparent);
+    color: var(--surface);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    transform: translateX(-50%); /* 가운데 맞춤 */
+    animation: mate-toast-in 0.3s ease-out both; /* CLAUDE.md: 애니메이션 0.3~0.8초, 한 번만 */
+}
+
+@keyframes mate-toast-in {
+    from { opacity: 0; transform: translate(-50%, 8px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
