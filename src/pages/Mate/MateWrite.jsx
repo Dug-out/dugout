@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import { createMatePost, getMyTeam } from "../../api/mate.js";
+import { createMatePost } from "../../api/mate.js";
 import { Button, Chip, Field, Icon, InlineMessage } from "../../components";
 import { MATE_POST } from "../../constants/policy.js";
+import useMyTeam from "../../hooks/useMyTeam.js";
 import MateGameSheet from "./components/MateGameSheet.jsx";
 import { formatDay, formatTime, matchLabel } from "../../utils/mateFormat.js";
 import "./MateWrite.css";
@@ -24,9 +25,9 @@ const EMPTY_FORM = {
  * 입력 순서 (디자인 그대로): 대표 이미지(선택) → 제목 → 경기 선택 → 좌석 → 모집 인원 → 나이대 → 성별 → 소개
  * 필수: 제목 · 경기 · 좌석 (DB 규칙에서 성별 · 소개는 비워도 된다)
  *
- * 🔌 DB: DB 담당자가 만든 src/api/mate.js 를 그대로 쓴다 (이 화면은 그 파일을 고치지 않음)
- *  - getMyTeam()          내 응원팀 · 경기 이름을 "LG vs 두산"처럼 내 팀 먼저 쓰려고
- *  - getSelectableGames() 경기 선택 시트 (MateGameSheet.jsx)
+ * 🔌 DB: src/api/mate.js 의 함수를 훅으로 불러 쓴다
+ *  - useMyTeam()          내 응원팀 · 경기 이름을 "LG vs 두산"처럼 내 팀 먼저 쓰려고
+ *  - 경기 선택 시트(MateGameSheet.jsx)는 useSelectableGames() 로 경기 목록을 불러온다
  *  - createMatePost()     모집 글 올리기 · 방장과 팀은 함수가 알아서 채운다
  */
 function MateWrite() {
@@ -38,17 +39,7 @@ function MateWrite() {
   const set = (key) => (value) => setForm((prev) => ({ ...prev, [key]: value }));
 
   // 내 응원팀 · 못 불러와도 글쓰기는 할 수 있다 (경기 이름만 "홈 vs 원정" 순서로 보인다)
-  const [myTeam, setMyTeam] = useState(null);
-
-  useEffect(() => {
-    let stale = false;
-    getMyTeam()
-      .then((team) => !stale && setMyTeam(team))
-      .catch(() => {});
-    return () => {
-      stale = true;
-    };
-  }, []);
+  const myTeam = useMyTeam();
 
   const [gameSheetOpen, setGameSheetOpen] = useState(false);
 
