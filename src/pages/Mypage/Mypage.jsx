@@ -41,7 +41,7 @@ function Mypage() {
 }
 
 function MypageBody({profile}) {
-    const {nickname, age, gender, team: teamCode, manner} = profile
+    const {nickname, team: teamCode, manner} = profile
     const team = SIGNUP.TEAMS.find((t) => t.code === teamCode)
     const summary = mannerSummary(manner)
 
@@ -53,7 +53,7 @@ function MypageBody({profile}) {
                     <img className="mypage__avatar" src="/assets/profile-default.png" alt="" width="512" height="512"/>
                     <div className="mypage__who">
                         <p className="mypage__name">{nickname}</p>
-                        <p className="mypage__meta">{age} · {gender} · {team?.name}</p>
+                        <p className="mypage__meta">{team?.name}</p>
                     </div>
                     <Button as={Link} to="/profile/edit" variant="small-outline">프로필 수정</Button>
                 </div>
@@ -65,7 +65,8 @@ function MypageBody({profile}) {
                             <path d="M7 4.5c2.2 2.2 2.2 12.8 0 15M17 4.5c-2.2 2.2-2.2 12.8 0 15"/>
                         </svg>
                         매너 타율
-                        <span className="mypage__manner-more">후기 보기<Icon name="chevronRight" size={14} strokeWidth={2.2}/></span>
+                        <span className="mypage__manner-more">후기 보기<Icon name="chevronRight" size={14}
+                                                                         strokeWidth={2.2}/></span>
                     </span>
                     <span className="mypage__manner-score">
                         <span className="mypage__manner-num">{formatManner(manner)}</span>
