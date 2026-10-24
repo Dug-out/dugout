@@ -31,6 +31,7 @@
     height: 64px;
     border-radius: 50%;
     background: var(--gray-100);
+    object-fit: cover;
 }
 
 .mypage__who {

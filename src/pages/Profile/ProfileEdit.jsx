@@ -2,11 +2,12 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router'
 import {checkNickname} from '../../api/auth.js'
 import {updateMyProfile} from '../../api/profiles.js'
-import {Button, Chip, Dialog, EmptyState, Field, Header, Icon, InlineMessage, Loading, TeamPicker} from '../../components'
+import {Button, Chip, Dialog, EmptyState, Field, Header, InlineMessage, Loading, TeamPicker} from '../../components'
 import {SIGNUP} from '../../constants/policy.js'
 import useAvailability from '../../hooks/useAvailability.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
 import {availabilityProps} from '../../utils/availability.js'
+import AvatarPicker from './AvatarPicker.jsx'
 import './ProfileEdit.css'
 
 // 입력 글자 수 제한 (DB의 headline 30자, bio 300자와 같다)
@@ -55,6 +56,9 @@ function ProfileEditForm({profile}) {
     // 버튼으로 고르는 값(나이대 · 성별 · 응원팀)을 저장한다
     const pick = (key, value) => setForm((prev) => ({...prev, [key]: value}))
 
+    // 프로필 사진 변경 · undefined(그대로), Blob(새 사진), null(기본 이미지로 변경)
+    const [avatar, setAvatar] = useState(undefined)
+
     // 저장 요청 중인지 (중복 클릭 방지)
     const [busy, setBusy] = useState(false)
     // 저장 결과 안내 창 · null(안 보임), {ok: true}(성공), {ok: false, message}(실패)
@@ -78,7 +82,7 @@ function ProfileEditForm({profile}) {
         if (!canSave) return
         setBusy(true)
         try {
-            await updateMyProfile({...form, nickname, headline: form.headline.trim(), bio: form.bio.trim()})
+            await updateMyProfile({...form, nickname, headline: form.headline.trim(), bio: form.bio.trim(), avatar})
             // 성공 안내 창
             setResult({ok: true})
         } catch (err) {
@@ -96,13 +100,8 @@ function ProfileEditForm({profile}) {
 
     return (
         <form className="profile-edit__form" onSubmit={handleSubmit}>
-            {/* 프로필 사진 · 사진 변경은 아직 연결하지 않았다 (Storage 준비 후) */}
-            <div className="profile-edit__photo">
-                <img src="/assets/profile-default.png" alt="프로필 사진" width="512" height="512"/>
-                <button type="button" aria-label="사진 변경">
-                    <Icon name="camera" size={18}/>
-                </button>
-            </div>
+            {/* 프로필 사진 · 고르거나 기본 이미지로 바꾸면 [저장하기]에서 프로필과 함께 저장된다 */}
+            <AvatarPicker currentUrl={profile.avatar} onChange={setAvatar}/>
 
             {/* 닉네임 · 바꿨을 때만 사용 가능 여부를 보여 준다 */}
             <Field id="profile-nick" label="닉네임" type="text" autoComplete="nickname"

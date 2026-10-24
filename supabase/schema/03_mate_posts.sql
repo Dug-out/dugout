@@ -84,7 +84,7 @@ select
     g.stadium as stadium_name,
     p.host_id,
     h.nickname as host_nickname,
-    null::text as host_avatar_url,
+    h.avatar_url as host_avatar_url,
     h.manner_avg as host_manner
 from public.mate_posts p
          join public.games g on g.id = p.game_id

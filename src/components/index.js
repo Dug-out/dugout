@@ -1,3 +1,4 @@
+export { default as AvatarCropper } from './AvatarCropper/AvatarCropper.jsx'
 export { default as BottomSheet } from './BottomSheet/BottomSheet.jsx'
 export { default as BottomSheetItem } from './BottomSheet/BottomSheetItem.jsx'
 export { default as Button } from './Button/Button.jsx'

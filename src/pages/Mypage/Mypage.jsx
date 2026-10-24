@@ -45,7 +45,7 @@ function Mypage() {
 
 /** 불러온 프로필로 그리는 본문 */
 function MypageBody({profile}) {
-    const {nickname, team: teamCode, manner} = profile
+    const {nickname, team: teamCode, avatar, manner} = profile
     // 응원팀 코드로 팀 이름('LG 트윈스' 등)을 찾는다
     const team = SIGNUP.TEAMS.find((t) => t.code === teamCode)
     // 매너 타율 카드에 쓸 값 · 구간 이름, 막대 길이, 다음 구간까지 안내
@@ -57,7 +57,7 @@ function MypageBody({profile}) {
             <section className="mypage__card mypage__card--profile">
                 {/* 사진 · 닉네임 · 응원팀 · 프로필 수정 */}
                 <div className="mypage__profile">
-                    <img className="mypage__avatar" src="/assets/profile-default.png" alt="" width="512" height="512"/>
+                    <img className="mypage__avatar" src={avatar ?? '/assets/profile-default.png'} alt="" width="512" height="512"/>
                     <div className="mypage__who">
                         <p className="mypage__name">{nickname}</p>
                         <p className="mypage__meta">{team?.name}</p>
