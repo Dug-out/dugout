@@ -24,13 +24,13 @@
     cursor: pointer;
 }
 
-/* 고른 사진 미리보기 · 88×88 */
+/* 고른 사진 미리보기 · 높이 88, 가로는 대표 이미지 비율(1200×680)에 맞춘다 */
 .mate-image__preview {
     position: relative;
     display: flex;
     flex: none;
-    width: 88px;
     height: 88px;
+    aspect-ratio: 1200 / 680;
     overflow: hidden;
     border-radius: var(--radius-card-sm);
 }

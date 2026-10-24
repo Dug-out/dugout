@@ -79,7 +79,7 @@ function MateImagePicker({onChange}) {
             <div className="mate-image">
                 {preview ? (
                     <span className="mate-image__preview">
-                        <img src={preview} alt="선택한 대표 이미지" width="88" height="88"/>
+                        <img src={preview} alt="선택한 대표 이미지" width="1200" height="680"/>
                         <button type="button" className="mate-image__remove" aria-label="대표 이미지 삭제"
                                 onClick={remove}>
                             <Icon name="close" size={14}/>
