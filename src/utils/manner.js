@@ -1,4 +1,4 @@
-import {MANNER} from '../../../constants/policy.js'
+import {MANNER} from '../constants/policy.js'
 
 // 매너 타율 .389 형태로 표시
 export const formatManner = (value) => value.toFixed(3).replace(/^0/, '')

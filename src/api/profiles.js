@@ -19,22 +19,26 @@ function uploadErrorMessage({message = ''}) {
 }
 
 /**
- * 내 프로필 · 마이페이지와 프로필 수정 화면이 쓴다
+ * 프로필 한 명 · 로그인한 사람은 누구의 프로필이든 볼 수 있다
+ * @param {string} id 보려는 사람의 id
  * @returns {Promise<{nickname: string, team: string, gender: string, age: string, headline: string, bio: string, avatar: string | null, manner: number}>}
  *  avatar: 프로필 사진 주소 · 사진을 정하지 않았으면 null (화면이 기본 이미지를 보여 준다)
  */
-export async function getMyProfile() {
-    const {data: {session}} = await supabase.auth.getSession()
-    const {id: userId} = session.user
-
+export async function getProfile(id) {
     const {data, error} = await supabase
         .from('profiles')
         .select('nickname, team, gender, age_group, headline, bio, avatar_url, manner_avg')
-        .eq('id', userId)
+        .eq('id', id)
         .single()
     if (error) throw error
     const {nickname, team, gender, age_group: age, headline, bio, avatar_url: avatar, manner_avg: manner} = data
     return {nickname, team, gender, age, headline, bio, avatar, manner: Number(manner)}
+}
+
+/** 내 프로필 · 마이페이지와 프로필 수정 화면이 쓴다 */
+export async function getMyProfile() {
+    const {data: {session}} = await supabase.auth.getSession()
+    return getProfile(session.user.id)
 }
 
 /**

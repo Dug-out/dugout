@@ -10,6 +10,7 @@ import Mypage from './pages/Mypage/Mypage.jsx'
 import MyPosts from './pages/MyPosts/MyPosts.jsx'
 import Record from './pages/Record/Record.jsx'
 import ReviewList from './pages/ReviewList/ReviewList.jsx'
+import ProfileView from './pages/Profile/ProfileView.jsx'
 import ProfileEdit from './pages/Profile/ProfileEdit.jsx'
 import Splash from './pages/Splash/Splash.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
@@ -51,6 +52,7 @@ function App() {
             <Route path="/my/posts" element={<MyPosts/>}/>
             <Route path="/my/manner" element={<MannerReviews/>}/>
             <Route path="/my/reviews" element={<ReviewList/>}/>
+            <Route path="/profile/:id" element={<ProfileView/>}/>
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout/>}>
                 <Route path="/home" element={<Placeholder title="홈"/>}/>

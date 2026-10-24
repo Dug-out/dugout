@@ -2,7 +2,7 @@ import {Link} from 'react-router'
 import {Button, EmptyState, Header, Icon, Loading} from '../../components'
 import {SIGNUP} from '../../constants/policy.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
-import {formatManner, mannerSummary} from './utils/manner.js'
+import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './Mypage.css'
 
 // 내 활동 메뉴 · 눌렀을 때 이동할 화면
@@ -54,6 +54,7 @@ function Mypage() {
 /** 불러온 프로필로 그리는 본문 */
 function MypageBody({profile}) {
     const {nickname, team: teamCode, avatar, manner} = profile
+
     // 응원팀 코드로 팀 이름('LG 트윈스' 등)을 찾는다
     const team = SIGNUP.TEAMS.find((t) => t.code === teamCode)
     // 매너 타율 카드에 쓸 값 · 구간 이름, 막대 길이, 다음 구간까지 안내
