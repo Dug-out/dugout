@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react'
-import {AvatarCropper, BottomSheet, BottomSheetItem, Icon, InlineMessage} from '../../components'
+import {BottomSheet, BottomSheetItem, Icon, ImageCropper, InlineMessage} from '../../components'
 import './AvatarPicker.css'
 
 const DEFAULT_AVATAR = '/assets/profile-default.png'
@@ -102,7 +102,7 @@ function AvatarPicker({currentUrl, onChange}) {
             </BottomSheet>
 
             {/* 정사각형으로 자르는 화면 */}
-            {cropSrc && <AvatarCropper src={cropSrc} onDone={handleCropped} onCancel={closeCropper}/>}
+            {cropSrc && <ImageCropper src={cropSrc} onDone={handleCropped} onCancel={closeCropper} shape="round" label="프로필 사진 자르기"/>}
         </div>
     )
 }
