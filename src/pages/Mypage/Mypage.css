@@ -107,6 +107,7 @@
     margin-left: auto;
     font-weight: 600;
     color: var(--surface);
+    text-decoration: none;
 }
 
 /* 구간 이름이 점수 숫자의 세로 가운데에 오도록 맞춘다 */
@@ -175,6 +176,7 @@
     font-weight: 500;
     text-align: left;
     color: var(--text-900);
+    text-decoration: none;
     cursor: pointer;
 }
 
