@@ -27,3 +27,22 @@ export async function cropToBlob(src, area, size = 512) {
         canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('사진을 만들 수 없어요'))), 'image/jpeg', 0.9)
     })
 }
+
+/**
+ * 사진과 가장 긴 변의 최대 길이 → 비율을 지켜 줄인 JPEG 파일(Blob) · 이미 작으면 크기는 그대로 둔다
+ * @param {string} src 원본 사진 주소
+ * @param {number} maxSide 가장 긴 변의 최대 길이 (px)
+ * @returns {Promise<Blob>}
+ */
+export async function resizeToBlob(src, maxSide = 1280) {
+    const image = await loadImage(src)
+    const scale = Math.min(1, maxSide / Math.max(image.width, image.height))
+    const canvas = document.createElement('canvas')
+    canvas.width = Math.round(image.width * scale)
+    canvas.height = Math.round(image.height * scale)
+    canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height)
+
+    return new Promise((resolve, reject) => {
+        canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('사진을 만들 수 없어요'))), 'image/jpeg', 0.85)
+    })
+}
