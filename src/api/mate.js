@@ -67,6 +67,6 @@ export async function createMatePost({gameId, title, seat, capacity, ages = [], 
         })
         .select('id')
         .single()
-    if (error) throw new Error(createErrorMessage(error), {cause: error})
+    if (error) throw Object.assign(new Error(createErrorMessage(error)), {cause: error})
     return {id: data.id}
 }
