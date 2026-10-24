@@ -70,6 +70,13 @@
     font-weight: 400;
 }
 
+/* 대표 이미지 아래 안내 */
+.mate-write__image-hint {
+    color: var(--text-500);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
 /* ─── 경기 선택 버튼 · 높이 56 ─── */
 .mate-write__game {
     display: flex;

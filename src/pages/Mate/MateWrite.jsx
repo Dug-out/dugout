@@ -1,12 +1,11 @@
 import {useState} from "react";
 import {useNavigate} from "react-router";
 import {createMatePost} from "../../api/mate.js";
-import {Button, Chip, Field, Icon, InlineMessage} from "../../components";
+import {Button, Chip, Field, Icon, InlineMessage, PhotoPicker} from "../../components";
 import {MATE_POST} from "../../constants/policy.js";
 import useGoBack from "../../hooks/useGoBack.js";
 import useMyTeam from "../../hooks/useMyTeam.js";
 import MateGameSheet from "./components/MateGameSheet.jsx";
-import MateImagePicker from "./components/MateImagePicker.jsx";
 import {formatDay, formatTime, matchLabel} from "../../utils/mateFormat.js";
 import "./MateWrite.css";
 
@@ -94,7 +93,17 @@ function MateWrite() {
             {/* noValidate: 브라우저 기본 검사 말풍선 대신 화면 안내를 쓴다 */}
             <form className="mate-write__form" onSubmit={submit} noValidate>
                 {/* 대표 이미지 (선택) · 올릴 때 함께 저장된다 */}
-                <MateImagePicker onChange={set("image")}/>
+                <div className="mate-write__group">
+                    <span className="mate-write__label">
+                        대표 이미지 <small>(선택)</small>
+                    </span>
+                    <PhotoPicker shape="rect" defaultImage={MATE_POST.DEFAULT_IMAGE} label="대표 이미지"
+                                 aspect={MATE_POST.IMAGE_WIDTH / MATE_POST.IMAGE_HEIGHT}
+                                 outputWidth={MATE_POST.IMAGE_WIDTH} fillWidth onChange={set("image")}/>
+                    <span className="mate-write__image-hint">
+                        {form.image ? "목록과 상세 위에 이 사진이 보여요." : "사진을 올리면 모집 글이 더 눈에 띄어요."}
+                    </span>
+                </div>
 
                 {/* 제목 · 50자까지 */}
                 <Field

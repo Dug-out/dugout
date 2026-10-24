@@ -1,19 +1,36 @@
 import {useEffect, useRef, useState} from 'react'
-import {BottomSheet, BottomSheetItem, Icon, ImageCropper, InlineMessage} from '../../components'
-import './AvatarPicker.css'
+import BottomSheet from '../BottomSheet/BottomSheet.jsx'
+import BottomSheetItem from '../BottomSheet/BottomSheetItem.jsx'
+import Icon from '../Icon/Icon.jsx'
+import ImageCropper from '../ImageCropper/ImageCropper.jsx'
+import InlineMessage from '../InlineMessage/InlineMessage.jsx'
+import './PhotoPicker.css'
 
-const DEFAULT_AVATAR = '/assets/profile-default.png'
 const ACCEPT = ['image/jpeg', 'image/png', 'image/webp']
-const SOURCE_MAX_BYTES = 15 * 1024 * 1024 // 고르는 원본 사진의 최대 용량 (자른 뒤에는 훨씬 작아진다)
+// 고르는 원본 사진의 최대 용량 (자른 뒤에는 훨씬 작아진다)
+const SOURCE_MAX_BYTES = 15 * 1024 * 1024
 
 /**
- * 프로필 사진 바꾸기 · 사진을 누르면 "사진 선택하기 / 기본 이미지로 변경"이 나오고,
- * 사진을 고르면 정사각형으로 자르는 화면이 뜬다. 실제 저장은 프로필 [저장하기]에서 한다.
- * @param {{currentUrl: string | null, onChange: (avatar: Blob | null) => void}} props
- *  currentUrl: 지금 저장된 사진 주소 (없으면 null)
+ * 사진 고르기 · 기본 이미지를 누르면 "사진 선택하기 / 기본 이미지로 변경"이 나오고,
+ * 사진을 고르면 정해진 비율로 자르는 화면이 뜬다. 실제 저장은 이 화면을 쓰는 쪽에서 한다.
+ * @param {{defaultImage: string, onChange: (photo: Blob | null) => void, currentUrl?: string | null,
+ *          shape?: 'round' | 'rect', aspect?: number, outputWidth?: number, fillWidth?: boolean, label?: string}} props
+ *  defaultImage: 사진을 정하지 않았을 때 보이는 기본 이미지 / currentUrl: 지금 저장된 사진 주소 (없으면 null)
  *  onChange: 새 사진을 자르면 Blob, 기본 이미지로 바꾸면 null 을 알려 준다
+ *  shape: round 면 동그라미(104px), rect 면 가로를 가득 채우는 직사각형 / aspect: 가로 ÷ 세로 (기본 1)
+ *  outputWidth: 자른 사진의 가로 길이 px (기본 512) / fillWidth: 자르는 틀이 가로를 가득 채울지 (rect 용)
+ *  label: 시트와 자르기 화면의 이름 (예: '프로필 사진')
  */
-function AvatarPicker({currentUrl, onChange}) {
+function PhotoPicker({
+                         defaultImage,
+                         onChange,
+                         currentUrl = null,
+                         shape = 'round',
+                         aspect = 1,
+                         outputWidth = 512,
+                         fillWidth = false,
+                         label = '사진',
+                     }) {
     // 지금 화면에 보여 주는 사진 주소 · null 이면 기본 이미지
     const [shown, setShown] = useState(currentUrl)
     // "사진 선택하기 / 기본 이미지로 변경" 시트가 열려 있는지
@@ -81,30 +98,35 @@ function AvatarPicker({currentUrl, onChange}) {
     }
 
     return (
-        <div className="avatar-picker">
+        <div className={`photo-picker photo-picker--${shape}`}>
             {/* 사진 · 누르면 시트가 열린다 */}
-            <button type="button" className="avatar-picker__photo" aria-label="프로필 사진 변경"
+            <button type="button" className="photo-picker__photo" aria-label={`${label} 변경`}
                     onClick={() => setSheetOpen(true)}>
-                <img src={shown ?? DEFAULT_AVATAR} alt="" width="512" height="512"/>
-                <span className="avatar-picker__camera" aria-hidden="true">
+                <img src={shown ?? defaultImage} alt="" width={outputWidth} height={Math.round(outputWidth / aspect)}
+                     style={{aspectRatio: aspect}}/>
+                <span className="photo-picker__camera" aria-hidden="true">
                     <Icon name="camera" size={18}/>
                 </span>
             </button>
             {message && <InlineMessage tone="error">{message}</InlineMessage>}
 
-            {/* 파일 선택 입력 · 화면에는 보이지 않고 위 시트에서 대신 연다 */}
+            {/* 파일 선택 입력 · 화면에는 보이지 않고 아래 시트에서 대신 연다 */}
             <input ref={inputRef} type="file" accept={ACCEPT.join(',')} hidden onChange={handleFile}/>
 
             {/* 사진 선택하기 / 기본 이미지로 변경 (사진이 이미 기본이면 뒤쪽은 숨긴다) */}
-            <BottomSheet open={sheetOpen} onClose={() => setSheetOpen(false)} label="프로필 사진">
+            <BottomSheet open={sheetOpen} onClose={() => setSheetOpen(false)} label={label}>
                 <BottomSheetItem onClick={choosePhoto}>사진 선택하기</BottomSheetItem>
                 {shown !== null && <BottomSheetItem onClick={resetToDefault}>기본 이미지로 변경</BottomSheetItem>}
             </BottomSheet>
 
-            {/* 정사각형으로 자르는 화면 */}
-            {cropSrc && <ImageCropper src={cropSrc} onDone={handleCropped} onCancel={closeCropper} shape="round" label="프로필 사진 자르기"/>}
+            {/* 정해진 비율로 자르는 화면 */}
+            {cropSrc && (
+                <ImageCropper src={cropSrc} onDone={handleCropped} onCancel={closeCropper} aspect={aspect}
+                              shape={shape === 'round' ? 'round' : 'rect'} outputWidth={outputWidth}
+                              fillWidth={fillWidth} label={`${label} 자르기`}/>
+            )}
         </div>
     )
 }
 
-export default AvatarPicker
+export default PhotoPicker

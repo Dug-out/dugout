@@ -1,0 +1,78 @@
+.photo-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 프로필 사진처럼 동그란 사진은 가운데에 둔다 */
+.photo-picker--round {
+    align-items: center;
+}
+
+/* 사진 · 누르는 버튼 */
+.photo-picker__photo {
+    position: relative;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.photo-picker--round .photo-picker__photo {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+}
+
+.photo-picker--rect .photo-picker__photo {
+    display: block;
+    width: 100%;
+    border-radius: var(--radius-card-sm);
+}
+
+.photo-picker__photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.photo-picker--round .photo-picker__photo img {
+    height: 104px;
+    border-radius: 50%;
+}
+
+.photo-picker--rect .photo-picker__photo img {
+    border-radius: var(--radius-card-sm);
+}
+
+/* 카메라 모양 배지 */
+.photo-picker__camera {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--surface);
+    border-radius: 50%;
+    background: var(--navy-500);
+    color: var(--surface);
+}
+
+/* 동그란 사진은 모서리 밖으로, 직사각형은 안쪽 모서리에 */
+.photo-picker--round .photo-picker__camera {
+    right: -6px;
+    bottom: -6px;
+}
+
+.photo-picker--rect .photo-picker__camera {
+    right: 10px;
+    bottom: 10px;
+}
+
+.photo-picker__photo:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: 4px;
+}
