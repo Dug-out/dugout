@@ -6,6 +6,7 @@ import {MATE_POST} from "../../constants/policy.js";
 import useGoBack from "../../hooks/useGoBack.js";
 import useMyTeam from "../../hooks/useMyTeam.js";
 import MateGameSheet from "./components/MateGameSheet.jsx";
+import MateImagePicker from "./components/MateImagePicker.jsx";
 import {formatDay, formatTime, matchLabel} from "../../utils/mateFormat.js";
 import "./MateWrite.css";
 
@@ -18,6 +19,7 @@ const EMPTY_FORM = {
     ages: [],
     gender: "",
     description: "",
+    image: null,
 };
 
 /** 모집 글 쓰기 · 제목, 경기, 좌석이 필수이고 나머지는 비워도 된다 */
@@ -70,7 +72,7 @@ function MateWrite() {
                 ages: form.ages,
                 gender: form.gender || "무관",
                 description: form.description,
-                imageUrl: null, // 사진 올리기 함수가 아직 없어서 기본 이미지로 저장
+                image: form.image,
             });
             navigate(`/mate/${id}`, {replace: true, state: {created: true}});
         } catch (failure) {
@@ -91,23 +93,8 @@ function MateWrite() {
 
             {/* noValidate: 브라우저 기본 검사 말풍선 대신 화면 안내를 쓴다 */}
             <form className="mate-write__form" onSubmit={submit} noValidate>
-                {/* 대표 이미지 (선택) · 사진 올리기가 준비되면 연결한다 */}
-                <div className="mate-write__group">
-          <span className="mate-write__label">
-            대표 이미지 <small>(선택)</small>
-          </span>
-                    <div className="mate-write__image-row">
-                        <button type="button" className="mate-write__add-photo" disabled>
-                            <Icon name="camera" size={24} strokeWidth={1.8}/>
-                            사진 추가
-                        </button>
-                        <span className="mate-write__image-hint">
-              사진 올리기는 준비 중이에요.
-              <br/>
-              지금은 기본 이미지로 올라가요.
-            </span>
-                    </div>
-                </div>
+                {/* 대표 이미지 (선택) · 올릴 때 함께 저장된다 */}
+                <MateImagePicker onChange={set("image")}/>
 
                 {/* 제목 · 50자까지 */}
                 <Field

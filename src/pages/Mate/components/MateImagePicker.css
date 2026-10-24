@@ -1,0 +1,84 @@
+.mate-image {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* 사진 추가 버튼 · 88×88 점선 상자 */
+.mate-image__add {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 88px;
+    height: 88px;
+    border: 2px dashed var(--gray-300);
+    border-radius: var(--radius-card-sm);
+    background: var(--bg);
+    color: var(--text-500);
+    font-family: var(--font-base), sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.mate-image__add:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* 고른 사진 미리보기 · 88×88 */
+.mate-image__preview {
+    position: relative;
+    display: flex;
+    flex: none;
+    width: 88px;
+    height: 88px;
+    overflow: hidden;
+    border-radius: var(--radius-card-sm);
+}
+
+.mate-image__preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 삭제(✕) · 눈에 보이는 크기는 28px, 눌리는 영역은 44px */
+.mate-image__remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    width: 44px;
+    height: 44px;
+    padding: 4px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.mate-image__remove > svg {
+    box-sizing: content-box;
+    padding: 7px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--navy-700) 70%, transparent);
+    color: var(--surface);
+}
+
+.mate-image__remove:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: -2px;
+}
+
+.mate-image__hint {
+    flex: 1;
+    color: var(--text-500);
+    font-size: 13px;
+    line-height: 1.5;
+}
