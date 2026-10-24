@@ -22,7 +22,9 @@ export async function getSelectableGames() {
         .gt('game_at', new Date().toISOString())
         .order('game_at')
     if (error) throw error
-    return data.map(({id, game_at: gameAt, home_team: home, away_team: away, stadium}) => ({
+    // 테이블 타입을 만들어 두지 않아서 IDE 가 data 의 모양을 몰라 경고하므로, 받은 줄의 모양을 알려 준다
+    const rows = /** @type {{id: number, game_at: string, home_team: string, away_team: string, stadium: string}[]} */ (data)
+    return rows.map(({id, game_at: gameAt, home_team: home, away_team: away, stadium}) => ({
         id, gameAt, home, away, stadium,
     }))
 }
