@@ -39,8 +39,10 @@
     color: var(--text-900);
 }
 
+/* 안내 글자는 입력한 글자(16px)보다 작게 · 입력칸 자체의 16px 은 그대로라 iOS 에서 확대되지 않는다 */
 .field__input::placeholder {
     color: var(--placeholder);
+    font-size: 14px;
 }
 
 .field__input:focus-visible {
