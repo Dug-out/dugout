@@ -1,0 +1,161 @@
+.profile-view {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 100dvh;
+    background: var(--bg);
+}
+
+/* ── 위쪽 프로필 ── */
+.profile-view__top {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 24px 22px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    text-align: center;
+}
+
+.profile-view__avatar {
+    display: block;
+    width: 96px;
+    height: 96px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--gray-100);
+    object-fit: cover;
+}
+
+.profile-view__name {
+    margin: 4px 0 0;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.profile-view__meta {
+    font-size: 13px;
+    color: var(--text-500);
+}
+
+.profile-view__headline {
+    margin: 2px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-700);
+}
+
+.profile-view__manner {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    margin-top: 6px;
+    padding: 0 14px;
+    border-radius: var(--radius-full);
+    background: var(--gray-100);
+}
+
+.profile-view__ball circle {
+    fill: var(--surface);
+}
+
+.profile-view__ball path {
+    fill: none;
+    stroke: var(--red-500);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+}
+
+.profile-view__manner-label {
+    font-size: 13px;
+    color: var(--text-500);
+}
+
+.profile-view__manner-num {
+    font-family: var(--font-number), serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--navy-500);
+}
+
+.profile-view__manner-tier {
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+    background: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--navy-500);
+}
+
+/* ── 본문 ── */
+.profile-view__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px 16px 28px;
+}
+
+.profile-view__section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-view__title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.profile-view__bio {
+    margin: 0;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card-sm);
+    background: var(--surface);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-700);
+    white-space: pre-wrap;
+}
+
+.profile-view__card {
+    padding: 18px 18px 4px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+}
+
+.profile-view__head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.profile-view__card-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.profile-view__count {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-400);
+}
+
+.profile-view__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 14px;
+    padding: 22px 0 24px;
+    border-top: 1px solid var(--divider);
+    font-size: 13px;
+    color: var(--text-400);
+}
