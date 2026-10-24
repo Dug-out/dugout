@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
-import { Navigate, Route, Routes, useLocation } from 'react-router'
-import { onAuthChange } from './api/auth.js'
+import {useEffect, useState} from 'react'
+import {Navigate, Route, Routes, useLocation} from 'react-router'
+import {onAuthChange} from './api/auth.js'
 import Login from './pages/Login/Login.jsx'
 import Signup from './pages/Signup/Signup.jsx'
 import SignupDone from './pages/Signup/SignupDone.jsx'
 import Splash from './pages/Splash/Splash.jsx'
-// [메이트 추가] 모집 글 쓰기 · 상세(지금은 자리 + 완료 창) 화면
 import MateWrite from './pages/Mate/MateWrite.jsx'
 import MateDetail from './pages/Mate/MateDetail.jsx'
 
@@ -19,9 +18,16 @@ function Placeholder({ title }) {
 
 function App() {
     const { pathname } = useLocation()
-    const [signedIn, setSignedIn] = useState(null) // null: 저장된 세션 확인 중
 
-    useEffect(() => onAuthChange((session) => setSignedIn(!!session)), [])
+    // null: 저장된 세션 확인 중, true: 로그인된 상태, false: 로그인되지 않은 상태
+    const [signedIn, setSignedIn] = useState(null)
+
+    // 앱이 뜰 때 한 번, 로그인 상태가 바뀔 때마다 알려 달라고 등록한다
+    useEffect(() => {
+        // 세션이 있으면 true, 없으면 false
+        // 앱이 사라질 때 React가 불러서 구독을 끊는다
+        return onAuthChange((session) => setSignedIn(!!session))
+    }, [])
 
     if (!PUBLIC_PATHS.includes(pathname)) {
         if (signedIn === null) return null
@@ -36,9 +42,7 @@ function App() {
             <Route path="/signup/done" element={<SignupDone/>}/>
             <Route path="/profile/edit" element={<Placeholder title="자기소개 작성"/>}/>
             <Route path="/home" element={<Placeholder title="홈"/>}/>
-            {/* [메이트 추가] 모집 글 쓰기 · PUBLIC_PATHS에 없으므로 로그인해야 들어올 수 있다 */}
             <Route path="/mate/write" element={<MateWrite/>}/>
-            {/* [메이트 추가] 모집 글 상세 · 지금은 "준비 중" 자리 + 글 올리기 완료 창 (상세 화면은 MateDetail.jsx를 채운다) */}
             <Route path="/mate/:id" element={<MateDetail/>}/>
         </Routes>
     )

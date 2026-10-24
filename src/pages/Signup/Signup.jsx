@@ -32,33 +32,44 @@ const teamStyle = (color) => /** @type {import('react').CSSProperties} */ ({'--t
 
 /** 회원가입 · 한 화면 (이메일 → 비밀번호 → 닉네임 → 성별 · 나이대 · 응원팀) */
 function Signup() {
+    // 가입에 성공하면 완료 화면으로 이동할 때 쓴다
     const navigate = useNavigate()
 
+    // 입력한 값 · gender, age, team 은 아직 고르지 않은면 null 이다
     const [form, setForm] = useState({
         email: '', password: '', passwordConfirm: '', nickname: '', gender: null, age: null, team: null,
     })
 
+    // 글자 입력칸마다 쓰는 변경 함수 · set('email') 은 email 칸이 바뀔 때 form.email 을 갱신한다
     const set = (key) => (e) => setForm((prev) => ({...prev, [key]: e.target.value}))
+
+    // 버튼으로 고르는 값(성별 · 나이대 · 응원팀)을 저장한다
     const pick = (key, value) => setForm((prev) => ({...prev, [key]: value}))
 
+    // 가입 요청 중인지 (중복 클릭 방지)
     const [busy, setBusy] = useState(false)
+    // 버튼 위에 보여줄 오류 문구
     const [error, setError] = useState('')
 
+    // 앞뒤 공백을 뺀 값으로 검사하고 가입한다
     const email = form.email.trim()
     const nickname = form.nickname.trim()
 
+    // 형식 검사 (이메일 형식, 닉네임 길이)
     const emailValid = SIGNUP.EMAIL_RULE.test(email)
     const nicknameValid = nickname.length >= SIGNUP.NICKNAME_MIN && nickname.length <= SIGNUP.NICKNAME_MAX
 
+    // 형식이 맞으면 입력을 멈추고 0.5초 뒤 DB에 중복을 물어본다 · 결과: idle | checking | ok | taken | failed
+    const passwordValid = SIGNUP.PASSWORD_RULE.test(form.password)
+    const passwordMatch = form.passwordConfirm !== '' && form.password === form.passwordConfirm
     const emailResult = useAvailability(email, emailValid, checkEmail)
     const nicknameResult = useAvailability(nickname, nicknameValid, checkNickname)
 
-    const passwordValid = SIGNUP.PASSWORD_RULE.test(form.password)
-    const passwordMatch = form.passwordConfirm !== '' && form.password === form.passwordConfirm
-
+    // 모든 칸이 통과하고 요청 중이 아닐 때만 가입 버튼이 켜진다
     const canSubmit = emailResult === 'ok' && passwordValid && passwordMatch && nicknameResult === 'ok'
         && form.gender && form.age && form.team && !busy
 
+    // 가입 버튼(또는 엔터)을 눌렀을 때 · 가입을 요청하고, 성공하면 완료 화면으로 이동하고 실패하면 오류 문구를 보여 준다
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!canSubmit) return
@@ -89,6 +100,7 @@ function Signup() {
                     <img src="/assets/pose-hi.png" alt="손을 흔드는 덕아웃 캐릭터" width="520" height="520"/>
                 </div>
 
+                {/* 이메일 · 입력을 멈추면 가입된 이메일인지 자동으로 확인한다 */}
                 <Field id="signup-email" label="이메일" type="email" autoComplete="email" inputMode="email"
                        value={form.email} onChange={set('email')}
                        {...availabilityProps('email', emailResult)}/>
@@ -97,17 +109,20 @@ function Signup() {
                        value={form.password} onChange={set('password')}
                        hint="영문과 숫자를 섞어 8자 이상"/>
 
+                {/* 비밀번호 확인 · 비어 있으면 아무 문구도 없고, 입력하면 일치 여부를 보여 준다 */}
                 <Field id="signup-pw2" label="비밀번호 확인" type="password" autoComplete="new-password"
                        value={form.passwordConfirm} onChange={set('passwordConfirm')}
                        {...(form.passwordConfirm === '' ? {} : passwordMatch
                            ? {status: 'ok', message: '비밀번호가 일치해요'}
                            : {status: 'error', message: '비밀번호가 일치하지 않아요'})}/>
 
+                {/* 닉네임 · 입력을 멈추면 사용 중인 닉네임인지 자동으로 확인한다 */}
                 <Field id="signup-nick" label="닉네임" type="text" autoComplete="nickname"
                        maxLength={SIGNUP.NICKNAME_MAX} value={form.nickname} onChange={set('nickname')}
                        hint={`${SIGNUP.NICKNAME_MIN}~${SIGNUP.NICKNAME_MAX}자 · 메이트에게 보여지는 이름이에요`}
                        {...availabilityProps('nickname', nicknameResult)}/>
 
+                {/* 성별 · 하나만 고른다 */}
                 <fieldset className="signup__group">
                     <legend>성별</legend>
                     <div className="signup__genders">
@@ -120,6 +135,7 @@ function Signup() {
                     </div>
                 </fieldset>
 
+                {/* 나이대 · 하나만 고른다 */}
                 <fieldset className="signup__group">
                     <legend>나이대</legend>
                     <div className="signup__ages">
@@ -132,6 +148,7 @@ function Signup() {
                     </div>
                 </fieldset>
 
+                {/* 응원팀 · 고른 구단은 그 구단 색(--team-color)으로 강조된다 */}
                 <fieldset className="signup__group">
                     <legend>응원팀</legend>
                     <div className="signup__teams">
@@ -149,6 +166,7 @@ function Signup() {
                 </fieldset>
 
                 <div className="signup__footer">
+                    {/* 가입 실패 문구 */}
                     {error && <InlineMessage tone="error">{error}</InlineMessage>}
                     <Button type="submit" block disabled={!canSubmit}>
                         {busy ? '가입하는 중…' : '가입하고 시작하기'}

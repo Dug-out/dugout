@@ -11,23 +11,32 @@ function signInErrorMessage(error) {
     return '로그인하지 못했어요. 잠시 후 다시 시도해 주세요'
 }
 
-/** 로그인 · 이메일 + 비밀번호 */
+/** 로그인 s 이메일 + 비밀번호 */
 function Login() {
+    // 로그인에 성공하면 화면을 이동할 때 쓴다
     const navigate = useNavigate()
 
+    // 입력한 값 · keep 은 "로그인 상태 유지" 체크 여부
     const [form, setForm] = useState({
         email: '', password: '', keep: true
     })
 
-    const set = (key) => (e) => setForm((prev) => ({...prev, [key]: e.target.value}))
+    // 입력칸마다 onChange에 사용하는 변경 함수
+    const set = (key) => (e) => {
+        const {type, checked, value} = e.target
+        setForm((prev) => ({...prev, [key]: type === 'checkbox' ? checked : value}))
+    }
 
+    // 로그인 요청 중인지 (중복 클릭 방지)
     const [busy, setBusy] = useState(false)
+    // 버튼 위에 보여줄 오류 문구
     const [error, setError] = useState('')
 
+    // 이메일 형식이 맞고 비밀번호가 입력됐고 요청 중이 아닐 때만 로그인 버튼이 켜진다
     const emailValid = SIGNUP.EMAIL_RULE.test(form.email.trim())
-
     const canSubmit = emailValid && form.password !== '' && !busy
 
+    // 로그인 버튼을 눌렀을 때 · 로그인을 요청하고, 성공하면 홈으로 이동하고 실패하면 오류 문구를 보여 준다
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!canSubmit) return
@@ -62,13 +71,14 @@ function Login() {
                 <Field id="login-pw" label="비밀번호" type="password" autoComplete="current-password"
                        placeholder="비밀번호를 입력해 주세요"
                        value={form.password} onChange={set('password')}/>
+                {/* 로그인 상태 유지 · 체크하면 브라우저를 닫아도 로그인이 남는다 */}
                 <label className="login__keep">
-                    <input type="checkbox" checked={form.keep}
-                           onChange={(e) => setForm((prev) => ({...prev, keep: e.target.checked}))}/>
+                    <input type="checkbox" checked={form.keep} onChange={set('keep')}/>
                     로그인 상태 유지
                 </label>
 
                 <div className="login__actions">
+                    {/* 로그인 실패 문구 */}
                     {error && <InlineMessage tone="error">{error}</InlineMessage>}
                     <Button type="submit" block disabled={!canSubmit}>{busy ? '로그인하는 중…' : '로그인'}</Button>
                     <Link to="/login" className="login__forgot">비밀번호를 잊으셨나요?</Link>
