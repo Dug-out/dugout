@@ -14,7 +14,7 @@ import './ProfileEdit.css'
 const HEADLINE_MAX = 30
 const BIO_MAX = 300
 
-/** 프로필 수정 (Profile-edit.dc.html) · 불러오기에 성공하면 그 값으로 채운 입력 화면을 보여 준다 */
+/** 프로필 수정 · 불러오기에 성공하면 그 값으로 채운 입력 화면을 보여 준다 */
 function ProfileEdit() {
     // 내 프로필 불러오기 · status 는 loading | ready | error
     const {status, profile, reload} = useMyProfile()
@@ -67,6 +67,7 @@ function ProfileEditForm({profile}) {
     // 앞뒤 공백을 뺀 닉네임으로 검사하고 저장한다
     const nickname = form.nickname.trim()
     const nicknameValid = nickname.length >= SIGNUP.NICKNAME_MIN && nickname.length <= SIGNUP.NICKNAME_MAX
+
     // 원래 닉네임에서 바꿨는지
     const nicknameChanged = nickname !== profile.nickname
 
@@ -83,10 +84,8 @@ function ProfileEditForm({profile}) {
         setBusy(true)
         try {
             await updateMyProfile({...form, nickname, headline: form.headline.trim(), bio: form.bio.trim(), avatar})
-            // 성공 안내 창
             setResult({ok: true})
         } catch (err) {
-            // 실패 안내 창 · API 가 만든 한국어 문구를 그대로 보여 준다
             setResult({ok: false, message: err.message})
         } finally {
             setBusy(false)
