@@ -2,7 +2,7 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router'
 import {checkNickname} from '../../api/auth.js'
 import {updateMyProfile} from '../../api/profiles.js'
-import {Button, Chip, Dialog, EmptyState, Field, Header, Icon, InlineMessage, TeamPicker} from '../../components'
+import {Button, Chip, Dialog, EmptyState, Field, Header, Icon, InlineMessage, Loading, TeamPicker} from '../../components'
 import {SIGNUP} from '../../constants/policy.js'
 import useAvailability from '../../hooks/useAvailability.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
@@ -22,10 +22,7 @@ function ProfileEdit() {
         <div className="profile-edit">
             <Header title="프로필 수정" backTo="/my"/>
             {/* 불러오는 중 */}
-            {status === 'loading' && (
-                <EmptyState className="profile-edit__state" image="/assets/loading.png"
-                            title="내 정보를 불러오고 있어요"/>
-            )}
+            {status === 'loading' && <Loading/>}
             {/* 불러오지 못했을 때 · 다시 시도 버튼 */}
             {status === 'error' && (
                 <EmptyState className="profile-edit__state" image="/assets/pose-sad.png"

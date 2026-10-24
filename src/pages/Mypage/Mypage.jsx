@@ -1,5 +1,5 @@
 import {Link} from 'react-router'
-import {Button, EmptyState, Header, Icon} from '../../components'
+import {Button, EmptyState, Header, Icon, Loading} from '../../components'
 import {SIGNUP} from '../../constants/policy.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
 import {formatManner, mannerSummary} from './utils/manner.js'
@@ -29,9 +29,7 @@ function Mypage() {
             <Header large title="마이페이지"/>
             <main className="mypage">
                 {/* 불러오는 중 */}
-                {status === 'loading' && (
-                    <EmptyState image="/assets/loading.png" title="내 정보를 불러오고 있어요"/>
-                )}
+                {status === 'loading' && <Loading/>}
                 {/* 불러오지 못했을 때 · 다시 시도 버튼 */}
                 {status === 'error' && (
                     <EmptyState image="/assets/pose-sad.png" title="내 정보를 불러오지 못했어요"
