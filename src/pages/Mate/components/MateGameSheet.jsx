@@ -8,9 +8,9 @@ import './MateGameSheet.css'
  * 디자인 파일이 없어서 직관 기록하기(Record-write.dc.html)의 "다녀온 경기" 목록 모양을 따랐다.
  * 경기 하나를 누르면 바로 고르고 시트가 닫힌다.
  *
- * 🔌 DB: getSelectableGames() · getMyTeam() (DB 담당자가 만든 src/api/mate.js)
+ * 🔌 DB: getSelectableGames() (src/api/mate.js)
  *        시작 전 예정 경기를 빠른 순으로 · 내 팀 경기만 오는 것은 DB 규칙(RLS)이 맡는다
- *        불러오기와 내 팀 경기 거르기는 hooks/useSelectableGames.js 가 맡는다
+ *        불러오기는 hooks/useSelectableGames.js 가 맡는다
  * @param {{myTeam: string | null, selectedId: number | null, onPick: (game: object) => void, onClose: () => void}} props
  */
 function MateGameSheet({myTeam, selectedId, onPick, onClose}) {
