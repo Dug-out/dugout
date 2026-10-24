@@ -1,0 +1,97 @@
+.profile-edit {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-height: 100dvh;
+    background: var(--surface);
+    color: var(--text-900);
+}
+
+/* 불러오는 중 · 실패 */
+.profile-edit__state {
+    margin-top: 120px;
+}
+
+.profile-edit__form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 22px;
+    padding: 20px 20px 0;
+}
+
+/* ── 프로필 사진 ── */
+.profile-edit__photo {
+    position: relative;
+    align-self: center;
+    width: 104px;
+    height: 104px;
+}
+
+.profile-edit__photo img {
+    display: block;
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+}
+
+/* 사진 변경 버튼 · 보이는 크기는 40px, 터치 영역도 44px에 가깝게 */
+.profile-edit__photo button {
+    position: absolute;
+    right: -6px;
+    bottom: -6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 3px solid var(--surface);
+    border-radius: 50%;
+    background: var(--navy-500);
+    color: var(--surface);
+    cursor: pointer;
+}
+
+.profile-edit__photo button::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+}
+
+/* ── 선택 묶음 ── */
+.profile-edit__group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.profile-edit__group legend {
+    padding: 0;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.profile-edit__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* ── 하단 고정 저장 버튼 ── */
+.profile-edit__footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: auto -20px 0;
+    padding: 24px 20px calc(28px + env(safe-area-inset-bottom));
+    background: var(--surface);
+}

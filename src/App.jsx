@@ -4,6 +4,9 @@ import {onAuthChange} from './api/auth.js'
 import Login from './pages/Login/Login.jsx'
 import Signup from './pages/Signup/Signup.jsx'
 import SignupDone from './pages/Signup/SignupDone.jsx'
+import {TabLayout} from './components'
+import Mypage from './pages/Mypage/Mypage.jsx'
+import ProfileEdit from './pages/Profile/ProfileEdit.jsx'
 import Splash from './pages/Splash/Splash.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
 import MateDetail from './pages/Mate/MateDetail.jsx'
@@ -40,8 +43,12 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/signup/done" element={<SignupDone/>}/>
-            <Route path="/profile/edit" element={<Placeholder title="자기소개 작성"/>}/>
-            <Route path="/home" element={<Placeholder title="홈"/>}/>
+            <Route path="/profile/edit" element={<ProfileEdit/>}/>
+            {/* 탭바가 붙는 화면들 */}
+            <Route element={<TabLayout/>}>
+                <Route path="/home" element={<Placeholder title="홈"/>}/>
+                <Route path="/my" element={<Mypage/>}/>
+            </Route>
             <Route path="/mate/write" element={<MateWrite/>}/>
             <Route path="/mate/:id" element={<MateDetail/>}/>
         </Routes>
