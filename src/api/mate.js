@@ -1,16 +1,5 @@
 import {supabase} from '../lib/supabase.js'
 
-/** DB 한 줄(snake_case) → 화면에서 쓰는 모양(camelCase) */
-function toGame(row) {
-    return {
-        id: row.id,
-        gameAt: row.game_at,
-        home: row.home_team,
-        away: row.away_team,
-        stadium: row.stadium,
-    }
-}
-
 /** 브라우저에 저장된 로그인 정보에서 id를 읽고, 해당 사용자의 team을 조회 */
 export async function getMyTeam() {
     const {data: {session}} = await supabase.auth.getSession()
@@ -33,7 +22,9 @@ export async function getSelectableGames() {
         .gt('game_at', new Date().toISOString())
         .order('game_at')
     if (error) throw error
-    return data.map(toGame)
+    return data.map(({id, game_at: gameAt, home_team: home, away_team: away, stadium}) => ({
+        id, gameAt, home, away, stadium,
+    }))
 }
 
 /** 저장 실패 → 화면에 보여줄 문구 */

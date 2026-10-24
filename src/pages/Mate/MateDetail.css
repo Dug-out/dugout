@@ -284,7 +284,7 @@
     box-sizing: border-box;
     width: 48px;
     height: 48px;
-    border: 1.5px dashed var(--gray-300);
+    border: 2px dashed var(--gray-300);
     border-radius: 50%;
     color: var(--text-400);
     font-size: 13px;

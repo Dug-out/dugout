@@ -53,7 +53,7 @@
     border-top: 1px solid var(--gray-100);
     background: var(--surface);
     color: var(--text-900);
-    font-family: var(--font-base);
+    font-family: var(--font-base), serif;
     text-align: left;
     cursor: pointer;
 }
@@ -78,7 +78,7 @@
     box-sizing: border-box;
     width: 22px;
     height: 22px;
-    border: 1.5px solid var(--gray-300);
+    border: 2px solid var(--gray-300);
     border-radius: 50%;
     background: var(--surface);
 }
