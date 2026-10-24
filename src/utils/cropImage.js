@@ -1,4 +1,4 @@
-// 사진 주소로 이미지를 불러온다
+// 사진 주소 → 불러온 이미지
 function loadImage(src) {
     return new Promise((resolve, reject) => {
         const image = new Image()
@@ -9,7 +9,7 @@ function loadImage(src) {
 }
 
 /**
- * 사진에서 고른 정사각형 부분을 잘라 JPEG 파일(Blob)로 만든다
+ * 사진과 고른 정사각형 부분 → 잘라 만든 JPEG 파일(Blob)
  * @param {string} src 원본 사진 주소
  * @param {{x: number, y: number, width: number, height: number}} area 자를 부분 (원본 사진 기준 픽셀)
  * @param {number} size 만들 사진의 한 변 길이 (px)
