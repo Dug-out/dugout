@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { Dialog, Header, Icon } from "../../components";
 import { MATE_POST } from "../../constants/policy.js";
+import useGoBack from "../../hooks/useGoBack.js";
 import "./MateDetail.css";
 
 const DEFAULT_AVATAR = "/assets/profile-default.png"; // 프로필 사진이 없을 때 (Brand-assets: 모든 프로필 자리)
@@ -63,10 +64,7 @@ function MateDetail() {
   };
 
   // 뒤로가기 · 이전 화면이 있으면 그리로, 주소로 바로 들어왔으면 홈으로
-  const goBack = () => {
-    if (window.history.state?.idx > 0) navigate(-1);
-    else navigate("/home", { replace: true });
-  };
+  const goBack = useGoBack();
 
   // 공유 · 휴대폰은 공유 창(카카오톡 · 문자 등), 공유 창이 없는 브라우저는 주소 복사
   const share = async () => {
