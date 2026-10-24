@@ -7,13 +7,6 @@ import useAvailability from '../../hooks/useAvailability.js'
 import {availabilityProps} from '../../utils/availability.js'
 import './Signup.css'
 
-// 가입 오류 → 안내 문구 (DB 트리거가 닉네임 중복 같은 마지막 검사를 한 번 더 한다)
-function signUpErrorMessage(error) {
-    if (/already registered/i.test(error.message)) return '이미 가입된 이메일이에요'
-    if (/database error/i.test(error.message)) return '이미 사용 중인 닉네임이거나 입력값이 올바르지 않아요'
-    return '가입하지 못했어요. 잠시 후 다시 시도해 주세요'
-}
-
 /** 회원가입 · 한 화면 (이메일 → 비밀번호 → 닉네임 → 성별 · 나이대 · 응원팀) */
 function Signup() {
     // 가입에 성공하면 완료 화면으로 이동할 때 쓴다
@@ -59,16 +52,18 @@ function Signup() {
         if (!canSubmit) return
         setBusy(true)
         setError('')
-        const {error: signUpError} = await signUp({...form, email, nickname})
-        setBusy(false)
-        if (signUpError) {
-            setError(signUpErrorMessage(signUpError))
-            return
+        try {
+            await signUp({...form, email, nickname})
+            navigate('/signup/done', {
+                replace: true,
+                state: {nickname, team: form.team, gender: form.gender, age: form.age},
+            })
+        } catch (err) {
+            // API 가 만든 한국어 문구를 그대로 보여 준다
+            setError(err.message)
+        } finally {
+            setBusy(false)
         }
-        navigate('/signup/done', {
-            replace: true,
-            state: {nickname, team: form.team, gender: form.gender, age: form.age},
-        })
     }
 
     return (

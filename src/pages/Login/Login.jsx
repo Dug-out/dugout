@@ -5,12 +5,6 @@ import {Button, Field, InlineMessage} from '../../components'
 import {SIGNUP} from '../../constants/policy.js'
 import './Login.css'
 
-// 로그인 오류 → 안내 문구 (이메일 / 비밀번호 중 무엇이 틀렸는지는 알려주지 않는다)
-function signInErrorMessage(error) {
-    if (/invalid login credentials/i.test(error.message)) return '이메일 또는 비밀번호가 올바르지 않아요'
-    return '로그인하지 못했어요. 잠시 후 다시 시도해 주세요'
-}
-
 /** 로그인 · 이메일 + 비밀번호 */
 function Login() {
     // 로그인에 성공하면 화면을 이동할 때 쓴다
@@ -42,13 +36,15 @@ function Login() {
         if (!canSubmit) return
         setBusy(true)
         setError('')
-        const {error: signInError} = await signIn({...form, email: form.email.trim()})
-        setBusy(false)
-        if (signInError) {
-            setError(signInErrorMessage(signInError))
-            return
+        try {
+            await signIn({...form, email: form.email.trim()})
+            navigate('/home', {replace: true})
+        } catch (err) {
+            // API 가 만든 한국어 문구를 그대로 보여 준다
+            setError(err.message)
+        } finally {
+            setBusy(false)
         }
-        navigate('/home', {replace: true})
     }
 
     return (
