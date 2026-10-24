@@ -3,14 +3,16 @@ import {supabase} from '../lib/supabase.js'
 /** 브라우저에 저장된 로그인 정보에서 id를 읽고, 해당 사용자의 team을 조회 */
 export async function getMyTeam() {
     const {data: {session}} = await supabase.auth.getSession()
+    const {id: userId} = session.user
 
     const {data, error} = await supabase
         .from('profiles')
         .select('team')
-        .eq('id', session.user.id)
+        .eq('id', userId)
         .single()
     if (error) throw error
-    return data.team
+    const {team} = data
+    return team
 }
 
 /** [경기 선택] 목록 · 시작 전 예정 경기를 빠른 순으로 (내 팀 경기만 오는 건 DB 규칙) */
@@ -22,7 +24,6 @@ export async function getSelectableGames() {
         .gt('game_at', new Date().toISOString())
         .order('game_at')
     if (error) throw error
-    // 테이블 타입을 만들어 두지 않아서 IDE 가 data 의 모양을 몰라 경고하므로, 받은 줄의 모양을 알려 준다
     const rows = /** @type {{id: number, game_at: string, home_team: string, away_team: string, stadium: string}[]} */ (data)
     return rows.map(({id, game_at: gameAt, home_team: home, away_team: away, stadium}) => ({
         id, gameAt, home, away, stadium,
@@ -39,7 +40,7 @@ function createErrorMessage(error) {
 
 /**
  * [모집 글 올리기] 모집 글 저장 · 방장과 내 응원팀은 알아서 채운다
- * 값의 규칙은 constants/policy.js 의 MATE_POST 참고 (어기면 Error, message는 그대로 보여줘도 된다)
+ * 값의 규칙을 어기면 Error, message는 그대로 보여줘도 된다
  * @returns {Promise<{id: string}>} 새 글의 id
  */
 export async function createMatePost({gameId, title, seat, capacity, ages = [], gender = '무관', description = '', imageUrl = null}) {
@@ -61,5 +62,6 @@ export async function createMatePost({gameId, title, seat, capacity, ages = [], 
         .select('id')
         .single()
     if (error) throw Object.assign(new Error(createErrorMessage(error)), {cause: error})
-    return {id: data.id}
+    const {id} = data
+    return {id}
 }

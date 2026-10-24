@@ -81,6 +81,6 @@ export const getSession = () => supabase.auth.getSession()
  *  콜백은 (이벤트 이름, session) 을 받는다. 우리는 session 만 넘겨서 로그인 여부를 판단한다.
  */
 export function onAuthChange(callback) {
-    const {data} = supabase.auth.onAuthStateChange((_event, session) => callback(session))
-    return () => data.subscription.unsubscribe()
+    const {data: {subscription}} = supabase.auth.onAuthStateChange((_event, session) => callback(session))
+    return () => subscription.unsubscribe()
 }

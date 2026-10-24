@@ -38,7 +38,8 @@ export async function getProfile(id) {
 /** 내 프로필 · 마이페이지와 프로필 수정 화면이 쓴다 */
 export async function getMyProfile() {
     const {data: {session}} = await supabase.auth.getSession()
-    return getProfile(session.user.id)
+    const {id: userId} = session.user
+    return getProfile(userId)
 }
 
 /**
