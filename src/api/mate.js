@@ -62,7 +62,16 @@ async function uploadMateImage(blob) {
  * image: 대표 이미지(Blob) · 없으면 기본 이미지로 보인다. 글 저장에 실패하면 올려 둔 사진은 지운다.
  * @returns {Promise<{id: string}>} 새 글의 id
  */
-export async function createMatePost({gameId, title, seat, capacity, ages = [], gender = '무관', description = '', image = null}) {
+export async function createMatePost({
+                                         gameId,
+                                         title,
+                                         seat,
+                                         capacity,
+                                         ages = [],
+                                         gender = '무관',
+                                         description = '',
+                                         image = null
+                                     }) {
     // 내 팀을 못 불러오면 저장도 못 하므로, 다른 저장 실패와 같은 한국어 문구의 Error 로 던진다
     const team = await getMyTeam().catch((cause) => {
         throw Object.assign(new Error(createErrorMessage({})), {cause})
@@ -87,7 +96,8 @@ export async function createMatePost({gameId, title, seat, capacity, ages = [], 
         .single()
     if (error) {
         // 글이 저장되지 않았으니 올려 둔 사진도 지운다 (지우지 못해도 글쓰기 오류가 우선이다)
-        if (uploaded) await supabase.storage.from(MATE_IMAGE_BUCKET).remove([uploaded.path]).catch(() => {})
+        if (uploaded) await supabase.storage.from(MATE_IMAGE_BUCKET).remove([uploaded.path]).catch(() => {
+        })
         throw Object.assign(new Error(createErrorMessage(error)), {cause: error})
     }
     const {id} = data

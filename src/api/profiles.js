@@ -85,5 +85,6 @@ export async function updateMyProfile({nickname, headline, bio, age, gender, tea
     if (error) throw Object.assign(new Error(updateErrorMessage(error)), {cause: error})
 
     // 저장이 끝난 뒤에 옛 사진 파일을 정리한다 (실패해도 프로필 저장에는 영향 없음)
-    if (avatar === null) removeAvatar().catch(() => {})
+    if (avatar === null) removeAvatar().catch(() => {
+    })
 }
