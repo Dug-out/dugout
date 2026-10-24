@@ -101,7 +101,7 @@ function MateWrite() {
                                  aspect={MATE_POST.IMAGE_WIDTH / MATE_POST.IMAGE_HEIGHT}
                                  outputWidth={MATE_POST.IMAGE_WIDTH} fillWidth onChange={set("image")}/>
                     <span className="mate-write__image-hint">
-                        {form.image ? "목록과 상세 위에 이 사진이 보여요." : "사진을 올리면 모집 글이 더 눈에 띄어요."}
+                        {form.image ? "목록과 상세 위에 이 사진이 보여요." : "사진을 올리지 않으면 이 기본 이미지가 보여요."}
                     </span>
                 </div>
 
