@@ -2,17 +2,33 @@ import {setKeepLogin, supabase} from '../lib/supabase.js'
 
 // supabase 함수는 실패해도 예외를 던지지 않고 {data, error} 로 돌려준다.
 // 성공하면 error 가 null 이고, 실패하면 data 가 null 이다.
+// 화면에서 쓰는 signIn, signUp 은 실패하면 Error 를 던지고, message 는 그대로 보여줘도 되는 한국어 문구다.
+
+// 로그인 실패 → 화면에 보여줄 문구 (이메일 / 비밀번호 중 무엇이 틀렸는지는 알려주지 않는다)
+function signInErrorMessage({message}) {
+    if (/invalid login credentials/i.test(message)) return '이메일 또는 비밀번호가 올바르지 않아요'
+    return '로그인하지 못했어요. 잠시 후 다시 시도해 주세요'
+}
+
+// 가입 실패 → 화면에 보여줄 문구 (DB 트리거가 닉네임 중복 같은 마지막 검사를 한 번 더 한다)
+function signUpErrorMessage({message}) {
+    if (/already registered/i.test(message)) return '이미 가입된 이메일이에요'
+    if (/database error/i.test(message)) return '이미 사용 중인 닉네임이거나 입력값이 올바르지 않아요'
+    return '가입하지 못했어요. 잠시 후 다시 시도해 주세요'
+}
 
 /**
  * 로그인 · keep=false 이면 탭을 닫을 때 로그아웃된다
  *
  * signInWithPassword: 이메일·비밀번호로 로그인한다.
  *  성공하면 세션(토큰)을 저장소에 알아서 저장하고, 이후 요청에 토큰을 자동으로 붙인다.
- *  이메일이나 비밀번호가 틀리면 error 에 "Invalid login credentials" 가 온다.
+ *  이메일이나 비밀번호가 틀리면 error 에 "Invalid login credentials" 가 오고, 이를 한국어 Error 로 바꿔 던진다.
  */
-export function signIn({email, password, keep}) {
+export async function signIn({email, password, keep}) {
     setKeepLogin(keep)
-    return supabase.auth.signInWithPassword({email, password})
+    const {data, error} = await supabase.auth.signInWithPassword({email, password})
+    if (error) throw Object.assign(new Error(signInErrorMessage(error)), {cause: error})
+    return data
 }
 
 /**
@@ -21,15 +37,17 @@ export function signIn({email, password, keep}) {
  * signUp: 이메일·비밀번호를 이용해 새 계정을 만든다. ("Confirm email" 은 꺼둔 상태)
  *  options.data: 사용자 추가 정보. auth.users 의 raw_user_meta_data 에 저장되고,
  *                가입 트리거(handle_new_user)가 여기서 값을 꺼내 profiles 행을 만든다.
- *  이미 가입된 이메일이면 error 에 "User already registered" 가 온다.
+ *  이미 가입된 이메일이면 error 에 "User already registered" 가 오고, 이를 한국어 Error 로 바꿔 던진다.
  */
-export function signUp({email, password, nickname, team, gender, age}) {
+export async function signUp({email, password, nickname, team, gender, age}) {
     setKeepLogin(false)
-    return supabase.auth.signUp({
+    const {data, error} = await supabase.auth.signUp({
         email,
         password,
         options: {data: {nickname, team, gender, age_group: age}},
     })
+    if (error) throw Object.assign(new Error(signUpErrorMessage(error)), {cause: error})
+    return data
 }
 
 /**
