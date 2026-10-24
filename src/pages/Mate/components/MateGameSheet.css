@@ -1,4 +1,4 @@
-/* 경기 선택 시트 안쪽 · 시트 테두리·핸들·여백은 기존 BottomSheet가 그린다 */
+/* 경기 선택 시트 안쪽 */
 .mate-game {
     display: flex;
     flex-direction: column;
@@ -26,7 +26,7 @@
 }
 
 /* ── 달력 (Mate-cal.dc.html) ── */
-/* 달 이동 줄 · [‹] 2026.10 [›] */
+/* 달 이동 줄 */
 .mate-cal__head {
     display: flex;
     align-items: center;
@@ -80,7 +80,7 @@
     row-gap: 2px;
 }
 
-/* 날짜 칸 · 숫자 + 아래 빨간 점 */
+/* 날짜 칸 */
 .mate-cal__day {
     display: flex;
     flex-direction: column;
@@ -116,7 +116,7 @@
     border-radius: 50%;
 }
 
-/* 고른 날 · 남색 동그라미 */
+/* 고른 날 */
 .mate-cal__day[aria-pressed='true'] .mate-cal__num {
     background: var(--navy-500);
     font-weight: 700;
@@ -128,7 +128,7 @@
     outline-offset: -2px;
 }
 
-/* 경기 있음 표시 점 · 범례에도 같은 점을 쓴다 */
+/* 경기 있음 점 (범례도 같이 쓴다) */
 .mate-cal__dot {
     flex: none;
     width: 5px;
@@ -151,7 +151,7 @@
     height: 6px;
 }
 
-/* 고른 경기 띠 · 고르기 전에는 회색 안내, 고르면 연한 남색 바탕 (진한 남색은 아래 선택 버튼만 쓴다) */
+/* 고른 경기 띠 · 진한 남색은 선택 버튼만 쓰도록 연한 바탕 */
 .mate-cal__picked {
     display: flex;
     flex-direction: column;
@@ -174,7 +174,7 @@
     color: var(--navy-500);
 }
 
-/* [취소] [이 경기로 선택] · 1 : 1.6 */
+/* 버튼 · 1 : 1.6 */
 .mate-cal__actions {
     display: grid;
     grid-template-columns: 1fr 1.6fr;
