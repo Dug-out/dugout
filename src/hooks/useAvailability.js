@@ -18,8 +18,10 @@ export default function useAvailability(value, valid, check) {
     useEffect(() => {
         // 형식이 틀리면 확인하지 않는다
         if (!valid) return undefined
+
         // 값이 바뀌면 true 가 되어, 늦게 도착한 옛 응답을 버린다
         let stale = false
+
         const timer = setTimeout(async () => {
             setResult({value, status: 'checking'})
             // true: 사용 가능, false: 이미 있음, null: 확인 실패
@@ -27,6 +29,7 @@ export default function useAvailability(value, valid, check) {
             if (stale) return
             setResult({value, status: available === null ? 'failed' : available ? 'ok' : 'taken'})
         }, DEBOUNCE_MS)
+
         // 값이 또 바뀌거나 화면이 사라질 때 · 아직 안 보낸 요청을 취소하고 옛 응답은 무시한다
         return () => {
             stale = true
