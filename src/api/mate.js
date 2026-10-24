@@ -103,3 +103,95 @@ export async function createMatePost({
     const {id} = data
     return {id}
 }
+
+/**
+ * 모집 글 하나 · 글, 경기, 방장, 수락된 참여자, 그리고 내 신청 상태를 모아서 가져온다.
+ * 내 응원팀 글이 아니거나 없는 글이면 null 을 돌려준다.
+ * @param {string} id 모집 글 id
+ * @returns {Promise<null | {
+ *   id: string, title: string, imageUrl: string | null, isOpen: boolean, seat: string, capacity: number,
+ *   ages: string[], gender: string, description: string, joinedCount: number,
+ *   host: {id: string, nickname: string, avatarUrl: string | null, manner: number},
+ *   game: {gameAt: string, home: string, away: string, stadium: string},
+ *   members: {userId: string, role: string, nickname: string, avatarUrl: string | null}[],
+ *   myStatus: null | 'host' | 'pending' | 'accepted' | 'rejected' | 'left'
+ * }>}
+ *  myStatus: 내가 방장이면 'host', 신청한 적이 없으면 null
+ */
+export async function getMatePost(id) {
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
+    const {id: userId} = session.user
+
+    // 글 · 방장 · 경기 / 수락된 참여자 / 내 신청 줄을 동시에 불러온다
+    const [postResult, membersResult, myResult] = await Promise.all([
+        supabase
+            .from('mate_posts')
+            .select(
+                `id, title, image_url, status, seat, capacity, ages, gender, description, host_id, joined_count,
+                host:profiles!host_id(nickname, avatar_url, manner_avg),
+                game:games(game_at, home_team, away_team, stadium)`,
+            )
+            .eq('id', id)
+            .maybeSingle(),
+        supabase.rpc('mate_post_members', {p: id}),
+        supabase.from('mate_members').select('role, status').eq('post_id', id).eq('user_id', userId).maybeSingle(),
+    ])
+
+    // 주소가 uuid 모양이 아니면(22P02) 없는 글과 같다
+    if (postResult.error?.code === '22P02') return null
+    if (postResult.error) throw postResult.error
+    if (membersResult.error) throw membersResult.error
+    if (myResult.error) throw myResult.error
+    // 없는 글이거나 다른 팀 글(RLS 가 숨긴다)
+    if (!postResult.data) return null
+
+    const {data: post} = postResult
+    const {data: members} = membersResult
+    const {data: mine} = myResult
+
+    const {host: hostRow, game: gameRow} = post
+    return {
+        id: post.id,
+        title: post.title,
+        imageUrl: post.image_url,
+        isOpen: post.status === 'open',
+        seat: post.seat,
+        capacity: post.capacity,
+        ages: post.ages,
+        gender: post.gender,
+        description: post.description,
+        joinedCount: post.joined_count,
+        host: {
+            id: post.host_id,
+            nickname: hostRow.nickname,
+            avatarUrl: hostRow.avatar_url,
+            manner: Number(hostRow.manner_avg),
+        },
+        game: {gameAt: gameRow.game_at, home: gameRow.home_team, away: gameRow.away_team, stadium: gameRow.stadium},
+        members: members.map((row) => {
+            const {user_id: memberId, role, nickname, avatar_url: avatarUrl} = row
+            return {userId: memberId, role, nickname, avatarUrl}
+        }),
+        // 방장은 신청 줄(role='host')이 있어서 role 이 우선이다
+        myStatus: mine ? (mine.role === 'host' ? 'host' : mine.status) : null,
+    }
+}
+
+// 신청 실패 → 화면에 보여줄 문구 (DB 오류 코드 기준)
+function applyErrorMessage({code}) {
+    if (code === '23505') return '이미 신청한 모집 글이에요'
+    if (code === '42501') return '지금은 신청할 수 없어요. 모집이 마감됐거나 경기가 이미 시작됐을 수 있어요'
+    if (code === '23514') return '입력한 내용을 다시 확인해 주세요'
+    return '신청하지 못했어요. 잠시 후 다시 시도해 주세요'
+}
+
+/**
+ * 참여 신청 · 한마디와 함께 '대기' 상태로 신청한다 (수락은 방장이 한다)
+ * @param {{postId: string, message?: string}} apply 한마디는 100자까지
+ */
+export async function applyToMatePost({postId, message = ''}) {
+    const {error} = await supabase.from('mate_members').insert({post_id: postId, message: message.trim()})
+    if (error) throw Object.assign(new Error(applyErrorMessage(error)), {cause: error})
+}
