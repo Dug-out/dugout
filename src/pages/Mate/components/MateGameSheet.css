@@ -151,7 +151,7 @@
     height: 6px;
 }
 
-/* 고른 경기 띠 · 고르기 전에는 회색 안내, 고르면 남색 바탕에 흰 글씨 */
+/* 고른 경기 띠 · 고르기 전에는 회색 안내, 고르면 연한 남색 바탕 (진한 남색은 아래 선택 버튼만 쓴다) */
 .mate-cal__picked {
     display: flex;
     flex-direction: column;
@@ -164,14 +164,14 @@
 }
 
 .mate-cal__picked--on {
-    background: var(--navy-500);
-    color: var(--on-navy-sub);
+    background: var(--navy-50);
+    color: var(--text-500);
 }
 
 .mate-cal__picked strong {
     font-size: 15px;
     font-weight: 700;
-    color: var(--surface);
+    color: var(--navy-500);
 }
 
 /* [취소] [이 경기로 선택] · 1 : 1.6 */
