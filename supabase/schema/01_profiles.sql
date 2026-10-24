@@ -8,6 +8,8 @@ create table public.profiles (
   team text not null check (team in ('LG','두산','KIA','삼성','롯데','한화','SSG','NC','KT','키움')),
   gender text not null check (gender in ('여성','남성')),
   age_group text not null check (age_group in ('10대','20대','30대','40대 이상')),
+  headline text not null default '' check (char_length(headline) <= 30),
+  bio text not null default '' check (char_length(bio) <= 300),
   manner_avg numeric(4,3) not null default 0.250 check (manner_avg between 0.200 and 0.400),
   created_at timestamptz not null default now()  -- 가입 시각 (자동)
 );
@@ -29,8 +31,8 @@ revoke all on public.profiles from anon, authenticated;
 -- 조회: 로그인한 사람은 프로필 조회 가능 (정책과 별개로 테이블 권한도 필요)
 grant select on public.profiles to authenticated;
 
--- 수정: 이 네 컬럼만 (매너 타율은 직접 못 바꿈) · 행 추가는 아래 트리거만 한다
-grant update (nickname, team, gender, age_group) on public.profiles to authenticated;
+-- 수정: 프로필 수정 화면의 항목만 (매너 타율은 직접 못 바꿈) · 행 추가는 아래 트리거만 한다
+grant update (nickname, team, gender, age_group, headline, bio) on public.profiles to authenticated;
 
 -- 2. 가입 시 프로필 자동 생성
 -- 새 계정이 생기면 실행되는 함수
