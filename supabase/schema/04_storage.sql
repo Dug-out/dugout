@@ -30,3 +30,29 @@ create policy "avatars_update_own" on storage.objects
 create policy "avatars_delete_own" on storage.objects
   for delete to authenticated
   using (bucket_id = 'avatars' and (storage.foldername(name))[1] = auth.uid()::text);
+
+------------------------------------------
+-- 모집 글 대표 이미지 저장소
+------------------------------------------
+-- mate-images 버킷 · 공개, 2MB 이하, jpeg/png/webp 만 (이미 있으면 설정만 맞춘다)
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('mate-images', 'mate-images', true, 2097152, array['image/jpeg', 'image/png', 'image/webp'])
+on conflict (id) do update
+  set public = excluded.public,
+      file_size_limit = excluded.file_size_limit,
+      allowed_mime_types = excluded.allowed_mime_types;
+
+-- 사진 파일은 {내 id}/{무작위 이름}.jpg 경로에 저장한다. 로그인한 사람은 자기 폴더의 파일만 다룰 수 있다
+-- (글마다 새 이름으로 올리므로 덮어쓰기용 수정 정책은 필요 없다)
+create policy "mate_images_select_own" on storage.objects
+  for select to authenticated
+  using (bucket_id = 'mate-images' and (storage.foldername(name))[1] = auth.uid()::text);
+
+create policy "mate_images_insert_own" on storage.objects
+  for insert to authenticated
+  with check (bucket_id = 'mate-images' and (storage.foldername(name))[1] = auth.uid()::text);
+
+-- 글 저장에 실패했을 때 올려 둔 사진을 지울 수 있다
+create policy "mate_images_delete_own" on storage.objects
+  for delete to authenticated
+  using (bucket_id = 'mate-images' and (storage.foldername(name))[1] = auth.uid()::text);

@@ -2,12 +2,13 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router'
 import {checkNickname} from '../../api/auth.js'
 import {updateMyProfile} from '../../api/profiles.js'
-import {Button, Chip, Dialog, EmptyState, Field, Header, InlineMessage, Loading, TeamPicker} from '../../components'
+import {
+    Button, Chip, Dialog, EmptyState, Field, Header, InlineMessage, Loading, PhotoPicker, TeamPicker,
+} from '../../components'
 import {SIGNUP} from '../../constants/policy.js'
 import useAvailability from '../../hooks/useAvailability.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
 import {availabilityProps} from '../../utils/availability.js'
-import AvatarPicker from './AvatarPicker.jsx'
 import './ProfileEdit.css'
 
 // 입력 글자 수 제한 (DB의 headline 30자, bio 300자와 같다)
@@ -100,7 +101,8 @@ function ProfileEditForm({profile}) {
     return (
         <form className="profile-edit__form" onSubmit={handleSubmit}>
             {/* 프로필 사진 · 고르거나 기본 이미지로 바꾸면 [저장하기]에서 프로필과 함께 저장된다 */}
-            <AvatarPicker currentUrl={profile.avatar} onChange={setAvatar}/>
+            <PhotoPicker defaultImage="/assets/profile-default.png" currentUrl={profile.avatar} onChange={setAvatar}
+                         label="프로필 사진"/>
 
             {/* 닉네임 · 바꿨을 때만 사용 가능 여부를 보여 준다 */}
             <Field id="profile-nick" label="닉네임" type="text" autoComplete="nickname"

@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "react-router";
 import {createMatePost} from "../../api/mate.js";
-import {Button, Chip, Field, Icon, InlineMessage} from "../../components";
+import {Button, Chip, Field, Icon, InlineMessage, PhotoPicker} from "../../components";
 import {MATE_POST} from "../../constants/policy.js";
 import useGoBack from "../../hooks/useGoBack.js";
 import useMyTeam from "../../hooks/useMyTeam.js";
@@ -18,6 +18,7 @@ const EMPTY_FORM = {
     ages: [],
     gender: "",
     description: "",
+    image: null,
 };
 
 /** 모집 글 쓰기 · 제목, 경기, 좌석이 필수이고 나머지는 비워도 된다 */
@@ -70,7 +71,7 @@ function MateWrite() {
                 ages: form.ages,
                 gender: form.gender || "무관",
                 description: form.description,
-                imageUrl: null, // 사진 올리기 함수가 아직 없어서 기본 이미지로 저장
+                image: form.image,
             });
             navigate(`/mate/${id}`, {replace: true, state: {created: true}});
         } catch (failure) {
@@ -91,22 +92,17 @@ function MateWrite() {
 
             {/* noValidate: 브라우저 기본 검사 말풍선 대신 화면 안내를 쓴다 */}
             <form className="mate-write__form" onSubmit={submit} noValidate>
-                {/* 대표 이미지 (선택) · 사진 올리기가 준비되면 연결한다 */}
+                {/* 대표 이미지 (선택) · 올릴 때 함께 저장된다 */}
                 <div className="mate-write__group">
-          <span className="mate-write__label">
-            대표 이미지 <small>(선택)</small>
-          </span>
-                    <div className="mate-write__image-row">
-                        <button type="button" className="mate-write__add-photo" disabled>
-                            <Icon name="camera" size={24} strokeWidth={1.8}/>
-                            사진 추가
-                        </button>
-                        <span className="mate-write__image-hint">
-              사진 올리기는 준비 중이에요.
-              <br/>
-              지금은 기본 이미지로 올라가요.
-            </span>
-                    </div>
+                    <span className="mate-write__label">
+                        대표 이미지 <small>(선택)</small>
+                    </span>
+                    <PhotoPicker shape="rect" defaultImage={MATE_POST.DEFAULT_IMAGE} label="대표 이미지"
+                                 aspect={MATE_POST.IMAGE_WIDTH / MATE_POST.IMAGE_HEIGHT}
+                                 outputWidth={MATE_POST.IMAGE_WIDTH} fillWidth onChange={set("image")}/>
+                    <span className="mate-write__image-hint">
+                        {form.image ? "목록과 상세 위에 이 사진이 보여요." : "사진을 올리지 않으면 이 기본 이미지가 보여요."}
+                    </span>
                 </div>
 
                 {/* 제목 · 50자까지 */}
@@ -121,9 +117,9 @@ function MateWrite() {
 
                 {/* 경기 선택 · 누르면 경기 선택 시트가 열린다 */}
                 <div className="mate-write__group">
-          <span className="mate-write__label" id="mate-write-game-label">
-            경기 선택
-          </span>
+                    <span className="mate-write__label" id="mate-write-game-label">
+                        경기 선택
+                    </span>
                     <button
                         type="button"
                         className="mate-write__game"
@@ -133,18 +129,18 @@ function MateWrite() {
                     >
                         <Icon name="calendar" size={20} strokeWidth={1.8}/>
                         <span id="mate-write-game-value" className="mate-write__game-text">
-              {form.game ? (
-                  <>
-                      {/* '10.22 (목) 18:30 · LG vs 두산' / 구장 */}
-                      <span className="mate-write__game-main">
-                    {formatDay(form.game.gameAt)} {formatTime(form.game.gameAt)} · {matchLabel(form.game, myTeam)}
-                  </span>
-                      <span className="mate-write__game-sub">{form.game.stadium}</span>
-                  </>
-              ) : (
-                  <span className="mate-write__game-placeholder">같이 볼 경기를 골라 주세요</span>
-              )}
-            </span>
+                            {form.game ? (
+                                <>
+                                    {/* '10.22 (목) 18:30 · LG vs 두산' / 구장 */}
+                                    <span className="mate-write__game-main">
+                                        {formatDay(form.game.gameAt)} {formatTime(form.game.gameAt)} · {matchLabel(form.game, myTeam)}
+                                    </span>
+                                    <span className="mate-write__game-sub">{form.game.stadium}</span>
+                                </>
+                            ) : (
+                                <span className="mate-write__game-placeholder">같이 볼 경기를 골라 주세요</span>
+                            )}
+                        </span>
                         <Icon name="chevronRight" size={18}/>
                     </button>
                 </div>
@@ -161,9 +157,9 @@ function MateWrite() {
 
                 {/* 모집 인원 · 본인 포함 2~10명 */}
                 <div className="mate-write__count-row">
-          <span className="mate-write__label">
-            모집 인원 <small>(본인 포함)</small>
-          </span>
+                    <span className="mate-write__label">
+                        모집 인원 <small>(본인 포함)</small>
+                    </span>
                     <div className="mate-write__stepper">
                         <button
                             type="button"
@@ -175,8 +171,8 @@ function MateWrite() {
                         </button>
                         {/* aria-live: 숫자가 바뀌면 화면 읽기 프로그램이 읽는다 */}
                         <span className="mate-write__count" aria-live="polite">
-              {form.capacity}명
-            </span>
+                            {form.capacity}명
+                        </span>
                         <button
                             type="button"
                             aria-label="인원 늘리기"
@@ -252,9 +248,9 @@ function ChipGroup({label, sub, children}) {
     return (
         // role="group": 화면 읽기 프로그램이 칩을 한 묶음으로 읽는다
         <div className="mate-write__group" role="group" aria-label={label}>
-      <span className="mate-write__label">
-        {label} {sub && <small>{sub}</small>}
-      </span>
+            <span className="mate-write__label">
+                {label} {sub && <small>{sub}</small>}
+            </span>
             <div className="mate-write__chips">{children}</div>
         </div>
     );

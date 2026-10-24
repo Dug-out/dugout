@@ -45,6 +45,8 @@ export const MATE_POST = {
   GENDERS: ['여성', '남성', '무관'], // 하나만
   APPLY_MESSAGE_MAX: 100,
   DEFAULT_IMAGE: '/assets/mate-default.png',
+  IMAGE_WIDTH: 1200, // 대표 이미지 크기 · 기본 이미지(mate-default.png)와 같은 비율
+  IMAGE_HEIGHT: 680,
 };
 
 export const SIGNUP = {
