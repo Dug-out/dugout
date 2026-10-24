@@ -117,9 +117,9 @@ function MateWrite() {
 
                 {/* 경기 선택 · 누르면 경기 선택 시트가 열린다 */}
                 <div className="mate-write__group">
-          <span className="mate-write__label" id="mate-write-game-label">
-            경기 선택
-          </span>
+                    <span className="mate-write__label" id="mate-write-game-label">
+                        경기 선택
+                    </span>
                     <button
                         type="button"
                         className="mate-write__game"
@@ -129,18 +129,18 @@ function MateWrite() {
                     >
                         <Icon name="calendar" size={20} strokeWidth={1.8}/>
                         <span id="mate-write-game-value" className="mate-write__game-text">
-              {form.game ? (
-                  <>
-                      {/* '10.22 (목) 18:30 · LG vs 두산' / 구장 */}
-                      <span className="mate-write__game-main">
-                    {formatDay(form.game.gameAt)} {formatTime(form.game.gameAt)} · {matchLabel(form.game, myTeam)}
-                  </span>
-                      <span className="mate-write__game-sub">{form.game.stadium}</span>
-                  </>
-              ) : (
-                  <span className="mate-write__game-placeholder">같이 볼 경기를 골라 주세요</span>
-              )}
-            </span>
+                            {form.game ? (
+                                <>
+                                    {/* '10.22 (목) 18:30 · LG vs 두산' / 구장 */}
+                                    <span className="mate-write__game-main">
+                                        {formatDay(form.game.gameAt)} {formatTime(form.game.gameAt)} · {matchLabel(form.game, myTeam)}
+                                    </span>
+                                    <span className="mate-write__game-sub">{form.game.stadium}</span>
+                                </>
+                            ) : (
+                                <span className="mate-write__game-placeholder">같이 볼 경기를 골라 주세요</span>
+                            )}
+                        </span>
                         <Icon name="chevronRight" size={18}/>
                     </button>
                 </div>
@@ -157,9 +157,9 @@ function MateWrite() {
 
                 {/* 모집 인원 · 본인 포함 2~10명 */}
                 <div className="mate-write__count-row">
-          <span className="mate-write__label">
-            모집 인원 <small>(본인 포함)</small>
-          </span>
+                    <span className="mate-write__label">
+                        모집 인원 <small>(본인 포함)</small>
+                    </span>
                     <div className="mate-write__stepper">
                         <button
                             type="button"
@@ -171,8 +171,8 @@ function MateWrite() {
                         </button>
                         {/* aria-live: 숫자가 바뀌면 화면 읽기 프로그램이 읽는다 */}
                         <span className="mate-write__count" aria-live="polite">
-              {form.capacity}명
-            </span>
+                            {form.capacity}명
+                        </span>
                         <button
                             type="button"
                             aria-label="인원 늘리기"
@@ -248,9 +248,9 @@ function ChipGroup({label, sub, children}) {
     return (
         // role="group": 화면 읽기 프로그램이 칩을 한 묶음으로 읽는다
         <div className="mate-write__group" role="group" aria-label={label}>
-      <span className="mate-write__label">
-        {label} {sub && <small>{sub}</small>}
-      </span>
+            <span className="mate-write__label">
+                {label} {sub && <small>{sub}</small>}
+            </span>
             <div className="mate-write__chips">{children}</div>
         </div>
     );
