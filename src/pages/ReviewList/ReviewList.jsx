@@ -16,7 +16,7 @@ function ReviewList() {
                     <p className="review-list__sub">경기 후 7일 안에 평가할 수 있어요</p>
                     {/* 비었을 때 (Empty-review.dc.html 문구) */}
                     <div className="review-list__empty">
-                        <img src="/assets/pose-sad.png" alt="" width="120" height="120"/>
+                        <img src="/assets/pose-sad.png" alt="" width="520" height="520"/>
                         <strong>지금은 평가할 메이트가 없어요</strong>
                         <span>메이트와 함께 직관을 다녀오면 여기에서 평가할 수 있어요</span>
                     </div>
