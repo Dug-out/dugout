@@ -6,6 +6,9 @@ import Signup from './pages/Signup/Signup.jsx'
 import SignupDone from './pages/Signup/SignupDone.jsx'
 import {TabLayout} from './components'
 import Mypage from './pages/Mypage/Mypage.jsx'
+import MyPosts from './pages/MyPosts/MyPosts.jsx'
+import Record from './pages/Record/Record.jsx'
+import ReviewList from './pages/ReviewList/ReviewList.jsx'
 import ProfileEdit from './pages/Profile/ProfileEdit.jsx'
 import Splash from './pages/Splash/Splash.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
@@ -44,10 +47,13 @@ function App() {
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/signup/done" element={<SignupDone/>}/>
             <Route path="/profile/edit" element={<ProfileEdit/>}/>
+            <Route path="/my/posts" element={<MyPosts/>}/>
+            <Route path="/my/reviews" element={<ReviewList/>}/>
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout/>}>
                 <Route path="/home" element={<Placeholder title="홈"/>}/>
                 <Route path="/my" element={<Mypage/>}/>
+                <Route path="/record" element={<Record/>}/>
             </Route>
             <Route path="/mate/write" element={<MateWrite/>}/>
             <Route path="/mate/:id" element={<MateDetail/>}/>

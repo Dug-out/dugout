@@ -175,6 +175,7 @@
     font-weight: 500;
     text-align: left;
     color: var(--text-900);
+    text-decoration: none;
     cursor: pointer;
 }
 
