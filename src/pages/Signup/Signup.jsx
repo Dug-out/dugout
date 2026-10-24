@@ -1,9 +1,10 @@
 import {useState} from 'react'
 import {useNavigate} from 'react-router'
-import {Button, Chip, Field, Header, InlineMessage} from '../../components'
+import {Button, Chip, Field, Header, InlineMessage, TeamPicker} from '../../components'
 import {checkEmail, checkNickname, signUp} from '../../api/auth.js'
 import {SIGNUP} from '../../constants/policy.js'
-import useAvailability from './useAvailability.js'
+import useAvailability from '../../hooks/useAvailability.js'
+import {availabilityProps} from '../../utils/availability.js'
 import './Signup.css'
 
 // 가입 오류 → 안내 문구 (DB 트리거가 닉네임 중복 같은 마지막 검사를 한 번 더 한다)
@@ -12,23 +13,6 @@ function signUpErrorMessage(error) {
     if (/database error/i.test(error.message)) return '이미 사용 중인 닉네임이거나 입력값이 올바르지 않아요'
     return '가입하지 못했어요. 잠시 후 다시 시도해 주세요'
 }
-
-const AVAILABILITY = {
-    email: {ok: '사용할 수 있는 이메일이에요', taken: '이미 가입된 이메일이에요'},
-    nickname: {ok: '멋진 닉네임이에요!', taken: '이미 사용 중인 닉네임이에요'},
-}
-
-/** 중복 확인 결과 → Field의 status / message / hint */
-function availabilityProps(kind, result) {
-    if (result === 'checking') return {hint: '확인하는 중이에요…'}
-    if (result === 'ok') return {status: 'ok', message: AVAILABILITY[kind].ok}
-    if (result === 'taken') return {status: 'error', message: AVAILABILITY[kind].taken}
-    if (result === 'failed') return {status: 'error', message: '확인하지 못했어요. 잠시 후 다시 시도해 주세요'}
-    return {}
-}
-
-// 구단 색을 CSS 변수로 넘긴다 (CSS 변수는 CSSProperties 타입에 없어서 캐스팅)
-const teamStyle = (color) => /** @type {import('react').CSSProperties} */ ({'--team-color': color})
 
 /** 회원가입 · 한 화면 (이메일 → 비밀번호 → 닉네임 → 성별 · 나이대 · 응원팀) */
 function Signup() {
@@ -151,18 +135,7 @@ function Signup() {
                 {/* 응원팀 · 고른 구단은 그 구단 색(--team-color)으로 강조된다 */}
                 <fieldset className="signup__group">
                     <legend>응원팀</legend>
-                    <div className="signup__teams">
-                        {SIGNUP.TEAMS.map((team) => (
-                            <button key={team.code} type="button" className="signup__team"
-                                    style={teamStyle(team.color)} aria-pressed={form.team === team.code}
-                                    onClick={() => pick('team', team.code)}>
-                                <span className="signup__logo">
-                                    <img src={team.icon} alt="" width="240" height="240"/>
-                                </span>
-                                {team.label}
-                            </button>
-                        ))}
-                    </div>
+                    <TeamPicker value={form.team} onChange={(code) => pick('team', code)}/>
                 </fieldset>
 
                 <div className="signup__footer">

@@ -1,0 +1,12 @@
+.tab-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+/* 화면 내용이 남은 높이를 모두 차지해서 탭바가 항상 아래에 붙는다 */
+.tab-layout__page {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
