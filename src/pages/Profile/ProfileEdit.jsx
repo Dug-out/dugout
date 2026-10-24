@@ -2,7 +2,7 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router'
 import {checkNickname} from '../../api/auth.js'
 import {updateMyProfile} from '../../api/profiles.js'
-import {Button, Chip, EmptyState, Field, Header, Icon, InlineMessage, TeamPicker} from '../../components'
+import {Button, Chip, Dialog, EmptyState, Field, Header, Icon, InlineMessage, TeamPicker} from '../../components'
 import {SIGNUP} from '../../constants/policy.js'
 import useAvailability from '../../hooks/useAvailability.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
@@ -40,7 +40,7 @@ function ProfileEdit() {
 
 /** 불러온 프로필로 채운 입력 화면 */
 function ProfileEditForm({profile}) {
-    // 저장하면 마이페이지로 돌아갈 때 쓴다
+    // 저장하면 마이페이지로 이동할 때 쓴다
     const navigate = useNavigate()
 
     // 불러온 값으로 시작한다 (이 컴포넌트는 불러온 뒤에야 만들어지므로 처음부터 채워져 있다)
@@ -60,8 +60,8 @@ function ProfileEditForm({profile}) {
 
     // 저장 요청 중인지 (중복 클릭 방지)
     const [busy, setBusy] = useState(false)
-    // 버튼 위에 보여줄 오류 문구
-    const [error, setError] = useState('')
+    // 저장 결과 안내 창 · null(안 보임), {ok: true}(성공), {ok: false, message}(실패)
+    const [result, setResult] = useState(null)
 
     // 앞뒤 공백을 뺀 닉네임으로 검사하고 저장한다
     const nickname = form.nickname.trim()
@@ -75,25 +75,27 @@ function ProfileEditForm({profile}) {
     // 닉네임이 형식에 맞고, 바꿨다면 사용 가능할 때만 저장할 수 있다
     const canSave = nicknameValid && (!nicknameChanged || nicknameResult === 'ok') && !busy
 
-    // 저장 버튼(또는 엔터)을 눌렀을 때 · 저장하고 마이페이지로 돌아간다
+    // 저장 버튼(또는 엔터)을 눌렀을 때 · 저장하고 결과 안내 창을 띄운다
     const handleSubmit = async (e) => {
-        // 폼 제출 시 페이지가 새로고침되는 기본 동작을 막는다
         e.preventDefault()
         if (!canSave) return
         setBusy(true)
-        setError('')
         try {
-            // 앞뒤 공백을 뺀 값으로 저장한다
             await updateMyProfile({...form, nickname, headline: form.headline.trim(), bio: form.bio.trim()})
-            // 성공 · 마이페이지로 돌아간다
-            navigate('/my')
+            // 성공 안내 창
+            setResult({ok: true})
         } catch (err) {
-            // 실패 · API 가 만든 한국어 문구를 그대로 보여 준다
-            setError(err.message)
+            // 실패 안내 창 · API 가 만든 한국어 문구를 그대로 보여 준다
+            setResult({ok: false, message: err.message})
         } finally {
             setBusy(false)
         }
     }
+
+    // 성공 안내 창을 닫을 때 · 마이페이지로 돌아간다
+    const goMypage = () => navigate('/my')
+    // 실패 안내 창을 닫을 때 · 창만 닫는다
+    const closeResult = () => setResult(null)
 
     return (
         <form className="profile-edit__form" onSubmit={handleSubmit}>
@@ -154,10 +156,20 @@ function ProfileEditForm({profile}) {
 
             {/* 하단에 고정된 저장 버튼 */}
             <div className="profile-edit__footer">
-                {/* 저장 실패 문구 */}
-                {error && <InlineMessage tone="error">{error}</InlineMessage>}
                 <Button type="submit" block disabled={!canSave}>{busy ? '저장하는 중…' : '저장하기'}</Button>
             </div>
+
+            {/* 저장 성공 · 확인(또는 바깥을 눌러 닫기)하면 마이페이지로 돌아간다 */}
+            <Dialog open={result?.ok === true} onClose={goMypage} onConfirm={goMypage}
+                    image="/assets/pose-yay.png" title="프로필을 저장했어요!"
+                    description="바뀐 내용이 마이페이지에 반영됐어요."
+                    confirmLabel="확인" cancelLabel={null} tone="primary"/>
+
+            {/* 저장 실패 · 확인하면 창만 닫고 입력 화면에 그대로 남는다 */}
+            <Dialog open={result?.ok === false} onClose={closeResult} onConfirm={closeResult}
+                    image="/assets/pose-sad.png" title="저장하지 못했어요"
+                    description={result?.message}
+                    confirmLabel="확인" cancelLabel={null} tone="primary"/>
         </form>
     )
 }

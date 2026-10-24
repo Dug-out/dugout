@@ -12,9 +12,10 @@ import './Dialog.css'
  *   title: string,
  *   description?: import('react').ReactNode,
  *   image?: string,
- *   cancelLabel?: string,
+ *   cancelLabel?: string | null,   // null이면 취소 버튼 없이 확인 버튼만 (완료·실패 안내 창)
  *   confirmLabel: string,
- *   tone?: 'danger' | 'primary'
+ *   tone?: 'danger' | 'primary',
+ *   className?: string
  * }} props
  */
 function Dialog({
@@ -27,19 +28,22 @@ function Dialog({
                     cancelLabel = '취소',
                     confirmLabel,
                     tone = 'danger',
+                    className = '',
                 }) {
     const titleId = useId()
 
     return (
         <Overlay open={open} onClose={onClose} align="center" labelledBy={titleId}>
-            <div className="dialog">
+            <div className={['dialog', className].filter(Boolean).join(' ')}>
                 {image && <img className="dialog__image" src={image} alt="" width="68" height="68"/>}
                 <h2 id={titleId} className="dialog__title">{title}</h2>
                 {description && <p className="dialog__desc">{description}</p>}
-                <div className="dialog__actions">
-                    <button type="button" className="dialog__btn dialog__btn--cancel" onClick={onClose}>
-                        {cancelLabel}
-                    </button>
+                <div className={`dialog__actions${cancelLabel === null ? ' dialog__actions--single' : ''}`}>
+                    {cancelLabel !== null && (
+                        <button type="button" className="dialog__btn dialog__btn--cancel" onClick={onClose}>
+                            {cancelLabel}
+                        </button>
+                    )}
                     <button type="button" className={`dialog__btn dialog__btn--${tone}`} onClick={onConfirm}>
                         {confirmLabel}
                     </button>

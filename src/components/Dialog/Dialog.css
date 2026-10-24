@@ -35,6 +35,10 @@
     margin-top: 6px;
 }
 
+.dialog__actions--single {
+    grid-template-columns: 1fr;
+}
+
 .dialog__btn {
     height: 48px;
     border: 0;
