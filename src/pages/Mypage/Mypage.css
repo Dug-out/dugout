@@ -108,9 +108,10 @@
     color: var(--surface);
 }
 
+/* 구간 이름이 점수 숫자의 세로 가운데에 오도록 맞춘다 */
 .mypage__manner-score {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 6px;
 }
 
