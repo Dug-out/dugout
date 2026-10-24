@@ -67,7 +67,8 @@ Claude Design 캔버스의 "간소화 버전" 페이지를 그대로 내보낸 �
 - `Empty-mate.dc.html` — 메이트 찾기 · 모집 글 없음
 - `Empty-record.dc.html` — 직관 기록 · 기록 없음
 - `Empty-posts.dc.html` — 내 직관 약속 · 약속 없음
-- `Empty-review.dc.html` — 메이트 평가 · 평가 대기 없음
+- `Empty-review.dc.html` — 메이트 평가 · 평가 대기 없음 (`Review-list` 카드 구조 그대로, 카드 안에 빈 안내)
+- `Empty-manner.dc.html` — 받은 매너 후기 · 후기 없음 (`Manner` 카드 구조 그대로, 카드 안에 빈 안내)
 
 ### 로딩
 - `Loading.dc.html` — 로딩 중 (마스코트 흔들림 + 점 3개 깜빡임). 데이터 불러올 때 화면 가운데에 공통으로 사용
