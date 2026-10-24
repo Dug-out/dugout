@@ -109,7 +109,7 @@ export async function createMatePost({
  * 내 응원팀 글이 아니거나 없는 글이면 null 을 돌려준다.
  * @param {string} id 모집 글 id
  * @returns {Promise<null | {
- *   id: string, title: string, imageUrl: string | null, isOpen: boolean, seat: string, capacity: number,
+ *   id: string, myId: string, title: string, imageUrl: string | null, isOpen: boolean, seat: string, capacity: number,
  *   ages: string[], gender: string, description: string, joinedCount: number,
  *   host: {id: string, nickname: string, avatarUrl: string | null, manner: number},
  *   game: {gameAt: string, home: string, away: string, stadium: string},
@@ -154,6 +154,7 @@ export async function getMatePost(id) {
     const {host: hostRow, game: gameRow} = post
     return {
         id: post.id,
+        myId: userId,
         title: post.title,
         imageUrl: post.image_url,
         isOpen: post.status === 'open',
