@@ -1,78 +1,48 @@
-.mate-image {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-/* 사진 추가 버튼 · 88×88 점선 상자 */
-.mate-image__add {
-    display: flex;
-    flex: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    width: 88px;
-    height: 88px;
-    border: 2px dashed var(--gray-300);
+/* 대표 이미지 · 누르는 버튼 (기본 이미지와 같은 비율) */
+.mate-image__photo {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
     border-radius: var(--radius-card-sm);
-    background: var(--bg);
-    color: var(--text-500);
-    font-family: var(--font-base), sans-serif;
-    font-size: 12px;
-    font-weight: 600;
+    background: none;
     cursor: pointer;
 }
 
-/* 고른 사진 미리보기 · 높이 88, 가로는 대표 이미지 비율(1200×680)에 맞춘다 */
-.mate-image__preview {
-    position: relative;
-    display: flex;
-    flex: none;
-    height: 88px;
-    aspect-ratio: 1200 / 680;
-    overflow: hidden;
-    border-radius: var(--radius-card-sm);
-}
-
-.mate-image__preview img {
+.mate-image__photo img {
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 680;
+    border-radius: var(--radius-card-sm);
     object-fit: cover;
 }
 
-/* 삭제(✕) · 눈에 보이는 크기는 28px, 눌리는 영역은 44px */
-.mate-image__remove {
+/* 카메라 모양 배지 */
+.mate-image__camera {
     position: absolute;
-    top: 0;
-    right: 0;
+    right: 10px;
+    bottom: 10px;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    width: 44px;
-    height: 44px;
-    padding: 4px;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-}
-
-.mate-image__remove > svg {
-    box-sizing: content-box;
-    padding: 7px;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--surface);
     border-radius: 50%;
-    background: color-mix(in srgb, var(--navy-700) 70%, transparent);
+    background: var(--navy-500);
     color: var(--surface);
 }
 
-.mate-image__remove:focus-visible {
+.mate-image__photo:focus-visible {
     outline: 2px solid var(--navy-300);
-    outline-offset: -2px;
+    outline-offset: 2px;
 }
 
 .mate-image__hint {
-    flex: 1;
+    margin: 0;
     color: var(--text-500);
     font-size: 13px;
     line-height: 1.5;

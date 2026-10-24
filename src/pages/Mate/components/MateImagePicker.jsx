@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react'
-import {Icon, ImageCropper, InlineMessage} from '../../../components'
+import {BottomSheet, BottomSheetItem, Icon, ImageCropper, InlineMessage} from '../../../components'
 import {MATE_POST} from '../../../constants/policy.js'
 import './MateImagePicker.css'
 
@@ -14,8 +14,10 @@ const SOURCE_MAX_BYTES = 15 * 1024 * 1024
  *  onChange: 사진을 고르면 줄인 사진(Blob), 지우면 null 을 알려 준다
  */
 function MateImagePicker({onChange}) {
-    // 미리보기 주소 · 없으면 사진을 고르지 않은 상태
+    // 미리보기 주소 · 없으면 기본 이미지
     const [preview, setPreview] = useState(null)
+    // "사진 선택하기 / 기본 이미지로 변경" 시트가 열려 있는지
+    const [sheetOpen, setSheetOpen] = useState(false)
     // 자르는 중인 원본 사진 주소 · 없으면 자르는 화면을 닫아 둔다
     const [cropSrc, setCropSrc] = useState(null)
     // 사진을 고를 때 생긴 안내 문구 (형식, 용량)
@@ -29,6 +31,12 @@ function MateImagePicker({onChange}) {
     useEffect(() => () => {
         if (previewRef.current) URL.revokeObjectURL(previewRef.current)
     }, [])
+
+    // "사진 선택하기" · 시트를 닫고 파일 선택 창을 연다
+    const choosePhoto = () => {
+        setSheetOpen(false)
+        inputRef.current.click()
+    }
 
     // 파일을 골랐을 때 · 형식과 용량을 확인하고 자르는 화면을 연다
     const handleFile = (e) => {
@@ -62,11 +70,12 @@ function MateImagePicker({onChange}) {
         onChange(blob)
     }
 
-    // 삭제(✕) · 고른 사진을 지우고 기본 이미지로 되돌린다
-    const remove = () => {
+    // "기본 이미지로 변경" · 고른 사진을 지우고 기본 이미지로 되돌린다
+    const resetToDefault = () => {
         if (previewRef.current) URL.revokeObjectURL(previewRef.current)
         previewRef.current = null
         setPreview(null)
+        setSheetOpen(false)
         setMessage('')
         onChange(null)
     }
@@ -76,29 +85,28 @@ function MateImagePicker({onChange}) {
             <span className="mate-write__label">
                 대표 이미지 <small>(선택)</small>
             </span>
-            <div className="mate-image">
-                {preview ? (
-                    <span className="mate-image__preview">
-                        <img src={preview} alt="선택한 대표 이미지" width="1200" height="680"/>
-                        <button type="button" className="mate-image__remove" aria-label="대표 이미지 삭제"
-                                onClick={remove}>
-                            <Icon name="close" size={14}/>
-                        </button>
-                    </span>
-                ) : (
-                    <button type="button" className="mate-image__add" onClick={() => inputRef.current.click()}>
-                        <Icon name="camera" size={24} strokeWidth={1.8}/>
-                        사진 추가
-                    </button>
-                )}
-                <span className="mate-image__hint">
-                    {preview ? '목록과 상세 위에 이 사진이 보여요.' : '사진을 올리면 모집 글이 더 눈에 띄어요.'}
+            {/* 대표 이미지 · 누르면 시트가 열린다 */}
+            <button type="button" className="mate-image__photo" aria-label="대표 이미지 변경"
+                    onClick={() => setSheetOpen(true)}>
+                <img src={preview ?? MATE_POST.DEFAULT_IMAGE} alt="" width={MATE_POST.IMAGE_WIDTH}
+                     height={MATE_POST.IMAGE_HEIGHT}/>
+                <span className="mate-image__camera" aria-hidden="true">
+                    <Icon name="camera" size={18}/>
                 </span>
-            </div>
+            </button>
+            <p className="mate-image__hint">
+                {preview ? '목록과 상세 위에 이 사진이 보여요.' : '사진을 올리면 모집 글이 더 눈에 띄어요.'}
+            </p>
             {message && <InlineMessage tone="error">{message}</InlineMessage>}
 
-            {/* 파일 선택 입력 · 화면에는 보이지 않고 위 버튼에서 대신 연다 */}
+            {/* 파일 선택 입력 · 화면에는 보이지 않고 아래 시트에서 대신 연다 */}
             <input ref={inputRef} type="file" accept={ACCEPT.join(',')} hidden onChange={handleFile}/>
+
+            {/* 사진 선택하기 / 기본 이미지로 변경 (사진이 이미 기본이면 뒤쪽은 숨긴다) */}
+            <BottomSheet open={sheetOpen} onClose={() => setSheetOpen(false)} label="대표 이미지">
+                <BottomSheetItem onClick={choosePhoto}>사진 선택하기</BottomSheetItem>
+                {preview && <BottomSheetItem onClick={resetToDefault}>기본 이미지로 변경</BottomSheetItem>}
+            </BottomSheet>
 
             {/* 기본 이미지와 같은 비율로 자르는 화면 */}
             {cropSrc && (
