@@ -1,0 +1,31 @@
+.segment-tabs {
+    display: flex;
+    padding: 4px;
+    border-radius: var(--radius-input);
+    background: var(--gray-100);
+}
+
+.segment-tabs__tab {
+    flex: 1;
+    min-height: 44px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    font-family: var(--font-base), sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-500);
+    cursor: pointer;
+}
+
+.segment-tabs__tab[aria-selected='true'] {
+    background: var(--surface);
+    box-shadow: var(--shadow-tab);
+    font-weight: 700;
+    color: var(--navy-500);
+}
+
+.segment-tabs__tab:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: -2px;
+}

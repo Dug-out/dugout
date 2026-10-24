@@ -63,6 +63,7 @@
   --shadow-ticket: 0 10px 20px rgba(27, 42, 92, 0.1);
   --stamp-bg: rgba(255, 255, 255, 0.88);
   --shadow-card: 0 4px 14px rgba(27, 42, 92, 0.06); /* 모집 글 카드 */
+  --shadow-tab: 0 1px 3px rgba(20, 27, 51, 0.12); /* 구분 탭에서 고른 칸 */
   --shadow-bottom-btn: 0 8px 20px rgba(27, 42, 92, 0.24);
   --dim: rgba(15, 26, 61, 0.55);
   --app-max-width: 430px;
