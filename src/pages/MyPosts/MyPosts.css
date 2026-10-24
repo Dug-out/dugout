@@ -16,4 +16,5 @@
 
 .my-posts__empty {
     flex: 1;
+    justify-content: center;
 }
