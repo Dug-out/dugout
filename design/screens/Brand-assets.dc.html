@@ -11,14 +11,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0}
-@keyframes wob{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes wob{0%,100%{transform:translateY(0) rotate(-6deg)}25%{transform:translateY(-8px) rotate(0)}50%{transform:translateY(0) rotate(6deg)}75%{transform:translateY(-8px) rotate(0)}}
 @keyframes ld{0%,80%,100%{opacity:.25}40%{opacity:1}}
-.wob{animation:wob 1s ease-in-out infinite}
+.wob{animation:wob 1.2s ease-in-out infinite;transform-origin:50% 90%}
 .ld{animation:ld 1.2s infinite both}
 @media (prefers-reduced-motion: reduce){.wob,.ld{animation:none}}
 </style>
 </helmet>
-<div style="width: 1200px; height: 3410px; box-sizing: border-box; padding: 48px; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; display: flex; flex-direction: column; gap: 44px; overflow: hidden">
+<div style="width: 1200px; height: 3460px; box-sizing: border-box; padding: 48px; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; display: flex; flex-direction: column; gap: 44px; overflow: hidden">
 <header style="display: flex; align-items: center; gap: 18px">
 <img src="assets/app-icon.png" alt="" width="64" height="64" style="display: block; border-radius: 18px">
 <div><h1 style="margin: 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 34px; font-weight: 400; color: #1B2A5C">덕아웃 이미지 에셋 · 간소화</h1>
@@ -113,10 +113,10 @@ body{margin:0}
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px"><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column"><div style="height: 170px; background: #FCE8EA; display: flex; align-items: center; justify-content: center"><img src="assets/rate-good.png" alt="추천해요" width="140" height="140" style="display: block; width: 140px; height: 140px"></div><figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 15px; font-weight: 700; color: #141B33">최고의 메이트</span><span style="font-size: 12px; color: #5A6380">8점 이상 · rate-good</span></figcaption></figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column"><div style="height: 170px; background: #EEF0F6; display: flex; align-items: center; justify-content: center"><img src="assets/rate-soso.png" alt="그저 그래요" width="140" height="140" style="display: block; width: 140px; height: 140px"></div><figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 15px; font-weight: 700; color: #141B33">괜찮았어요</span><span style="font-size: 12px; color: #5A6380">5 ~ 7점 · rate-soso</span></figcaption></figure><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column"><div style="height: 170px; background: #EEF0F6; display: flex; align-items: center; justify-content: center"><img src="assets/rate-bad.png" alt="별로예요" width="140" height="140" style="display: block; width: 140px; height: 140px"></div><figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 15px; font-weight: 700; color: #141B33">아쉬웠어요</span><span style="font-size: 12px; color: #5A6380">4점 이하 · rate-bad</span></figcaption></figure></div>
 </section>
 <section style="display: flex; flex-direction: column; gap: 14px">
-<div><h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #141B33">상태 · 기능 이미지</h2><p style="margin: 4px 0 0; font-size: 13px; color: #5A6380">로딩 상태에 쓰는 이미지예요.</p></div>
+<div><h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #141B33">상태 · 기능 이미지</h2><p style="margin: 4px 0 0; font-size: 13px; color: #5A6380">로딩 상태에 쓰는 이미지와 모션이에요.</p></div>
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px"><figure style="margin: 0; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column">
-<div style="height: 150px; background: #F7F8FC; display: flex; align-items: center; justify-content: center"><img src="assets/loading.png" alt="로딩" style="display: block; max-width: 150px; max-height: 118px; width: auto; height: auto"></div>
-<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">로딩</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">데이터 불러오는 중 (흔들림 모션)</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/loading.png</code></figcaption>
+<div style="height: 190px; background: #F7F8FC; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px"><img class="wob" src="assets/loading.png" alt="로딩" style="display: block; width: 120px; height: auto"><span style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #5A6380">불러오는 중<span style="display: flex; gap: 4px"><span class="ld" style="width: 6px; height: 6px; border-radius: 50%; background: #1B2A5C"></span><span class="ld" style="width: 6px; height: 6px; border-radius: 50%; background: #1B2A5C; animation-delay: .2s"></span><span class="ld" style="width: 6px; height: 6px; border-radius: 50%; background: #1B2A5C; animation-delay: .4s"></span></span></span></div>
+<figcaption style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700; color: #141B33">로딩</span><span style="font-size: 12px; line-height: 1.45; color: #5A6380">데이터 불러오는 중. 마스코트가 좌우로 흔들리며 통통 뛰고(1.2초 반복), 점 3개가 차례로 깜빡여요. 동작 줄이기 설정이면 멈춤.</span><code style="font-size: 11px; color: #6B7390; font-family: ui-monospace, monospace">assets/loading.png</code></figcaption>
 </figure></div>
 </section>
 <section style="display: flex; flex-direction: column; gap: 14px">
@@ -131,7 +131,7 @@ body{margin:0}
 </section>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":3410}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":3460}}'>
 class Component extends DCLogic {
   renderVals() {
     return {};
