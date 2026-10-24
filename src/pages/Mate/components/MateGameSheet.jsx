@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import {getMyTeam, getSelectableGames} from '../../../api/mate.js'
 import {BottomSheet, Button} from '../../../components'
-import {formatDay, formatTime, matchLabel} from '../utils/mateFormat.js'
+import {formatDay, formatTime, matchLabel} from '../../../utils/mateFormat.js'
 import './MateGameSheet.css'
 
 /**

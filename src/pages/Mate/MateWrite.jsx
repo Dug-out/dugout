@@ -4,7 +4,7 @@ import { createMatePost, getMyTeam } from "../../api/mate.js";
 import { Button, Chip, Field, Icon, InlineMessage } from "../../components";
 import { MATE_POST } from "../../constants/policy.js";
 import MateGameSheet from "./components/MateGameSheet.jsx";
-import { formatDay, formatTime, matchLabel } from "./utils/mateFormat.js";
+import { formatDay, formatTime, matchLabel } from "../../utils/mateFormat.js";
 import "./MateWrite.css";
 
 /** 새 글의 처음 값 */

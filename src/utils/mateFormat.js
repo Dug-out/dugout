@@ -1,6 +1,6 @@
 // 메이트 화면에서 쓰는 글자 만들기 함수 모음 (날짜 · 시간 · 팀 이름)
 // 여러 화면에서 같은 모양으로 보이도록 한곳에 모았다.
-import {SIGNUP} from '../../../constants/policy.js'
+import {SIGNUP} from '../constants/policy.js'
 
 /** 요일 글자 · Date.getDay()가 0(일)~6(토)을 돌려준다 */
 const DAYS = ['일', '월', '화', '수', '목', '금', '토']
