@@ -20,8 +20,9 @@ const EMPTY_FORM = {
     description: "",
 };
 
-/** 모집 글 쓰기 (Mate-write.dc.html) · 제목, 경기, 좌석이 필수이고 나머지는 비워도 된다 */
+/** 모집 글 쓰기 · 제목, 경기, 좌석이 필수이고 나머지는 비워도 된다 */
 function MateWrite() {
+    // 작성에 성공하면 완료 화면으로 이동할 때 쓴다
     const navigate = useNavigate();
 
     // 입력한 값
@@ -30,7 +31,7 @@ function MateWrite() {
     // 입력칸마다 쓰는 변경 함수 · set('title')(값) 은 title 칸만 바꾼다
     const set = (key) => (value) => setForm((prev) => ({...prev, [key]: value}));
 
-    // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다 (못 불러와도 글쓰기는 가능)
+    // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
     const myTeam = useMyTeam();
 
     // 경기 선택 시트가 열려 있는지
@@ -71,10 +72,8 @@ function MateWrite() {
                 description: form.description,
                 imageUrl: null, // 사진 올리기 함수가 아직 없어서 기본 이미지로 저장
             });
-            // replace: 뒤로가기로 이 화면에 돌아오지 않게 · state.created: 상세 화면이 완료 창을 띄운다
             navigate(`/mate/${id}`, {replace: true, state: {created: true}});
         } catch (failure) {
-            // API 가 만든 한국어 문구를 그대로 보여 준다
             setError(failure.message);
             setBusy(false);
         }

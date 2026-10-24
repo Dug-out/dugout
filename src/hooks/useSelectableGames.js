@@ -4,8 +4,6 @@ import {getSelectableGames} from '../api/mate.js'
 /**
  * 모집 글에 고를 수 있는 경기(시작 전, 내 팀 경기)를 불러온다.
  * @returns {{status: 'loading' | 'ready' | 'error', games: object[], reload: () => void}}
- *
- * 내 팀 경기만 오는 것은 DB 규칙(RLS)이 맡는다 (supabase/schema/02_games.sql).
  */
 export default function useSelectableGames() {
     const [state, setState] = useState(
@@ -13,7 +11,7 @@ export default function useSelectableGames() {
         ({status: 'loading', games: []}),
     )
 
-    // 올릴 때마다 아래 effect 가 다시 실행된다 (다시 시도)
+    // 올릴 때마다 아래 effect 가 다시 실행된다
     const [retry, setRetry] = useState(0)
 
     useEffect(() => {

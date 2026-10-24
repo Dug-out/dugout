@@ -40,7 +40,6 @@ function createErrorMessage(error) {
 
 /**
  * [모집 글 올리기] 모집 글 저장 · 방장과 내 응원팀은 알아서 채운다
- * 값의 규칙을 어기면 Error, message는 그대로 보여줘도 된다
  * @returns {Promise<{id: string}>} 새 글의 id
  */
 export async function createMatePost({gameId, title, seat, capacity, ages = [], gender = '무관', description = '', imageUrl = null}) {

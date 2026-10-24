@@ -8,8 +8,6 @@ import {getMyProfile} from '../api/profiles.js'
  *  reload: 불러오기에 실패했을 때 "다시 시도" 버튼이 부른다
  */
 export default function useMyProfile() {
-    // status: 불러오는 상태 · loading(불러오는 중), ready(성공), error(실패)
-    // profile: 불러온 내 프로필 · 성공하기 전에는 null
     const [state, setState] = useState(
         /** @type {{status: 'loading' | 'ready' | 'error', profile: object | null}} */
         ({status: 'loading', profile: null}),

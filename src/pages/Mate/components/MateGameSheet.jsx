@@ -15,7 +15,6 @@ const monthIndex = (date) => date.getFullYear() * 12 + date.getMonth()
 
 /**
  * 경기 선택 시트 (Mate-cal.dc.html) · 경기가 있는 날을 눌러 고르고 [이 경기로 선택]으로 확정한다
- * 경기 목록은 hooks/useSelectableGames.js 가 불러온다 (내 팀 경기만 오는 것은 DB 규칙)
  * @param {{myTeam: string | null, selectedId: number | null, onPick: (game: object) => void, onClose: () => void}} props
  */
 function MateGameSheet({myTeam, selectedId, onPick, onClose}) {
@@ -125,7 +124,8 @@ function GameCalendar({games, myTeam, selectedId, onPick, onClose}) {
                 })}
             </div>
 
-            <p className="mate-cal__legend"><span className="mate-cal__dot" aria-hidden="true"/>{myTeam ?? '우리 팀'} 경기</p>
+            <p className="mate-cal__legend"><span className="mate-cal__dot" aria-hidden="true"/>{myTeam ?? '우리 팀'} 경기
+            </p>
 
             {/* 고른 경기 띠 */}
             <div className={`mate-cal__picked${picked ? ' mate-cal__picked--on' : ''}`} aria-live="polite">
