@@ -24,10 +24,10 @@ export async function getSelectableGames() {
         .gt('game_at', new Date().toISOString())
         .order('game_at')
     if (error) throw error
-    const rows = /** @type {{id: number, game_at: string, home_team: string, away_team: string, stadium: string}[]} */ (data)
-    return rows.map(({id, game_at: gameAt, home_team: home, away_team: away, stadium}) => ({
-        id, gameAt, home, away, stadium,
-    }))
+    return data.map((row) => {
+        const {id, game_at: gameAt, home_team: home, away_team: away, stadium} = row
+        return {id, gameAt, home, away, stadium}
+    })
 }
 
 /** 저장 실패 → 화면에 보여줄 문구 */
