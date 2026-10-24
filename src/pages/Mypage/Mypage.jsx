@@ -82,8 +82,8 @@ function MypageBody({profile}) {
                             <path d="M7 4.5c2.2 2.2 2.2 12.8 0 15M17 4.5c-2.2 2.2-2.2 12.8 0 15"/>
                         </svg>
                         매너 타율
-                        <span className="mypage__manner-more">후기 보기<Icon name="chevronRight" size={14}
-                                                                         strokeWidth={2.2}/></span>
+                        <Link to="/my/manner" className="mypage__manner-more">후기 보기<Icon name="chevronRight" size={14}
+                                                                       strokeWidth={2.2}/></Link>
                     </span>
                     {/* 점수(.250 형태)와 구간 이름 */}
                     <span className="mypage__manner-score">

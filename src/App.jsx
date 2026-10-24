@@ -5,6 +5,7 @@ import Login from './pages/Login/Login.jsx'
 import Signup from './pages/Signup/Signup.jsx'
 import SignupDone from './pages/Signup/SignupDone.jsx'
 import {TabLayout} from './components'
+import MannerReviews from './pages/MannerReviews/MannerReviews.jsx'
 import Mypage from './pages/Mypage/Mypage.jsx'
 import MyPosts from './pages/MyPosts/MyPosts.jsx'
 import Record from './pages/Record/Record.jsx'
@@ -48,6 +49,7 @@ function App() {
             <Route path="/signup/done" element={<SignupDone/>}/>
             <Route path="/profile/edit" element={<ProfileEdit/>}/>
             <Route path="/my/posts" element={<MyPosts/>}/>
+            <Route path="/my/manner" element={<MannerReviews/>}/>
             <Route path="/my/reviews" element={<ReviewList/>}/>
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout/>}>
