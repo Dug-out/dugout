@@ -10,6 +10,7 @@ create table public.profiles (
   age_group text not null check (age_group in ('10대','20대','30대','40대 이상')),
   headline text not null default '' check (char_length(headline) <= 30),
   bio text not null default '' check (char_length(bio) <= 300),
+  avatar_url text check (avatar_url is null or (char_length(avatar_url) <= 500 and avatar_url like '%/storage/v1/object/public/avatars/%')),  -- 프로필 사진 주소 (avatars 버킷의 사진만, 비어 있으면 기본 이미지)
   manner_avg numeric(4,3) not null default 0.250 check (manner_avg between 0.200 and 0.400),
   created_at timestamptz not null default now()  -- 가입 시각 (자동)
 );
@@ -32,7 +33,7 @@ revoke all on public.profiles from anon, authenticated;
 grant select on public.profiles to authenticated;
 
 -- 수정: 프로필 수정 화면의 항목만 (매너 타율은 직접 못 바꿈) · 행 추가는 아래 트리거만 한다
-grant update (nickname, team, gender, age_group, headline, bio) on public.profiles to authenticated;
+grant update (nickname, team, gender, age_group, headline, bio, avatar_url) on public.profiles to authenticated;
 
 -- 2. 가입 시 프로필 자동 생성
 -- 새 계정이 생기면 실행되는 함수
