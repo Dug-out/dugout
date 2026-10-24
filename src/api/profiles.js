@@ -23,7 +23,7 @@ export async function getMyProfile() {
         .single()
     if (error) throw error
     const {nickname, team, gender, age_group: age, headline, bio, manner_avg: manner} = data
-    return {nickname, team, gender, age, headline, bio, manner: Number(manner)} // numeric 은 문자열로 올 수 있어 숫자로 바꾼다
+    return {nickname, team, gender, age, headline, bio, manner: Number(manner)}
 }
 
 /**
