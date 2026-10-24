@@ -2,7 +2,7 @@ import {Link} from 'react-router'
 import {Button, EmptyState, Header, Icon, Loading} from '../../components'
 import {SIGNUP} from '../../constants/policy.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
-import {formatManner, mannerSummary} from './utils/manner.js'
+import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './Mypage.css'
 
 // 내 활동 메뉴 · 눌렀을 때 이동할 화면
