@@ -8,7 +8,7 @@ import MateGameSheet from "./components/MateGameSheet.jsx";
 import { formatDay, formatTime, matchLabel } from "../../utils/mateFormat.js";
 import "./MateWrite.css";
 
-/** 새 글의 처음 값 */
+// 새 글의 처음 값
 const EMPTY_FORM = {
   title: "",
   game: null,
@@ -19,52 +19,46 @@ const EMPTY_FORM = {
   description: "",
 };
 
-/**
- * 모집 글 쓰기 · 주소 /mate/write (Mate-write.dc.html)
- *
- * 입력 순서 (디자인 그대로): 대표 이미지(선택) → 제목 → 경기 선택 → 좌석 → 모집 인원 → 나이대 → 성별 → 소개
- * 필수: 제목 · 경기 · 좌석 (DB 규칙에서 성별 · 소개는 비워도 된다)
- *
- * 🔌 DB: src/api/mate.js 의 함수를 훅으로 불러 쓴다
- *  - useMyTeam()          내 응원팀 · 경기 이름을 "LG vs 두산"처럼 내 팀 먼저 쓰려고
- *  - 경기 선택 시트(MateGameSheet.jsx)는 useSelectableGames() 로 경기 목록을 불러온다
- *  - createMatePost()     모집 글 올리기 · 방장과 팀은 함수가 알아서 채운다
- */
+/** 모집 글 쓰기 (Mate-write.dc.html) · 제목, 경기, 좌석이 필수이고 나머지는 비워도 된다 */
 function MateWrite() {
   const navigate = useNavigate();
 
+  // 입력한 값
   const [form, setForm] = useState(EMPTY_FORM);
 
-  // set('title')(값) 처럼 칸 이름을 넣으면 그 칸만 바꾸는 함수를 만든다
+  // 입력칸마다 쓰는 변경 함수 · set('title')(값) 은 title 칸만 바꾼다
   const set = (key) => (value) => setForm((prev) => ({ ...prev, [key]: value }));
 
-  // 내 응원팀 · 못 불러와도 글쓰기는 할 수 있다 (경기 이름만 "홈 vs 원정" 순서로 보인다)
+  // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다 (못 불러와도 글쓰기는 가능)
   const myTeam = useMyTeam();
 
+  // 경기 선택 시트가 열려 있는지
   const [gameSheetOpen, setGameSheetOpen] = useState(false);
 
+  // 올리는 중인지 (중복 클릭 방지)
   const [busy, setBusy] = useState(false);
+  // 버튼 위에 보여줄 오류 문구
   const [error, setError] = useState("");
 
-  // 좌석 · 성별: 하나만 · 이미 고른 것을 다시 누르면 해제 (디자인 동작)
+  // 하나만 고르는 칸(좌석, 성별) · 고른 것을 다시 누르면 해제
   const pickOne = (key, value) => set(key)(form[key] === value ? "" : value);
 
-  // 나이대: 여러 개 · 순서는 항상 10대 → 40대 이상으로 맞춘다
+  // 나이대는 여러 개 · 순서는 항상 10대 → 40대 이상
   const toggleAge = (age) => set("ages")(MATE_POST.AGES.filter((a) => (a === age) !== form.ages.includes(a)));
 
-  // 필수 3칸(제목, 선택한경기, 좌석)
+  // 필수 칸(제목, 경기, 좌석)이 채워졌는지
   const ready = form.title.trim() && form.game && form.seat;
   const canSubmit = ready && !busy;
 
-  // 닫기(✕) · 들어온 화면으로 돌아간다 · 이전 화면이 없으면(주소로 바로 들어옴) 홈으로
+  // 닫기(✕) · 이전 화면으로, 주소로 바로 들어왔으면 홈으로
   const close = () => {
     if (window.history.state?.idx > 0) navigate(-1);
     else navigate("/home", { replace: true });
   };
 
-  // 모집 글 올리기 → 성공하면 새 글의 상세 화면으로
+  // 올리기 버튼을 눌렀을 때 · 성공하면 새 글 상세 화면으로 이동하고, 실패하면 오류 문구를 보여 준다
   const submit = async (e) => {
-    e.preventDefault(); // <form> 기본 동작(페이지 새로고침) 막기
+    e.preventDefault();
     if (!canSubmit) return;
     setBusy(true);
     setError("");
@@ -79,11 +73,10 @@ function MateWrite() {
         description: form.description,
         imageUrl: null, // 사진 올리기 함수가 아직 없어서 기본 이미지로 저장
       });
-      // replace: 뒤로가기를 눌렀을 때 쓰기 화면으로 돌아오지 않게
-      // state.created: 상세 화면(MateDetail)이 이 값을 보고 "모집 글을 올렸어요!" 완료 창을 띄운다
+      // replace: 뒤로가기로 이 화면에 돌아오지 않게 · state.created: 상세 화면이 완료 창을 띄운다
       navigate(`/mate/${id}`, { replace: true, state: { created: true } });
     } catch (failure) {
-      // createMatePost가 화면에 그대로 보여 줘도 되는 문구로 오류를 낸다 (예: '입력한 내용을 다시 확인해 주세요')
+      // API 가 만든 한국어 문구를 그대로 보여 준다
       setError(failure.message);
       setBusy(false);
     }
@@ -91,7 +84,7 @@ function MateWrite() {
 
   return (
     <div className="mate-write">
-      {/* 헤더 · 디자인은 뒤로가기(←) 대신 닫기(✕)라서 공통 Header 대신 같은 크기로 직접 그린다 */}
+      {/* 닫기(✕) 헤더 · 공통 Header 는 뒤로가기(←)만 있어서 직접 그린다 */}
       <header className="mate-write__header">
         <button type="button" className="mate-write__close" aria-label="닫기" onClick={close}>
           <Icon name="close" size={22} />
@@ -99,9 +92,9 @@ function MateWrite() {
         <h1 className="mate-write__heading">모집 글 쓰기</h1>
       </header>
 
-      {/* noValidate: 브라우저 기본 입력 검사 말풍선 대신 화면 안내를 쓴다 */}
+      {/* noValidate: 브라우저 기본 검사 말풍선 대신 화면 안내를 쓴다 */}
       <form className="mate-write__form" onSubmit={submit} noValidate>
-        {/* 대표 이미지 (선택) · 사진 올리기 함수가 아직 없어서 버튼만 두고 누를 수 없게 했다 */}
+        {/* 대표 이미지 (선택) · 사진 올리기가 준비되면 연결한다 */}
         <div className="mate-write__group">
           <span className="mate-write__label">
             대표 이미지 <small>(선택)</small>
@@ -119,7 +112,7 @@ function MateWrite() {
           </div>
         </div>
 
-        {/* 제목 · 기존 Field 컴포넌트 (높이 50 · radius 12 · 글자 16px) · 50자까지 (DB 규칙) */}
+        {/* 제목 · 50자까지 */}
         <Field
           id="mate-write-title"
           label="제목"
@@ -129,7 +122,7 @@ function MateWrite() {
           onChange={(e) => set("title")(e.target.value)}
         />
 
-        {/* 경기 선택 · 누르면 경기 선택 시트 */}
+        {/* 경기 선택 · 누르면 경기 선택 시트가 열린다 */}
         <div className="mate-write__group">
           <span className="mate-write__label" id="mate-write-game-label">
             경기 선택
@@ -159,7 +152,7 @@ function MateWrite() {
           </button>
         </div>
 
-        {/* 좌석 · 하나만 · 기존 Chip(select) 사용 */}
+        {/* 좌석 · 하나만 */}
         <ChipGroup label="좌석">
           {MATE_POST.SEATS.map((seat) => (
             <Chip key={seat} variant="select" selected={form.seat === seat} onClick={() => pickOne("seat", seat)}>
@@ -168,7 +161,7 @@ function MateWrite() {
           ))}
         </ChipGroup>
 
-        {/* 모집 인원 · − 숫자 + (본인 포함 2~10명) */}
+        {/* 모집 인원 · 본인 포함 2~10명 */}
         <div className="mate-write__count-row">
           <span className="mate-write__label">
             모집 인원 <small>(본인 포함)</small>
@@ -182,7 +175,7 @@ function MateWrite() {
             >
               −
             </button>
-            {/* aria-live: 숫자가 바뀌면 화면 읽기 프로그램이 읽어 준다 */}
+            {/* aria-live: 숫자가 바뀌면 화면 읽기 프로그램이 읽는다 */}
             <span className="mate-write__count" aria-live="polite">
               {form.capacity}명
             </span>
@@ -197,7 +190,7 @@ function MateWrite() {
           </div>
         </div>
 
-        {/* 나이대 · 여러 개 · 안 고르면 무관 */}
+        {/* 나이대 · 여러 개, 안 고르면 무관 */}
         <ChipGroup label="나이대" sub="(여러 개 선택 가능)">
           {MATE_POST.AGES.map((age) => (
             <Chip key={age} variant="select" selected={form.ages.includes(age)} onClick={() => toggleAge(age)}>
@@ -206,7 +199,7 @@ function MateWrite() {
           ))}
         </ChipGroup>
 
-        {/* 성별 · 하나만 · 안 고르면 무관 */}
+        {/* 성별 · 하나만, 안 고르면 무관 */}
         <ChipGroup label="성별">
           {MATE_POST.GENDERS.map((gender) => (
             <Chip key={gender} variant="select" selected={form.gender === gender} onClick={() => pickOne("gender", gender)}>
@@ -215,7 +208,7 @@ function MateWrite() {
           ))}
         </ChipGroup>
 
-        {/* 소개 · 500자까지 (DB 규칙) · 글자 수 표시 */}
+        {/* 소개 · 500자까지 */}
         <div className="mate-write__group">
           <label htmlFor="mate-write-description" className="mate-write__label">
             소개
@@ -235,7 +228,7 @@ function MateWrite() {
           </span>
         </div>
 
-        {/* 아래 고정 버튼 · 필수 칸이 비어 있으면 회색(누를 수 없음) + 안내 */}
+        {/* 하단 고정 버튼 · 필수 칸이 비어 있으면 누를 수 없고 안내가 나온다 */}
         <div className="mate-write__bottom">
           {error && <InlineMessage tone="error">{error}</InlineMessage>}
           {!ready && <InlineMessage>제목 · 경기 · 좌석을 채우면 올릴 수 있어요</InlineMessage>}
@@ -245,7 +238,7 @@ function MateWrite() {
         </div>
       </form>
 
-      {/* 경기 선택 시트 · 열 때마다 새로 만들어서 최신 경기 목록을 불러온다 */}
+      {/* 경기 선택 시트 · 열 때마다 새로 만들어 최신 경기를 불러온다 */}
       {gameSheetOpen && (
         <MateGameSheet
           myTeam={myTeam}
@@ -261,10 +254,10 @@ function MateWrite() {
   );
 }
 
-/** 칩 묶음 · [라벨 (작은 설명)] 아래에 칩을 줄바꿈하며 나열 */
+/** 칩 묶음 · 라벨 아래에 칩을 나열 */
 function ChipGroup({ label, sub, children }) {
   return (
-    // role="group" + aria-label: 화면 읽기 프로그램이 "좌석 그룹"처럼 묶어서 읽는다
+    // role="group": 화면 읽기 프로그램이 칩을 한 묶음으로 읽는다
     <div className="mate-write__group" role="group" aria-label={label}>
       <span className="mate-write__label">
         {label} {sub && <small>{sub}</small>}
