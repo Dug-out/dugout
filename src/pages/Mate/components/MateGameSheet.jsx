@@ -133,12 +133,15 @@ function GameCalendar({games, myTeam, selectedId, onPick, onClose}) {
 
             <p className="mate-cal__legend"><span className="mate-cal__dot" aria-hidden="true"/>{myTeam ?? '우리 팀'} 경기</p>
 
-            {/* 고른 경기 안내 · '10.25 (일) 14:00 · KIA vs 삼성 · 챔피언스필드' */}
-            <p className="mate-cal__picked" aria-live="polite">
-                {picked
-                    ? `${formatDay(picked.gameAt)} ${formatTime(picked.gameAt)} · ${matchLabel(picked, myTeam)} · ${picked.stadium}`
-                    : '경기가 있는 날짜를 눌러 주세요'}
-            </p>
+            {/* 고른 경기 띠 · 날짜·시간·경기 이름은 굵게, 구장은 아래에 작게 · 고르기 전에는 회색 안내 */}
+            <div className={`mate-cal__picked${picked ? ' mate-cal__picked--on' : ''}`} aria-live="polite">
+                {picked ? (
+                    <>
+                        <strong>{formatDay(picked.gameAt)} {formatTime(picked.gameAt)} · {matchLabel(picked, myTeam)}</strong>
+                        <span>{picked.stadium}</span>
+                    </>
+                ) : '경기가 있는 날짜를 눌러 주세요'}
+            </div>
 
             <div className="mate-cal__actions">
                 <Button variant="secondary" onClick={onClose}>취소</Button>
