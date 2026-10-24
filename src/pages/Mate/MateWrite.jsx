@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { createMatePost, getMyTeam } from "../../api/mate.js";
-import { Button, Chip, Field, InlineMessage } from "../../components";
-// Icon은 components/index.js 에서 내보내지 않아서 파일에서 직접 가져온다
-import Icon from "../../components/Icon/Icon.jsx";
+import { Button, Chip, Field, Icon, InlineMessage } from "../../components";
 import { MATE_POST } from "../../constants/policy.js";
 import MateGameSheet from "./components/MateGameSheet.jsx";
-import MateIcon from "./components/MateIcon.jsx";
 import { formatDay, formatTime, matchLabel } from "./utils/mateFormat.js";
 import "./MateWrite.css";
 
@@ -106,7 +103,7 @@ function MateWrite() {
       {/* 헤더 · 디자인은 뒤로가기(←) 대신 닫기(✕)라서 공통 Header 대신 같은 크기로 직접 그린다 */}
       <header className="mate-write__header">
         <button type="button" className="mate-write__close" aria-label="닫기" onClick={close}>
-          <MateIcon name="close" size={22} />
+          <Icon name="close" size={22} />
         </button>
         <h1 className="mate-write__heading">모집 글 쓰기</h1>
       </header>
@@ -120,7 +117,7 @@ function MateWrite() {
           </span>
           <div className="mate-write__image-row">
             <button type="button" className="mate-write__add-photo" disabled>
-              <MateIcon name="camera" size={24} strokeWidth={1.8} />
+              <Icon name="camera" size={24} strokeWidth={1.8} />
               사진 추가
             </button>
             <span className="mate-write__image-hint">
@@ -167,7 +164,7 @@ function MateWrite() {
                 <span className="mate-write__game-placeholder">같이 볼 경기를 골라 주세요</span>
               )}
             </span>
-            <MateIcon name="chevronRight" size={18} />
+            <Icon name="chevronRight" size={18} />
           </button>
         </div>
 
