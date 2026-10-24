@@ -11,7 +11,7 @@ function signInErrorMessage(error) {
     return '로그인하지 못했어요. 잠시 후 다시 시도해 주세요'
 }
 
-/** 로그인 s 이메일 + 비밀번호 */
+/** 로그인 · 이메일 + 비밀번호 */
 function Login() {
     // 로그인에 성공하면 화면을 이동할 때 쓴다
     const navigate = useNavigate()
