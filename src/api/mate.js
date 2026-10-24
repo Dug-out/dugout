@@ -1,27 +1,18 @@
 import {supabase} from '../lib/supabase.js'
 
-/** DB 한 줄(snake_case) → 화면에서 쓰는 모양(camelCase) */
-function toGame(row) {
-    return {
-        id: row.id,
-        gameAt: row.game_at,
-        home: row.home_team,
-        away: row.away_team,
-        stadium: row.stadium,
-    }
-}
-
 /** 브라우저에 저장된 로그인 정보에서 id를 읽고, 해당 사용자의 team을 조회 */
 export async function getMyTeam() {
     const {data: {session}} = await supabase.auth.getSession()
+    const {id: userId} = session.user
 
     const {data, error} = await supabase
         .from('profiles')
         .select('team')
-        .eq('id', session.user.id)
+        .eq('id', userId)
         .single()
     if (error) throw error
-    return data.team
+    const {team} = data
+    return team
 }
 
 /** [경기 선택] 목록 · 시작 전 예정 경기를 빠른 순으로 (내 팀 경기만 오는 건 DB 규칙) */
@@ -33,7 +24,10 @@ export async function getSelectableGames() {
         .gt('game_at', new Date().toISOString())
         .order('game_at')
     if (error) throw error
-    return data.map(toGame)
+    return data.map((row) => {
+        const {id, game_at: gameAt, home_team: home, away_team: away, stadium} = row
+        return {id, gameAt, home, away, stadium}
+    })
 }
 
 /** 저장 실패 → 화면에 보여줄 문구 */
@@ -46,11 +40,13 @@ function createErrorMessage(error) {
 
 /**
  * [모집 글 올리기] 모집 글 저장 · 방장과 내 응원팀은 알아서 채운다
- * 값의 규칙은 constants/policy.js 의 MATE_POST 참고 (어기면 Error, message는 그대로 보여줘도 된다)
  * @returns {Promise<{id: string}>} 새 글의 id
  */
 export async function createMatePost({gameId, title, seat, capacity, ages = [], gender = '무관', description = '', imageUrl = null}) {
-    const team = await getMyTeam()
+    // 내 팀을 못 불러오면 저장도 못 하므로, 다른 저장 실패와 같은 한국어 문구의 Error 로 던진다
+    const team = await getMyTeam().catch((cause) => {
+        throw Object.assign(new Error(createErrorMessage({})), {cause})
+    })
 
     const {data, error} = await supabase
         .from('mate_posts')
@@ -67,6 +63,7 @@ export async function createMatePost({gameId, title, seat, capacity, ages = [], 
         })
         .select('id')
         .single()
-    if (error) throw new Error(createErrorMessage(error), {cause: error})
-    return {id: data.id}
+    if (error) throw Object.assign(new Error(createErrorMessage(error)), {cause: error})
+    const {id} = data
+    return {id}
 }

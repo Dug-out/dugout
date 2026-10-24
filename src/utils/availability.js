@@ -1,3 +1,4 @@
+// 중복 확인 결과별 안내 문구
 const AVAILABILITY = {
     email: {ok: '사용할 수 있는 이메일이에요', taken: '이미 가입된 이메일이에요'},
     nickname: {ok: '멋진 닉네임이에요!', taken: '이미 사용 중인 닉네임이에요'},

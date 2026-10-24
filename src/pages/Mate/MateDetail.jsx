@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { Header } from "../../components";
-// Icon은 components/index.js 에서 내보내지 않아서 파일에서 직접 가져온다
-import Icon from "../../components/Icon/Icon.jsx";
+import { Dialog, Header, Icon } from "../../components";
 import { MATE_POST } from "../../constants/policy.js";
-import MateCreatedDialog from "./components/MateCreatedDialog.jsx";
-import MateIcon from "./components/MateIcon.jsx";
+import useGoBack from "../../hooks/useGoBack.js";
 import "./MateDetail.css";
 
 const DEFAULT_AVATAR = "/assets/profile-default.png"; // 프로필 사진이 없을 때 (Brand-assets: 모든 프로필 자리)
@@ -67,10 +64,7 @@ function MateDetail() {
   };
 
   // 뒤로가기 · 이전 화면이 있으면 그리로, 주소로 바로 들어왔으면 홈으로
-  const goBack = () => {
-    if (window.history.state?.idx > 0) navigate(-1);
-    else navigate("/home", { replace: true });
-  };
+  const goBack = useGoBack();
 
   // 공유 · 휴대폰은 공유 창(카카오톡 · 문자 등), 공유 창이 없는 브라우저는 주소 복사
   const share = async () => {
@@ -101,7 +95,7 @@ function MateDetail() {
         onBack={goBack}
         right={
           <button type="button" className="mate-detail__share" aria-label="공유" onClick={share}>
-            <MateIcon name="share" size={22} strokeWidth={1.8} />
+            <Icon name="share" size={22} strokeWidth={1.8} />
           </button>
         }
       />
@@ -141,7 +135,7 @@ function MateDetail() {
           <InfoRow icon={<Icon name="my" size={20} strokeWidth={1.8} />} label="성별">
             {post.gender}
           </InfoRow>
-          <InfoRow icon={<MateIcon name="seat" size={20} strokeWidth={1.8} />} label="좌석">
+          <InfoRow icon={<Icon name="seat" size={20} strokeWidth={1.8} />} label="좌석">
             {post.seat}
           </InfoRow>
           <InfoRow icon={<Icon name="mate" size={20} strokeWidth={1.8} />} label="인원">
@@ -182,7 +176,23 @@ function MateDetail() {
       </main>
 
       {/* 올리기 완료 창 */}
-      <MateCreatedDialog open={createdOpen} onClose={closeCreated} />
+      <Dialog
+        open={createdOpen}
+        onClose={closeCreated}
+        onConfirm={closeCreated}
+        image="/assets/pose-yay.png"
+        title="모집 글을 올렸어요!"
+        description={
+          <>
+            같은 팀 팬의 참여 신청을 기다려 볼까요?
+            <br />
+            신청이 오면 방장이 수락할 수 있어요.
+          </>
+        }
+        confirmLabel="확인"
+        cancelLabel={null}
+        tone="primary"
+      />
 
       {/* 안내 문구 · role="status": 화면 읽기 프로그램이 문구를 읽어 준다 */}
       {toast && (

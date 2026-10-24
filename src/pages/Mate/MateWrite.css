@@ -87,11 +87,11 @@
     gap: 4px;
     width: 88px;
     height: 88px;
-    border: 1.5px dashed var(--gray-300);
+    border: 2px dashed var(--gray-300);
     border-radius: var(--radius-card-sm);
     background: var(--bg);
     color: var(--text-500);
-    font-family: var(--font-base);
+    font-family: var(--font-base), serif;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -121,7 +121,7 @@
     border-radius: var(--radius-input);
     background: var(--surface);
     color: var(--navy-500); /* 달력 아이콘 */
-    font-family: var(--font-base);
+    font-family: var(--font-base), serif;
     text-align: left;
     cursor: pointer;
 }
@@ -182,7 +182,7 @@
     border: 0;
     background: transparent;
     color: var(--navy-500);
-    font-family: var(--font-base);
+    font-family: var(--font-base), serif;
     font-size: 20px;
     cursor: pointer;
 }
@@ -200,41 +200,9 @@
     text-align: center;
 }
 
-/* ─── 소개 · 5줄 · 글자 16px (iOS 확대 방지 · 디자인은 15px) ─── */
-.mate-write__description {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-input);
-    font-family: var(--font-base);
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--text-900);
-    resize: none; /* 사용자가 크기를 바꾸지 못하게 */
-}
-
-.mate-write__description::placeholder {
-    color: var(--placeholder);
-}
-
-.mate-write__description:focus {
-    border-color: var(--navy-500);
-    outline: none;
-}
-
-/* 소개 글자 수 '0/500' · 오른쪽 */
-.mate-write__count-text {
-    align-self: flex-end;
-    margin-top: -4px;
-    color: var(--text-400);
-    font-size: 12px;
-}
-
 .mate-write__close:focus-visible,
 .mate-write__game:focus-visible,
-.mate-write__stepper button:focus-visible,
-.mate-write__description:focus-visible {
+.mate-write__stepper button:focus-visible {
     outline: 2px solid var(--navy-300);
     outline-offset: 2px;
 }
