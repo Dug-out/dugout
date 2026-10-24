@@ -1,23 +1,24 @@
 import {useEffect, useRef, useState} from 'react'
-import {Icon, InlineMessage} from '../../../components'
-import {resizeToBlob} from '../../../utils/cropImage.js'
+import {Icon, ImageCropper, InlineMessage} from '../../../components'
+import {MATE_POST} from '../../../constants/policy.js'
 import './MateImagePicker.css'
 
 const ACCEPT = ['image/jpeg', 'image/png', 'image/webp']
-// 고르는 원본 사진의 최대 용량 (줄인 뒤에는 훨씬 작아진다)
+
+// 고르는 원본 사진의 최대 용량 (자른 뒤에는 훨씬 작아진다)
 const SOURCE_MAX_BYTES = 15 * 1024 * 1024
 
 /**
- * 모집 글 대표 이미지 고르기 · 사진을 고르면 줄여서 미리 보여 주고, 실제 저장은 [모집 글 올리기]에서 한다.
+ * 모집 글 이미지 고르기 · 사진을 줄여서 보여 주고, 실제 저장은 [모집 글 올리기]에서 한다.
  * @param {{onChange: (image: Blob | null) => void}} props
  *  onChange: 사진을 고르면 줄인 사진(Blob), 지우면 null 을 알려 준다
  */
 function MateImagePicker({onChange}) {
     // 미리보기 주소 · 없으면 사진을 고르지 않은 상태
     const [preview, setPreview] = useState(null)
-    // 사진을 줄이는 중인지
-    const [busy, setBusy] = useState(false)
-    // 사진을 고를 때 생긴 안내 문구 (형식, 용량, 처리 실패)
+    // 자르는 중인 원본 사진 주소 · 없으면 자르는 화면을 닫아 둔다
+    const [cropSrc, setCropSrc] = useState(null)
+    // 사진을 고를 때 생긴 안내 문구 (형식, 용량)
     const [message, setMessage] = useState('')
 
     // 숨겨 둔 파일 선택 입력 / 미리보기 주소(나중에 정리하려고 기억해 둔다)
@@ -29,8 +30,8 @@ function MateImagePicker({onChange}) {
         if (previewRef.current) URL.revokeObjectURL(previewRef.current)
     }, [])
 
-    // 파일을 골랐을 때 · 형식과 용량을 확인하고 줄여서 미리보기로 보여 준다
-    const handleFile = async (e) => {
+    // 파일을 골랐을 때 · 형식과 용량을 확인하고 자르는 화면을 연다
+    const handleFile = (e) => {
         const file = e.target.files[0]
         e.target.value = '' // 같은 사진을 다시 골라도 이 함수가 불리도록 비운다
         if (!file) return
@@ -43,20 +44,22 @@ function MateImagePicker({onChange}) {
             return
         }
         setMessage('')
-        setBusy(true)
-        const source = URL.createObjectURL(file)
-        try {
-            const blob = await resizeToBlob(source)
-            if (previewRef.current) URL.revokeObjectURL(previewRef.current)
-            previewRef.current = URL.createObjectURL(blob)
-            setPreview(previewRef.current)
-            onChange(blob)
-        } catch {
-            setMessage('사진을 처리하지 못했어요. 다른 사진으로 시도해 주세요')
-        } finally {
-            URL.revokeObjectURL(source)
-            setBusy(false)
-        }
+        setCropSrc(URL.createObjectURL(file))
+    }
+
+    // 자르는 화면을 닫으면서 원본 사진 주소를 정리한다
+    const closeCropper = () => {
+        URL.revokeObjectURL(cropSrc)
+        setCropSrc(null)
+    }
+
+    // 자르기를 마쳤을 때 · 자른 사진을 미리보기로 보여 주고 부모에게 알린다
+    const handleCropped = (blob) => {
+        if (previewRef.current) URL.revokeObjectURL(previewRef.current)
+        previewRef.current = URL.createObjectURL(blob)
+        setPreview(previewRef.current)
+        closeCropper()
+        onChange(blob)
     }
 
     // 삭제(✕) · 고른 사진을 지우고 기본 이미지로 되돌린다
@@ -83,10 +86,9 @@ function MateImagePicker({onChange}) {
                         </button>
                     </span>
                 ) : (
-                    <button type="button" className="mate-image__add" disabled={busy}
-                            onClick={() => inputRef.current.click()}>
+                    <button type="button" className="mate-image__add" onClick={() => inputRef.current.click()}>
                         <Icon name="camera" size={24} strokeWidth={1.8}/>
-                        {busy ? '처리 중…' : '사진 추가'}
+                        사진 추가
                     </button>
                 )}
                 <span className="mate-image__hint">
@@ -97,6 +99,13 @@ function MateImagePicker({onChange}) {
 
             {/* 파일 선택 입력 · 화면에는 보이지 않고 위 버튼에서 대신 연다 */}
             <input ref={inputRef} type="file" accept={ACCEPT.join(',')} hidden onChange={handleFile}/>
+
+            {/* 기본 이미지와 같은 비율로 자르는 화면 */}
+            {cropSrc && (
+                <ImageCropper src={cropSrc} onDone={handleCropped} onCancel={closeCropper}
+                              aspect={MATE_POST.IMAGE_WIDTH / MATE_POST.IMAGE_HEIGHT}
+                              outputWidth={MATE_POST.IMAGE_WIDTH} label="대표 이미지 자르기"/>
+            )}
         </div>
     )
 }

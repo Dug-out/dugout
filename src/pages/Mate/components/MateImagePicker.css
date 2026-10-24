@@ -24,11 +24,6 @@
     cursor: pointer;
 }
 
-.mate-image__add:disabled {
-    opacity: 0.5;
-    cursor: default;
-}
-
 /* 고른 사진 미리보기 · 88×88 */
 .mate-image__preview {
     position: relative;
