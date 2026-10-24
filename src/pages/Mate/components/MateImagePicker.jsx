@@ -104,7 +104,7 @@ function MateImagePicker({onChange}) {
             {cropSrc && (
                 <ImageCropper src={cropSrc} onDone={handleCropped} onCancel={closeCropper}
                               aspect={MATE_POST.IMAGE_WIDTH / MATE_POST.IMAGE_HEIGHT}
-                              outputWidth={MATE_POST.IMAGE_WIDTH} label="대표 이미지 자르기"/>
+                              outputWidth={MATE_POST.IMAGE_WIDTH} label="대표 이미지 자르기" fillWidth/>
             )}
         </div>
     )
