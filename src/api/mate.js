@@ -44,7 +44,10 @@ function createErrorMessage(error) {
  * @returns {Promise<{id: string}>} 새 글의 id
  */
 export async function createMatePost({gameId, title, seat, capacity, ages = [], gender = '무관', description = '', imageUrl = null}) {
-    const team = await getMyTeam()
+    // 내 팀을 못 불러오면 저장도 못 하므로, 다른 저장 실패와 같은 한국어 문구의 Error 로 던진다
+    const team = await getMyTeam().catch((cause) => {
+        throw Object.assign(new Error(createErrorMessage({})), {cause})
+    })
 
     const {data, error} = await supabase
         .from('mate_posts')
