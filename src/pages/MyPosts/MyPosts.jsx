@@ -80,22 +80,14 @@ function PostList({myTeam, items}) {
 
 /** 약속 한 장 · 위에 사진(상태 뱃지, D-day), 아래에 제목과 경기 일정·구장·인원 */
 function PostCard({item, myTeam, now, past = false}) {
-    const {id, title, image, role, accepted, isOpen, capacity, joinedCount, hostNickname, game} = item
-    const isHost = role === 'host'
+    const {id, title, image, role, capacity, joinedCount, hostNickname, game} = item
 
-    // 사진 위 상태 뱃지 · 지난 약속은 모두 종료
+    // 사진 위 상태 뱃지 · 지난 약속은 종료, 아니면 내가 방장인지 참여 중인지
     const badge = past
         ? {text: '종료', tone: 'ended'}
-        : isHost
+        : role === 'host'
           ? {text: '방장', tone: 'host'}
-          : accepted
-            ? {text: '참여 중', tone: 'joined'}
-            : {text: '수락 대기', tone: 'pending'}
-
-    // 인원 줄 · 방장은 모집 상태까지, 그 외에는 방장 이름
-    const people = isHost
-        ? `내가 연 약속 · ${joinedCount}/${capacity}명 ${isOpen ? '모집 중' : '모집 마감'}`
-        : `방장 ${hostNickname} · ${joinedCount}/${capacity}명`
+          : {text: '참여 중', tone: 'joined'}
 
     return (
         <article className="my-posts__card">
@@ -119,7 +111,7 @@ function PostCard({item, myTeam, now, past = false}) {
                         </span>
                         <span className="my-posts__line">
                             <Icon name="mate" size={14}/>
-                            {people}
+                            방장 {hostNickname} · {joinedCount}/{capacity}명
                         </span>
                     </span>
                 </span>

@@ -110,10 +110,6 @@
     background: var(--red-500);
 }
 
-.my-posts__badge--pending {
-    background: var(--gray-500);
-}
-
 .my-posts__badge--ended {
     background: color-mix(in srgb, var(--text-900) 72%, transparent);
 }
