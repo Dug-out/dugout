@@ -28,7 +28,6 @@ function MateApplySheet({postId, onClose, onApplied}) {
             await applyToMatePost({postId, message})
             onApplied()
         } catch (err) {
-            // API 가 만든 한국어 문구를 그대로 보여 준다
             setError(err.message)
             setBusy(false)
         }

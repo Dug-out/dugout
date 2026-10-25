@@ -119,10 +119,12 @@ function MateDetail() {
 function PostContent({post, onApplied}) {
     // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
     const myTeam = useMyTeam()
+
     // 참여 신청 시트가 열려 있는지
     const [applyOpen, setApplyOpen] = useState(false)
 
     const {title, imageUrl, isOpen, host, game, seat, ages, gender, description, capacity, joinedCount, members} = post
+
     // 남은 자리 / 인원 막대 길이
     const left = capacity - joinedCount
     const percent = Math.min(100, (joinedCount / capacity) * 100)
