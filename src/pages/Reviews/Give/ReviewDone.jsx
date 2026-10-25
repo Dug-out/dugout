@@ -1,5 +1,5 @@
 import {Link, Navigate, useLocation} from 'react-router'
-import {Button} from '../../components'
+import {Button} from '../../../components'
 import './ReviewDone.css'
 
 // 위에서 떨어지는 색종이 개수

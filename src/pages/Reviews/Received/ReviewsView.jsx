@@ -1,5 +1,5 @@
-import {Header, Icon, LoadState, ReviewItem} from '../../components'
-import useReceivedReviews from '../../hooks/useReceivedReviews.js'
+import {Header, Icon, LoadState, ReviewItem} from '../../../components'
+import useReceivedReviews from '../../../hooks/useReceivedReviews.js'
 import './ReviewsView.css'
 
 /** 받은 매너 후기 목록 · userId 가 null 이면 내 후기 */

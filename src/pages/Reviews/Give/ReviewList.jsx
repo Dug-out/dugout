@@ -1,9 +1,9 @@
 import {Link} from 'react-router'
-import {Button, Header, Icon, LoadState} from '../../components'
-import {PROFILE} from '../../constants/policy.js'
-import useMyTeam from '../../hooks/useMyTeam.js'
-import useReviewList from '../../hooks/useReviewList.js'
-import {formatDay, matchLabel} from '../../utils/mateFormat.js'
+import {Button, Header, Icon, LoadState} from '../../../components'
+import {PROFILE} from '../../../constants/policy.js'
+import useMyTeam from '../../../hooks/useMyTeam.js'
+import useReviewList from '../../../hooks/useReviewList.js'
+import {formatDay, matchLabel} from '../../../utils/mateFormat.js'
 import './ReviewList.css'
 
 /** 메이트 평가하기 · 평가 대기(글별로 묶음)와 지난 평가 */
