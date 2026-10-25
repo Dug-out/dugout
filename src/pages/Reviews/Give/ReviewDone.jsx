@@ -18,7 +18,7 @@ function ReviewDone() {
                 ))}
             </div>
             <div className="review-done__center">
-                <img src="/assets/pose-yay.png" alt="" width="160" height="160" />
+                <img src="/assets/pose-yay.png" alt="" width="520" height="520" />
                 <h1>평가가 전달됐어요!</h1>
                 <p>
                     소중한 평가 덕분에

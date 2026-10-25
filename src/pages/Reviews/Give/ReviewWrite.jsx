@@ -126,7 +126,7 @@ function ReviewForm({target}) {
                         <br />몇 점인가요?
                     </h2>
                     <div className="review-write__score">
-                        <img src={`/assets/${face}.png`} alt="" width="72" height="72" />
+                        <img src={`/assets/${face}.png`} alt="" width="260" height="260" />
                         <span className="review-write__number">{shownScore}</span>
                         <span className="review-write__unit">점</span>
                     </div>
