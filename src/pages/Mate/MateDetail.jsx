@@ -258,11 +258,7 @@ const STATUS_LABEL = {
 
 /** 화면 아래 고정 영역 · 보는 사람과 글의 상태에 따라 버튼이 달라진다. 방장은 버튼이 없다. */
 function ApplyBar({post, onApply}) {
-    const {myStatus, isOpen, capacity, joinedCount, game} = post
-
-    // 화면이 뜬 시각 · 렌더링마다 바뀌지 않도록 한 번만 정한다
-    const [now] = useState(() => Date.now())
-
+    const {myStatus, isOpen, capacity, joinedCount} = post
     if (myStatus === 'host') return null
 
     // 신청 가능한 상태가 아니면 이유를 꺼진 버튼으로 보여 준다
@@ -270,7 +266,6 @@ function ApplyBar({post, onApply}) {
     if (myStatus === 'accepted') disabledLabel = '채팅방 입장하기'
     else if (myStatus) disabledLabel = STATUS_LABEL[myStatus]
     else if (!isOpen) disabledLabel = '모집이 마감됐어요'
-    else if (new Date(game.gameAt).getTime() <= now) disabledLabel = '이미 시작한 경기예요'
 
     return (
         <div className="mate-detail__bottom">
