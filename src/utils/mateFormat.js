@@ -21,3 +21,10 @@ export const formatTime = (value) => {
 /** 경기 → 'LG vs 두산' · 내 팀이 뛰는 경기면 내 팀을 앞에 쓴다 */
 export const matchLabel = (game, myTeam) =>
     game.away === myTeam ? `${game.away} vs ${game.home}` : `${game.home} vs ${game.away}`
+
+/** 경기 날짜 → 'D-3' · 오늘 경기면 'D-DAY' (시각이 아니라 날짜로 센다) */
+export const formatDday = (value, now) => {
+    const day = (date) => new Date(date.getFullYear(), date.getMonth(), date.getDate())
+    const diff = Math.round((day(new Date(value)) - day(new Date(now))) / 86400000)
+    return diff <= 0 ? 'D-DAY' : `D-${diff}`
+}

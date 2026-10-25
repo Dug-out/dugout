@@ -3,7 +3,7 @@ import {Link} from 'react-router'
 import {Button, EmptyState, Header, Icon, Loading} from '../../components'
 import {MATE_POST} from '../../constants/policy.js'
 import useMyPosts from '../../hooks/useMyPosts.js'
-import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
+import {formatDay, formatDday, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import './MyPosts.css'
 
 // 보기 구분 · 내가 연 약속은 방장, 참여한 약속은 방장이 아닌 약속(수락 대기 포함)
@@ -65,52 +65,64 @@ function PostList({myTeam, items}) {
             {upcoming.length > 0 && (
                 <section className="my-posts__group">
                     <h2 className="my-posts__heading">다가오는 직관</h2>
-                    {upcoming.map((item) => <PostCard key={item.id} item={item} myTeam={myTeam}/>)}
+                    {upcoming.map((item) => <PostCard key={item.id} item={item} myTeam={myTeam} now={now}/>)}
                 </section>
             )}
             {past.length > 0 && (
                 <section className="my-posts__group">
                     <h2 className="my-posts__heading">지난 직관</h2>
-                    {past.map((item) => <PostCard key={item.id} item={item} myTeam={myTeam} past/>)}
+                    {past.map((item) => <PostCard key={item.id} item={item} myTeam={myTeam} now={now} past/>)}
                 </section>
             )}
         </main>
     )
 }
 
-/** 약속 한 장 · 사진, 제목과 상태 뱃지, 인원, 경기 일정 */
-function PostCard({item, myTeam, past = false}) {
+/** 약속 한 장 · 위에 사진(상태 뱃지, D-day), 아래에 제목과 경기 일정·구장·인원 */
+function PostCard({item, myTeam, now, past = false}) {
     const {id, title, image, role, accepted, isOpen, capacity, joinedCount, hostNickname, game} = item
     const isHost = role === 'host'
 
-    // 상태 뱃지 · 지난 약속은 모두 종료
-    const badge = past ? {text: '종료', tone: 'ended'}
-        : isHost ? {text: '방장', tone: 'host'}
-            : accepted ? {text: '참여 중', tone: 'joined'}
-                : {text: '수락 대기', tone: 'pending'}
+    // 사진 위 상태 뱃지 · 지난 약속은 모두 종료
+    const badge = past
+        ? {text: '종료', tone: 'ended'}
+        : isHost
+          ? {text: '방장', tone: 'host'}
+          : accepted
+            ? {text: '참여 중', tone: 'joined'}
+            : {text: '수락 대기', tone: 'pending'}
 
     // 인원 줄 · 방장은 모집 상태까지, 그 외에는 방장 이름
     const people = isHost
-        ? `모집 ${joinedCount}/${capacity}명 · ${isOpen ? '모집 중' : '모집 마감'}`
+        ? `내가 연 약속 · ${joinedCount}/${capacity}명 ${isOpen ? '모집 중' : '모집 마감'}`
         : `방장 ${hostNickname} · ${joinedCount}/${capacity}명`
 
     return (
         <article className="my-posts__card">
             {/* 지금은 모집 글 상세로 이동 · 채팅방, 기록 상세가 생기면 상태에 따라 나눠 연결한다 */}
-            <Link to={`/mate/${id}`} className="my-posts__link">
-                <img className="my-posts__thumb" src={image ?? MATE_POST.DEFAULT_IMAGE} alt="" width="56" height="56"/>
-                <span className="my-posts__info">
-                    <span className="my-posts__title-row">
-                        <span className="my-posts__title">{title}</span>
-                        <span className={`my-posts__badge my-posts__badge--${badge.tone}`}>{badge.text}</span>
-                    </span>
-                    <span className="my-posts__people">{people}</span>
-                    <span className="my-posts__when">
-                        <Icon name="calendar" size={14}/>
-                        {formatDay(game.gameAt)} {formatTime(game.gameAt)} {matchLabel(game, myTeam)} · {game.stadium}
+            <Link to={`/mate/${id}`} className={`my-posts__link${past ? ' my-posts__link--past' : ''}`}>
+                <span className="my-posts__cover">
+                    <img src={image ?? MATE_POST.DEFAULT_IMAGE} alt="" width="350" height="120"/>
+                    <span className={`my-posts__badge my-posts__badge--${badge.tone}`}>{badge.text}</span>
+                    {!past && <span className="my-posts__dday">{formatDday(game.gameAt, now)}</span>}
+                </span>
+                <span className="my-posts__text">
+                    <span className="my-posts__title">{title}</span>
+                    <span className="my-posts__lines">
+                        <span className="my-posts__line my-posts__line--main">
+                            <Icon name="calendar" size={14}/>
+                            {formatDay(game.gameAt)} {formatTime(game.gameAt)} · {matchLabel(game, myTeam)}
+                        </span>
+                        <span className="my-posts__line">
+                            <Icon name="pin" size={14}/>
+                            {game.stadium}
+                        </span>
+                        <span className="my-posts__line">
+                            <Icon name="mate" size={14}/>
+                            {people}
+                        </span>
                     </span>
                 </span>
-                <Icon name="chevronRight" size={18}/>
             </Link>
         </article>
     )

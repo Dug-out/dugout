@@ -62,92 +62,110 @@
 .my-posts__card {
     overflow: hidden;
     border: 1px solid var(--border);
-    border-radius: var(--radius-card-sm);
+    border-radius: var(--radius-card);
     background: var(--surface);
+    box-shadow: var(--shadow-card);
 }
 
 .my-posts__link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px;
+    display: block;
     color: var(--text-900);
     text-decoration: none;
 }
 
-.my-posts__link > svg {
-    flex: none;
-    color: var(--text-400);
+/* 사진 · 왼쪽 위에 상태 뱃지, 오른쪽 위에 D-day */
+.my-posts__cover {
+    position: relative;
+    display: block;
+    height: 120px;
+    overflow: hidden;
 }
 
-.my-posts__thumb {
-    flex: none;
-    width: 56px;
-    height: 56px;
-    border-radius: 14px;
+.my-posts__cover img {
+    display: block;
+    width: 100%;
+    height: 120px;
     object-fit: cover;
 }
 
-.my-posts__info {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 0;
-}
-
-.my-posts__title-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.my-posts__title {
-    overflow: hidden;
-    font-size: 15px;
-    font-weight: 700;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+/* 지난 약속은 사진을 흐리게 */
+.my-posts__link--past .my-posts__cover img {
+    filter: grayscale(0.7);
+    opacity: 0.75;
 }
 
 .my-posts__badge {
-    flex: none;
-    padding: 2px 6px;
-    border-radius: 5px;
-    font-size: 11px;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: var(--navy-500);
+    font-size: 12px;
     font-weight: 700;
+    color: var(--surface);
 }
 
 .my-posts__badge--host {
-    background: var(--red-50);
-    color: var(--red-text);
+    background: var(--red-500);
 }
 
-.my-posts__badge--joined {
-    background: var(--navy-50);
+.my-posts__badge--pending {
+    background: var(--gray-500);
+}
+
+.my-posts__badge--ended {
+    background: color-mix(in srgb, var(--text-900) 72%, transparent);
+}
+
+.my-posts__dday {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    font-family: var(--font-number), sans-serif;
+    font-size: 13px;
     color: var(--navy-500);
 }
 
-.my-posts__badge--pending,
-.my-posts__badge--ended {
-    background: var(--gray-100);
+.my-posts__text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px 16px 16px;
+}
+
+.my-posts__title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.my-posts__link--past .my-posts__title {
     color: var(--text-500);
 }
 
-.my-posts__people {
-    font-size: 12px;
-    color: var(--text-500);
+.my-posts__lines {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 13px;
 }
 
-.my-posts__when {
+.my-posts__line {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--navy-500);
+    color: var(--text-500);
 }
 
-.my-posts__when svg {
+.my-posts__line svg {
     flex: none;
+}
+
+.my-posts__line--main {
+    font-weight: 600;
+    color: var(--text-700);
 }
