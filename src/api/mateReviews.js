@@ -48,3 +48,25 @@ export async function getMyReviews() {
         }
     })
 }
+
+/** 평가할 메이트 한 명 · 평가 대기 목록에서 찾아 돌려준다 (이미 평가했거나 7일이 지났으면 null) */
+export async function getReviewTodo(postId, userId) {
+    const todos = await getReviewTodos()
+    return todos.find((todo) => todo.postId === postId && todo.userId === userId) ?? null
+}
+
+/** 평가 실패 → 화면에 보여줄 문구 */
+function createErrorMessage({code}) {
+    if (code === '23505') return '이미 평가한 메이트예요'
+    if (code === '42501') return '지금은 평가할 수 없어요. 함께 간 메이트가 아니거나 아직 끝나지 않은 경기예요'
+    if (code === '23514') return '입력한 내용을 다시 확인해 주세요'
+    return '평가하지 못했어요. 잠시 후 다시 시도해 주세요'
+}
+
+/** 평가 보내기 · met 이 false(노쇼)면 점수는 0 이어야 한다 (매너 타율은 DB 트리거가 바꾼다) */
+export async function createReview({postId, revieweeId, met, score, comment = ''}) {
+    const {error} = await supabase
+        .from('mate_reviews')
+        .insert({post_id: postId, reviewee_id: revieweeId, met, score, comment: comment.trim()})
+    if (error) throw Object.assign(new Error(createErrorMessage(error)), {cause: error})
+}
