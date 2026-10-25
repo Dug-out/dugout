@@ -147,7 +147,7 @@
 }
 
 .review-write__unit {
-    align-self: baseline;
+    margin-left: -6px; /* 숫자 바로 옆에 붙인다 */
     font-size: 18px;
     font-weight: 700;
     color: var(--text-700);
@@ -178,32 +178,12 @@
 
 /* ── 노쇼 안내 ── */
 .review-write__noshow {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    border-radius: var(--radius-card-sm);
+    margin: 0;
+    padding: 10px 14px;
+    border-radius: var(--radius-input);
     background: var(--red-50);
-}
-
-.review-write__noshow img {
-    display: block;
-    flex: none;
-    width: 56px;
-    height: 56px;
-}
-
-.review-write__noshow-text {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
     font-size: 13px;
     line-height: 1.5;
-    color: var(--text-500);
-}
-
-.review-write__noshow-text strong {
-    font-size: 15px;
     color: var(--red-text);
 }
 

@@ -158,13 +158,9 @@ function ReviewForm({target}) {
                 </section>
 
                 {!met && (
-                    <div className="review-write__noshow">
-                        <img src="/assets/pose-sad.png" alt="" width="56" height="56" />
-                        <span className="review-write__noshow-text">
-                            <strong>노쇼로 접수돼요</strong>
-                            <span>접수되면 상대의 매너 타율이 내려가요. 직관 기록에서도 이 만남은 빠져요.</span>
-                        </span>
-                    </div>
+                    <p className="review-write__noshow">
+                        노쇼로 접수되면 상대의 매너 타율이 내려가요. 직관 기록에서도 이 만남은 빠져요.
+                    </p>
                 )}
 
                 {/* 한 줄 후기 · 만났어도 안 왔어도 쓸 수 있다 */}
