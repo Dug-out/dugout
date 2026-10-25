@@ -14,12 +14,11 @@ const PATHS = {
     chevronRight: <path d="M9 6l6 6-6 6"/>,
     info: <><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></>,
     close: <path d="M6 6l12 12M18 6L6 18"/>,
-    share: <><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"/></>,
     seat: <><path d="M6 11V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5"/><path d="M4 11h16v4H4zM6 15v5M18 15v5"/></>,
     camera: <><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></>,
 }
 
-/** name: back | plus | check | alert | calendar | pin | home | mate | record | trade | my | chevronRight | camera | info | close | share | seat */
+/** name: back | plus | check | alert | calendar | pin | home | mate | record | trade | my | chevronRight | camera | info | close | seat */
 function Icon({name, size = 24, strokeWidth = 2, ...rest}) {
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"

@@ -12,7 +12,7 @@ import './MateDetail.css'
 
 // 프로필 사진이 없을 때
 const DEFAULT_AVATAR = '/assets/profile-default.png'
-// "링크를 복사했어요" 안내가 떠 있는 시간
+// 화면 아래 안내가 떠 있는 시간
 const TOAST_MS = 2000
 
 /**
@@ -48,25 +48,6 @@ function MateDetail() {
     // 뒤로가기 · 이전 화면이 있으면 그리로, 주소로 바로 들어왔으면 홈으로
     const goBack = useGoBack()
 
-    // 공유 · 휴대폰은 공유 창(카카오톡 · 문자 등), 공유 창이 없는 브라우저는 주소 복사
-    const share = async () => {
-        const url = window.location.href
-        if (navigator.share) {
-            try {
-                await navigator.share({title: post.title, url})
-            } catch {
-                // 공유 창에서 사용자가 취소한 경우 · 아무것도 하지 않는다
-            }
-            return
-        }
-        try {
-            await navigator.clipboard.writeText(url)
-            showToast('링크를 복사했어요')
-        } catch {
-            showToast('링크를 복사하지 못했어요')
-        }
-    }
-
     // 신청이 끝났을 때 · 상태를 다시 불러와 아래 버튼을 "수락을 기다리고 있어요"로 바꾼다
     const handleApplied = () => {
         refresh()
@@ -75,17 +56,7 @@ function MateDetail() {
 
     return (
         <div className="mate-detail">
-            <Header
-                title=""
-                onBack={goBack}
-                right={
-                    status === 'ready' && (
-                        <button type="button" className="mate-detail__share" aria-label="공유" onClick={share}>
-                            <Icon name="share" size={22} strokeWidth={1.8}/>
-                        </button>
-                    )
-                }
-           />
+            <Header title="" onBack={goBack}/>
 
             {/* 불러오는 중 */}
             {status === 'loading' && <Loading/>}

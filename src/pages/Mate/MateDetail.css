@@ -11,26 +11,6 @@
     border-bottom: 0;
 }
 
-/* 공유 버튼 · 기존 뒤로가기 버튼과 같은 44×44 */
-.mate-detail__share {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    border: 0;
-    border-radius: var(--radius-input);
-    background: transparent;
-    color: var(--text-900);
-    cursor: pointer;
-}
-
-.mate-detail__share:focus-visible {
-    outline: 2px solid var(--navy-300);
-    outline-offset: -2px;
-}
-
 /* 대표 이미지 · 높이 220 · 가로는 화면 너비 (비율이 달라도 잘라서 채움) */
 .mate-detail__hero {
     display: block;
