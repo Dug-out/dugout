@@ -59,6 +59,24 @@ export async function getMyPosts() {
     })
 }
 
+/** 새 신청 수 · 내가 방장인 글 중 경기가 아직 안 지난 글의 대기 중 신청을 센다 */
+export async function getPendingApplicantCount() {
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
+    const {id: userId} = session.user
+
+    const {count, error} = await supabase
+        .from('mate_members')
+        .select('post:mate_posts!inner(host_id, game:games!inner(game_at))', {count: 'exact', head: true})
+        .eq('status', 'pending')
+        .eq('post.host_id', userId)
+        .gt('post.game.game_at', new Date().toISOString())
+    if (error) throw error
+
+    return count ?? 0
+}
+
 /**
  * 신청자 관리 · 방장이 자기 글의 대기 중 신청과 수락된 참여자를 한 번에 가져온다.
  * 없는 글이거나 내가 방장이 아니면 null 을 돌려준다.
