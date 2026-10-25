@@ -15,30 +15,32 @@ const MATE_IMAGE_BUCKET = 'mate-images'
 
 /** 대표 이미지를 올리고 파일 경로와 공개 주소를 돌려준다 */
 async function uploadMateImage(blob) {
-    const {data: {session}} = await supabase.auth.getSession()
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
     const {id: userId} = session.user
     const path = `${userId}/${crypto.randomUUID()}.jpg`
 
-    const {error} = await supabase.storage
-        .from(MATE_IMAGE_BUCKET)
-        .upload(path, blob, {contentType: 'image/jpeg'})
+    const {error} = await supabase.storage.from(MATE_IMAGE_BUCKET).upload(path, blob, {contentType: 'image/jpeg'})
     if (error) throw Object.assign(new Error(uploadErrorMessage(error)), {cause: error})
 
-    const {data: {publicUrl}} = supabase.storage.from(MATE_IMAGE_BUCKET).getPublicUrl(path)
+    const {
+        data: {publicUrl},
+    } = supabase.storage.from(MATE_IMAGE_BUCKET).getPublicUrl(path)
     return {path, url: publicUrl}
 }
 
 /** [모집 글 올리기] 모집 글 저장 · 방장과 내 응원팀은 알아서 채우고, image(Blob)가 있으면 함께 올린다 */
 export async function createMatePost({
-                                         gameId,
-                                         title,
-                                         seat,
-                                         capacity,
-                                         ages = [],
-                                         gender = '무관',
-                                         description = '',
-                                         image = null
-                                     }) {
+    gameId,
+    title,
+    seat,
+    capacity,
+    ages = [],
+    gender = '무관',
+    description = '',
+    image = null,
+}) {
     // 내 팀을 모르면 저장할 수 없다
     const team = await getMyTeam().catch((cause) => {
         throw Object.assign(new Error(createErrorMessage({})), {cause})
@@ -63,7 +65,11 @@ export async function createMatePost({
         .single()
     if (error) {
         // 글이 저장되지 않았으니 올린 사진도 지운다
-        if (uploaded) await supabase.storage.from(MATE_IMAGE_BUCKET).remove([uploaded.path]).catch(() => {})
+        if (uploaded)
+            await supabase.storage
+                .from(MATE_IMAGE_BUCKET)
+                .remove([uploaded.path])
+                .catch(() => {})
         throw Object.assign(new Error(createErrorMessage(error)), {cause: error})
     }
     const {id} = data

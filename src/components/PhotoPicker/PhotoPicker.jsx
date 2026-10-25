@@ -22,15 +22,15 @@ const SOURCE_MAX_BYTES = 15 * 1024 * 1024
  *  label: 시트와 자르기 화면의 이름 (예: '프로필 사진')
  */
 function PhotoPicker({
-                         defaultImage,
-                         onChange,
-                         currentUrl = null,
-                         shape = 'round',
-                         aspect = 1,
-                         outputWidth = 512,
-                         fillWidth = false,
-                         label = '사진',
-                     }) {
+    defaultImage,
+    onChange,
+    currentUrl = null,
+    shape = 'round',
+    aspect = 1,
+    outputWidth = 512,
+    fillWidth = false,
+    label = '사진',
+}) {
     // 지금 화면에 보여 주는 사진 주소 · null 이면 기본 이미지
     const [shown, setShown] = useState(currentUrl)
     // "사진 선택하기 / 기본 이미지로 변경" 시트가 열려 있는지
@@ -45,9 +45,12 @@ function PhotoPicker({
     const previewRef = useRef(null)
 
     // 화면을 떠날 때 만들어 둔 미리보기 주소를 정리한다
-    useEffect(() => () => {
-        if (previewRef.current) URL.revokeObjectURL(previewRef.current)
-    }, [])
+    useEffect(
+        () => () => {
+            if (previewRef.current) URL.revokeObjectURL(previewRef.current)
+        },
+        [],
+    )
 
     // "사진 선택하기" · 시트를 닫고 파일 선택 창을 연다
     const choosePhoto = () => {
@@ -100,18 +103,27 @@ function PhotoPicker({
     return (
         <div className={`photo-picker photo-picker--${shape}`}>
             {/* 사진 · 누르면 시트가 열린다 */}
-            <button type="button" className="photo-picker__photo" aria-label={`${label} 변경`}
-                    onClick={() => setSheetOpen(true)}>
-                <img src={shown ?? defaultImage} alt="" width={outputWidth} height={Math.round(outputWidth / aspect)}
-                     style={{aspectRatio: aspect}}/>
+            <button
+                type="button"
+                className="photo-picker__photo"
+                aria-label={`${label} 변경`}
+                onClick={() => setSheetOpen(true)}
+            >
+                <img
+                    src={shown ?? defaultImage}
+                    alt=""
+                    width={outputWidth}
+                    height={Math.round(outputWidth / aspect)}
+                    style={{aspectRatio: aspect}}
+                />
                 <span className="photo-picker__camera" aria-hidden="true">
-                    <Icon name="camera" size={18}/>
+                    <Icon name="camera" size={18} />
                 </span>
             </button>
             {message && <InlineMessage tone="error">{message}</InlineMessage>}
 
             {/* 파일 선택 입력 · 화면에는 보이지 않고 아래 시트에서 대신 연다 */}
-            <input ref={inputRef} type="file" accept={ACCEPT.join(',')} hidden onChange={handleFile}/>
+            <input ref={inputRef} type="file" accept={ACCEPT.join(',')} hidden onChange={handleFile} />
 
             {/* 사진 선택하기 / 기본 이미지로 변경 (사진이 이미 기본이면 뒤쪽은 숨긴다) */}
             <BottomSheet open={sheetOpen} onClose={() => setSheetOpen(false)} label={label}>
@@ -121,9 +133,16 @@ function PhotoPicker({
 
             {/* 정해진 비율로 자르는 화면 */}
             {cropSrc && (
-                <ImageCropper src={cropSrc} onDone={handleCropped} onCancel={closeCropper} aspect={aspect}
-                              shape={shape === 'round' ? 'round' : 'rect'} outputWidth={outputWidth}
-                              fillWidth={fillWidth} label={`${label} 자르기`}/>
+                <ImageCropper
+                    src={cropSrc}
+                    onDone={handleCropped}
+                    onCancel={closeCropper}
+                    aspect={aspect}
+                    shape={shape === 'round' ? 'round' : 'rect'}
+                    outputWidth={outputWidth}
+                    fillWidth={fillWidth}
+                    label={`${label} 자르기`}
+                />
             )}
         </div>
     )

@@ -7,9 +7,9 @@ function TabLayout() {
     return (
         <div className="tab-layout">
             <div className="tab-layout__page">
-                <Outlet/>
+                <Outlet />
             </div>
-            <TabBar/>
+            <TabBar />
         </div>
     )
 }

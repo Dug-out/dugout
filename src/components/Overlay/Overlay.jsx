@@ -32,10 +32,17 @@ function Overlay({open, onClose, align, label, labelledBy, children}) {
 
     return createPortal(
         <div className="overlay">
-            <div className="overlay__dim" onClick={onClose} aria-hidden="true"/>
+            <div className="overlay__dim" onClick={onClose} aria-hidden="true" />
             <div className={`overlay__frame overlay__frame--${align}`}>
-                <div ref={panelRef} className={`overlay__panel overlay__panel--${align}`} role="dialog"
-                     aria-modal="true" aria-label={label} aria-labelledby={labelledBy} tabIndex={-1}>
+                <div
+                    ref={panelRef}
+                    className={`overlay__panel overlay__panel--${align}`}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label={label}
+                    aria-labelledby={labelledBy}
+                    tabIndex={-1}
+                >
                     {children}
                 </div>
             </div>

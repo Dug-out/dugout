@@ -9,8 +9,12 @@ function ScoreTile({score, className = '', ...rest}) {
 
     return (
         <span className={classes} aria-label={`${score}점`} {...rest}>
-            <span className="score-tile__num" aria-hidden="true">{score}</span>
-            <span className="score-tile__unit" aria-hidden="true">점</span>
+            <span className="score-tile__num" aria-hidden="true">
+                {score}
+            </span>
+            <span className="score-tile__unit" aria-hidden="true">
+                점
+            </span>
         </span>
     )
 }

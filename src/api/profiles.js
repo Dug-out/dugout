@@ -14,14 +14,12 @@ const AVATAR_BUCKET = 'avatars'
 
 /** 브라우저에 저장된 로그인 정보에서 id를 읽고, 해당 사용자의 team을 조회 */
 export async function getMyTeam() {
-    const {data: {session}} = await supabase.auth.getSession()
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
     const {id: userId} = session.user
 
-    const {data, error} = await supabase
-        .from('profiles')
-        .select('team')
-        .eq('id', userId)
-        .single()
+    const {data, error} = await supabase.from('profiles').select('team').eq('id', userId).single()
     if (error) throw error
     const {team} = data
     return team
@@ -46,7 +44,9 @@ export async function getProfile(id) {
 
 /** 내 프로필 · 마이페이지와 프로필 수정 화면이 쓴다 */
 export async function getMyProfile() {
-    const {data: {session}} = await supabase.auth.getSession()
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
     const {id: userId} = session.user
     return getProfile(userId)
 }
@@ -57,7 +57,9 @@ export async function getMyProfile() {
  * @param {Blob} blob 화면에서 정사각형으로 자른 사진
  */
 async function uploadAvatar(blob) {
-    const {data: {session}} = await supabase.auth.getSession()
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
     const {id: userId} = session.user
     const path = `${userId}/avatar.jpg`
 
@@ -66,13 +68,17 @@ async function uploadAvatar(blob) {
         .upload(path, blob, {upsert: true, contentType: 'image/jpeg'})
     if (error) throw Object.assign(new Error(uploadErrorMessage(error)), {cause: error})
 
-    const {data: {publicUrl}} = supabase.storage.from(AVATAR_BUCKET).getPublicUrl(path)
+    const {
+        data: {publicUrl},
+    } = supabase.storage.from(AVATAR_BUCKET).getPublicUrl(path)
     return `${publicUrl}?v=${Date.now()}`
 }
 
 /** 올려 둔 프로필 사진 파일을 지운다 · 기본 이미지로 되돌릴 때 쓴다 (이미 없어도 오류 없음) */
 async function removeAvatar() {
-    const {data: {session}} = await supabase.auth.getSession()
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
     const {id: userId} = session.user
     await supabase.storage.from(AVATAR_BUCKET).remove([`${userId}/avatar.jpg`])
 }
@@ -84,7 +90,9 @@ async function removeAvatar() {
  * @param {{nickname: string, headline: string, bio: string, age: string, gender: string, team: string, avatar?: Blob | null}} profile
  */
 export async function updateMyProfile({nickname, headline, bio, age, gender, team, avatar}) {
-    const {data: {session}} = await supabase.auth.getSession()
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
     const {id: userId} = session.user
 
     const changes = {nickname, headline, bio, age_group: age, gender, team}
@@ -93,13 +101,9 @@ export async function updateMyProfile({nickname, headline, bio, age, gender, tea
     // 기본 이미지로 되돌리면 주소를 비운다
     if (avatar === null) changes.avatar_url = null
 
-    const {error} = await supabase
-        .from('profiles')
-        .update(changes)
-        .eq('id', userId)
+    const {error} = await supabase.from('profiles').update(changes).eq('id', userId)
     if (error) throw Object.assign(new Error(updateErrorMessage(error)), {cause: error})
 
     // 저장이 끝난 뒤에 옛 사진 파일을 정리한다 (실패해도 프로필 저장에는 영향 없음)
-    if (avatar === null) removeAvatar().catch(() => {
-    })
+    if (avatar === null) removeAvatar().catch(() => {})
 }

@@ -13,9 +13,9 @@ function ProfileView() {
 
     return (
         <div className="profile-view">
-            <Header title="프로필"/>
-            <LoadState status={status} errorTitle="프로필을 불러오지 못했어요" onRetry={reload}/>
-            {status === 'ready' && <ProfileBody profile={profile}/>}
+            <Header title="프로필" />
+            <LoadState status={status} errorTitle="프로필을 불러오지 못했어요" onRetry={reload} />
+            {status === 'ready' && <ProfileBody profile={profile} />}
         </div>
     )
 }
@@ -31,15 +31,22 @@ function ProfileBody({profile}) {
         <>
             {/* 사진 · 닉네임 · 나이대/성별/응원팀 · 한 줄 소개 · 매너 타율 */}
             <section className="profile-view__top">
-                <img className="profile-view__avatar" src={avatar ?? PROFILE.DEFAULT_AVATAR} alt=""
-                     width="512" height="512"/>
+                <img
+                    className="profile-view__avatar"
+                    src={avatar ?? PROFILE.DEFAULT_AVATAR}
+                    alt=""
+                    width="512"
+                    height="512"
+                />
                 <h2 className="profile-view__name">{nickname}</h2>
-                <span className="profile-view__meta">{age} · {gender} · {team?.name}</span>
+                <span className="profile-view__meta">
+                    {age} · {gender} · {team?.name}
+                </span>
                 {headline && <p className="profile-view__headline">{headline}</p>}
                 <span className="profile-view__manner">
                     <svg className="profile-view__ball" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M7 4.5c2.2 2.2 2.2 12.8 0 15M17 4.5c-2.2 2.2-2.2 12.8 0 15"/>
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M7 4.5c2.2 2.2 2.2 12.8 0 15M17 4.5c-2.2 2.2-2.2 12.8 0 15" />
                     </svg>
                     <span className="profile-view__manner-label">매너 타율</span>
                     <strong className="profile-view__manner-num">{formatManner(manner)}</strong>
@@ -64,7 +71,8 @@ function ProfileBody({profile}) {
                         {/* 후기가 생기면 여기에 "전체보기" 링크(Profile-reviews)와 최근 후기 3개를 보여 준다 */}
                     </div>
                     <div className="profile-view__empty">
-                        <Icon name="info" size={13}/>아직 받은 매너 후기가 없어요
+                        <Icon name="info" size={13} />
+                        아직 받은 매너 후기가 없어요
                     </div>
                 </section>
             </main>

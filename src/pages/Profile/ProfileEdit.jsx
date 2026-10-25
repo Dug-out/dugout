@@ -2,9 +2,7 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router'
 import {checkNickname} from '../../api/auth.js'
 import {updateMyProfile} from '../../api/profiles.js'
-import {
-    Button, Chip, Dialog, Field, Header, InlineMessage, LoadState, PhotoPicker, TeamPicker,
-} from '../../components'
+import {Button, Chip, Dialog, Field, Header, InlineMessage, LoadState, PhotoPicker, TeamPicker} from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useAvailability from '../../hooks/useAvailability.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
@@ -22,11 +20,15 @@ function ProfileEdit() {
 
     return (
         <div className="profile-edit">
-            <Header title="프로필 수정" backTo="/my"/>
-            <LoadState status={status} errorTitle="내 정보를 불러오지 못했어요" onRetry={reload}
-                       className="profile-edit__state"/>
+            <Header title="프로필 수정" backTo="/my" />
+            <LoadState
+                status={status}
+                errorTitle="내 정보를 불러오지 못했어요"
+                onRetry={reload}
+                className="profile-edit__state"
+            />
             {/* 불러왔을 때 · 불러온 값으로 채운 입력 화면 */}
-            {status === 'ready' && <ProfileEditForm profile={profile}/>}
+            {status === 'ready' && <ProfileEditForm profile={profile} />}
         </div>
     )
 }
@@ -95,23 +97,49 @@ function ProfileEditForm({profile}) {
     return (
         <form className="profile-edit__form" onSubmit={handleSubmit}>
             {/* 프로필 사진 · 고르거나 기본 이미지로 바꾸면 [저장하기]에서 프로필과 함께 저장된다 */}
-            <PhotoPicker defaultImage={PROFILE.DEFAULT_AVATAR} currentUrl={profile.avatar} onChange={setAvatar}
-                         label="프로필 사진"/>
+            <PhotoPicker
+                defaultImage={PROFILE.DEFAULT_AVATAR}
+                currentUrl={profile.avatar}
+                onChange={setAvatar}
+                label="프로필 사진"
+            />
 
             {/* 닉네임 · 바꿨을 때만 사용 가능 여부를 보여 준다 */}
-            <Field id="profile-nick" label="닉네임" type="text" autoComplete="nickname"
-                   maxLength={SIGNUP.NICKNAME_MAX} value={form.nickname} onChange={set('nickname')}
-                   {...(nicknameChanged ? availabilityProps('nickname', nicknameResult) : {})}/>
+            <Field
+                id="profile-nick"
+                label="닉네임"
+                type="text"
+                autoComplete="nickname"
+                maxLength={SIGNUP.NICKNAME_MAX}
+                value={form.nickname}
+                onChange={set('nickname')}
+                {...(nicknameChanged ? availabilityProps('nickname', nicknameResult) : {})}
+            />
 
             {/* 한 줄 소개 · 30자 */}
-            <Field id="profile-headline" label="한 줄 소개" type="text" counter
-                   maxLength={HEADLINE_MAX} value={form.headline} onChange={set('headline')}
-                   placeholder="예) 평일 저녁 직관 자주 가요!"/>
+            <Field
+                id="profile-headline"
+                label="한 줄 소개"
+                type="text"
+                counter
+                maxLength={HEADLINE_MAX}
+                value={form.headline}
+                onChange={set('headline')}
+                placeholder="예) 평일 저녁 직관 자주 가요!"
+            />
 
             {/* 자기소개 · 여러 줄, 300자 */}
-            <Field id="profile-bio" label="자기소개" multiline counter rows={5}
-                   maxLength={BIO_MAX} value={form.bio} onChange={set('bio')}
-                   placeholder="예) 평일엔 퇴근하고 잠실 1루 응원석, 주말엔 낮 경기 위주로 다녀요. 응원가 같이 크게 부르고 9회까지 자리 지키는 분이면 좋겠어요!"/>
+            <Field
+                id="profile-bio"
+                label="자기소개"
+                multiline
+                counter
+                rows={5}
+                maxLength={BIO_MAX}
+                value={form.bio}
+                onChange={set('bio')}
+                placeholder="예) 평일엔 퇴근하고 잠실 1루 응원석, 주말엔 낮 경기 위주로 다녀요. 응원가 같이 크게 부르고 9회까지 자리 지키는 분이면 좋겠어요!"
+            />
 
             {/* 나이대 · 하나만 고른다 */}
             <fieldset className="profile-edit__group">
@@ -130,8 +158,12 @@ function ProfileEditForm({profile}) {
                 <legend>성별</legend>
                 <div className="profile-edit__chips">
                     {SIGNUP.GENDERS.map((gender) => (
-                        <Chip key={gender} variant="select" selected={form.gender === gender}
-                              onClick={() => pick('gender', gender)}>
+                        <Chip
+                            key={gender}
+                            variant="select"
+                            selected={form.gender === gender}
+                            onClick={() => pick('gender', gender)}
+                        >
                             {gender}
                         </Chip>
                     ))}
@@ -141,26 +173,42 @@ function ProfileEditForm({profile}) {
             {/* 응원팀 · 가입 화면과 같은 선택 목록 */}
             <fieldset className="profile-edit__group">
                 <legend>응원팀</legend>
-                <TeamPicker value={form.team} onChange={(code) => pick('team', code)}/>
+                <TeamPicker value={form.team} onChange={(code) => pick('team', code)} />
                 <InlineMessage>팀을 바꿔도 예전 글과 기록은 그대로 남아요</InlineMessage>
             </fieldset>
 
             {/* 하단에 고정된 저장 버튼 */}
             <div className="profile-edit__footer">
-                <Button type="submit" block disabled={!canSave}>{busy ? '저장하는 중…' : '저장하기'}</Button>
+                <Button type="submit" block disabled={!canSave}>
+                    {busy ? '저장하는 중…' : '저장하기'}
+                </Button>
             </div>
 
             {/* 저장 성공 · 확인(또는 바깥을 눌러 닫기)하면 마이페이지로 돌아간다 */}
-            <Dialog open={result?.ok === true} onClose={goMypage} onConfirm={goMypage}
-                    image="/assets/pose-yay.png" title="프로필을 저장했어요!"
-                    description="바뀐 내용이 마이페이지에 반영됐어요."
-                    confirmLabel="확인" cancelLabel={null} tone="primary"/>
+            <Dialog
+                open={result?.ok === true}
+                onClose={goMypage}
+                onConfirm={goMypage}
+                image="/assets/pose-yay.png"
+                title="프로필을 저장했어요!"
+                description="바뀐 내용이 마이페이지에 반영됐어요."
+                confirmLabel="확인"
+                cancelLabel={null}
+                tone="primary"
+            />
 
             {/* 저장 실패 · 확인하면 창만 닫고 입력 화면에 그대로 남는다 */}
-            <Dialog open={result?.ok === false} onClose={closeResult} onConfirm={closeResult}
-                    image="/assets/pose-sad.png" title="저장하지 못했어요"
-                    description={result?.message}
-                    confirmLabel="확인" cancelLabel={null} tone="primary"/>
+            <Dialog
+                open={result?.ok === false}
+                onClose={closeResult}
+                onConfirm={closeResult}
+                image="/assets/pose-sad.png"
+                title="저장하지 못했어요"
+                description={result?.message}
+                confirmLabel="확인"
+                cancelLabel={null}
+                tone="primary"
+            />
         </form>
     )
 }

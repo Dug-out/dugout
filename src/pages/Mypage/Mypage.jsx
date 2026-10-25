@@ -19,12 +19,18 @@ function MenuRow({label, to}) {
     const content = (
         <>
             <span className="mypage__row-label">{label}</span>
-            <Icon name="chevronRight" size={18}/>
+            <Icon name="chevronRight" size={18} />
         </>
     )
-    return to
-        ? <Link to={to} className="mypage__row">{content}</Link>
-        : <button type="button" className="mypage__row">{content}</button>
+    return to ? (
+        <Link to={to} className="mypage__row">
+            {content}
+        </Link>
+    ) : (
+        <button type="button" className="mypage__row">
+            {content}
+        </button>
+    )
 }
 
 /** 마이페이지 · 내 프로필, 매너 타율, 메뉴 */
@@ -34,10 +40,10 @@ function Mypage() {
 
     return (
         <>
-            <Header large title="마이페이지"/>
+            <Header large title="마이페이지" />
             <main className="mypage">
-                <LoadState status={status} errorTitle="내 정보를 불러오지 못했어요" onRetry={reload}/>
-                {status === 'ready' && <MypageBody profile={profile}/>}
+                <LoadState status={status} errorTitle="내 정보를 불러오지 못했어요" onRetry={reload} />
+                {status === 'ready' && <MypageBody profile={profile} />}
             </main>
         </>
     )
@@ -58,12 +64,20 @@ function MypageBody({profile}) {
             <section className="mypage__card mypage__card--profile">
                 {/* 사진 · 닉네임 · 응원팀 · 프로필 수정 */}
                 <div className="mypage__profile">
-                    <img className="mypage__avatar" src={avatar ?? PROFILE.DEFAULT_AVATAR} alt="" width="512" height="512"/>
+                    <img
+                        className="mypage__avatar"
+                        src={avatar ?? PROFILE.DEFAULT_AVATAR}
+                        alt=""
+                        width="512"
+                        height="512"
+                    />
                     <div className="mypage__who">
                         <p className="mypage__name">{nickname}</p>
                         <p className="mypage__meta">{team?.name}</p>
                     </div>
-                    <Button as={Link} to="/profile/edit" variant="small-outline">프로필 수정</Button>
+                    <Button as={Link} to="/profile/edit" variant="small-outline">
+                        프로필 수정
+                    </Button>
                 </div>
 
                 {/* 매너 타율 카드 */}
@@ -71,12 +85,14 @@ function MypageBody({profile}) {
                     {/* 제목 줄 */}
                     <span className="mypage__manner-title">
                         <svg className="mypage__ball" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M7 4.5c2.2 2.2 2.2 12.8 0 15M17 4.5c-2.2 2.2-2.2 12.8 0 15"/>
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M7 4.5c2.2 2.2 2.2 12.8 0 15M17 4.5c-2.2 2.2-2.2 12.8 0 15" />
                         </svg>
                         매너 타율
-                        <Link to="/my/manner" className="mypage__manner-more">후기 보기<Icon name="chevronRight" size={14}
-                                                                       strokeWidth={2.2}/></Link>
+                        <Link to="/my/manner" className="mypage__manner-more">
+                            후기 보기
+                            <Icon name="chevronRight" size={14} strokeWidth={2.2} />
+                        </Link>
                     </span>
                     {/* 점수(.250 형태)와 구간 이름 */}
                     <span className="mypage__manner-score">
@@ -85,7 +101,7 @@ function MypageBody({profile}) {
                     </span>
                     {/* 진행 막대 · .200~.400 사이에서 지금 위치 */}
                     <span className="mypage__bar" aria-hidden="true">
-                        <span style={{width: `${summary.progress * 100}%`}}/>
+                        <span style={{width: `${summary.progress * 100}%`}} />
                     </span>
                     {/* 안내 문구 · 오른쪽은 다음 구간까지 남은 값 */}
                     <span className="mypage__manner-foot">
@@ -98,14 +114,20 @@ function MypageBody({profile}) {
             {/* 내 활동 메뉴 */}
             <section className="mypage__card">
                 <h2 className="mypage__section">내 활동</h2>
-                {ACTIVITY_MENU.map(({label, to}) => <MenuRow key={label} label={label} to={to}/>)}
+                {ACTIVITY_MENU.map(({label, to}) => (
+                    <MenuRow key={label} label={label} to={to} />
+                ))}
             </section>
 
             {/* 계정 메뉴 */}
             <section className="mypage__card">
                 <h2 className="mypage__section">계정</h2>
-                {ACCOUNT_MENU.map((label) => <MenuRow key={label} label={label}/>)}
-                <button type="button" className="mypage__row mypage__row--quiet">회원 탈퇴</button>
+                {ACCOUNT_MENU.map((label) => (
+                    <MenuRow key={label} label={label} />
+                ))}
+                <button type="button" className="mypage__row mypage__row--quiet">
+                    회원 탈퇴
+                </button>
             </section>
         </>
     )

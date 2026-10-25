@@ -19,12 +19,15 @@ export async function applyToMatePost({postId, message = ''}) {
  * pendingCount 는 대기 중인 신청 수 · 방장만 볼 수 있어서 방장이 아니면 0
  */
 export async function getMyPosts() {
-    const {data: {session}} = await supabase.auth.getSession()
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
     const {id: userId} = session.user
 
     const {data, error} = await supabase
         .from('mate_members')
-        .select(`
+        .select(
+            `
             role,
             post:mate_posts!inner(
                 id, title, image_url, capacity, joined_count,
@@ -32,7 +35,8 @@ export async function getMyPosts() {
                 game:games!inner(game_at, home_team, away_team, stadium),
                 members:mate_members(status)
             )
-        `)
+        `,
+        )
         .eq('user_id', userId)
         .eq('status', 'accepted')
     if (error) throw error
@@ -60,7 +64,9 @@ export async function getMyPosts() {
  * 없는 글이거나 내가 방장이 아니면 null 을 돌려준다.
  */
 export async function getMateApplicants(postId) {
-    const {data: {session}} = await supabase.auth.getSession()
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
     const {id: userId} = session.user
 
     const [postResult, membersResult] = await Promise.all([
@@ -71,7 +77,9 @@ export async function getMateApplicants(postId) {
             .maybeSingle(),
         supabase
             .from('mate_members')
-            .select('user_id, role, status, message, created_at, user:profiles!user_id(nickname, avatar_url, age_group, team)')
+            .select(
+                'user_id, role, status, message, created_at, user:profiles!user_id(nickname, avatar_url, age_group, team)',
+            )
             .eq('post_id', postId)
             .in('status', ['pending', 'accepted'])
             .order('created_at'),

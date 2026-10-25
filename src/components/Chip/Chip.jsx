@@ -10,15 +10,7 @@ import './Chip.css'
  * onClick을 넘기면 <button>, 아니면 <span>으로 렌더링한다.
  * selected는 filter / select에서만 쓴다.
  */
-function Chip({
-                  variant = 'filter',
-                  tone,
-                  selected = false,
-                  onClick,
-                  className = '',
-                  children,
-                  ...rest
-              }) {
+function Chip({variant = 'filter', tone, selected = false, onClick, className = '', children, ...rest}) {
     const interactive = typeof onClick === 'function'
     const Component = interactive ? 'button' : 'span'
 
@@ -33,9 +25,7 @@ function Chip({
         .filter(Boolean)
         .join(' ')
 
-    const props = interactive
-        ? {type: 'button', onClick, 'aria-pressed': selected}
-        : {}
+    const props = interactive ? {type: 'button', onClick, 'aria-pressed': selected} : {}
 
     return (
         <Component className={classes} {...props} {...rest}>

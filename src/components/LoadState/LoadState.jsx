@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import {Link} from 'react-router'
 import Button from '../Button/Button.jsx'
 import EmptyState from '../EmptyState/EmptyState.jsx'
 import Loading from '../Loading/Loading.jsx'
@@ -10,8 +10,8 @@ import Loading from '../Loading/Loading.jsx'
  *          notFound?: {title: string, description: string, backTo: string, backLabel: string}, className?: string}} props
  *  notFound: 없는 글처럼 "찾을 수 없음"이 있는 화면에서만 넘긴다 · backTo/backLabel 은 돌아갈 곳
  */
-function LoadState({ status, errorTitle, onRetry, notFound, className = '' }) {
-    if (status === 'loading') return <Loading/>
+function LoadState({status, errorTitle, onRetry, notFound, className = ''}) {
+    if (status === 'loading') return <Loading />
 
     if (status === 'error') {
         return (
