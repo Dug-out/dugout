@@ -260,25 +260,36 @@ const STATUS_LABEL = {
 function ApplyBar({post, onApply}) {
     const {myStatus, isOpen, capacity, joinedCount} = post
 
-    // 신청 가능한 상태가 아니면 이유를 꺼진 버튼으로 보여 준다 (채팅방은 아직 없어서 입장 버튼도 꺼 둔다)
-    let disabledLabel = null
-    if (myStatus === 'host' || myStatus === 'accepted') disabledLabel = '채팅방 입장하기'
-    else if (myStatus) disabledLabel = STATUS_LABEL[myStatus]
-    else if (!isOpen) disabledLabel = '모집이 마감됐어요'
+    // 보는 사람과 글의 상태에 따라 버튼 하나를 고른다 (채팅방은 아직 없어서 입장 버튼은 꺼 둔다)
+    let button
+    if (myStatus === 'host' || myStatus === 'accepted') {
+        button = (
+            <Button block disabled>
+                <Icon name="chat" size={20}/>
+                채팅방 입장하기
+            </Button>
+        )
+    } else if (myStatus) {
+        button = (
+            <Button block disabled>
+                {STATUS_LABEL[myStatus]}
+            </Button>
+        )
+    } else if (!isOpen) {
+        button = (
+            <Button block disabled>
+                모집이 마감됐어요
+            </Button>
+        )
+    } else {
+        button = (
+            <Button block onClick={onApply}>
+                참여 신청하기 · {capacity - joinedCount}자리 남음
+            </Button>
+        )
+    }
 
-    return (
-        <div className="mate-detail__bottom">
-            {disabledLabel ? (
-                <Button block disabled>
-                    {disabledLabel}
-                </Button>
-            ) : (
-                <Button block onClick={onApply}>
-                    참여 신청하기 · {capacity - joinedCount}자리 남음
-                </Button>
-            )}
-        </div>
-    )
+    return <div className="mate-detail__bottom">{button}</div>
 }
 
 /** 정보 카드 한 줄 · <dt>이름 <dd>값 (이름-값 목록을 뜻하는 HTML 태그) */
