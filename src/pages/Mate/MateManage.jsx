@@ -3,6 +3,7 @@ import {Link, useParams} from 'react-router'
 import {respondToApplicant} from '../../api/mateMembers.js'
 import {Button, Dialog, EmptyState, Header, Icon, Loading} from '../../components'
 import useMateApplicants from '../../hooks/useMateApplicants.js'
+import useMyTeam from '../../hooks/useMyTeam.js'
 import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import './MateManage.css'
 
@@ -48,8 +49,10 @@ function MateManage() {
 
 /** 불러온 내용 · 위에 모집 현황, 아래에 새 신청과 함께 가는 사람 */
 function ManageContent({data, refresh}) {
-    const {myTeam, post, pending, accepted} = data
+    const {post, pending, accepted} = data
     const {id, title, capacity, joinedCount, game} = post
+    // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
+    const myTeam = useMyTeam()
     // 정원이 찼으면 수락할 수 없다 (DB 도 한 번 더 막는다)
     const left = capacity - joinedCount
     const full = left <= 0

@@ -1,5 +1,4 @@
 import {supabase} from '../lib/supabase.js'
-import {getMyTeam} from './profiles.js'
 
 /** 신청 실패 → 화면에 보여줄 문구 */
 function applyErrorMessage({code}) {
@@ -22,7 +21,6 @@ export async function applyToMatePost({postId, message = ''}) {
 export async function getMyPosts() {
     const {data: {session}} = await supabase.auth.getSession()
     const {id: userId} = session.user
-    const myTeam = await getMyTeam()
 
     const {data, error} = await supabase
         .from('mate_members')
@@ -39,7 +37,7 @@ export async function getMyPosts() {
         .eq('status', 'accepted')
     if (error) throw error
 
-    const items = data.map((row) => {
+    return data.map((row) => {
         const {role, post} = row
         const {id, title, image_url: image, capacity, joined_count: joinedCount} = post
         const {host, game, members} = post
@@ -55,7 +53,6 @@ export async function getMyPosts() {
             game: {gameAt: game.game_at, home: game.home_team, away: game.away_team, stadium: game.stadium},
         }
     })
-    return {myTeam, items}
 }
 
 /**
@@ -66,7 +63,7 @@ export async function getMateApplicants(postId) {
     const {data: {session}} = await supabase.auth.getSession()
     const {id: userId} = session.user
 
-    const [postResult, membersResult, myTeam] = await Promise.all([
+    const [postResult, membersResult] = await Promise.all([
         supabase
             .from('mate_posts')
             .select('id, title, capacity, host_id, joined_count, game:games(game_at, home_team, away_team, stadium)')
@@ -78,7 +75,6 @@ export async function getMateApplicants(postId) {
             .eq('post_id', postId)
             .in('status', ['pending', 'accepted'])
             .order('created_at'),
-        getMyTeam(),
     ])
 
     // 주소가 uuid 모양이 아니면(22P02) 없는 글과 같다
@@ -107,7 +103,6 @@ export async function getMateApplicants(postId) {
     })
 
     return {
-        myTeam,
         post: {
             id: post.id,
             title: post.title,

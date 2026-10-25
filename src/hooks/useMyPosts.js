@@ -3,12 +3,12 @@ import {getMyPosts} from '../api/mateMembers.js'
 
 /**
  * 내 직관 약속을 불러온다.
- * @returns {{status: 'loading' | 'ready' | 'error', data: {myTeam: string, items: object[]} | null, reload: () => void}}
- *  data: ready 일 때만 값이 있다 · 그 외에는 null
+ * @returns {{status: 'loading' | 'ready' | 'error', data: object[] | null, reload: () => void}}
+ *  data: 내 약속 목록 · ready 일 때만 값이 있다 (그 외에는 null)
  */
 export default function useMyPosts() {
     const [state, setState] = useState(
-        /** @type {{status: 'loading' | 'ready' | 'error', data: {myTeam: string, items: object[]} | null}} */
+        /** @type {{status: 'loading' | 'ready' | 'error', data: object[] | null}} */
         ({status: 'loading', data: null}),
     )
 
