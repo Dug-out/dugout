@@ -4,7 +4,7 @@ export const MANNER = {
     START: 0.25,
     MIN: 0.2,
     MAX: 0.4,
-    NOSHOW_DELTA: -0.02,
+    NOSHOW_DELTA: -0.015,
     // 점수(1~10) → 매너 타율 변화량
     deltaFromScore: (score) => (score - 6) * 0.002,
     TIERS: [

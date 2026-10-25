@@ -8,13 +8,13 @@ create table public.mate_reviews (
   reviewer_id uuid not null default auth.uid() references public.profiles (id) on delete cascade,  -- 평가한 사람 (나만 볼 수 있다)
   reviewee_id uuid not null references public.profiles (id) on delete cascade,  -- 평가받은 사람
   met boolean not null,  -- true: 만났어요 · false: 상대가 안 왔어요(노쇼)
-  score int check (score between 1 and 10),  -- 만났을 때만 1~10점
+  score int not null check (score between 0 and 10),  -- 만났으면 1~10점 · 노쇼는 0점
   comment text not null default '' check (char_length(comment) <= 100),  -- 한 줄 후기
   created_at timestamptz not null default now(),
   unique (post_id, reviewer_id, reviewee_id),  -- 같은 글에서 같은 사람은 한 번만 평가한다
   check (reviewer_id <> reviewee_id),
-  -- 만났으면 점수가 있어야 하고, 노쇼면 점수도 후기도 없다
-  check ((met and score is not null) or (not met and score is null and comment = ''))
+  -- 만났으면 1~10점, 노쇼면 0점 (후기는 둘 다 쓸 수 있다)
+  check ((met and score >= 1) or (not met and score = 0))
 );
 
 -- 받은 평가 조회(프로필, 매너 후기)와 내가 한 평가 조회를 빠르게
@@ -70,12 +70,11 @@ create policy "mate_reviews_insert" on public.mate_reviews
 ------------------------------------------
 -- 4. 받은 평가 공개 · 누가 썼는지(reviewer_id)는 빼고 점수와 후기만
 -- 뷰는 만든 사람(관리자) 권한으로 읽기 때문에 위 정책과 상관없이 모든 평가를 보여 주되, 평가자 칸이 없다
--- 노쇼는 점수가 없으므로 후기 목록에서 뺀다
+-- 노쇼(0점)도 후기로 함께 보여 준다
 ------------------------------------------
 create view public.public_reviews as
 select r.id, r.post_id, r.reviewee_id, r.score, r.comment, r.created_at
-from public.mate_reviews r
-where r.met;
+from public.mate_reviews r;
 
 revoke all on public.public_reviews from anon, authenticated;
 grant select on public.public_reviews to authenticated;
@@ -116,7 +115,7 @@ grant execute on function public.my_review_todos() to authenticated;
 
 ------------------------------------------
 -- 6. 매너 타율 반영 · 평가가 들어오면 받은 사람의 매너 타율에 더한다
---  · 만났으면 (점수 - 6) × 0.002 (6점이면 변화 없음) · 노쇼면 -0.020 (접수되면 바로 반영)
+--  · 만났으면 (점수 - 6) × 0.002 (6점이면 변화 없음) · 노쇼면 점수와 상관없이 -0.015 (접수되면 바로 반영)
 --  · .200 아래로는 내려가지 않고 .400 위로는 올라가지 않는다
 -- profiles.manner_avg 는 사용자가 직접 못 바꾸므로 관리자 권한 함수가 대신 바꾼다
 ------------------------------------------
@@ -125,7 +124,7 @@ returns trigger language plpgsql security definer set search_path = public as $$
 begin
   update public.profiles
   set manner_avg = greatest(0.200, least(0.400,
-    manner_avg + case when new.met then (new.score - 6) * 0.002 else -0.020 end
+    manner_avg + case when new.met then (new.score - 6) * 0.002 else -0.015 end
   ))
   where id = new.reviewee_id;
   return null;
