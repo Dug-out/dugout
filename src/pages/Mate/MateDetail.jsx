@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react'
+import {useState} from 'react'
 import {Link, useLocation, useNavigate, useParams} from 'react-router'
 import {Button, Dialog, EmptyState, Header, Icon, Loading} from '../../components'
 import {MATE_POST} from '../../constants/policy.js'
@@ -12,8 +12,6 @@ import './MateDetail.css'
 
 // 프로필 사진이 없을 때
 const DEFAULT_AVATAR = '/assets/profile-default.png'
-// 화면 아래 안내가 떠 있는 시간
-const TOAST_MS = 2000
 
 /**
  * 모집 글 상세 · 주소의 id 로 글을 불러와 보여 준다.
@@ -35,24 +33,8 @@ function MateDetail() {
         navigate(location.pathname, {replace: true, state: null})
     }
 
-    // 화면 아래 잠깐 뜨는 안내
-    const [toast, setToast] = useState('')
-    const toastTimer = useRef(null)
-    useEffect(() => () => clearTimeout(toastTimer.current), [])
-    const showToast = (text) => {
-        clearTimeout(toastTimer.current)
-        setToast(text)
-        toastTimer.current = setTimeout(() => setToast(''), TOAST_MS)
-    }
-
     // 뒤로가기 · 이전 화면이 있으면 그리로, 주소로 바로 들어왔으면 홈으로
     const goBack = useGoBack()
-
-    // 신청이 끝났을 때 · 상태를 다시 불러와 아래 버튼을 "수락을 기다리고 있어요"로 바꾼다
-    const handleApplied = () => {
-        refresh()
-        showToast('참여 신청을 보냈어요')
-    }
 
     return (
         <div className="mate-detail">
@@ -84,7 +66,7 @@ function MateDetail() {
                     }
                />
             )}
-            {status === 'ready' && <PostContent post={post} onApplied={handleApplied}/>}
+            {status === 'ready' && <PostContent post={post} onApplied={refresh}/>}
 
             {/* 올리기 완료 창 */}
             <Dialog
@@ -105,12 +87,6 @@ function MateDetail() {
                 tone="primary"
            />
 
-            {/* 안내 문구 · role="status": 화면 읽기 프로그램이 문구를 읽어 준다 */}
-            {toast && (
-                <p className="mate-detail__toast" role="status">
-                    {toast}
-                </p>
-            )}
         </div>
     )
 }
