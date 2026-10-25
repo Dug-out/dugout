@@ -114,8 +114,9 @@ function ReviewListBody({todos, done}) {
                                 {formatDay(review.game.gameAt)} {review.game.stadium} ·{' '}
                                 {matchLabel(review.game, myTeam)}
                             </span>
+                            {review.comment && <span className="review-list__comment">{review.comment}</span>}
                         </span>
-                        <span className="review-list__state">평가 완료</span>
+                        <span className="review-list__state">{review.met ? `${review.score}점` : '노쇼'}</span>
                     </div>
                 ))}
             </section>

@@ -119,7 +119,7 @@
 }
 
 .review-write__choice[aria-checked='true'] {
-    border: 1.5px solid var(--navy-500);
+    border: 2px solid var(--navy-500);
     background: var(--navy-50);
     font-weight: 700;
     color: var(--navy-500);

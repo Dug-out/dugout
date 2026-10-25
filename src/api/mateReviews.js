@@ -26,7 +26,7 @@ export async function getMyReviews() {
     const {data, error} = await supabase
         .from('mate_reviews')
         .select(
-            `id, post_id, reviewee_id, created_at,
+            `id, post_id, reviewee_id, met, score, comment, created_at,
             post:mate_posts(host_id, title, game:games(game_at, home_team, away_team, stadium)),
             reviewee:profiles!reviewee_id(nickname, avatar_url)`,
         )
@@ -34,7 +34,7 @@ export async function getMyReviews() {
     if (error) throw error
 
     return data.map((row) => {
-        const {id, post_id: postId, reviewee_id: userId, post, reviewee} = row
+        const {id, post_id: postId, reviewee_id: userId, met, score, comment, post, reviewee} = row
         const {game} = post
         return {
             id,
@@ -45,6 +45,9 @@ export async function getMyReviews() {
             isHost: post.host_id === userId,
             nickname: reviewee.nickname,
             avatarUrl: reviewee.avatar_url,
+            met,
+            score,
+            comment,
         }
     })
 }

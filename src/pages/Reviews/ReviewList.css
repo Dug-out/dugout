@@ -118,7 +118,6 @@
 
 .review-list__row--done {
     border-top: 1px solid var(--divider);
-    opacity: 0.6;
 }
 
 .review-list__row--done:first-of-type {
@@ -181,11 +180,18 @@
     color: var(--red-text);
 }
 
+.review-list__comment {
+    margin-top: 2px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-700);
+}
+
 .review-list__state {
     flex: none;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-400);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-500);
 }
 
 .review-list__note {
