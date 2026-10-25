@@ -9,7 +9,9 @@ import MannerReviews from './pages/Reviews/MannerReviews.jsx'
 import Mypage from './pages/Mypage/Mypage.jsx'
 import MyPosts from './pages/MyPosts/MyPosts.jsx'
 import Record from './pages/Record/Record.jsx'
+import ReviewDone from './pages/Reviews/ReviewDone.jsx'
 import ReviewList from './pages/Reviews/ReviewList.jsx'
+import ReviewWrite from './pages/Reviews/ReviewWrite.jsx'
 import ProfileView from './pages/Profile/ProfileView.jsx'
 import ProfileEdit from './pages/Profile/ProfileEdit.jsx'
 import Splash from './pages/Splash/Splash.jsx'
@@ -53,6 +55,8 @@ function App() {
             <Route path="/my/posts" element={<MyPosts />} />
             <Route path="/my/manner" element={<MannerReviews />} />
             <Route path="/my/reviews" element={<ReviewList />} />
+            <Route path="/reviews/done" element={<ReviewDone />} />
+            <Route path="/reviews/:postId/:userId" element={<ReviewWrite />} />
             <Route path="/profile/:id" element={<ProfileView />} />
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout />}>

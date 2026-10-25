@@ -1,0 +1,232 @@
+.review-write {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 100dvh;
+    background: var(--surface);
+}
+
+.review-write__form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.review-write__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 26px;
+    padding: 20px 20px 24px;
+}
+
+/* ── 평가할 메이트 ── */
+.review-write__who {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: var(--radius-card-sm);
+    background: var(--bg);
+}
+
+.review-write__who img {
+    display: block;
+    flex: none;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.review-write__info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.review-write__name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.review-write__nickname {
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.review-write__team {
+    flex: none;
+    padding: 2px 7px;
+    border-radius: var(--radius-chip-sm);
+    background: var(--navy-50);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--navy-500);
+}
+
+.review-write__game {
+    font-size: 13px;
+    color: var(--text-500);
+}
+
+/* ── 섹션 ── */
+.review-write__section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.review-write__heading {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.review-write__ask {
+    margin: 0 0 4px;
+    font-family: var(--font-emotion), serif;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--navy-500);
+}
+
+/* ── 만났는지 ── */
+.review-write__choices {
+    display: flex;
+    gap: 8px;
+}
+
+.review-write__choice {
+    flex: 1;
+    min-height: 48px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-input);
+    background: var(--surface);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-700);
+    cursor: pointer;
+}
+
+.review-write__choice[aria-checked='true'] {
+    border: 1.5px solid var(--navy-500);
+    background: var(--navy-50);
+    font-weight: 700;
+    color: var(--navy-500);
+}
+
+/* ── 점수 ── */
+.review-write__score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.review-write__score img {
+    display: block;
+    width: 72px;
+    height: 72px;
+}
+
+.review-write__number {
+    font-family: var(--font-number), serif;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--red-500);
+}
+
+.review-write__unit {
+    align-self: baseline;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-700);
+}
+
+.review-write__range-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.review-write__range {
+    width: 100%;
+    height: 44px;
+    margin: 0;
+    accent-color: var(--red-500);
+    cursor: pointer;
+}
+
+.review-write__ticks {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px;
+    font-size: 12px;
+    color: var(--text-400);
+}
+
+/* ── 노쇼 안내 ── */
+.review-write__noshow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--radius-card-sm);
+    background: var(--red-50);
+}
+
+.review-write__noshow img {
+    display: block;
+    flex: none;
+    width: 56px;
+    height: 56px;
+}
+
+.review-write__noshow-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-500);
+}
+
+.review-write__noshow-text strong {
+    font-size: 15px;
+    color: var(--red-text);
+}
+
+.review-write__note {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin: -14px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-400);
+}
+
+.review-write__note svg {
+    flex: none;
+    margin-top: 2px;
+}
+
+/* ── 아래 고정 버튼 ── */
+.review-write__bottom {
+    position: sticky;
+    bottom: 0;
+    padding: 12px 20px max(28px, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--gray-100);
+    background: var(--surface);
+}
