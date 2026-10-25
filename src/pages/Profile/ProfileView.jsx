@@ -1,8 +1,8 @@
 import {Link, useParams} from 'react-router'
 import {Header, Icon, LoadState, ReviewItem} from '../../components'
 import {PROFILE, REVIEW, SIGNUP} from '../../constants/policy.js'
-import useProfile from '../../hooks/useProfile.js'
-import useReceivedReviews from '../../hooks/useReceivedReviews.js'
+import useProfile from '../../hooks/load/useProfile.js'
+import useReceivedReviews from '../../hooks/load/useReceivedReviews.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './ProfileView.css'
 

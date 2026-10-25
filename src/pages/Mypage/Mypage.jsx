@@ -4,7 +4,7 @@ import {getReviewTodoCount} from '../../api/mateReviews.js'
 import {Button, Header, Icon, LoadState} from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useLoad from '../../hooks/useLoad.js'
-import useMyProfile from '../../hooks/useMyProfile.js'
+import useMyProfile from '../../hooks/load/useMyProfile.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './Mypage.css'
 

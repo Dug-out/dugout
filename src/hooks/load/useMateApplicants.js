@@ -1,5 +1,5 @@
-import {getMateApplicants} from '../api/mateMembers.js'
-import useLoad from './useLoad.js'
+import {getMateApplicants} from '../../api/mateMembers.js'
+import useLoad from '../useLoad.js'
 
 /**
  * 신청자 관리에 쓸 데이터를 불러온다.

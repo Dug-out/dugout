@@ -1,5 +1,5 @@
-import {getMyPosts} from '../api/mateMembers.js'
-import useLoad from './useLoad.js'
+import {getMyPosts} from '../../api/mateMembers.js'
+import useLoad from '../useLoad.js'
 
 /**
  * 내 직관 약속을 불러온다.

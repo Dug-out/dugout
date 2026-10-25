@@ -4,7 +4,7 @@ import {createReview} from '../../../api/mateReviews.js'
 import {Button, Dialog, Field, Header, Icon, LoadState} from '../../../components'
 import {PROFILE, REVIEW} from '../../../constants/policy.js'
 import useMyTeam from '../../../hooks/useMyTeam.js'
-import useReviewTarget from '../../../hooks/useReviewTarget.js'
+import useReviewTarget from '../../../hooks/load/useReviewTarget.js'
 import {formatDay, matchLabel} from '../../../utils/mateFormat.js'
 import './ReviewWrite.css'
 

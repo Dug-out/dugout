@@ -1,5 +1,5 @@
-import {getReceivedReviews} from '../api/mateReviews.js'
-import useLoad from './useLoad.js'
+import {getReceivedReviews} from '../../api/mateReviews.js'
+import useLoad from '../useLoad.js'
 
 // 후기 목록을 한 번에 가져오는 최대 개수
 const LIST_LIMIT = 100

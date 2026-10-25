@@ -5,7 +5,7 @@ import {Button, Chip, Dialog, Field, Header, InlineMessage, LoadState, PhotoPick
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useAvailability from '../../hooks/useAvailability.js'
 import useGoBack from '../../hooks/useGoBack.js'
-import useMyProfile from '../../hooks/useMyProfile.js'
+import useMyProfile from '../../hooks/load/useMyProfile.js'
 import {availabilityProps} from '../../utils/availability.js'
 import './ProfileEdit.css'
 

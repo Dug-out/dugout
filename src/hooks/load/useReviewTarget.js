@@ -1,5 +1,5 @@
-import {getReviewTodos} from '../api/mateReviews.js'
-import useLoad from './useLoad.js'
+import {getReviewTodos} from '../../api/mateReviews.js'
+import useLoad from '../useLoad.js'
 
 /**
  * 평가할 메이트 한 명을 불러온다.

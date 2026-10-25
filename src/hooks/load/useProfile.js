@@ -1,5 +1,5 @@
-import {getProfile} from '../api/profiles.js'
-import useLoad from './useLoad.js'
+import {getProfile} from '../../api/profiles.js'
+import useLoad from '../useLoad.js'
 
 /**
  * 다른 사람의 프로필을 불러온다.

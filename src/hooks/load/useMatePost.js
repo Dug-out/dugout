@@ -1,5 +1,5 @@
-import {getMatePost} from '../api/matePosts.js'
-import useLoad from './useLoad.js'
+import {getMatePost} from '../../api/matePosts.js'
+import useLoad from '../useLoad.js'
 
 /**
  * 모집 글 하나를 불러온다.
