@@ -98,6 +98,8 @@ function PostContent({post, onApplied}) {
 
     // 참여 신청 시트가 열려 있는지
     const [applyOpen, setApplyOpen] = useState(false)
+    // 신청을 보낸 뒤 "신청을 보냈어요" 안내 창이 열려 있는지
+    const [appliedOpen, setAppliedOpen] = useState(false)
 
     const {title, imageUrl, isOpen, host, game, seat, ages, gender, description, capacity, joinedCount, members} = post
 
@@ -202,10 +204,30 @@ function PostContent({post, onApplied}) {
                     onClose={() => setApplyOpen(false)}
                     onApplied={() => {
                         setApplyOpen(false)
+                        setAppliedOpen(true)
                         onApplied()
                     }}
                />
             )}
+
+            {/* 신청 완료 안내 창 */}
+            <Dialog
+                open={appliedOpen}
+                onClose={() => setAppliedOpen(false)}
+                onConfirm={() => setAppliedOpen(false)}
+                image="/assets/pose-yay.png"
+                title="참여 신청을 보냈어요!"
+                description={
+                    <>
+                        방장이 수락하면 채팅방에 들어갈 수 있어요.
+                        <br/>
+                        수락 소식을 기다려 볼까요?
+                    </>
+                }
+                confirmLabel="확인"
+                cancelLabel={null}
+                tone="primary"
+            />
         </>
     )
 }
