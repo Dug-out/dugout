@@ -3,7 +3,7 @@ import {Link} from 'react-router'
 import {Button, EmptyState, Header, Icon, LoadState} from '../../components'
 import {MATE_POST} from '../../constants/policy.js'
 import useMyPosts from '../../hooks/load/useMyPosts.js'
-import useMyTeam from '../../hooks/useMyTeam.js'
+import useMyTeam from '../../hooks/load/useMyTeam.js'
 import {formatDay, formatDday, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import './MyPosts.css'
 
