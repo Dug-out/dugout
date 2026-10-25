@@ -28,7 +28,7 @@ function ProfileBody({id, profile}) {
     const team = SIGNUP.TEAMS.find((t) => t.code === teamCode)
     const summary = mannerSummary(manner)
     // 받은 후기 · 프로필에는 최근 것만 보여 주고 전체는 따로 본다
-    const {reviews, total} = useReceivedReviews(id, REVIEW.PROFILE_PREVIEW_COUNT)
+    const {status: reviewStatus, reviews, total} = useReceivedReviews(id, REVIEW.PROFILE_PREVIEW_COUNT)
 
     return (
         <>
@@ -78,16 +78,21 @@ function ProfileBody({id, profile}) {
                             </Link>
                         )}
                     </div>
-                    {reviews.length === 0 ? (
+                    {reviewStatus === 'error' && (
+                        <div className="profile-view__empty">
+                            <Icon name="info" size={13} />
+                            후기를 불러오지 못했어요
+                        </div>
+                    )}
+                    {reviewStatus === 'ready' && reviews.length === 0 && (
                         <div className="profile-view__empty">
                             <Icon name="info" size={13} />
                             아직 받은 매너 후기가 없어요
                         </div>
-                    ) : (
-                        reviews.map(({id: reviewId, score, comment}) => (
-                            <ReviewItem key={reviewId} score={score} comment={comment} />
-                        ))
                     )}
+                    {reviews.map(({id: reviewId, score, comment}) => (
+                        <ReviewItem key={reviewId} score={score} comment={comment} />
+                    ))}
                 </section>
             </main>
         </>

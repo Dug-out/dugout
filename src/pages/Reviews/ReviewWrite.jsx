@@ -42,8 +42,9 @@ function ReviewWrite() {
 /** 불러온 메이트에 대한 평가 입력 */
 function ReviewForm({target}) {
     const navigate = useNavigate()
-    // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다 / 상대 응원팀 · 이름 옆 뱃지에 쓴다
+    // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
     const myTeam = useMyTeam()
+    // 상대 응원팀 · 이름 옆 뱃지에 쓴다
     const {profile} = useProfile(target.userId)
     const team = SIGNUP.TEAMS.find((t) => t.code === profile?.team)
 

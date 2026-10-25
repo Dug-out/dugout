@@ -7,7 +7,13 @@ function ProfileReviews() {
     const {id} = useParams()
     const {profile} = useProfile(id)
 
-    return <ReviewsView userId={id} title={`${profile?.nickname ?? ''}님의 매너 후기`} backTo={`/profile/${id}`} />
+    return (
+        <ReviewsView
+            userId={id}
+            title={profile ? `${profile.nickname}님의 매너 후기` : '매너 후기'}
+            backTo={`/profile/${id}`}
+        />
+    )
 }
 
 export default ProfileReviews
