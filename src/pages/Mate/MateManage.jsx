@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {Link, useParams} from 'react-router'
 import {respondToApplicant} from '../../api/mateMembers.js'
-import {Button, Dialog, EmptyState, Header, Icon, Loading} from '../../components'
+import {Button, Dialog, Header, Icon, LoadState} from '../../components'
 import useMateApplicants from '../../hooks/useMateApplicants.js'
 import useMyTeam from '../../hooks/useMyTeam.js'
 import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
@@ -17,29 +17,17 @@ function MateManage() {
     return (
         <div className="mate-manage">
             <Header title="신청자 관리" backTo={`/mate/${id}`}/>
-            {status === 'loading' && <Loading/>}
-            {status === 'error' && (
-                <EmptyState
-                    title="신청자 목록을 불러오지 못했어요"
-                    description="잠시 후 다시 시도해 주세요"
-                    action={
-                        <Button variant="small-outline" onClick={reload}>
-                            다시 시도
-                        </Button>
-                    }
-                />
-            )}
-            {status === 'notfound' && (
-                <EmptyState
-                    title="신청자 관리를 열 수 없어요"
-                    description="내가 올린 모집 글에서만 볼 수 있어요"
-                    action={
-                        <Button as={Link} to="/my/posts" variant="small-outline">
-                            내 직관 약속으로
-                        </Button>
-                    }
-                />
-            )}
+            <LoadState
+                status={status}
+                errorTitle="신청자 목록을 불러오지 못했어요"
+                onRetry={reload}
+                notFound={{
+                    title: '신청자 관리를 열 수 없어요',
+                    description: '내가 올린 모집 글에서만 볼 수 있어요',
+                    backTo: '/my/posts',
+                    backLabel: '내 직관 약속으로',
+                }}
+            />
             {status === 'ready' && <ManageContent data={data} refresh={refresh}/>}
         </div>
     )

@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {Link, useLocation, useNavigate, useParams} from 'react-router'
-import {Button, Dialog, EmptyState, Header, Icon, Loading} from '../../components'
+import {Button, Dialog, Header, Icon, LoadState} from '../../components'
 import {MATE_POST, PROFILE} from '../../constants/policy.js'
 import useGoBack from '../../hooks/useGoBack.js'
 import useMatePost from '../../hooks/useMatePost.js'
@@ -38,32 +38,17 @@ function MateDetail() {
         <div className="mate-detail">
             <Header title="" onBack={goBack}/>
 
-            {/* 불러오는 중 */}
-            {status === 'loading' && <Loading/>}
-            {/* 불러오지 못했을 때 · 다시 시도 버튼 */}
-            {status === 'error' && (
-                <EmptyState
-                    title="모집 글을 불러오지 못했어요"
-                    description="잠시 후 다시 시도해 주세요"
-                    action={
-                        <Button variant="small-outline" onClick={reload}>
-                            다시 시도
-                        </Button>
-                    }
-               />
-            )}
-            {/* 없는 글이거나 다른 팀 글 */}
-            {status === 'notfound' && (
-                <EmptyState
-                    title="모집 글을 찾을 수 없어요"
-                    description="삭제됐거나 볼 수 없는 글이에요"
-                    action={
-                        <Button as={Link} to="/home" variant="small-outline">
-                            홈으로
-                        </Button>
-                    }
-               />
-            )}
+            <LoadState
+                status={status}
+                errorTitle="모집 글을 불러오지 못했어요"
+                onRetry={reload}
+                notFound={{
+                    title: '모집 글을 찾을 수 없어요',
+                    description: '삭제됐거나 볼 수 없는 글이에요',
+                    backTo: '/home',
+                    backLabel: '홈으로',
+                }}
+            />
             {status === 'ready' && <PostContent post={post} refresh={refresh}/>}
 
             {/* 올리기 완료 창 */}

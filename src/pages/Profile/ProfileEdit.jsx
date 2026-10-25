@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router'
 import {checkNickname} from '../../api/auth.js'
 import {updateMyProfile} from '../../api/profiles.js'
 import {
-    Button, Chip, Dialog, EmptyState, Field, Header, InlineMessage, Loading, PhotoPicker, TeamPicker,
+    Button, Chip, Dialog, Field, Header, InlineMessage, LoadState, PhotoPicker, TeamPicker,
 } from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useAvailability from '../../hooks/useAvailability.js'
@@ -23,14 +23,8 @@ function ProfileEdit() {
     return (
         <div className="profile-edit">
             <Header title="프로필 수정" backTo="/my"/>
-            {/* 불러오는 중 */}
-            {status === 'loading' && <Loading/>}
-            {/* 불러오지 못했을 때 · 다시 시도 버튼 */}
-            {status === 'error' && (
-                <EmptyState className="profile-edit__state" image="/assets/pose-sad.png"
-                            title="내 정보를 불러오지 못했어요" description="잠시 후 다시 시도해 주세요"
-                            action={<Button variant="small-outline" onClick={reload}>다시 시도</Button>}/>
-            )}
+            <LoadState status={status} errorTitle="내 정보를 불러오지 못했어요" onRetry={reload}
+                       className="profile-edit__state"/>
             {/* 불러왔을 때 · 불러온 값으로 채운 입력 화면 */}
             {status === 'ready' && <ProfileEditForm profile={profile}/>}
         </div>

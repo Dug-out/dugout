@@ -1,5 +1,5 @@
 import {useParams} from 'react-router'
-import {Button, EmptyState, Header, Icon, Loading} from '../../components'
+import {Header, Icon, LoadState} from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useProfile from '../../hooks/useProfile.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
@@ -14,13 +14,7 @@ function ProfileView() {
     return (
         <div className="profile-view">
             <Header title="프로필"/>
-            {/* 불러오는 중 */}
-            {status === 'loading' && <Loading/>}
-            {/* 불러오지 못했을 때 · 다시 시도 버튼 */}
-            {status === 'error' && (
-                <EmptyState title="프로필을 불러오지 못했어요" description="잠시 후 다시 시도해 주세요"
-                            action={<Button variant="small-outline" onClick={reload}>다시 시도</Button>}/>
-            )}
+            <LoadState status={status} errorTitle="프로필을 불러오지 못했어요" onRetry={reload}/>
             {status === 'ready' && <ProfileBody profile={profile}/>}
         </div>
     )

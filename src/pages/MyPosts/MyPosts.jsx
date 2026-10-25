@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {Link} from 'react-router'
-import {Button, EmptyState, Header, Icon, Loading} from '../../components'
+import {Button, EmptyState, Header, Icon, LoadState} from '../../components'
 import {MATE_POST} from '../../constants/policy.js'
 import useMyPosts from '../../hooks/useMyPosts.js'
 import useMyTeam from '../../hooks/useMyTeam.js'
@@ -22,11 +22,7 @@ function MyPosts() {
     return (
         <div className="my-posts">
             <Header title="내 직관 약속" backTo="/my"/>
-            {status === 'loading' && <Loading/>}
-            {status === 'error' && (
-                <EmptyState title="약속을 불러오지 못했어요" description="잠시 후 다시 시도해 주세요"
-                            action={<Button variant="small-outline" onClick={reload}>다시 시도</Button>}/>
-            )}
+            <LoadState status={status} errorTitle="약속을 불러오지 못했어요" onRetry={reload}/>
             {status === 'ready' && data.length === 0 && (
                 <EmptyState title="아직 잡힌 직관 약속이 없어요"
                             description={<>모집 글에 참여하거나<br/>직접 글을 올려 메이트를 모아 보세요</>}
