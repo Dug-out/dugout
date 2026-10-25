@@ -15,6 +15,7 @@ import ProfileEdit from './pages/Profile/ProfileEdit.jsx'
 import Splash from './pages/Splash/Splash.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
 import MateDetail from './pages/Mate/MateDetail.jsx'
+import MateManage from './pages/Mate/MateManage.jsx'
 
 // 로그인하지 않아도 볼 수 있는 화면. 여기에 없는 주소는 모두 로그인해야 한다.
 const PUBLIC_PATHS = ['/', '/login', '/signup', '/signup/done']
@@ -61,6 +62,7 @@ function App() {
             </Route>
             <Route path="/mate/write" element={<MateWrite/>}/>
             <Route path="/mate/:id" element={<MateDetail/>}/>
+            <Route path="/mate/:id/manage" element={<MateManage/>}/>
         </Routes>
     )
 }
