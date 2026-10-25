@@ -21,12 +21,12 @@ import MateManage from './pages/Mate/MateManage.jsx'
 const PUBLIC_PATHS = ['/', '/login', '/signup', '/signup/done']
 
 // 아직 만들지 않은 화면 자리 표시
-function Placeholder({ title }) {
+function Placeholder({title}) {
     return <div style={{padding: 24}}>{title} (준비 중)</div>
 }
 
 function App() {
-    const { pathname } = useLocation()
+    const {pathname} = useLocation()
 
     // null: 저장된 세션 확인 중, true: 로그인된 상태, false: 로그인되지 않은 상태
     const [signedIn, setSignedIn] = useState(null)
@@ -40,29 +40,29 @@ function App() {
 
     if (!PUBLIC_PATHS.includes(pathname)) {
         if (signedIn === null) return null
-        if (!signedIn) return <Navigate to="/login" replace/>
+        if (!signedIn) return <Navigate to="/login" replace />
     }
 
     return (
         <Routes>
-            <Route path="/" element={<Splash/>}/>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/signup" element={<Signup/>}/>
-            <Route path="/signup/done" element={<SignupDone/>}/>
-            <Route path="/profile/edit" element={<ProfileEdit/>}/>
-            <Route path="/my/posts" element={<MyPosts/>}/>
-            <Route path="/my/manner" element={<MannerReviews/>}/>
-            <Route path="/my/reviews" element={<ReviewList/>}/>
-            <Route path="/profile/:id" element={<ProfileView/>}/>
+            <Route path="/" element={<Splash />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup/done" element={<SignupDone />} />
+            <Route path="/profile/edit" element={<ProfileEdit />} />
+            <Route path="/my/posts" element={<MyPosts />} />
+            <Route path="/my/manner" element={<MannerReviews />} />
+            <Route path="/my/reviews" element={<ReviewList />} />
+            <Route path="/profile/:id" element={<ProfileView />} />
             {/* 탭바가 붙는 화면들 */}
-            <Route element={<TabLayout/>}>
-                <Route path="/home" element={<Placeholder title="홈"/>}/>
-                <Route path="/my" element={<Mypage/>}/>
-                <Route path="/record" element={<Record/>}/>
+            <Route element={<TabLayout />}>
+                <Route path="/home" element={<Placeholder title="홈" />} />
+                <Route path="/my" element={<Mypage />} />
+                <Route path="/record" element={<Record />} />
             </Route>
-            <Route path="/mate/write" element={<MateWrite/>}/>
-            <Route path="/mate/:id" element={<MateDetail/>}/>
-            <Route path="/mate/:id/manage" element={<MateManage/>}/>
+            <Route path="/mate/write" element={<MateWrite />} />
+            <Route path="/mate/:id" element={<MateDetail />} />
+            <Route path="/mate/:id/manage" element={<MateManage />} />
         </Routes>
     )
 }

@@ -36,7 +36,7 @@ function MateDetail() {
 
     return (
         <div className="mate-detail">
-            <Header title="" onBack={goBack}/>
+            <Header title="" onBack={goBack} />
 
             <LoadState
                 status={status}
@@ -49,7 +49,7 @@ function MateDetail() {
                     backLabel: '홈으로',
                 }}
             />
-            {status === 'ready' && <PostContent post={post} refresh={refresh}/>}
+            {status === 'ready' && <PostContent post={post} refresh={refresh} />}
 
             {/* 올리기 완료 창 */}
             <Dialog
@@ -61,15 +61,14 @@ function MateDetail() {
                 description={
                     <>
                         같은 팀 팬의 참여 신청을 기다려 볼까요?
-                        <br/>
+                        <br />
                         신청이 오면 방장이 수락할 수 있어요.
                     </>
                 }
                 confirmLabel="확인"
                 cancelLabel={null}
                 tone="primary"
-           />
-
+            />
         </div>
     )
 }
@@ -100,7 +99,13 @@ function PostContent({post, refresh}) {
     return (
         <>
             {/* 대표 이미지 · 없으면 기본 이미지 */}
-            <img className="mate-detail__hero" src={imageUrl || MATE_POST.DEFAULT_IMAGE} alt="" width="390" height="220"/>
+            <img
+                className="mate-detail__hero"
+                src={imageUrl || MATE_POST.DEFAULT_IMAGE}
+                alt=""
+                width="390"
+                height="220"
+            />
 
             {/* 배지 · 제목 · 방장 (누르면 방장 프로필) */}
             <section className="mate-detail__top">
@@ -109,7 +114,7 @@ function PostContent({post, refresh}) {
                 </span>
                 <h1 className="mate-detail__title">{title}</h1>
                 <Link to={`/profile/${host.id}`} className="mate-detail__host">
-                    <img src={host.avatarUrl || PROFILE.DEFAULT_AVATAR} alt="" width="40" height="40"/>
+                    <img src={host.avatarUrl || PROFILE.DEFAULT_AVATAR} alt="" width="40" height="40" />
                     <span className="mate-detail__host-text">
                         <span className="mate-detail__host-name">
                             {host.nickname}
@@ -119,30 +124,30 @@ function PostContent({post, refresh}) {
                             매너 타율 <strong>{formatManner(host.manner)}</strong>
                         </span>
                     </span>
-                    <Icon name="chevronRight" size={18}/>
+                    <Icon name="chevronRight" size={18} />
                 </Link>
             </section>
 
             <main className="mate-detail__body">
                 {/* 정보 카드 · [아이콘] [이름 52px] [값] 다섯 줄 */}
                 <dl className="mate-detail__info">
-                    <InfoRow icon={<Icon name="calendar" size={20} strokeWidth={1.8}/>} label="경기">
+                    <InfoRow icon={<Icon name="calendar" size={20} strokeWidth={1.8} />} label="경기">
                         {formatDay(game.gameAt)} {formatTime(game.gameAt)} {matchLabel(game, myTeam)}
                         <span className="mate-detail__info-sub">{game.stadium}</span>
                     </InfoRow>
-                    <InfoRow icon={<Icon name="my" size={20} strokeWidth={1.8}/>} label="나이대">
+                    <InfoRow icon={<Icon name="my" size={20} strokeWidth={1.8} />} label="나이대">
                         {ages.length ? ages.join(' · ') : '무관'}
                     </InfoRow>
-                    <InfoRow icon={<Icon name="my" size={20} strokeWidth={1.8}/>} label="성별">
+                    <InfoRow icon={<Icon name="my" size={20} strokeWidth={1.8} />} label="성별">
                         {gender}
                     </InfoRow>
-                    <InfoRow icon={<Icon name="seat" size={20} strokeWidth={1.8}/>} label="좌석">
+                    <InfoRow icon={<Icon name="seat" size={20} strokeWidth={1.8} />} label="좌석">
                         {seat}
                     </InfoRow>
-                    <InfoRow icon={<Icon name="mate" size={20} strokeWidth={1.8}/>} label="인원">
+                    <InfoRow icon={<Icon name="mate" size={20} strokeWidth={1.8} />} label="인원">
                         {joinedCount} / {capacity}명
                         <span className="mate-detail__bar" aria-hidden="true">
-                            <span style={{width: `${percent}%`}}/>
+                            <span style={{width: `${percent}%`}} />
                         </span>
                     </InfoRow>
                 </dl>
@@ -162,10 +167,18 @@ function PostContent({post, refresh}) {
                         {members.map((member) => {
                             const isMe = member.userId === post.myId
                             return (
-                                <li key={member.userId} className={`mate-detail__member${isMe ? ' mate-detail__member--me' : ''}`}>
+                                <li
+                                    key={member.userId}
+                                    className={`mate-detail__member${isMe ? ' mate-detail__member--me' : ''}`}
+                                >
                                     <Link to={`/profile/${member.userId}`} className="mate-detail__member-link">
                                         <span className="mate-detail__avatar">
-                                            <img src={member.avatarUrl || PROFILE.DEFAULT_AVATAR} alt="" width="48" height="48"/>
+                                            <img
+                                                src={member.avatarUrl || PROFILE.DEFAULT_AVATAR}
+                                                alt=""
+                                                width="48"
+                                                height="48"
+                                            />
                                             {/* 보는 사람 본인은 남색 테두리 + "나" 표시 */}
                                             {isMe && <span className="mate-detail__me-tag">나</span>}
                                         </span>
@@ -178,22 +191,20 @@ function PostContent({post, refresh}) {
                         {left > 0 && (
                             <li className="mate-detail__member">
                                 <span className="mate-detail__empty-seat">+{left}</span>
-                                <span className="mate-detail__member-name mate-detail__member-name--empty">빈 자리</span>
+                                <span className="mate-detail__member-name mate-detail__member-name--empty">
+                                    빈 자리
+                                </span>
                             </li>
                         )}
                     </ul>
                 </section>
             </main>
 
-            <ApplyBar post={post} onApply={() => setApplyOpen(true)}/>
+            <ApplyBar post={post} onApply={() => setApplyOpen(true)} />
 
             {/* 참여 신청 시트 · 열 때마다 새로 만들어 입력이 비어 있다 */}
             {applyOpen && (
-                <MateApplySheet
-                    postId={post.id}
-                    onClose={() => setApplyOpen(false)}
-                    onDone={handleApplyDone}
-                />
+                <MateApplySheet postId={post.id} onClose={() => setApplyOpen(false)} onDone={handleApplyDone} />
             )}
 
             {/* 신청 성공 */}
@@ -206,7 +217,7 @@ function PostContent({post, refresh}) {
                 description={
                     <>
                         방장이 수락하면 채팅방에 들어갈 수 있어요.
-                        <br/>
+                        <br />
                         수락 소식을 기다려 볼까요?
                     </>
                 }
@@ -247,7 +258,7 @@ function ApplyBar({post, onApply}) {
     if (myStatus === 'host' || myStatus === 'accepted') {
         button = (
             <Button block disabled>
-                <Icon name="chat" size={20}/>
+                <Icon name="chat" size={20} />
                 채팅방 입장하기
             </Button>
         )

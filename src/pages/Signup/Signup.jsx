@@ -14,7 +14,13 @@ function Signup() {
 
     // 입력한 값 · gender, age, team 은 아직 고르지 않은면 null 이다
     const [form, setForm] = useState({
-        email: '', password: '', passwordConfirm: '', nickname: '', gender: null, age: null, team: null,
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        nickname: '',
+        gender: null,
+        age: null,
+        team: null,
     })
 
     // 글자 입력칸마다 쓰는 변경 함수 · set('email') 은 email 칸이 바뀔 때 form.email 을 갱신한다
@@ -43,8 +49,15 @@ function Signup() {
     const nicknameResult = useAvailability(nickname, nicknameValid, checkNickname)
 
     // 모든 칸이 통과하고 요청 중이 아닐 때만 가입 버튼이 켜진다
-    const canSubmit = emailResult === 'ok' && passwordValid && passwordMatch && nicknameResult === 'ok'
-        && form.gender && form.age && form.team && !busy
+    const canSubmit =
+        emailResult === 'ok' &&
+        passwordValid &&
+        passwordMatch &&
+        nicknameResult === 'ok' &&
+        form.gender &&
+        form.age &&
+        form.team &&
+        !busy
 
     // 가입 버튼(또는 엔터)을 눌렀을 때 · 가입을 요청하고, 성공하면 완료 화면으로 이동하고 실패하면 오류 문구를 보여 준다
     const handleSubmit = async (e) => {
@@ -68,46 +81,82 @@ function Signup() {
 
     return (
         <div className="signup">
-            <Header title="회원가입" backTo="/login"/>
+            <Header title="회원가입" backTo="/login" />
 
             <form className="signup__form" onSubmit={handleSubmit}>
                 <div className="signup__intro">
                     <div className="signup__intro-text">
-                        <p className="signup__title">반가워요!<br/>계정을 만들어요</p>
+                        <p className="signup__title">
+                            반가워요!
+                            <br />
+                            계정을 만들어요
+                        </p>
                         <p className="signup__sub">같은 팀 팬과 함께하는 즐거운 직관</p>
                     </div>
-                    <img src="/assets/pose-hi.png" alt="손을 흔드는 덕아웃 캐릭터" width="520" height="520"/>
+                    <img src="/assets/pose-hi.png" alt="손을 흔드는 덕아웃 캐릭터" width="520" height="520" />
                 </div>
 
                 {/* 이메일 · 입력을 멈추면 가입된 이메일인지 자동으로 확인한다 */}
-                <Field id="signup-email" label="이메일" type="email" autoComplete="email" inputMode="email"
-                       value={form.email} onChange={set('email')}
-                       {...availabilityProps('email', emailResult)}/>
+                <Field
+                    id="signup-email"
+                    label="이메일"
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    value={form.email}
+                    onChange={set('email')}
+                    {...availabilityProps('email', emailResult)}
+                />
 
-                <Field id="signup-pw" label="비밀번호" type="password" autoComplete="new-password"
-                       value={form.password} onChange={set('password')}
-                       hint="영문과 숫자를 섞어 8자 이상"/>
+                <Field
+                    id="signup-pw"
+                    label="비밀번호"
+                    type="password"
+                    autoComplete="new-password"
+                    value={form.password}
+                    onChange={set('password')}
+                    hint="영문과 숫자를 섞어 8자 이상"
+                />
 
                 {/* 비밀번호 확인 · 비어 있으면 아무 문구도 없고, 입력하면 일치 여부를 보여 준다 */}
-                <Field id="signup-pw2" label="비밀번호 확인" type="password" autoComplete="new-password"
-                       value={form.passwordConfirm} onChange={set('passwordConfirm')}
-                       {...(form.passwordConfirm === '' ? {} : passwordMatch
-                           ? {status: 'ok', message: '비밀번호가 일치해요'}
-                           : {status: 'error', message: '비밀번호가 일치하지 않아요'})}/>
+                <Field
+                    id="signup-pw2"
+                    label="비밀번호 확인"
+                    type="password"
+                    autoComplete="new-password"
+                    value={form.passwordConfirm}
+                    onChange={set('passwordConfirm')}
+                    {...(form.passwordConfirm === ''
+                        ? {}
+                        : passwordMatch
+                          ? {status: 'ok', message: '비밀번호가 일치해요'}
+                          : {status: 'error', message: '비밀번호가 일치하지 않아요'})}
+                />
 
                 {/* 닉네임 · 입력을 멈추면 사용 중인 닉네임인지 자동으로 확인한다 */}
-                <Field id="signup-nick" label="닉네임" type="text" autoComplete="nickname"
-                       maxLength={SIGNUP.NICKNAME_MAX} value={form.nickname} onChange={set('nickname')}
-                       hint={`${SIGNUP.NICKNAME_MIN}~${SIGNUP.NICKNAME_MAX}자 · 메이트에게 보여지는 이름이에요`}
-                       {...availabilityProps('nickname', nicknameResult)}/>
+                <Field
+                    id="signup-nick"
+                    label="닉네임"
+                    type="text"
+                    autoComplete="nickname"
+                    maxLength={SIGNUP.NICKNAME_MAX}
+                    value={form.nickname}
+                    onChange={set('nickname')}
+                    hint={`${SIGNUP.NICKNAME_MIN}~${SIGNUP.NICKNAME_MAX}자 · 메이트에게 보여지는 이름이에요`}
+                    {...availabilityProps('nickname', nicknameResult)}
+                />
 
                 {/* 성별 · 하나만 고른다 */}
                 <fieldset className="signup__group">
                     <legend>성별</legend>
                     <div className="signup__genders">
                         {SIGNUP.GENDERS.map((gender) => (
-                            <Button key={gender} variant="segment" selected={form.gender === gender}
-                                    onClick={() => pick('gender', gender)}>
+                            <Button
+                                key={gender}
+                                variant="segment"
+                                selected={form.gender === gender}
+                                onClick={() => pick('gender', gender)}
+                            >
                                 {gender}
                             </Button>
                         ))}
@@ -119,8 +168,12 @@ function Signup() {
                     <legend>나이대</legend>
                     <div className="signup__ages">
                         {SIGNUP.AGES.map((age) => (
-                            <Chip key={age} variant="select" selected={form.age === age}
-                                  onClick={() => pick('age', age)}>
+                            <Chip
+                                key={age}
+                                variant="select"
+                                selected={form.age === age}
+                                onClick={() => pick('age', age)}
+                            >
                                 {age}
                             </Chip>
                         ))}
@@ -130,7 +183,7 @@ function Signup() {
                 {/* 응원팀 · 고른 구단은 그 구단 색(--team-color)으로 강조된다 */}
                 <fieldset className="signup__group">
                     <legend>응원팀</legend>
-                    <TeamPicker value={form.team} onChange={(code) => pick('team', code)}/>
+                    <TeamPicker value={form.team} onChange={(code) => pick('team', code)} />
                 </fieldset>
 
                 <div className="signup__footer">

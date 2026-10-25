@@ -22,19 +22,19 @@ const formatManner = (value) => value.toFixed(3).replace(/^0/, '')
  * @param {number} capacity 모집 인원
  */
 function MateCard({
-                      to,
-                      image = MATE_POST.DEFAULT_IMAGE,
-                      status = 'open',
-                      dday,
-                      title,
-                      date,
-                      place,
-                      tags = [],
-                      host,
-                      joined,
-                      capacity,
-                      className = '',
-                  }) {
+    to,
+    image = MATE_POST.DEFAULT_IMAGE,
+    status = 'open',
+    dday,
+    title,
+    date,
+    place,
+    tags = [],
+    host,
+    joined,
+    capacity,
+    className = '',
+}) {
     const Component = to ? Link : 'article'
     const left = capacity - joined
     const classes = ['mate-card', className].filter(Boolean).join(' ')
@@ -42,7 +42,7 @@ function MateCard({
     return (
         <Component className={classes} {...(to ? {to} : {})}>
             <span className="mate-card__image">
-                <img src={image} alt="" width="350" height="140"/>
+                <img src={image} alt="" width="350" height="140" />
                 <span className={`mate-card__status mate-card__status--${status}`}>
                     {status === 'open' ? '모집 중' : '모집 마감'}
                 </span>
@@ -53,30 +53,43 @@ function MateCard({
                 <span className="mate-card__title">{title}</span>
 
                 <span className="mate-card__info">
-                    <span className="mate-card__date"><Icon name="calendar" size={14}/>{date}</span>
-                    <span className="mate-card__place"><Icon name="pin" size={14}/>{place}</span>
+                    <span className="mate-card__date">
+                        <Icon name="calendar" size={14} />
+                        {date}
+                    </span>
+                    <span className="mate-card__place">
+                        <Icon name="pin" size={14} />
+                        {place}
+                    </span>
                 </span>
 
                 {tags.length > 0 && (
                     <span className="mate-card__tags">
-                        {tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}
+                        {tags.map((tag) => (
+                            <Tag key={tag}>{tag}</Tag>
+                        ))}
                     </span>
                 )}
 
-                <span className="mate-card__divider"/>
+                <span className="mate-card__divider" />
 
                 <span className="mate-card__host">
-                    <img src={host.avatar ?? PROFILE.DEFAULT_AVATAR} alt="" width="24" height="24"/>
+                    <img src={host.avatar ?? PROFILE.DEFAULT_AVATAR} alt="" width="24" height="24" />
                     <span className="mate-card__host-name">{host.name}</span>
-                    <span className="mate-card__manner">매너 타율 <strong>{formatManner(host.manner)}</strong></span>
+                    <span className="mate-card__manner">
+                        매너 타율 <strong>{formatManner(host.manner)}</strong>
+                    </span>
                 </span>
 
                 <span className="mate-card__progress">
                     <span className="mate-card__bar" aria-hidden="true">
-                        <span style={{width: `${Math.min(100, (joined / capacity) * 100)}%`}}/>
+                        <span style={{width: `${Math.min(100, (joined / capacity) * 100)}%`}} />
                     </span>
                     <span className="mate-card__count">
-                        <strong>{joined}/{capacity}</strong>명{left > 0 && ` · ${left}자리 남음`}
+                        <strong>
+                            {joined}/{capacity}
+                        </strong>
+                        명{left > 0 && ` · ${left}자리 남음`}
                     </span>
                 </span>
             </span>

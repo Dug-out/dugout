@@ -15,7 +15,7 @@ function SignupDone() {
     const {state} = useLocation()
 
     // 주소를 직접 입력해서 들어오면 넘겨받은 정보가 없으므로 가입 화면으로 돌려보낸다
-    if (!state) return <Navigate to="/signup" replace/>
+    if (!state) return <Navigate to="/signup" replace />
 
     const {nickname, team: teamCode, gender, age} = state
 
@@ -31,7 +31,9 @@ function SignupDone() {
         <div className="done">
             {/* 색종이 장식 */}
             <div className="done__confetti" aria-hidden="true">
-                {Array.from({length: CONFETTI_COUNT}, (_, i) => <span key={i}/>)}
+                {Array.from({length: CONFETTI_COUNT}, (_, i) => (
+                    <span key={i} />
+                ))}
             </div>
 
             <div className="done__head">
@@ -41,16 +43,19 @@ function SignupDone() {
 
             {/* 멤버 카드 · 위쪽 슬롯에서 종이가 인쇄되어 나오는 모양 */}
             <div className="done__ticket-wrap">
-                <div className="done__slot" aria-hidden="true"/>
+                <div className="done__slot" aria-hidden="true" />
                 <div className="done__paper">
                     <div className="done__ticket">
                         <div className="done__ticket-top">
-                            <img src="/assets/logo.png" alt="DUGOUT" width="318" height="106"/>
-                            <span className="done__no">NO. {now.getFullYear()}-{mm}{dd}</span>
+                            <img src="/assets/logo.png" alt="DUGOUT" width="318" height="106" />
+                            <span className="done__no">
+                                NO. {now.getFullYear()}-{mm}
+                                {dd}
+                            </span>
                         </div>
                         <div className="done__who">
                             <span className="done__face">
-                                <img src={PROFILE.DEFAULT_AVATAR} alt="" width="512" height="512"/>
+                                <img src={PROFILE.DEFAULT_AVATAR} alt="" width="512" height="512" />
                             </span>
                             <div className="done__info">
                                 <div>
@@ -59,7 +64,10 @@ function SignupDone() {
                                 </div>
                                 <div>
                                     <div className="done__label">MY TEAM</div>
-                                    <div className="done__team">{team?.name}<span>MY</span></div>
+                                    <div className="done__team">
+                                        {team?.name}
+                                        <span>MY</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -79,19 +87,29 @@ function SignupDone() {
                             </div>
                         </div>
                         <div className="done__ticket-bottom">
-                            <div className="done__barcode" aria-hidden="true"/>
-                            <span>{now.getFullYear()}.{mm}.{dd} 가입</span>
+                            <div className="done__barcode" aria-hidden="true" />
+                            <span>
+                                {now.getFullYear()}.{mm}.{dd} 가입
+                            </span>
                         </div>
                     </div>
                 </div>
                 {/* "LET'S GO!" 도장 */}
-                <div className="done__stamp" aria-hidden="true">LET'S<br/>GO!</div>
+                <div className="done__stamp" aria-hidden="true">
+                    LET'S
+                    <br />
+                    GO!
+                </div>
             </div>
 
             {/* 자기소개를 작성하러 가거나, 홈으로 간다 */}
             <div className="done__actions">
-                <Button as={Link} to="/profile/edit" block>자기소개 작성하러 가기</Button>
-                <Button as={Link} to="/home" variant="text" block>나중에 할게요</Button>
+                <Button as={Link} to="/profile/edit" block>
+                    자기소개 작성하러 가기
+                </Button>
+                <Button as={Link} to="/home" variant="text" block>
+                    나중에 할게요
+                </Button>
             </div>
         </div>
     )

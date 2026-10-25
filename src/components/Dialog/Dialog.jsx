@@ -19,24 +19,26 @@ import './Dialog.css'
  * }} props
  */
 function Dialog({
-                    open,
-                    onClose,
-                    onConfirm,
-                    title,
-                    description,
-                    image = '/assets/pose-sad.png',
-                    cancelLabel = '취소',
-                    confirmLabel,
-                    tone = 'danger',
-                    className = '',
-                }) {
+    open,
+    onClose,
+    onConfirm,
+    title,
+    description,
+    image = '/assets/pose-sad.png',
+    cancelLabel = '취소',
+    confirmLabel,
+    tone = 'danger',
+    className = '',
+}) {
     const titleId = useId()
 
     return (
         <Overlay open={open} onClose={onClose} align="center" labelledBy={titleId}>
             <div className={['dialog', className].filter(Boolean).join(' ')}>
-                {image && <img className="dialog__image" src={image} alt="" width="68" height="68"/>}
-                <h2 id={titleId} className="dialog__title">{title}</h2>
+                {image && <img className="dialog__image" src={image} alt="" width="68" height="68" />}
+                <h2 id={titleId} className="dialog__title">
+                    {title}
+                </h2>
                 {description && <p className="dialog__desc">{description}</p>}
                 <div className={`dialog__actions${cancelLabel === null ? ' dialog__actions--single' : ''}`}>
                     {cancelLabel !== null && (

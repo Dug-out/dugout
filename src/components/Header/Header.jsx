@@ -14,16 +14,21 @@ function Header({title, large = false, backTo, onBack, right, className = ''}) {
 
     return (
         <header className={classes}>
-            {!large && (backTo ? (
-                <Link to={backTo} className="header__back" aria-label="뒤로">
-                    <Icon name="back"/>
-                </Link>
-            ) : (
-                <button type="button" className="header__back" aria-label="뒤로"
-                        onClick={onBack ?? (() => navigate(-1))}>
-                    <Icon name="back"/>
-                </button>
-            ))}
+            {!large &&
+                (backTo ? (
+                    <Link to={backTo} className="header__back" aria-label="뒤로">
+                        <Icon name="back" />
+                    </Link>
+                ) : (
+                    <button
+                        type="button"
+                        className="header__back"
+                        aria-label="뒤로"
+                        onClick={onBack ?? (() => navigate(-1))}
+                    >
+                        <Icon name="back" />
+                    </button>
+                ))}
             <h1 className="header__title">{title}</h1>
             {right && <div className="header__right">{right}</div>}
         </header>

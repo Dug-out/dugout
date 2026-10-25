@@ -21,14 +21,26 @@ function MyPosts() {
 
     return (
         <div className="my-posts">
-            <Header title="내 직관 약속" backTo="/my"/>
-            <LoadState status={status} errorTitle="약속을 불러오지 못했어요" onRetry={reload}/>
+            <Header title="내 직관 약속" backTo="/my" />
+            <LoadState status={status} errorTitle="약속을 불러오지 못했어요" onRetry={reload} />
             {status === 'ready' && data.length === 0 && (
-                <EmptyState title="아직 잡힌 직관 약속이 없어요"
-                            description={<>모집 글에 참여하거나<br/>직접 글을 올려 메이트를 모아 보세요</>}
-                            action={<Button as={Link} to="/home">메이트 찾으러 가기</Button>}/>
+                <EmptyState
+                    title="아직 잡힌 직관 약속이 없어요"
+                    description={
+                        <>
+                            모집 글에 참여하거나
+                            <br />
+                            직접 글을 올려 메이트를 모아 보세요
+                        </>
+                    }
+                    action={
+                        <Button as={Link} to="/home">
+                            메이트 찾으러 가기
+                        </Button>
+                    }
+                />
             )}
-            {status === 'ready' && data.length > 0 && <PostList items={data}/>}
+            {status === 'ready' && data.length > 0 && <PostList items={data} />}
         </div>
     )
 }
@@ -54,8 +66,14 @@ function PostList({items}) {
         <main className="my-posts__body">
             <div className="my-posts__tabs" role="tablist" aria-label="내 직관 약속 보기">
                 {TABS.map(({key, label, match}) => (
-                    <button key={key} type="button" role="tab" aria-selected={key === tabKey}
-                            className="my-posts__tab" onClick={() => setTabKey(key)}>
+                    <button
+                        key={key}
+                        type="button"
+                        role="tab"
+                        aria-selected={key === tabKey}
+                        className="my-posts__tab"
+                        onClick={() => setTabKey(key)}
+                    >
                         {label} {items.filter(match).length}
                     </button>
                 ))}
@@ -64,13 +82,17 @@ function PostList({items}) {
             {upcoming.length > 0 && (
                 <section className="my-posts__group">
                     <h2 className="my-posts__heading">다가오는 직관</h2>
-                    {upcoming.map((item) => <PostCard key={item.id} item={item} myTeam={myTeam} now={now}/>)}
+                    {upcoming.map((item) => (
+                        <PostCard key={item.id} item={item} myTeam={myTeam} now={now} />
+                    ))}
                 </section>
             )}
             {past.length > 0 && (
                 <section className="my-posts__group">
                     <h2 className="my-posts__heading">지난 직관</h2>
-                    {past.map((item) => <PostCard key={item.id} item={item} myTeam={myTeam} now={now} past/>)}
+                    {past.map((item) => (
+                        <PostCard key={item.id} item={item} myTeam={myTeam} now={now} past />
+                    ))}
                 </section>
             )}
         </main>
@@ -93,7 +115,7 @@ function PostCard({item, myTeam, now, past = false}) {
             {/* 지금은 모집 글 상세로 이동 · 채팅방, 기록 상세가 생기면 상태에 따라 나눠 연결한다 */}
             <Link to={`/mate/${id}`} className={`my-posts__link${past ? ' my-posts__link--past' : ''}`}>
                 <span className="my-posts__cover">
-                    <img src={image ?? MATE_POST.DEFAULT_IMAGE} alt="" width="350" height="120"/>
+                    <img src={image ?? MATE_POST.DEFAULT_IMAGE} alt="" width="350" height="120" />
                     <span className={`my-posts__badge my-posts__badge--${badge.tone}`}>{badge.text}</span>
                     {!past && <span className="my-posts__dday">{formatDday(game.gameAt, now)}</span>}
                 </span>
@@ -101,15 +123,15 @@ function PostCard({item, myTeam, now, past = false}) {
                     <span className="my-posts__title">{title}</span>
                     <span className="my-posts__lines">
                         <span className="my-posts__line my-posts__line--main">
-                            <Icon name="calendar" size={14}/>
+                            <Icon name="calendar" size={14} />
                             {formatDay(game.gameAt)} {formatTime(game.gameAt)} · {matchLabel(game, myTeam)}
                         </span>
                         <span className="my-posts__line">
-                            <Icon name="pin" size={14}/>
+                            <Icon name="pin" size={14} />
                             {game.stadium}
                         </span>
                         <span className="my-posts__line">
-                            <Icon name="mate" size={14}/>
+                            <Icon name="mate" size={14} />
                             방장 {hostNickname} · {joinedCount}/{capacity}명
                         </span>
                     </span>
@@ -122,7 +144,7 @@ function PostCard({item, myTeam, now, past = false}) {
                     <span className="my-posts__banner-count">{pendingCount}</span>
                     <span className="my-posts__banner-text">새 참여 신청이 기다리고 있어요</span>
                     신청자 관리
-                    <Icon name="chevronRight" size={16}/>
+                    <Icon name="chevronRight" size={16} />
                 </Link>
             )}
         </article>

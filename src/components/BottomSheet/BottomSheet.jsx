@@ -11,10 +11,12 @@ function BottomSheet({open, onClose, label, closeLabel = '닫기', children}) {
     return (
         <Overlay open={open} onClose={onClose} align="bottom" label={label}>
             <div className="sheet">
-                <span className="sheet__handle" aria-hidden="true"/>
+                <span className="sheet__handle" aria-hidden="true" />
                 {children}
                 {closeLabel && (
-                    <button type="button" className="sheet__close" onClick={onClose}>{closeLabel}</button>
+                    <button type="button" className="sheet__close" onClick={onClose}>
+                        {closeLabel}
+                    </button>
                 )}
             </div>
         </Overlay>

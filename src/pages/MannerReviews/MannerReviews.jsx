@@ -5,7 +5,7 @@ import './MannerReviews.css'
 function MannerReviews() {
     return (
         <div className="manner-reviews">
-            <Header title="받은 매너 후기" backTo="/my"/>
+            <Header title="받은 매너 후기" backTo="/my" />
             <main className="manner-reviews__body">
                 <section className="manner-reviews__card">
                     <div className="manner-reviews__head">
@@ -13,13 +13,18 @@ function MannerReviews() {
                         <span className="manner-reviews__count">0</span>
                     </div>
                     <p className="manner-reviews__note">
-                        <Icon name="info" size={13}/>누가 썼는지는 공개되지 않아요
+                        <Icon name="info" size={13} />
+                        누가 썼는지는 공개되지 않아요
                     </p>
                     {/* 후기가 생기면 이 자리에 점수 + 한 줄 후기 목록을 보여 준다 */}
                     <div className="manner-reviews__empty">
-                        <img src="/assets/pose-sad.png" alt="" width="520" height="520"/>
+                        <img src="/assets/pose-sad.png" alt="" width="520" height="520" />
                         <strong>아직 받은 매너 후기가 없어요</strong>
-                        <span>메이트와 함께 직관을 다녀오면<br/>메이트가 남긴 후기가 여기에 모여요</span>
+                        <span>
+                            메이트와 함께 직관을 다녀오면
+                            <br />
+                            메이트가 남긴 후기가 여기에 모여요
+                        </span>
                     </div>
                 </section>
             </main>

@@ -13,11 +13,16 @@ function TeamPicker({value, onChange}) {
     return (
         <div className="team-picker">
             {SIGNUP.TEAMS.map((team) => (
-                <button key={team.code} type="button" className="team-picker__team"
-                        style={teamStyle(team.color)} aria-pressed={value === team.code}
-                        onClick={() => onChange(team.code)}>
+                <button
+                    key={team.code}
+                    type="button"
+                    className="team-picker__team"
+                    style={teamStyle(team.color)}
+                    aria-pressed={value === team.code}
+                    onClick={() => onChange(team.code)}
+                >
                     <span className="team-picker__logo">
-                        <img src={team.icon} alt="" width="240" height="240"/>
+                        <img src={team.icon} alt="" width="240" height="240" />
                     </span>
                     {team.label}
                 </button>

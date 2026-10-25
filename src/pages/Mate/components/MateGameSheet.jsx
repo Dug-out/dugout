@@ -31,7 +31,9 @@ function MateGameSheet({myTeam, selectedId, onPick, onClose}) {
                 {status === 'error' && (
                     <div className="mate-game__state">
                         경기 일정을 불러오지 못했어요
-                        <Button variant="small-outline" onClick={reload}>다시 시도</Button>
+                        <Button variant="small-outline" onClick={reload}>
+                            다시 시도
+                        </Button>
                     </div>
                 )}
 
@@ -41,8 +43,13 @@ function MateGameSheet({myTeam, selectedId, onPick, onClose}) {
 
                 {/* 경기를 불러온 뒤에 만든다 (처음 보여 줄 달을 경기로 정하므로) */}
                 {status === 'ready' && games.length > 0 && (
-                    <GameCalendar games={games} myTeam={myTeam} selectedId={selectedId} onPick={onPick}
-                                  onClose={onClose}/>
+                    <GameCalendar
+                        games={games}
+                        myTeam={myTeam}
+                        selectedId={selectedId}
+                        onPick={onPick}
+                        onClose={onClose}
+                    />
                 )}
             </div>
         </BottomSheet>
@@ -79,67 +86,97 @@ function GameCalendar({games, myTeam, selectedId, onPick, onClose}) {
     // 날짜 칸 · 1일 앞의 빈 칸은 null
     const leading = new Date(view.year, view.month, 1).getDay()
     const lastDay = new Date(view.year, view.month + 1, 0).getDate()
-    const cells = [
-        ...Array.from({length: leading}, () => null),
-        ...Array.from({length: lastDay}, (_, i) => i + 1),
-    ]
+    const cells = [...Array.from({length: leading}, () => null), ...Array.from({length: lastDay}, (_, i) => i + 1)]
 
     return (
         <>
             {/* 달 이동 */}
             <div className="mate-cal__head">
-                <button type="button" className="mate-cal__move" aria-label="이전 달" disabled={!canPrev}
-                        onClick={() => moveMonth(-1)}>
-                    <Icon name="back" size={20}/>
+                <button
+                    type="button"
+                    className="mate-cal__move"
+                    aria-label="이전 달"
+                    disabled={!canPrev}
+                    onClick={() => moveMonth(-1)}
+                >
+                    <Icon name="back" size={20} />
                 </button>
-                <span className="mate-cal__month">{view.year}.{String(view.month + 1).padStart(2, '0')}</span>
-                <button type="button" className="mate-cal__move" aria-label="다음 달" disabled={!canNext}
-                        onClick={() => moveMonth(1)}>
-                    <Icon name="chevronRight" size={20}/>
+                <span className="mate-cal__month">
+                    {view.year}.{String(view.month + 1).padStart(2, '0')}
+                </span>
+                <button
+                    type="button"
+                    className="mate-cal__move"
+                    aria-label="다음 달"
+                    disabled={!canNext}
+                    onClick={() => moveMonth(1)}
+                >
+                    <Icon name="chevronRight" size={20} />
                 </button>
             </div>
 
             <div className="mate-cal__week" aria-hidden="true">
                 {WEEKDAYS.map((day, i) => (
-                    <span key={day} className={i === 0 ? 'mate-cal__sun' : undefined}>{day}</span>
+                    <span key={day} className={i === 0 ? 'mate-cal__sun' : undefined}>
+                        {day}
+                    </span>
                 ))}
             </div>
 
             <div className="mate-cal__grid">
                 {cells.map((day, i) => {
-                    if (day === null) return <span key={`blank-${i}`}/>
+                    if (day === null) return <span key={`blank-${i}`} />
                     const game = gameByDay.get(`${view.year}-${view.month}-${day}`)
                     // 경기 없는 날
-                    if (!game) return <span key={day} className="mate-cal__day mate-cal__day--off">{day}</span>
+                    if (!game)
+                        return (
+                            <span key={day} className="mate-cal__day mate-cal__day--off">
+                                {day}
+                            </span>
+                        )
                     const isPicked = picked?.id === game.id
                     return (
-                        <button key={day} type="button" className="mate-cal__day mate-cal__day--game"
-                                aria-pressed={isPicked}
-                                aria-label={`${view.month + 1}월 ${day}일 ${matchLabel(game, myTeam)}`}
-                                onClick={() => setPicked(game)}>
+                        <button
+                            key={day}
+                            type="button"
+                            className="mate-cal__day mate-cal__day--game"
+                            aria-pressed={isPicked}
+                            aria-label={`${view.month + 1}월 ${day}일 ${matchLabel(game, myTeam)}`}
+                            onClick={() => setPicked(game)}
+                        >
                             <span className="mate-cal__num">{day}</span>
-                            <span className="mate-cal__dot" aria-hidden="true"/>
+                            <span className="mate-cal__dot" aria-hidden="true" />
                         </button>
                     )
                 })}
             </div>
 
-            <p className="mate-cal__legend"><span className="mate-cal__dot" aria-hidden="true"/>{myTeam ?? '우리 팀'} 경기
+            <p className="mate-cal__legend">
+                <span className="mate-cal__dot" aria-hidden="true" />
+                {myTeam ?? '우리 팀'} 경기
             </p>
 
             {/* 고른 경기 띠 */}
             <div className={`mate-cal__picked${picked ? ' mate-cal__picked--on' : ''}`} aria-live="polite">
                 {picked ? (
                     <>
-                        <strong>{formatDay(picked.gameAt)} {formatTime(picked.gameAt)} · {matchLabel(picked, myTeam)}</strong>
+                        <strong>
+                            {formatDay(picked.gameAt)} {formatTime(picked.gameAt)} · {matchLabel(picked, myTeam)}
+                        </strong>
                         <span>{picked.stadium}</span>
                     </>
-                ) : '경기가 있는 날짜를 눌러 주세요'}
+                ) : (
+                    '경기가 있는 날짜를 눌러 주세요'
+                )}
             </div>
 
             <div className="mate-cal__actions">
-                <Button variant="secondary" onClick={onClose}>취소</Button>
-                <Button block disabled={!picked} onClick={() => onPick(picked)}>이 경기로 선택</Button>
+                <Button variant="secondary" onClick={onClose}>
+                    취소
+                </Button>
+                <Button block disabled={!picked} onClick={() => onPick(picked)}>
+                    이 경기로 선택
+                </Button>
             </div>
         </>
     )

@@ -16,7 +16,7 @@ function MateManage() {
 
     return (
         <div className="mate-manage">
-            <Header title="신청자 관리" backTo={`/mate/${id}`}/>
+            <Header title="신청자 관리" backTo={`/mate/${id}`} />
             <LoadState
                 status={status}
                 errorTitle="신청자 목록을 불러오지 못했어요"
@@ -28,7 +28,7 @@ function MateManage() {
                     backLabel: '내 직관 약속으로',
                 }}
             />
-            {status === 'ready' && <ManageContent data={data} refresh={refresh}/>}
+            {status === 'ready' && <ManageContent data={data} refresh={refresh} />}
         </div>
     )
 }
@@ -81,7 +81,7 @@ function ManageContent({data, refresh}) {
                 </p>
                 <p className="mate-manage__title">{title}</p>
                 <span className="mate-manage__bar" aria-hidden="true">
-                    <span style={{width: `${Math.min(100, (joinedCount / capacity) * 100)}%`}}/>
+                    <span style={{width: `${Math.min(100, (joinedCount / capacity) * 100)}%`}} />
                 </span>
                 <p className="mate-manage__count">
                     {capacity}명 중 {joinedCount}명 확정 · {full ? '정원이 가득 찼어요' : `${left}자리 남음`}
@@ -112,7 +112,7 @@ function ManageContent({data, refresh}) {
 
             {accepted.length > 0 && <h2 className="mate-manage__heading">함께 가요 {accepted.length}</h2>}
             {accepted.map((applicant) => (
-                <ApplicantCard key={applicant.userId} applicant={applicant}/>
+                <ApplicantCard key={applicant.userId} applicant={applicant} />
             ))}
 
             {/* 수락·거절 확인 · 잘못 누르지 않도록 한 번 더 묻는다 */}
@@ -126,13 +126,13 @@ function ManageContent({data, refresh}) {
                     accepting ? (
                         <>
                             수락하면 {targetName}님이
-                            <br/>
+                            <br />
                             함께 가는 메이트가 돼요.
                         </>
                     ) : (
                         <>
                             {targetName}님의 신청을 거절하면
-                            <br/>
+                            <br />
                             되돌릴 수 없어요.
                         </>
                     )
@@ -167,7 +167,7 @@ function ApplicantCard({applicant, children}) {
         <div className="mate-manage__card">
             <div className="mate-manage__who">
                 <Link to={`/profile/${userId}`} className="mate-manage__avatar" aria-label={`${nickname} 프로필 보기`}>
-                    <img src={avatarUrl || PROFILE.DEFAULT_AVATAR} alt="" width="44" height="44"/>
+                    <img src={avatarUrl || PROFILE.DEFAULT_AVATAR} alt="" width="44" height="44" />
                 </Link>
                 <div className="mate-manage__name">
                     <p className="mate-manage__nickname">{nickname}</p>
@@ -179,7 +179,7 @@ function ApplicantCard({applicant, children}) {
                     <span className="mate-manage__state mate-manage__state--pending">대기 중</span>
                 ) : (
                     <span className="mate-manage__state mate-manage__state--accepted">
-                        <Icon name="check" size={14}/>
+                        <Icon name="check" size={14} />
                         수락함
                     </span>
                 )}

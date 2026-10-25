@@ -12,7 +12,9 @@ function Login() {
 
     // 입력한 값 · keep 은 "로그인 상태 유지" 체크 여부
     const [form, setForm] = useState({
-        email: '', password: '', keep: true
+        email: '',
+        password: '',
+        keep: true,
     })
 
     // 입력칸마다 onChange에 사용하는 변경 함수
@@ -51,8 +53,8 @@ function Login() {
         <main className="login">
             <div className="login__intro">
                 <div className="login__brand">
-                    <img className="login__logo" src="/assets/logo.png" alt="DUGOUT" width="318" height="106"/>
-                    <img className="login__peek" src="/assets/char-peek.png" alt="" width="750" height="587"/>
+                    <img className="login__logo" src="/assets/logo.png" alt="DUGOUT" width="318" height="106" />
+                    <img className="login__peek" src="/assets/char-peek.png" alt="" width="750" height="587" />
                 </div>
                 <div className="login__copy">
                     <p className="login__tagline">오늘, 같이 응원할래?</p>
@@ -61,23 +63,40 @@ function Login() {
             </div>
 
             <form className="login__form" onSubmit={handleSubmit}>
-                <Field id="login-email" label="이메일" type="email" autoComplete="email" inputMode="email"
-                       placeholder="가입한 이메일을 입력해 주세요"
-                       value={form.email} onChange={set('email')}/>
-                <Field id="login-pw" label="비밀번호" type="password" autoComplete="current-password"
-                       placeholder="비밀번호를 입력해 주세요"
-                       value={form.password} onChange={set('password')}/>
+                <Field
+                    id="login-email"
+                    label="이메일"
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    placeholder="가입한 이메일을 입력해 주세요"
+                    value={form.email}
+                    onChange={set('email')}
+                />
+                <Field
+                    id="login-pw"
+                    label="비밀번호"
+                    type="password"
+                    autoComplete="current-password"
+                    placeholder="비밀번호를 입력해 주세요"
+                    value={form.password}
+                    onChange={set('password')}
+                />
                 {/* 로그인 상태 유지 · 체크하면 브라우저를 닫아도 로그인이 남는다 */}
                 <label className="login__keep">
-                    <input type="checkbox" checked={form.keep} onChange={set('keep')}/>
+                    <input type="checkbox" checked={form.keep} onChange={set('keep')} />
                     로그인 상태 유지
                 </label>
 
                 <div className="login__actions">
                     {/* 로그인 실패 문구 */}
                     {error && <InlineMessage tone="error">{error}</InlineMessage>}
-                    <Button type="submit" block disabled={!canSubmit}>{busy ? '로그인하는 중…' : '로그인'}</Button>
-                    <Link to="/login" className="login__forgot">비밀번호를 잊으셨나요?</Link>
+                    <Button type="submit" block disabled={!canSubmit}>
+                        {busy ? '로그인하는 중…' : '로그인'}
+                    </Button>
+                    <Link to="/login" className="login__forgot">
+                        비밀번호를 잊으셨나요?
+                    </Link>
                 </div>
             </form>
 
