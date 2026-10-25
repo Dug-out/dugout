@@ -53,12 +53,9 @@ function ReviewListBody({todos, done}) {
 
                 {groups.map((group) => (
                     <div key={group.postId} className="review-list__group">
-                        <p className="review-list__group-title">
-                            {group.postTitle}
-                            <span>
-                                {' '}
-                                · {formatDay(group.game.gameAt)} {group.game.stadium}
-                            </span>
+                        <p className="review-list__group-title">{group.postTitle}</p>
+                        <p className="review-list__group-sub">
+                            {formatDay(group.game.gameAt)} · {group.game.stadium}
                         </p>
                         {group.items.map((todo) => (
                             <div key={todo.userId} className="review-list__row">
