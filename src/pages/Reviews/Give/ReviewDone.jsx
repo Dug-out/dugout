@@ -26,7 +26,7 @@ function ReviewDone() {
                 </p>
             </div>
             <div className="review-done__bottom">
-                <Button as={Link} to="/my/reviews" block>
+                <Button as={Link} to="/my/reviews" replace block>
                     확인
                 </Button>
             </div>

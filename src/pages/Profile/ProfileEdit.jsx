@@ -1,10 +1,10 @@
 import {useState} from 'react'
-import {useNavigate} from 'react-router'
 import {checkNickname} from '../../api/auth.js'
 import {updateMyProfile} from '../../api/profiles.js'
 import {Button, Chip, Dialog, Field, Header, InlineMessage, LoadState, PhotoPicker, TeamPicker} from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useAvailability from '../../hooks/useAvailability.js'
+import useGoBack from '../../hooks/useGoBack.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
 import {availabilityProps} from '../../utils/availability.js'
 import './ProfileEdit.css'
@@ -36,7 +36,6 @@ function ProfileEdit() {
 /** 불러온 프로필로 채운 입력 화면 */
 function ProfileEditForm({profile}) {
     // 저장하면 마이페이지로 이동할 때 쓴다
-    const navigate = useNavigate()
 
     // 불러온 값으로 시작한다 (이 컴포넌트는 불러온 뒤에야 만들어지므로 처음부터 채워져 있다)
     const [form, setForm] = useState({
@@ -89,8 +88,8 @@ function ProfileEditForm({profile}) {
         }
     }
 
-    // 성공 안내 창을 닫을 때 · 마이페이지로 돌아간다
-    const goMypage = () => navigate('/my')
+    // 성공 안내 창을 닫을 때 · 온 화면(마이페이지)으로 돌아간다
+    const goMypage = useGoBack('/my')
     // 실패 안내 창을 닫을 때 · 창만 닫는다
     const closeResult = () => setResult(null)
 

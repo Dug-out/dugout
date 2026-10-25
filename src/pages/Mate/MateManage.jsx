@@ -2,7 +2,6 @@ import {useState} from 'react'
 import {Link, useParams} from 'react-router'
 import {respondToApplicant} from '../../api/mateMembers.js'
 import {Button, Dialog, Header, Icon, LoadState} from '../../components'
-import useGoBack from '../../hooks/useGoBack.js'
 import useMateApplicants from '../../hooks/useMateApplicants.js'
 import useMyTeam from '../../hooks/useMyTeam.js'
 import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
@@ -12,14 +11,12 @@ import {PROFILE} from '../../constants/policy.js'
 /** 신청자 관리 · 방장이 대기 중인 신청을 수락·거절하고, 수락된 참여자를 확인한다 */
 function MateManage() {
     const {id} = useParams()
-    // 뒤로가기 · 온 곳(내 직관 약속 또는 모집 글)으로 돌아가고, 주소로 바로 들어왔으면 모집 글로 간다
-    const goBack = useGoBack(`/mate/${id}`)
     // status 는 loading | ready | error | notfound
     const {status, data, reload, refresh} = useMateApplicants(id)
 
     return (
         <div className="mate-manage">
-            <Header title="신청자 관리" onBack={goBack} />
+            <Header title="신청자 관리" backTo={`/mate/${id}`} />
             <LoadState
                 status={status}
                 errorTitle="신청자 목록을 불러오지 못했어요"
