@@ -21,6 +21,7 @@ function MateDetail() {
     const {id} = useParams()
     const location = useLocation()
     const navigate = useNavigate()
+
     // status 는 loading | ready | error | notfound
     const {status, post, reload, refresh} = useMatePost(id)
 
@@ -242,6 +243,7 @@ const STATUS_LABEL = {
 /** 화면 아래 고정 영역 · 보는 사람과 글의 상태에 따라 버튼이 달라진다. 방장은 버튼이 없다. */
 function ApplyBar({post, onApply}) {
     const {myStatus, isOpen, capacity, joinedCount, game} = post
+
     // 화면이 뜬 시각 · 렌더링마다 바뀌지 않도록 한 번만 정한다
     const [now] = useState(() => Date.now())
 
