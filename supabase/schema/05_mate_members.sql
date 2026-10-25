@@ -186,3 +186,37 @@ revoke execute on function public.mate_post_members(uuid) from public, anon;
 grant execute on function public.mate_post_members(uuid) to authenticated;
 
 notify pgrst, 'reload schema';
+
+------------------------------------------
+-- 7. 모집 상태 자동 맞추기 · 수락된 인원이 정원이 되면 closed, 자리가 나면 open
+-- 방장은 status 를 직접 바꾸지 못하므로 관리자 권한 함수가 대신 바꾼다
+--  · 열려 있는 글: 수락된 인원이 정원 이상이면 닫는다
+--  · 닫힌 글: 자리가 났고 경기가 아직 시작 전일 때만 다시 연다 (경기 시작 뒤 닫는 일은 이후 pg_cron 이 맡는다)
+------------------------------------------
+create function public.sync_post_status()
+returns trigger language plpgsql security definer set search_path = public as $$
+declare
+  pid uuid := coalesce(new.post_id, old.post_id);
+begin
+  update public.mate_posts p
+  set status = case when p.status = 'open' then 'closed' else 'open' end
+  where p.id = pid
+    and (
+      (p.status = 'open' and public.joined_count(p) >= p.capacity)
+      or (
+        p.status = 'closed'
+        and public.joined_count(p) < p.capacity
+        and exists (select 1 from public.games g where g.id = p.game_id and g.game_at > now())
+      )
+    );
+  return null;
+end;
+$$;
+
+-- 참여자 줄이 생기거나, 상태가 바뀌거나, 지워진 직후마다 실행
+create trigger on_mate_member_changed
+  after insert or update of status or delete on public.mate_members
+  for each row execute function public.sync_post_status();
+
+-- 이미 올라와 있던 글 중 정원이 찬 글은 한 번 닫아 둔다 (여러 번 실행해도 안전)
+update public.mate_posts p set status = 'closed' where p.status = 'open' and public.joined_count(p) >= p.capacity;
