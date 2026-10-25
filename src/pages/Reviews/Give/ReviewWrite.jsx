@@ -2,9 +2,8 @@ import {useState} from 'react'
 import {useNavigate, useParams} from 'react-router'
 import {createReview} from '../../../api/mateReviews.js'
 import {Button, Dialog, Field, Header, Icon, LoadState} from '../../../components'
-import {PROFILE, REVIEW, SIGNUP} from '../../../constants/policy.js'
+import {PROFILE, REVIEW} from '../../../constants/policy.js'
 import useMyTeam from '../../../hooks/useMyTeam.js'
-import useProfile from '../../../hooks/useProfile.js'
 import useReviewTarget from '../../../hooks/useReviewTarget.js'
 import {formatDay, matchLabel} from '../../../utils/mateFormat.js'
 import './ReviewWrite.css'
@@ -45,9 +44,6 @@ function ReviewForm({target}) {
     const navigate = useNavigate()
     // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
     const myTeam = useMyTeam()
-    // 상대 응원팀 · 이름 옆 뱃지에 쓴다
-    const {profile} = useProfile(target.userId)
-    const team = SIGNUP.TEAMS.find((t) => t.code === profile?.team)
 
     // 만났는지 / 점수 / 한 줄 후기
     const [met, setMet] = useState(true)
@@ -90,10 +86,7 @@ function ReviewForm({target}) {
                 <div className="review-write__who">
                     <img src={target.avatarUrl || PROFILE.DEFAULT_AVATAR} alt="" width="48" height="48" />
                     <span className="review-write__info">
-                        <span className="review-write__name">
-                            <span className="review-write__nickname">{target.nickname}</span>
-                            {team && <span className="review-write__team">{team.name}</span>}
-                        </span>
+                        <span className="review-write__nickname">{target.nickname}</span>
                         <span className="review-write__game">
                             {formatDay(target.game.gameAt)} {target.game.stadium} · {matchLabel(target.game, myTeam)}
                         </span>

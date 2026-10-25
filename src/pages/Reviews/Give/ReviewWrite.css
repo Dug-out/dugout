@@ -48,28 +48,12 @@
     min-width: 0;
 }
 
-.review-write__name {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
 .review-write__nickname {
     overflow: hidden;
     font-size: 16px;
     font-weight: 700;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-.review-write__team {
-    flex: none;
-    padding: 2px 7px;
-    border-radius: var(--radius-chip-sm);
-    background: var(--navy-50);
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--navy-500);
 }
 
 .review-write__game {
