@@ -1,6 +1,6 @@
 import {useParams} from 'react-router'
-import {Button, EmptyState, Header, Icon, Loading} from '../../components'
-import {SIGNUP} from '../../constants/policy.js'
+import {Header, Icon, LoadState} from '../../components'
+import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useProfile from '../../hooks/useProfile.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './ProfileView.css'
@@ -14,13 +14,7 @@ function ProfileView() {
     return (
         <div className="profile-view">
             <Header title="프로필"/>
-            {/* 불러오는 중 */}
-            {status === 'loading' && <Loading/>}
-            {/* 불러오지 못했을 때 · 다시 시도 버튼 */}
-            {status === 'error' && (
-                <EmptyState title="프로필을 불러오지 못했어요" description="잠시 후 다시 시도해 주세요"
-                            action={<Button variant="small-outline" onClick={reload}>다시 시도</Button>}/>
-            )}
+            <LoadState status={status} errorTitle="프로필을 불러오지 못했어요" onRetry={reload}/>
             {status === 'ready' && <ProfileBody profile={profile}/>}
         </div>
     )
@@ -37,7 +31,7 @@ function ProfileBody({profile}) {
         <>
             {/* 사진 · 닉네임 · 나이대/성별/응원팀 · 한 줄 소개 · 매너 타율 */}
             <section className="profile-view__top">
-                <img className="profile-view__avatar" src={avatar ?? '/assets/profile-default.png'} alt=""
+                <img className="profile-view__avatar" src={avatar ?? PROFILE.DEFAULT_AVATAR} alt=""
                      width="512" height="512"/>
                 <h2 className="profile-view__name">{nickname}</h2>
                 <span className="profile-view__meta">{age} · {gender} · {team?.name}</span>

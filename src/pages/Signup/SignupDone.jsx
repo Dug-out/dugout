@@ -1,6 +1,6 @@
 import {Link, Navigate, useLocation} from 'react-router'
 import {Button} from '../../components'
-import {MANNER, SIGNUP} from '../../constants/policy.js'
+import {MANNER, PROFILE, SIGNUP} from '../../constants/policy.js'
 import './SignupDone.css'
 
 // 위에서 떨어지는 색종이 개수
@@ -50,7 +50,7 @@ function SignupDone() {
                         </div>
                         <div className="done__who">
                             <span className="done__face">
-                                <img src="/assets/profile-default.png" alt="" width="512" height="512"/>
+                                <img src={PROFILE.DEFAULT_AVATAR} alt="" width="512" height="512"/>
                             </span>
                             <div className="done__info">
                                 <div>

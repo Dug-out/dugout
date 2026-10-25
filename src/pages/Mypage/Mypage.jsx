@@ -1,6 +1,6 @@
 import {Link} from 'react-router'
-import {Button, EmptyState, Header, Icon, Loading} from '../../components'
-import {SIGNUP} from '../../constants/policy.js'
+import {Button, Header, Icon, LoadState} from '../../components'
+import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './Mypage.css'
@@ -36,15 +36,7 @@ function Mypage() {
         <>
             <Header large title="마이페이지"/>
             <main className="mypage">
-                {/* 불러오는 중 */}
-                {status === 'loading' && <Loading/>}
-                {/* 불러오지 못했을 때 · 다시 시도 버튼 */}
-                {status === 'error' && (
-                    <EmptyState image="/assets/pose-sad.png" title="내 정보를 불러오지 못했어요"
-                                description="잠시 후 다시 시도해 주세요"
-                                action={<Button variant="small-outline" onClick={reload}>다시 시도</Button>}/>
-                )}
-                {/* 불러왔을 때 */}
+                <LoadState status={status} errorTitle="내 정보를 불러오지 못했어요" onRetry={reload}/>
                 {status === 'ready' && <MypageBody profile={profile}/>}
             </main>
         </>
@@ -66,7 +58,7 @@ function MypageBody({profile}) {
             <section className="mypage__card mypage__card--profile">
                 {/* 사진 · 닉네임 · 응원팀 · 프로필 수정 */}
                 <div className="mypage__profile">
-                    <img className="mypage__avatar" src={avatar ?? '/assets/profile-default.png'} alt="" width="512" height="512"/>
+                    <img className="mypage__avatar" src={avatar ?? PROFILE.DEFAULT_AVATAR} alt="" width="512" height="512"/>
                     <div className="mypage__who">
                         <p className="mypage__name">{nickname}</p>
                         <p className="mypage__meta">{team?.name}</p>

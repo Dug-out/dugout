@@ -1,8 +1,9 @@
 import {useState} from 'react'
 import {Link} from 'react-router'
-import {Button, EmptyState, Header, Icon, Loading} from '../../components'
+import {Button, EmptyState, Header, Icon, LoadState} from '../../components'
 import {MATE_POST} from '../../constants/policy.js'
 import useMyPosts from '../../hooks/useMyPosts.js'
+import useMyTeam from '../../hooks/useMyTeam.js'
 import {formatDay, formatDday, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import './MyPosts.css'
 
@@ -21,23 +22,21 @@ function MyPosts() {
     return (
         <div className="my-posts">
             <Header title="내 직관 약속" backTo="/my"/>
-            {status === 'loading' && <Loading/>}
-            {status === 'error' && (
-                <EmptyState title="약속을 불러오지 못했어요" description="잠시 후 다시 시도해 주세요"
-                            action={<Button variant="small-outline" onClick={reload}>다시 시도</Button>}/>
-            )}
-            {status === 'ready' && data.items.length === 0 && (
+            <LoadState status={status} errorTitle="약속을 불러오지 못했어요" onRetry={reload}/>
+            {status === 'ready' && data.length === 0 && (
                 <EmptyState title="아직 잡힌 직관 약속이 없어요"
                             description={<>모집 글에 참여하거나<br/>직접 글을 올려 메이트를 모아 보세요</>}
                             action={<Button as={Link} to="/home">메이트 찾으러 가기</Button>}/>
             )}
-            {status === 'ready' && data.items.length > 0 && <PostList {...data}/>}
+            {status === 'ready' && data.length > 0 && <PostList items={data}/>}
         </div>
     )
 }
 
 /** 탭과 다가오는 직관 · 지난 직관 목록 */
-function PostList({myTeam, items}) {
+function PostList({items}) {
+    // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
+    const myTeam = useMyTeam()
     // 고른 구분
     const [tabKey, setTabKey] = useState('all')
 
@@ -78,9 +77,9 @@ function PostList({myTeam, items}) {
     )
 }
 
-/** 약속 한 장 · 위에 사진(상태 뱃지, D-day), 아래에 제목과 경기 일정·구장·인원 */
+/** 약속 한 장 · 위에 사진(상태 뱃지, D-day), 아래에 제목과 경기 일정·구장·인원. 방장이고 대기 중인 신청이 있으면 맨 아래에 안내 줄이 붙는다 */
 function PostCard({item, myTeam, now, past = false}) {
-    const {id, title, image, role, capacity, joinedCount, hostNickname, game} = item
+    const {id, title, image, role, capacity, joinedCount, hostNickname, pendingCount, game} = item
 
     // 사진 위 상태 뱃지 · 지난 약속은 종료, 아니면 내가 방장인지 참여 중인지
     const badge = past
@@ -116,6 +115,16 @@ function PostCard({item, myTeam, now, past = false}) {
                     </span>
                 </span>
             </Link>
+
+            {/* 새 신청 안내 · 아직 안 지난 약속의 방장에게만 */}
+            {!past && role === 'host' && pendingCount > 0 && (
+                <Link to={`/mate/${id}/manage`} className="my-posts__banner">
+                    <span className="my-posts__banner-count">{pendingCount}</span>
+                    <span className="my-posts__banner-text">새 참여 신청이 기다리고 있어요</span>
+                    신청자 관리
+                    <Icon name="chevronRight" size={16}/>
+                </Link>
+            )}
         </article>
     )
 }

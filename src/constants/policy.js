@@ -35,6 +35,10 @@ export const RECORD = {
       : { name: '눈물요정', image: 'rate-down', line: '다음 직관은 꼭 이길 거야…' },
 };
 
+export const PROFILE = {
+  DEFAULT_AVATAR: '/assets/profile-default.png', // 프로필 사진이 없을 때
+};
+
 export const MATE_POST = {
   MEMBERS_MIN: 2, // 본인 포함
   MEMBERS_MAX: 10,

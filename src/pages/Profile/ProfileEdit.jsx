@@ -3,9 +3,9 @@ import {useNavigate} from 'react-router'
 import {checkNickname} from '../../api/auth.js'
 import {updateMyProfile} from '../../api/profiles.js'
 import {
-    Button, Chip, Dialog, EmptyState, Field, Header, InlineMessage, Loading, PhotoPicker, TeamPicker,
+    Button, Chip, Dialog, Field, Header, InlineMessage, LoadState, PhotoPicker, TeamPicker,
 } from '../../components'
-import {SIGNUP} from '../../constants/policy.js'
+import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useAvailability from '../../hooks/useAvailability.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
 import {availabilityProps} from '../../utils/availability.js'
@@ -23,14 +23,8 @@ function ProfileEdit() {
     return (
         <div className="profile-edit">
             <Header title="프로필 수정" backTo="/my"/>
-            {/* 불러오는 중 */}
-            {status === 'loading' && <Loading/>}
-            {/* 불러오지 못했을 때 · 다시 시도 버튼 */}
-            {status === 'error' && (
-                <EmptyState className="profile-edit__state" image="/assets/pose-sad.png"
-                            title="내 정보를 불러오지 못했어요" description="잠시 후 다시 시도해 주세요"
-                            action={<Button variant="small-outline" onClick={reload}>다시 시도</Button>}/>
-            )}
+            <LoadState status={status} errorTitle="내 정보를 불러오지 못했어요" onRetry={reload}
+                       className="profile-edit__state"/>
             {/* 불러왔을 때 · 불러온 값으로 채운 입력 화면 */}
             {status === 'ready' && <ProfileEditForm profile={profile}/>}
         </div>
@@ -101,7 +95,7 @@ function ProfileEditForm({profile}) {
     return (
         <form className="profile-edit__form" onSubmit={handleSubmit}>
             {/* 프로필 사진 · 고르거나 기본 이미지로 바꾸면 [저장하기]에서 프로필과 함께 저장된다 */}
-            <PhotoPicker defaultImage="/assets/profile-default.png" currentUrl={profile.avatar} onChange={setAvatar}
+            <PhotoPicker defaultImage={PROFILE.DEFAULT_AVATAR} currentUrl={profile.avatar} onChange={setAvatar}
                          label="프로필 사진"/>
 
             {/* 닉네임 · 바꿨을 때만 사용 가능 여부를 보여 준다 */}
