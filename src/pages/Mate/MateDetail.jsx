@@ -67,7 +67,7 @@ function MateDetail() {
                     }
                />
             )}
-            {status === 'ready' && <PostContent post={post} onApplied={refresh}/>}
+            {status === 'ready' && <PostContent post={post} refresh={refresh}/>}
 
             {/* 올리기 완료 창 */}
             <Dialog
@@ -93,7 +93,7 @@ function MateDetail() {
 }
 
 /** 불러온 글 · 이미지, 제목과 방장, 정보 카드, 소개, 함께 가는 메이트, 아래 신청 영역 */
-function PostContent({post, onApplied}) {
+function PostContent({post, refresh}) {
     // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
     const myTeam = useMyTeam()
 
@@ -206,8 +206,9 @@ function PostContent({post, onApplied}) {
                     onApplied={() => {
                         setApplyOpen(false)
                         setAppliedOpen(true)
-                        onApplied()
+                        refresh()
                     }}
+                    onFailed={refresh}
                />
             )}
 

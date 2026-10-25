@@ -7,10 +7,11 @@ import './MateApplySheet.css'
 /**
  * 참여 신청 시트 · 방장에게 한마디를 남기고 신청한다
  * 시트가 열릴 때 만들어지므로 열 때마다 입력이 비어 있다.
- * @param {{postId: string, onClose: () => void, onApplied: () => void}} props
- *  onApplied: 신청이 끝났을 때 (화면이 상태를 다시 불러오고 시트를 닫는다)
+ * @param {{postId: string, onClose: () => void, onApplied: () => void, onFailed: () => void}} props
+ *  onApplied: 신청이 끝났을 때 (화면이 시트를 닫고 상태를 다시 불러온다)
+ *  onFailed: 신청이 실패했을 때 (마감 같은 이유일 수 있어서 화면이 상태를 다시 불러온다. 시트는 그대로 둔다)
  */
-function MateApplySheet({postId, onClose, onApplied}) {
+function MateApplySheet({postId, onClose, onApplied, onFailed}) {
     // 방장에게 남기는 한마디
     const [message, setMessage] = useState('')
     // 신청 요청 중인지 (중복 클릭 방지)
@@ -29,6 +30,7 @@ function MateApplySheet({postId, onClose, onApplied}) {
         } catch (err) {
             setError(err.message)
             setBusy(false)
+            onFailed()
         }
     }
 
