@@ -125,12 +125,10 @@ function ReviewForm({target}) {
 
                 {/* 점수 · 노쇼는 0점으로 고정되어 슬라이더가 없다 */}
                 <section className="review-write__section">
-                    {met && (
-                        <h2 className="review-write__ask">
-                            {target.nickname}님과의 직관,
-                            <br />몇 점인가요?
-                        </h2>
-                    )}
+                    <h2 className="review-write__ask">
+                        {target.nickname}님과의 직관,
+                        <br />몇 점인가요?
+                    </h2>
                     <div className="review-write__score">
                         <img src={`/assets/${face}.png`} alt="" width="72" height="72" />
                         <span className="review-write__number">{shownScore}</span>
