@@ -23,7 +23,7 @@ export const REVIEW = {
     COMMENT_MAX: 100,
     PROFILE_PREVIEW_COUNT: 3, // 프로필에는 최근 3개 + 전체보기
     // 점수 → 표정 이미지
-    faceFromScore: (s) => (s >= 8 ? 'rate-good' : s >= 5 ? 'rate-soso' : 'rate-bad'),
+    faceFromScore: (s) => (s >= 8 ? 'rate-good' : s >= 5 ? 'rate-soso' : s >= 1 ? 'rate-bad' : 'rate-noshow'),
 }
 
 export const RECORD = {
