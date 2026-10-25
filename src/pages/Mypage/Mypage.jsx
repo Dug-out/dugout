@@ -1,8 +1,10 @@
 import {Link} from 'react-router'
+import {getPendingApplicantCount} from '../../api/mateMembers.js'
+import {getReviewTodoCount} from '../../api/mateReviews.js'
 import {Button, Header, Icon, LoadState} from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
+import useLoad from '../../hooks/useLoad.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
-import useActivityCounts from '../../hooks/useActivityCounts.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './Mypage.css'
 
@@ -62,7 +64,9 @@ function MypageBody({profile}) {
     // 매너 타율 카드에 쓸 값 · 구간 이름, 막대 길이, 다음 구간까지 안내
     const summary = mannerSummary(manner)
     // 내 활동 옆에 붙일 개수 (불러오기 전이나 실패하면 null → 보여 주지 않는다)
-    const counts = useActivityCounts()
+    const {data: pending} = useLoad(getPendingApplicantCount, [])
+    const {data: waiting} = useLoad(getReviewTodoCount, [])
+    const counts = {pending, waiting}
 
     return (
         <>
