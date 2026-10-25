@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {BottomSheet, Button, Icon} from '../../../components'
-import useSelectableGames from '../../../hooks/useSelectableGames.js'
+import useSelectableGames from '../../../hooks/load/useSelectableGames.js'
 import {formatDay, formatTime, matchLabel} from '../../../utils/mateFormat.js'
 import './MateGameSheet.css'
 

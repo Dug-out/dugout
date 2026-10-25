@@ -1,8 +1,8 @@
 import {Link} from 'react-router'
 import {Button, Header, Icon, LoadState} from '../../../components'
 import {PROFILE, REVIEW} from '../../../constants/policy.js'
-import useMyTeam from '../../../hooks/useMyTeam.js'
-import useReviewList from '../../../hooks/useReviewList.js'
+import useMyTeam from '../../../hooks/load/useMyTeam.js'
+import useReviewList from '../../../hooks/load/useReviewList.js'
 import {formatDay, matchLabel} from '../../../utils/mateFormat.js'
 import './ReviewList.css'
 

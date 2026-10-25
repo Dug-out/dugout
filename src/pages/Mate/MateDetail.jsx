@@ -1,10 +1,10 @@
 import {useState} from 'react'
 import {Link, useLocation, useNavigate, useParams} from 'react-router'
-import {Button, Dialog, Header, Icon, LoadState} from '../../components'
+import {Button, Header, Icon, LoadState, NoticeDialog} from '../../components'
 import {MATE_POST, PROFILE} from '../../constants/policy.js'
 import useGoBack from '../../hooks/useGoBack.js'
-import useMatePost from '../../hooks/useMatePost.js'
-import useMyTeam from '../../hooks/useMyTeam.js'
+import useMatePost from '../../hooks/load/useMatePost.js'
+import useMyTeam from '../../hooks/load/useMyTeam.js'
 import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import {formatManner} from '../../utils/manner.js'
 import MateApplySheet from './components/MateApplySheet.jsx'
@@ -52,11 +52,10 @@ function MateDetail() {
             {status === 'ready' && <PostContent post={post} refresh={refresh} />}
 
             {/* 올리기 완료 창 */}
-            <Dialog
+            <NoticeDialog
                 open={createdOpen}
                 onClose={closeCreated}
-                onConfirm={closeCreated}
-                image="/assets/pose-yay.png"
+                kind="success"
                 title="모집 글을 올렸어요!"
                 description={
                     <>
@@ -65,9 +64,6 @@ function MateDetail() {
                         신청이 오면 방장이 수락할 수 있어요.
                     </>
                 }
-                confirmLabel="확인"
-                cancelLabel={null}
-                tone="primary"
             />
         </div>
     )
@@ -208,11 +204,10 @@ function PostContent({post, refresh}) {
             )}
 
             {/* 신청 성공 */}
-            <Dialog
+            <NoticeDialog
                 open={result?.ok === true}
                 onClose={() => setResult(null)}
-                onConfirm={() => setResult(null)}
-                image="/assets/pose-yay.png"
+                kind="success"
                 title="참여 신청을 보냈어요!"
                 description={
                     <>
@@ -221,22 +216,15 @@ function PostContent({post, refresh}) {
                         수락 소식을 기다려 볼까요?
                     </>
                 }
-                confirmLabel="확인"
-                cancelLabel={null}
-                tone="primary"
             />
 
             {/* 신청 실패 · API 가 만든 한국어 문구를 그대로 보여 준다 */}
-            <Dialog
+            <NoticeDialog
                 open={result?.ok === false}
                 onClose={() => setResult(null)}
-                onConfirm={() => setResult(null)}
-                image="/assets/pose-sad.png"
+                kind="failure"
                 title="신청하지 못했어요"
                 description={result?.message}
-                confirmLabel="확인"
-                cancelLabel={null}
-                tone="primary"
             />
         </>
     )

@@ -1,5 +1,5 @@
 import {useParams} from 'react-router'
-import useProfile from '../../../hooks/useProfile.js'
+import useProfile from '../../../hooks/load/useProfile.js'
 import ReviewsView from './ReviewsView.jsx'
 
 /** 다른 사람의 매너 후기 전체보기 · 제목에 그 사람의 닉네임을 쓴다 */

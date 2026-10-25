@@ -5,6 +5,7 @@ import './Dialog.css'
 /**
  * 확인 다이얼로그 · radius 22 · 캐릭터 68px · 버튼 48px 2개
  * 나가기 · 삭제처럼 되돌릴 수 없는 행동 직전에 한 번 더 물어볼 때 쓴다. 확인 버튼만 빨강, 취소는 흰색.
+ * 완료 · 실패를 알리는 창은 NoticeDialog 를 쓴다.
  * @param {{
  *   open: boolean,
  *   onClose: () => void,
@@ -12,7 +13,7 @@ import './Dialog.css'
  *   title: string,
  *   description?: import('react').ReactNode,
  *   image?: string,
- *   cancelLabel?: string | null,   // null이면 취소 버튼 없이 확인 버튼만 (완료·실패 안내 창)
+ *   cancelLabel?: string | null,   // null이면 취소 버튼 없이 확인 버튼만 (NoticeDialog 가 쓴다)
  *   confirmLabel: string,
  *   tone?: 'danger' | 'primary',
  *   className?: string
