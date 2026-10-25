@@ -2,7 +2,7 @@ import {Link} from 'react-router'
 import {Button, Header, Icon, LoadState} from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
-import useReviewCounts from '../../hooks/useReviewCounts.js'
+import useWaitingCount from '../../hooks/useWaitingCount.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './Mypage.css'
 
@@ -59,8 +59,8 @@ function MypageBody({profile}) {
     const team = SIGNUP.TEAMS.find((t) => t.code === teamCode)
     // 매너 타율 카드에 쓸 값 · 구간 이름, 막대 길이, 다음 구간까지 안내
     const summary = mannerSummary(manner)
-    // 받은 후기 · 평가 대기 개수 (불러오기 전이나 실패하면 null → 개수는 보여 주지 않는다)
-    const counts = useReviewCounts()
+    // 평가 대기 개수 (불러오기 전이나 실패하면 null → 보여 주지 않는다)
+    const waiting = useWaitingCount()
 
     return (
         <>
@@ -94,7 +94,7 @@ function MypageBody({profile}) {
                         </svg>
                         매너 타율
                         <Link to="/my/manner" className="mypage__manner-more">
-                            {counts ? `후기 ${counts.received}개 보기` : '후기 보기'}
+                            후기 보기
                             <Icon name="chevronRight" size={14} strokeWidth={2.2} />
                         </Link>
                     </span>
@@ -123,7 +123,7 @@ function MypageBody({profile}) {
                         key={label}
                         label={label}
                         to={to}
-                        note={badge === 'waiting' && counts?.waiting > 0 ? `평가 대기 ${counts.waiting}` : null}
+                        note={badge === 'waiting' && waiting > 0 ? `평가 대기 ${waiting}` : null}
                     />
                 ))}
             </section>
