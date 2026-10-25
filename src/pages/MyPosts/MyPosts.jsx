@@ -1,16 +1,118 @@
+import {useState} from 'react'
 import {Link} from 'react-router'
-import {Button, EmptyState, Header} from '../../components'
+import {Button, EmptyState, Header, Icon, Loading} from '../../components'
+import {MATE_POST} from '../../constants/policy.js'
+import useMyPosts from '../../hooks/useMyPosts.js'
+import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import './MyPosts.css'
 
-/** 내 직관 약속 · 아직 약속 테이블이 없어 빈 화면만 보여 준다 */
+// 보기 구분 · 내가 연 약속은 방장, 참여한 약속은 방장이 아닌 약속(수락 대기 포함)
+const TABS = [
+    {key: 'all', label: '전체', match: () => true},
+    {key: 'host', label: '내가 연 약속', match: (item) => item.role === 'host'},
+    {key: 'joined', label: '참여한 약속', match: (item) => item.role !== 'host'},
+]
+
+/** 내 직관 약속 · 약속이 없으면 빈 화면을 보여 준다 */
 function MyPosts() {
+    // status 는 loading | ready | error
+    const {status, data, reload} = useMyPosts()
+
     return (
         <div className="my-posts">
             <Header title="내 직관 약속" backTo="/my"/>
-            <EmptyState title="아직 잡힌 직관 약속이 없어요"
-                        description={<>모집 글에 참여하거나<br/>직접 글을 올려 메이트를 모아 보세요</>}
-                        action={<Button as={Link} to="/home">메이트 찾으러 가기</Button>}/>
+            {status === 'loading' && <Loading/>}
+            {status === 'error' && (
+                <EmptyState title="약속을 불러오지 못했어요" description="잠시 후 다시 시도해 주세요"
+                            action={<Button variant="small-outline" onClick={reload}>다시 시도</Button>}/>
+            )}
+            {status === 'ready' && data.items.length === 0 && (
+                <EmptyState title="아직 잡힌 직관 약속이 없어요"
+                            description={<>모집 글에 참여하거나<br/>직접 글을 올려 메이트를 모아 보세요</>}
+                            action={<Button as={Link} to="/home">메이트 찾으러 가기</Button>}/>
+            )}
+            {status === 'ready' && data.items.length > 0 && <PostList {...data}/>}
         </div>
+    )
+}
+
+/** 탭과 다가오는 직관 · 지난 직관 목록 */
+function PostList({myTeam, items}) {
+    // 고른 구분
+    const [tabKey, setTabKey] = useState('all')
+
+    const tab = TABS.find((t) => t.key === tabKey)
+    const shown = items.filter(tab.match)
+
+    // 화면이 뜬 시각 · 렌더링마다 바뀌지 않도록 한 번만 정한다
+    const [now] = useState(() => Date.now())
+    // 경기 시각이 지났으면 지난 직관 · 다가오는 직관은 가까운 순, 지난 직관은 최근 순
+    const byTime = (a, b) => new Date(a.game.gameAt) - new Date(b.game.gameAt)
+    const upcoming = shown.filter((i) => new Date(i.game.gameAt) > now).sort(byTime)
+    const past = shown.filter((i) => new Date(i.game.gameAt) <= now).sort((a, b) => byTime(b, a))
+
+    return (
+        <main className="my-posts__body">
+            <div className="my-posts__tabs" role="tablist" aria-label="내 직관 약속 보기">
+                {TABS.map(({key, label, match}) => (
+                    <button key={key} type="button" role="tab" aria-selected={key === tabKey}
+                            className="my-posts__tab" onClick={() => setTabKey(key)}>
+                        {label} {items.filter(match).length}
+                    </button>
+                ))}
+            </div>
+
+            {upcoming.length > 0 && (
+                <section className="my-posts__group">
+                    <h2 className="my-posts__heading">다가오는 직관</h2>
+                    {upcoming.map((item) => <PostCard key={item.id} item={item} myTeam={myTeam}/>)}
+                </section>
+            )}
+            {past.length > 0 && (
+                <section className="my-posts__group">
+                    <h2 className="my-posts__heading">지난 직관</h2>
+                    {past.map((item) => <PostCard key={item.id} item={item} myTeam={myTeam} past/>)}
+                </section>
+            )}
+        </main>
+    )
+}
+
+/** 약속 한 장 · 사진, 제목과 상태 뱃지, 인원, 경기 일정 */
+function PostCard({item, myTeam, past = false}) {
+    const {id, title, image, role, accepted, isOpen, capacity, joinedCount, hostNickname, game} = item
+    const isHost = role === 'host'
+
+    // 상태 뱃지 · 지난 약속은 모두 종료
+    const badge = past ? {text: '종료', tone: 'ended'}
+        : isHost ? {text: '방장', tone: 'host'}
+            : accepted ? {text: '참여 중', tone: 'joined'}
+                : {text: '수락 대기', tone: 'pending'}
+
+    // 인원 줄 · 방장은 모집 상태까지, 그 외에는 방장 이름
+    const people = isHost
+        ? `모집 ${joinedCount}/${capacity}명 · ${isOpen ? '모집 중' : '모집 마감'}`
+        : `방장 ${hostNickname} · ${joinedCount}/${capacity}명`
+
+    return (
+        <article className="my-posts__card">
+            {/* 지금은 모집 글 상세로 이동 · 채팅방, 기록 상세가 생기면 상태에 따라 나눠 연결한다 */}
+            <Link to={`/mate/${id}`} className="my-posts__link">
+                <img className="my-posts__thumb" src={image ?? MATE_POST.DEFAULT_IMAGE} alt="" width="56" height="56"/>
+                <span className="my-posts__info">
+                    <span className="my-posts__title-row">
+                        <span className="my-posts__title">{title}</span>
+                        <span className={`my-posts__badge my-posts__badge--${badge.tone}`}>{badge.text}</span>
+                    </span>
+                    <span className="my-posts__people">{people}</span>
+                    <span className="my-posts__when">
+                        <Icon name="calendar" size={14}/>
+                        {formatDay(game.gameAt)} {formatTime(game.gameAt)} {matchLabel(game, myTeam)} · {game.stadium}
+                    </span>
+                </span>
+                <Icon name="chevronRight" size={18}/>
+            </Link>
+        </article>
     )
 }
 
