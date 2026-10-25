@@ -270,7 +270,6 @@ function ApplyBar({post, onApply}) {
     if (myStatus === 'accepted') disabledLabel = '채팅방 입장하기'
     else if (myStatus) disabledLabel = STATUS_LABEL[myStatus]
     else if (!isOpen) disabledLabel = '모집이 마감됐어요'
-    else if (joinedCount >= capacity) disabledLabel = '인원이 다 찼어요'
     else if (new Date(game.gameAt).getTime() <= now) disabledLabel = '이미 시작한 경기예요'
 
     return (
