@@ -2,6 +2,7 @@ import {Link} from 'react-router'
 import Icon from '../Icon/Icon.jsx'
 import Tag from '../Tag/Tag.jsx'
 import './MateCard.css'
+import {PROFILE} from '../../constants/policy.js'
 
 // 매너 타율 .389 형태로 표시
 const formatManner = (value) => value.toFixed(3).replace(/^0/, '')
@@ -65,7 +66,7 @@ function MateCard({
                 <span className="mate-card__divider"/>
 
                 <span className="mate-card__host">
-                    <img src={host.avatar ?? '/assets/profile-default.png'} alt="" width="24" height="24"/>
+                    <img src={host.avatar ?? PROFILE.DEFAULT_AVATAR} alt="" width="24" height="24"/>
                     <span className="mate-card__host-name">{host.name}</span>
                     <span className="mate-card__manner">매너 타율 <strong>{formatManner(host.manner)}</strong></span>
                 </span>

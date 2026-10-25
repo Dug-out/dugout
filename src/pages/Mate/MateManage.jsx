@@ -6,9 +6,7 @@ import useMateApplicants from '../../hooks/useMateApplicants.js'
 import useMyTeam from '../../hooks/useMyTeam.js'
 import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import './MateManage.css'
-
-// 프로필 사진이 없을 때
-const DEFAULT_AVATAR = '/assets/profile-default.png'
+import {PROFILE} from '../../constants/policy.js'
 
 /** 신청자 관리 · 방장이 대기 중인 신청을 수락·거절하고, 수락된 참여자를 확인한다 */
 function MateManage() {
@@ -181,7 +179,7 @@ function ApplicantCard({applicant, children}) {
         <div className="mate-manage__card">
             <div className="mate-manage__who">
                 <Link to={`/profile/${userId}`} className="mate-manage__avatar" aria-label={`${nickname} 프로필 보기`}>
-                    <img src={avatarUrl || DEFAULT_AVATAR} alt="" width="44" height="44"/>
+                    <img src={avatarUrl || PROFILE.DEFAULT_AVATAR} alt="" width="44" height="44"/>
                 </Link>
                 <div className="mate-manage__name">
                     <p className="mate-manage__nickname">{nickname}</p>

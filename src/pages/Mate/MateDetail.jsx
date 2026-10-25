@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {Link, useLocation, useNavigate, useParams} from 'react-router'
 import {Button, Dialog, EmptyState, Header, Icon, Loading} from '../../components'
-import {MATE_POST} from '../../constants/policy.js'
+import {MATE_POST, PROFILE} from '../../constants/policy.js'
 import useGoBack from '../../hooks/useGoBack.js'
 import useMatePost from '../../hooks/useMatePost.js'
 import useMyTeam from '../../hooks/useMyTeam.js'
@@ -9,9 +9,6 @@ import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import {formatManner} from '../../utils/manner.js'
 import MateApplySheet from './components/MateApplySheet.jsx'
 import './MateDetail.css'
-
-// 프로필 사진이 없을 때
-const DEFAULT_AVATAR = '/assets/profile-default.png'
 
 /**
  * 모집 글 상세 · 주소의 id 로 글을 불러와 보여 준다.
@@ -127,7 +124,7 @@ function PostContent({post, refresh}) {
                 </span>
                 <h1 className="mate-detail__title">{title}</h1>
                 <Link to={`/profile/${host.id}`} className="mate-detail__host">
-                    <img src={host.avatarUrl || DEFAULT_AVATAR} alt="" width="40" height="40"/>
+                    <img src={host.avatarUrl || PROFILE.DEFAULT_AVATAR} alt="" width="40" height="40"/>
                     <span className="mate-detail__host-text">
                         <span className="mate-detail__host-name">
                             {host.nickname}
@@ -183,7 +180,7 @@ function PostContent({post, refresh}) {
                                 <li key={member.userId} className={`mate-detail__member${isMe ? ' mate-detail__member--me' : ''}`}>
                                     <Link to={`/profile/${member.userId}`} className="mate-detail__member-link">
                                         <span className="mate-detail__avatar">
-                                            <img src={member.avatarUrl || DEFAULT_AVATAR} alt="" width="48" height="48"/>
+                                            <img src={member.avatarUrl || PROFILE.DEFAULT_AVATAR} alt="" width="48" height="48"/>
                                             {/* 보는 사람 본인은 남색 테두리 + "나" 표시 */}
                                             {isMe && <span className="mate-detail__me-tag">나</span>}
                                         </span>

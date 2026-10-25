@@ -1,6 +1,6 @@
 import {useParams} from 'react-router'
 import {Button, EmptyState, Header, Icon, Loading} from '../../components'
-import {SIGNUP} from '../../constants/policy.js'
+import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useProfile from '../../hooks/useProfile.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './ProfileView.css'
@@ -37,7 +37,7 @@ function ProfileBody({profile}) {
         <>
             {/* 사진 · 닉네임 · 나이대/성별/응원팀 · 한 줄 소개 · 매너 타율 */}
             <section className="profile-view__top">
-                <img className="profile-view__avatar" src={avatar ?? '/assets/profile-default.png'} alt=""
+                <img className="profile-view__avatar" src={avatar ?? PROFILE.DEFAULT_AVATAR} alt=""
                      width="512" height="512"/>
                 <h2 className="profile-view__name">{nickname}</h2>
                 <span className="profile-view__meta">{age} · {gender} · {team?.name}</span>

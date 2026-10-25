@@ -1,6 +1,6 @@
 import {Link} from 'react-router'
 import {Button, EmptyState, Header, Icon, Loading} from '../../components'
-import {SIGNUP} from '../../constants/policy.js'
+import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './Mypage.css'
@@ -66,7 +66,7 @@ function MypageBody({profile}) {
             <section className="mypage__card mypage__card--profile">
                 {/* 사진 · 닉네임 · 응원팀 · 프로필 수정 */}
                 <div className="mypage__profile">
-                    <img className="mypage__avatar" src={avatar ?? '/assets/profile-default.png'} alt="" width="512" height="512"/>
+                    <img className="mypage__avatar" src={avatar ?? PROFILE.DEFAULT_AVATAR} alt="" width="512" height="512"/>
                     <div className="mypage__who">
                         <p className="mypage__name">{nickname}</p>
                         <p className="mypage__meta">{team?.name}</p>
