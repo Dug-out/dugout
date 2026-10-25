@@ -35,16 +35,18 @@ export async function getMyReviews() {
 
     return data.map((row) => {
         const {id, post_id: postId, reviewee_id: userId, met, score, comment, post, reviewee} = row
-        const {game} = post
+        const {host_id: hostId, title, game} = post
+        const {game_at: gameAt, home_team: home, away_team: away, stadium} = game
+        const {nickname, avatar_url: avatarUrl} = reviewee
         return {
             id,
             postId,
-            postTitle: post.title,
-            game: {gameAt: game.game_at, home: game.home_team, away: game.away_team, stadium: game.stadium},
+            postTitle: title,
+            game: {gameAt, home, away, stadium},
             userId,
-            isHost: post.host_id === userId,
-            nickname: reviewee.nickname,
-            avatarUrl: reviewee.avatar_url,
+            isHost: hostId === userId,
+            nickname,
+            avatarUrl,
             met,
             score,
             comment,
@@ -91,5 +93,9 @@ export async function getReceivedReviews(userId, limit) {
         .limit(limit)
     if (error) throw error
 
-    return {reviews: data, total: count ?? 0}
+    const reviews = data.map((row) => {
+        const {id: reviewId, score, comment} = row
+        return {id: reviewId, score, comment}
+    })
+    return {reviews, total: count ?? 0}
 }

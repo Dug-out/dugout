@@ -45,6 +45,8 @@ export async function getMyPosts() {
         const {role, post} = row
         const {id, title, image_url: image, capacity, joined_count: joinedCount} = post
         const {host, game, members} = post
+        const {nickname: hostNickname} = host
+        const {game_at: gameAt, home_team: home, away_team: away, stadium} = game
         return {
             id,
             title,
@@ -52,9 +54,9 @@ export async function getMyPosts() {
             role,
             capacity,
             joinedCount,
-            hostNickname: host.nickname,
+            hostNickname,
             pendingCount: role === 'host' ? members.filter((m) => m.status === 'pending').length : 0,
-            game: {gameAt: game.game_at, home: game.home_team, away: game.away_team, stadium: game.stadium},
+            game: {gameAt, home, away, stadium},
         }
     })
 }
@@ -107,35 +109,23 @@ export async function getMateApplicants(postId) {
     if (postResult.error?.code === '22P02') return null
     if (postResult.error) throw postResult.error
     if (membersResult.error) throw membersResult.error
-    // 없는 글, 다른 팀 글, 내가 방장이 아닌 글
-    if (!postResult.data || postResult.data.host_id !== userId) return null
 
     const {data: post} = postResult
     const {data: rows} = membersResult
-    const {game} = post
+    // 없는 글, 다른 팀 글, 내가 방장이 아닌 글
+    if (!post) return null
+    const {id, title, capacity, joined_count: joinedCount, host_id: hostId, game} = post
+    if (hostId !== userId) return null
+    const {game_at: gameAt, home_team: home, away_team: away, stadium} = game
 
     const applicants = rows.map((row) => {
-        const {user_id: id, role, status, message, user} = row
-        return {
-            userId: id,
-            role,
-            status,
-            message,
-            nickname: user.nickname,
-            avatarUrl: user.avatar_url,
-            age: user.age_group,
-            team: user.team,
-        }
+        const {user_id: userId, role, status, message, user} = row
+        const {nickname, avatar_url: avatarUrl, age_group: age, team} = user
+        return {userId, role, status, message, nickname, avatarUrl, age, team}
     })
 
     return {
-        post: {
-            id: post.id,
-            title: post.title,
-            capacity: post.capacity,
-            joinedCount: post.joined_count,
-            game: {gameAt: game.game_at, home: game.home_team, away: game.away_team, stadium: game.stadium},
-        },
+        post: {id, title, capacity, joinedCount, game: {gameAt, home, away, stadium}},
         // 대기 중인 신청 / 수락된 참여자 (방장 본인은 뺀다)
         pending: applicants.filter((a) => a.status === 'pending'),
         accepted: applicants.filter((a) => a.status === 'accepted' && a.role !== 'host'),
