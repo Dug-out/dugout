@@ -52,12 +52,6 @@ export async function getMyReviews() {
     })
 }
 
-/** 평가할 메이트 한 명 · 평가 대기 목록에서 찾아 돌려준다 (이미 평가했거나 7일이 지났으면 null) */
-export async function getReviewTodo(postId, userId) {
-    const todos = await getReviewTodos()
-    return todos.find((todo) => todo.postId === postId && todo.userId === userId) ?? null
-}
-
 /** 평가 실패 → 화면에 보여줄 문구 */
 function createErrorMessage({code}) {
     if (code === '23505') return '이미 평가한 메이트예요'

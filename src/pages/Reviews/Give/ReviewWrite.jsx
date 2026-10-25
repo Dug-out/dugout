@@ -9,10 +9,11 @@ import useReviewTarget from '../../../hooks/useReviewTarget.js'
 import {formatDay, matchLabel} from '../../../utils/mateFormat.js'
 import './ReviewWrite.css'
 
-// 처음 보여 줄 점수
-const DEFAULT_SCORE = 9
-// 노쇼는 점수 대신 이 값을 보낸다
-const NOSHOW_SCORE = 0
+// 만났는지 고르는 버튼
+const CHOICES = [
+    {met: true, label: '만났어요'},
+    {met: false, label: '상대가 안 왔어요'},
+]
 
 /** 메이트 평가하기 · 만났는지 고르고, 만났으면 점수와 한 줄 후기, 안 왔으면(노쇼) 한 줄 후기를 남긴다 */
 function ReviewWrite() {
@@ -29,7 +30,7 @@ function ReviewWrite() {
                 onRetry={reload}
                 notFound={{
                     title: '평가할 수 없는 메이트예요',
-                    description: '이미 평가했거나 평가 기간(경기 후 7일)이 지났어요',
+                    description: `이미 평가했거나 평가 기간(경기 후 ${REVIEW.DEADLINE_DAYS}일)이 지났어요`,
                     backTo: '/my/reviews',
                     backLabel: '평가 목록으로',
                 }}
@@ -50,7 +51,7 @@ function ReviewForm({target}) {
 
     // 만났는지 / 점수 / 한 줄 후기
     const [met, setMet] = useState(true)
-    const [score, setScore] = useState(DEFAULT_SCORE)
+    const [score, setScore] = useState(REVIEW.DEFAULT_SCORE)
     const [comment, setComment] = useState('')
 
     // 보내는 중인지 (중복 클릭 방지) / 실패 안내 문구
@@ -58,7 +59,7 @@ function ReviewForm({target}) {
     const [failure, setFailure] = useState('')
 
     // 지금 보여 줄 점수와 표정 (노쇼는 0점)
-    const shownScore = met ? score : NOSHOW_SCORE
+    const shownScore = met ? score : REVIEW.NOSHOW_SCORE
     const face = REVIEW.faceFromScore(shownScore)
 
     // [평가 보내기] · 성공하면 완료 화면으로, 실패하면 안내 카드를 띄운다
@@ -103,24 +104,18 @@ function ReviewForm({target}) {
                 <section className="review-write__section">
                     <h2 className="review-write__heading">실제로 만났나요?</h2>
                     <div className="review-write__choices" role="radiogroup" aria-label="만남 여부">
-                        <button
-                            type="button"
-                            role="radio"
-                            aria-checked={met}
-                            className="review-write__choice"
-                            onClick={() => setMet(true)}
-                        >
-                            만났어요
-                        </button>
-                        <button
-                            type="button"
-                            role="radio"
-                            aria-checked={!met}
-                            className="review-write__choice"
-                            onClick={() => setMet(false)}
-                        >
-                            상대가 안 왔어요
-                        </button>
+                        {CHOICES.map((choice) => (
+                            <button
+                                key={choice.label}
+                                type="button"
+                                role="radio"
+                                aria-checked={met === choice.met}
+                                className="review-write__choice"
+                                onClick={() => setMet(choice.met)}
+                            >
+                                {choice.label}
+                            </button>
+                        ))}
                     </div>
                 </section>
 

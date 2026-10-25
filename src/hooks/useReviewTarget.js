@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {getReviewTodo} from '../api/mateReviews.js'
+import {getReviewTodos} from '../api/mateReviews.js'
 
 /**
  * 평가할 메이트 한 명을 불러온다.
@@ -21,7 +21,9 @@ export default function useReviewTarget(postId, userId) {
         // 화면을 떠나거나 다른 사람으로 바뀌면 true 가 되어, 늦게 도착한 옛 응답을 버린다
         let stale = false
 
-        getReviewTodo(postId, userId)
+        // 평가 대기 목록에서 찾는다 · 이미 평가했거나 7일이 지났으면 목록에 없다
+        getReviewTodos()
+            .then((todos) => todos.find((todo) => todo.postId === postId && todo.userId === userId))
             .then(
                 (target) => !stale && setState(target ? {status: 'ready', target} : {status: 'notfound', target: null}),
             )
