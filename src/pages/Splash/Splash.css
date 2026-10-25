@@ -126,7 +126,7 @@
 .splash__field {
     position: relative;
     flex: 1;
-    min-height: 196px;
+    min-height: 212px; /* 캐릭터(.splash__peek) 높이만큼은 늘 확보해 머리가 잘리지 않게 한다 */
     margin-top: 12px;
     overflow: hidden;
 }
@@ -171,6 +171,7 @@
 /* ── 경기장 바닥 · 로딩 ── */
 .splash__stage {
     position: relative;
+    box-sizing: border-box; /* 아래 안전 영역 패딩이 높이 190 안에 들어가도록 */
     flex: none;
     height: 190px;
     padding-bottom: env(safe-area-inset-bottom);
