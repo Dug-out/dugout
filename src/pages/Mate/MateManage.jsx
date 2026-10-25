@@ -54,9 +54,9 @@ function ManageContent({data, refresh}) {
     const left = capacity - joinedCount
     const full = left <= 0
 
-    // 처리 중인 신청자 (중복 클릭 방지) / 거절 확인을 기다리는 신청자 / 처리 실패 문구
+    // 처리 중인 신청자 (중복 클릭 방지) / 확인을 기다리는 처리 {applicant, accept} / 처리 실패 문구
     const [busyId, setBusyId] = useState(null)
-    const [rejectTarget, setRejectTarget] = useState(null)
+    const [pendingAction, setPendingAction] = useState(null)
     const [failure, setFailure] = useState('')
 
     // 수락 또는 거절을 보내고, 어느 쪽이든 목록을 다시 불러온다
@@ -72,12 +72,16 @@ function ManageContent({data, refresh}) {
         setBusyId(null)
     }
 
-    // 거절 확인 창의 [거절하기]
-    const confirmReject = () => {
-        const target = rejectTarget
-        setRejectTarget(null)
-        respond(target, false)
+    // 확인 창의 [수락하기] / [거절하기]
+    const confirmAction = () => {
+        const {applicant, accept} = pendingAction
+        setPendingAction(null)
+        respond(applicant, accept)
     }
+
+    // 확인 창 문구 · 수락은 남색 버튼, 거절은 되돌릴 수 없어서 빨간 버튼
+    const accepting = pendingAction?.accept === true
+    const targetName = pendingAction?.applicant.nickname
 
     return (
         <main className="mate-manage__body">
@@ -103,11 +107,14 @@ function ManageContent({data, refresh}) {
                         <Button
                             variant="secondary"
                             disabled={busyId !== null}
-                            onClick={() => setRejectTarget(applicant)}
+                            onClick={() => setPendingAction({applicant, accept: false})}
                         >
                             거절
                         </Button>
-                        <Button disabled={busyId !== null || full} onClick={() => respond(applicant, true)}>
+                        <Button
+                            disabled={busyId !== null || full}
+                            onClick={() => setPendingAction({applicant, accept: true})}
+                        >
                             {full ? '정원 가득' : '수락'}
                         </Button>
                     </div>
@@ -119,22 +126,31 @@ function ManageContent({data, refresh}) {
                 <ApplicantCard key={applicant.userId} applicant={applicant}/>
             ))}
 
-            {/* 거절 확인 · 거절은 되돌릴 수 없다 */}
+            {/* 수락·거절 확인 · 잘못 누르지 않도록 한 번 더 묻는다 */}
             <Dialog
-                open={rejectTarget !== null}
-                onClose={() => setRejectTarget(null)}
-                onConfirm={confirmReject}
-                image="/assets/pose-sad.png"
-                title="신청을 거절할까요?"
+                open={pendingAction !== null}
+                onClose={() => setPendingAction(null)}
+                onConfirm={confirmAction}
+                image={accepting ? '/assets/pose-yay.png' : '/assets/pose-sad.png'}
+                title={accepting ? `${targetName}님을 수락할까요?` : '신청을 거절할까요?'}
                 description={
-                    <>
-                        {rejectTarget?.nickname}님의 신청을 거절하면
-                        <br/>
-                        되돌릴 수 없어요.
-                    </>
+                    accepting ? (
+                        <>
+                            수락하면 {targetName}님이
+                            <br/>
+                            함께 가는 메이트가 돼요.
+                        </>
+                    ) : (
+                        <>
+                            {targetName}님의 신청을 거절하면
+                            <br/>
+                            되돌릴 수 없어요.
+                        </>
+                    )
                 }
                 cancelLabel="취소"
-                confirmLabel="거절하기"
+                confirmLabel={accepting ? '수락하기' : '거절하기'}
+                tone={accepting ? 'primary' : 'danger'}
             />
 
             {/* 처리 실패 */}
