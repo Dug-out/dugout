@@ -2,17 +2,17 @@ import {useState} from 'react'
 import {useNavigate, useParams} from 'react-router'
 import {createReview} from '../../../api/mateReviews.js'
 import {Button, Dialog, Field, Header, Icon, LoadState} from '../../../components'
-import {PROFILE, REVIEW, SIGNUP} from '../../../constants/policy.js'
+import {PROFILE, REVIEW} from '../../../constants/policy.js'
 import useMyTeam from '../../../hooks/useMyTeam.js'
-import useProfile from '../../../hooks/useProfile.js'
 import useReviewTarget from '../../../hooks/useReviewTarget.js'
 import {formatDay, matchLabel} from '../../../utils/mateFormat.js'
 import './ReviewWrite.css'
 
-// 처음 보여 줄 점수
-const DEFAULT_SCORE = 9
-// 노쇼는 점수 대신 이 값을 보낸다
-const NOSHOW_SCORE = 0
+// 만났는지 고르는 버튼
+const CHOICES = [
+    {met: true, label: '만났어요'},
+    {met: false, label: '상대가 안 왔어요'},
+]
 
 /** 메이트 평가하기 · 만났는지 고르고, 만났으면 점수와 한 줄 후기, 안 왔으면(노쇼) 한 줄 후기를 남긴다 */
 function ReviewWrite() {
@@ -29,7 +29,7 @@ function ReviewWrite() {
                 onRetry={reload}
                 notFound={{
                     title: '평가할 수 없는 메이트예요',
-                    description: '이미 평가했거나 평가 기간(경기 후 7일)이 지났어요',
+                    description: `이미 평가했거나 평가 기간(경기 후 ${REVIEW.DEADLINE_DAYS}일)이 지났어요`,
                     backTo: '/my/reviews',
                     backLabel: '평가 목록으로',
                 }}
@@ -44,13 +44,10 @@ function ReviewForm({target}) {
     const navigate = useNavigate()
     // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
     const myTeam = useMyTeam()
-    // 상대 응원팀 · 이름 옆 뱃지에 쓴다
-    const {profile} = useProfile(target.userId)
-    const team = SIGNUP.TEAMS.find((t) => t.code === profile?.team)
 
     // 만났는지 / 점수 / 한 줄 후기
     const [met, setMet] = useState(true)
-    const [score, setScore] = useState(DEFAULT_SCORE)
+    const [score, setScore] = useState(REVIEW.DEFAULT_SCORE)
     const [comment, setComment] = useState('')
 
     // 보내는 중인지 (중복 클릭 방지) / 실패 안내 문구
@@ -58,7 +55,7 @@ function ReviewForm({target}) {
     const [failure, setFailure] = useState('')
 
     // 지금 보여 줄 점수와 표정 (노쇼는 0점)
-    const shownScore = met ? score : NOSHOW_SCORE
+    const shownScore = met ? score : REVIEW.NOSHOW_SCORE
     const face = REVIEW.faceFromScore(shownScore)
 
     // [평가 보내기] · 성공하면 완료 화면으로, 실패하면 안내 카드를 띄운다
@@ -89,10 +86,7 @@ function ReviewForm({target}) {
                 <div className="review-write__who">
                     <img src={target.avatarUrl || PROFILE.DEFAULT_AVATAR} alt="" width="48" height="48" />
                     <span className="review-write__info">
-                        <span className="review-write__name">
-                            <span className="review-write__nickname">{target.nickname}</span>
-                            {team && <span className="review-write__team">{team.name}</span>}
-                        </span>
+                        <span className="review-write__nickname">{target.nickname}</span>
                         <span className="review-write__game">
                             {formatDay(target.game.gameAt)} {target.game.stadium} · {matchLabel(target.game, myTeam)}
                         </span>
@@ -103,24 +97,18 @@ function ReviewForm({target}) {
                 <section className="review-write__section">
                     <h2 className="review-write__heading">실제로 만났나요?</h2>
                     <div className="review-write__choices" role="radiogroup" aria-label="만남 여부">
-                        <button
-                            type="button"
-                            role="radio"
-                            aria-checked={met}
-                            className="review-write__choice"
-                            onClick={() => setMet(true)}
-                        >
-                            만났어요
-                        </button>
-                        <button
-                            type="button"
-                            role="radio"
-                            aria-checked={!met}
-                            className="review-write__choice"
-                            onClick={() => setMet(false)}
-                        >
-                            상대가 안 왔어요
-                        </button>
+                        {CHOICES.map((choice) => (
+                            <button
+                                key={choice.label}
+                                type="button"
+                                role="radio"
+                                aria-checked={met === choice.met}
+                                className="review-write__choice"
+                                onClick={() => setMet(choice.met)}
+                            >
+                                {choice.label}
+                            </button>
+                        ))}
                     </div>
                 </section>
 
@@ -131,7 +119,7 @@ function ReviewForm({target}) {
                         <br />몇 점인가요?
                     </h2>
                     <div className="review-write__score">
-                        <img src={`/assets/${face}.png`} alt="" width="72" height="72" />
+                        <img src={`/assets/${face}.png`} alt="" width="260" height="260" />
                         <span className="review-write__number">{shownScore}</span>
                         <span className="review-write__unit">점</span>
                     </div>

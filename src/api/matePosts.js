@@ -110,29 +110,27 @@ export async function getMatePost(id) {
     const {data: members} = membersResult
     const {data: mine} = myResult
 
-    const {host: hostRow, game: gameRow} = post
+    const {title, image_url: imageUrl, status, seat, capacity, ages, gender, description} = post
+    const {joined_count: joinedCount, host_id: hostId, host, game} = post
+    const {nickname, avatar_url: avatarUrl, manner_avg: manner} = host
+    const {game_at: gameAt, home_team: home, away_team: away, stadium} = game
     return {
         id: post.id,
         myId: userId,
-        title: post.title,
-        imageUrl: post.image_url,
-        isOpen: post.status === 'open',
-        seat: post.seat,
-        capacity: post.capacity,
-        ages: post.ages,
-        gender: post.gender,
-        description: post.description,
-        joinedCount: post.joined_count,
-        host: {
-            id: post.host_id,
-            nickname: hostRow.nickname,
-            avatarUrl: hostRow.avatar_url,
-            manner: Number(hostRow.manner_avg),
-        },
-        game: {gameAt: gameRow.game_at, home: gameRow.home_team, away: gameRow.away_team, stadium: gameRow.stadium},
+        title,
+        imageUrl,
+        isOpen: status === 'open',
+        seat,
+        capacity,
+        ages,
+        gender,
+        description,
+        joinedCount,
+        host: {id: hostId, nickname, avatarUrl, manner: Number(manner)},
+        game: {gameAt, home, away, stadium},
         members: members.map((row) => {
-            const {user_id: memberId, role, nickname, avatar_url: avatarUrl} = row
-            return {userId: memberId, role, nickname, avatarUrl}
+            const {user_id: memberId, role, nickname: memberName, avatar_url: memberAvatar} = row
+            return {userId: memberId, role, nickname: memberName, avatarUrl: memberAvatar}
         }),
         // 내가 방장이면 'host', 신청한 적이 없으면 null
         myStatus: mine ? (mine.role === 'host' ? 'host' : mine.status) : null,

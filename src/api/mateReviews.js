@@ -21,6 +21,14 @@ export async function getReviewTodos() {
     })
 }
 
+/** 평가 대기 수 · 목록은 받지 않고 개수만 센다 (마이페이지) */
+export async function getReviewTodoCount() {
+    const {count, error} = await supabase.rpc('my_review_todos', {}, {count: 'exact', head: true})
+    if (error) throw error
+
+    return count ?? 0
+}
+
 /** 내가 한 평가 목록 · 최근 것부터 */
 export async function getMyReviews() {
     const {data, error} = await supabase
@@ -35,27 +43,23 @@ export async function getMyReviews() {
 
     return data.map((row) => {
         const {id, post_id: postId, reviewee_id: userId, met, score, comment, post, reviewee} = row
-        const {game} = post
+        const {host_id: hostId, title, game} = post
+        const {game_at: gameAt, home_team: home, away_team: away, stadium} = game
+        const {nickname, avatar_url: avatarUrl} = reviewee
         return {
             id,
             postId,
-            postTitle: post.title,
-            game: {gameAt: game.game_at, home: game.home_team, away: game.away_team, stadium: game.stadium},
+            postTitle: title,
+            game: {gameAt, home, away, stadium},
             userId,
-            isHost: post.host_id === userId,
-            nickname: reviewee.nickname,
-            avatarUrl: reviewee.avatar_url,
+            isHost: hostId === userId,
+            nickname,
+            avatarUrl,
             met,
             score,
             comment,
         }
     })
-}
-
-/** 평가할 메이트 한 명 · 평가 대기 목록에서 찾아 돌려준다 (이미 평가했거나 7일이 지났으면 null) */
-export async function getReviewTodo(postId, userId) {
-    const todos = await getReviewTodos()
-    return todos.find((todo) => todo.postId === postId && todo.userId === userId) ?? null
 }
 
 /** 평가 실패 → 화면에 보여줄 문구 */
@@ -97,5 +101,9 @@ export async function getReceivedReviews(userId, limit) {
         .limit(limit)
     if (error) throw error
 
-    return {reviews: data, total: count ?? 0}
+    const reviews = data.map((row) => {
+        const {id: reviewId, score, comment} = row
+        return {id: reviewId, score, comment}
+    })
+    return {reviews, total: count ?? 0}
 }

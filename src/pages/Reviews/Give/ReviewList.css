@@ -125,8 +125,14 @@
     margin-top: 10px;
 }
 
-.review-list__avatar {
+.review-list__avatar-link {
+    display: block;
     flex: none;
+    border-radius: 50%;
+}
+
+.review-list__avatar {
+    display: block;
     width: 44px;
     height: 44px;
     border: 1px solid var(--border);

@@ -18,12 +18,17 @@ export const MANNER = {
 export const REVIEW = {
     SCORE_MIN: 1,
     SCORE_MAX: 10,
+    DEFAULT_SCORE: 9, // 평가하기 화면에서 처음 보여 줄 점수
+    NOSHOW_SCORE: 0, // 노쇼는 점수 대신 0점
+    GOOD_SCORE: 8, // 이 점수 이상이면 좋은 평가
     DEADLINE_DAYS: 7, // 경기 후 7일 안에만 평가
     SAME_PERSON_PER_MONTH: 1, // 같은 사람끼리 한 달 1회만 반영
     COMMENT_MAX: 100,
     PROFILE_PREVIEW_COUNT: 3, // 프로필에는 최근 3개 + 전체보기
+    isGood: (s) => s >= REVIEW.GOOD_SCORE,
     // 점수 → 표정 이미지
-    faceFromScore: (s) => (s >= 8 ? 'rate-good' : s >= 5 ? 'rate-soso' : s >= 1 ? 'rate-bad' : 'rate-noshow'),
+    faceFromScore: (s) =>
+        s >= REVIEW.GOOD_SCORE ? 'rate-good' : s >= 5 ? 'rate-soso' : s >= 1 ? 'rate-bad' : 'rate-noshow',
 }
 
 export const RECORD = {
