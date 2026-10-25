@@ -184,6 +184,12 @@
     flex: 1;
 }
 
+.mypage__row-note {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--red-text);
+}
+
 .mypage__row svg {
     color: var(--gray-500);
 }

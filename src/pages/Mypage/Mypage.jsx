@@ -2,23 +2,25 @@ import {Link} from 'react-router'
 import {Button, Header, Icon, LoadState} from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
+import useReviewCounts from '../../hooks/useReviewCounts.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './Mypage.css'
 
 // 내 활동 메뉴 · 눌렀을 때 이동할 화면
 const ACTIVITY_MENU = [
     {label: '내 직관 약속', to: '/my/posts'},
-    {label: '메이트 평가하기', to: '/my/reviews'},
+    {label: '메이트 평가하기', to: '/my/reviews', badge: 'waiting'},
     {label: '직관 기록', to: '/record'},
 ]
 // 계정 메뉴 · 아직 기능을 연결하지 않았다 (화면만)
 const ACCOUNT_MENU = ['알림 설정', '로그아웃']
 
-/** 메뉴 한 줄 · 이름과 오른쪽 화살표 · to 가 있으면 그 화면으로 이동하고, 없으면 눌러도 아직 아무 일도 없다 */
-function MenuRow({label, to}) {
+/** 메뉴 한 줄 · 이름, 안내(선택), 오른쪽 화살표 · to 가 있으면 그 화면으로 이동하고, 없으면 눌러도 아직 아무 일도 없다 */
+function MenuRow({label, to, note}) {
     const content = (
         <>
             <span className="mypage__row-label">{label}</span>
+            {note && <span className="mypage__row-note">{note}</span>}
             <Icon name="chevronRight" size={18} />
         </>
     )
@@ -57,6 +59,8 @@ function MypageBody({profile}) {
     const team = SIGNUP.TEAMS.find((t) => t.code === teamCode)
     // 매너 타율 카드에 쓸 값 · 구간 이름, 막대 길이, 다음 구간까지 안내
     const summary = mannerSummary(manner)
+    // 받은 후기 · 평가 대기 개수 (불러오기 전이나 실패하면 null → 개수는 보여 주지 않는다)
+    const counts = useReviewCounts()
 
     return (
         <>
@@ -90,7 +94,7 @@ function MypageBody({profile}) {
                         </svg>
                         매너 타율
                         <Link to="/my/manner" className="mypage__manner-more">
-                            후기 보기
+                            {counts ? `후기 ${counts.received}개 보기` : '후기 보기'}
                             <Icon name="chevronRight" size={14} strokeWidth={2.2} />
                         </Link>
                     </span>
@@ -114,8 +118,13 @@ function MypageBody({profile}) {
             {/* 내 활동 메뉴 */}
             <section className="mypage__card">
                 <h2 className="mypage__section">내 활동</h2>
-                {ACTIVITY_MENU.map(({label, to}) => (
-                    <MenuRow key={label} label={label} to={to} />
+                {ACTIVITY_MENU.map(({label, to, badge}) => (
+                    <MenuRow
+                        key={label}
+                        label={label}
+                        to={to}
+                        note={badge === 'waiting' && counts?.waiting > 0 ? `평가 대기 ${counts.waiting}` : null}
+                    />
                 ))}
             </section>
 
