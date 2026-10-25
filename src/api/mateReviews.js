@@ -70,3 +70,29 @@ export async function createReview({postId, revieweeId, met, score, comment = ''
         .insert({post_id: postId, reviewee_id: revieweeId, met, score, comment: comment.trim()})
     if (error) throw Object.assign(new Error(createErrorMessage(error)), {cause: error})
 }
+
+/**
+ * 받은 후기 · 최근 것부터 (작성자는 내려오지 않는다: public_reviews 뷰)
+ * @param {string | null} userId 받은 사람 id · null 이면 나
+ * @param {number} limit 가져올 최대 개수 · 0 이면 개수(total)만
+ * @returns {Promise<{reviews: {id: string, score: number, comment: string}[], total: number}>}
+ */
+export async function getReceivedReviews(userId, limit) {
+    let id = userId
+    if (!id) {
+        const {
+            data: {session},
+        } = await supabase.auth.getSession()
+        id = session.user.id
+    }
+
+    const {data, count, error} = await supabase
+        .from('public_reviews')
+        .select('id, score, comment', {count: 'exact'})
+        .eq('reviewee_id', id)
+        .order('created_at', {ascending: false})
+        .limit(limit)
+    if (error) throw error
+
+    return {reviews: data, total: count ?? 0}
+}
