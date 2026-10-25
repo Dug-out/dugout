@@ -78,9 +78,9 @@ function PostList({myTeam, items}) {
     )
 }
 
-/** 약속 한 장 · 위에 사진(상태 뱃지, D-day), 아래에 제목과 경기 일정·구장·인원 */
+/** 약속 한 장 · 위에 사진(상태 뱃지, D-day), 아래에 제목과 경기 일정·구장·인원. 방장이고 대기 중인 신청이 있으면 맨 아래에 안내 줄이 붙는다 */
 function PostCard({item, myTeam, now, past = false}) {
-    const {id, title, image, role, capacity, joinedCount, hostNickname, game} = item
+    const {id, title, image, role, capacity, joinedCount, hostNickname, pendingCount, game} = item
 
     // 사진 위 상태 뱃지 · 지난 약속은 종료, 아니면 내가 방장인지 참여 중인지
     const badge = past
@@ -116,6 +116,16 @@ function PostCard({item, myTeam, now, past = false}) {
                     </span>
                 </span>
             </Link>
+
+            {/* 새 신청 안내 · 아직 안 지난 약속의 방장에게만 */}
+            {!past && role === 'host' && pendingCount > 0 && (
+                <Link to={`/mate/${id}/manage`} className="my-posts__banner">
+                    <span className="my-posts__banner-count">{pendingCount}</span>
+                    <span className="my-posts__banner-text">새 참여 신청이 기다리고 있어요</span>
+                    신청자 관리
+                    <Icon name="chevronRight" size={16}/>
+                </Link>
+            )}
         </article>
     )
 }

@@ -15,7 +15,10 @@ export async function applyToMatePost({postId, message = ''}) {
     if (error) throw Object.assign(new Error(applyErrorMessage(error)), {cause: error})
 }
 
-/** 내 직관 약속 · 내가 방장이거나 수락된 참여자인 모집 글을 가져온다 (수락 대기·거절·나간 글은 뺀다) */
+/**
+ * 내 직관 약속 · 내가 방장이거나 수락된 참여자인 모집 글을 가져온다 (수락 대기·거절·나간 글은 뺀다)
+ * pendingCount 는 대기 중인 신청 수 · 방장만 볼 수 있어서 방장이 아니면 0
+ */
 export async function getMyPosts() {
     const {data: {session}} = await supabase.auth.getSession()
     const {id: userId} = session.user
@@ -28,7 +31,8 @@ export async function getMyPosts() {
             post:mate_posts!inner(
                 id, title, image_url, capacity, joined_count,
                 host:profiles!host_id(nickname),
-                game:games!inner(game_at, home_team, away_team, stadium)
+                game:games!inner(game_at, home_team, away_team, stadium),
+                members:mate_members(status)
             )
         `)
         .eq('user_id', userId)
@@ -38,7 +42,7 @@ export async function getMyPosts() {
     const items = data.map((row) => {
         const {role, post} = row
         const {id, title, image_url: image, capacity, joined_count: joinedCount} = post
-        const {host, game} = post
+        const {host, game, members} = post
         return {
             id,
             title,
@@ -47,6 +51,7 @@ export async function getMyPosts() {
             capacity,
             joinedCount,
             hostNickname: host.nickname,
+            pendingCount: role === 'host' ? members.filter((m) => m.status === 'pending').length : 0,
             game: {gameAt: game.game_at, home: game.home_team, away: game.away_team, stadium: game.stadium},
         }
     })
