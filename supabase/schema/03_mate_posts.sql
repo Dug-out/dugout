@@ -51,8 +51,9 @@ create policy "mate_posts_insert_own" on public.mate_posts
     )
   );
 
--- 수정: 방장만 모집 마감으로 변경 가능하다.
-grant update (title, seat, capacity, ages, gender, description, image_url, status) on public.mate_posts to authenticated;
+-- 수정: 방장은 제목, 소개, 대표 이미지만 고칠 수 있다 (정원·좌석·나이대·성별·경기·모집 상태는 못 바꾼다)
+-- 모집 상태(status)는 수락된 인원에 따라 05_mate_members.sql 의 트리거가 바꾼다
+grant update (title, description, image_url) on public.mate_posts to authenticated;
 
 create policy "mate_posts_update_host" on public.mate_posts
   for update to authenticated using (host_id = auth.uid()) with check (host_id = auth.uid());
