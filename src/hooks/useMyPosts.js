@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {getMyPosts} from '../api/myPosts.js'
+import {getMyPosts} from '../api/mateMembers.js'
 
 /**
  * 내 직관 약속을 불러온다.

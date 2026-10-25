@@ -1,35 +1,6 @@
 import {supabase} from '../lib/supabase.js'
+import {getMyTeam} from './profiles.js'
 import {uploadErrorMessage} from './storage.js'
-
-/** 브라우저에 저장된 로그인 정보에서 id를 읽고, 해당 사용자의 team을 조회 */
-export async function getMyTeam() {
-    const {data: {session}} = await supabase.auth.getSession()
-    const {id: userId} = session.user
-
-    const {data, error} = await supabase
-        .from('profiles')
-        .select('team')
-        .eq('id', userId)
-        .single()
-    if (error) throw error
-    const {team} = data
-    return team
-}
-
-/** [경기 선택] 목록 · 시작 전 예정 경기를 빠른 순으로 (내 팀 경기만 오는 건 DB 규칙) */
-export async function getSelectableGames() {
-    const {data, error} = await supabase
-        .from('games')
-        .select('id, game_at, home_team, away_team, stadium')
-        .eq('status', 'scheduled')
-        .gt('game_at', new Date().toISOString())
-        .order('game_at')
-    if (error) throw error
-    return data.map((row) => {
-        const {id, game_at: gameAt, home_team: home, away_team: away, stadium} = row
-        return {id, gameAt, home, away, stadium}
-    })
-}
 
 /** 저장 실패 → 화면에 보여줄 문구 */
 function createErrorMessage(error) {
@@ -160,18 +131,4 @@ export async function getMatePost(id) {
         // 내가 방장이면 'host', 신청한 적이 없으면 null
         myStatus: mine ? (mine.role === 'host' ? 'host' : mine.status) : null,
     }
-}
-
-/** 신청 실패 → 화면에 보여줄 문구 */
-function applyErrorMessage({code}) {
-    if (code === '23505') return '이미 신청한 모집 글이에요'
-    if (code === '42501') return '지금은 신청할 수 없어요. 모집이 마감됐거나 경기가 이미 시작됐을 수 있어요'
-    if (code === '23514') return '입력한 내용을 다시 확인해 주세요'
-    return '신청하지 못했어요. 잠시 후 다시 시도해 주세요'
-}
-
-/** 참여 신청 · 한마디와 함께 대기 상태로 신청한다 (수락은 방장이 한다) */
-export async function applyToMatePost({postId, message = ''}) {
-    const {error} = await supabase.from('mate_members').insert({post_id: postId, message: message.trim()})
-    if (error) throw Object.assign(new Error(applyErrorMessage(error)), {cause: error})
 }

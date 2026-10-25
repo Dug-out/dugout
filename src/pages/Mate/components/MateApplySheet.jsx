@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {applyToMatePost} from '../../../api/mate.js'
+import {applyToMatePost} from '../../../api/mateMembers.js'
 import {BottomSheet, Button, Field} from '../../../components'
 import {MATE_POST} from '../../../constants/policy.js'
 import './MateApplySheet.css'
