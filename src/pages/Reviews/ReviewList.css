@@ -79,6 +79,109 @@
     color: var(--text-400);
 }
 
+/* 글별로 묶은 평가 대기 */
+.review-list__group {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--divider);
+}
+
+.review-list__group-title {
+    margin: 0 0 2px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-700);
+}
+
+.review-list__group-title span {
+    font-weight: 500;
+    color: var(--text-400);
+}
+
+/* 사람 한 줄 */
+.review-list__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+}
+
+.review-list__group .review-list__row + .review-list__row {
+    border-top: 1px solid var(--divider);
+}
+
+.review-list__row--done {
+    border-top: 1px solid var(--divider);
+    opacity: 0.6;
+}
+
+.review-list__row--done:first-of-type {
+    margin-top: 10px;
+}
+
+.review-list__avatar {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.review-list__who {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.review-list__name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.review-list__nickname {
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.review-list__badge {
+    flex: none;
+    padding: 2px 6px;
+    border-radius: var(--radius-chip-sm);
+    background: var(--navy-50);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--navy-500);
+}
+
+.review-list__badge--done {
+    background: var(--gray-100);
+    color: var(--text-500);
+}
+
+.review-list__meta {
+    font-size: 12px;
+    color: var(--text-400);
+}
+
+.review-list__left {
+    font-weight: 600;
+    color: var(--red-text);
+}
+
+.review-list__state {
+    flex: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-400);
+}
+
 .review-list__note {
     display: flex;
     align-items: flex-start;
