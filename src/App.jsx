@@ -9,6 +9,7 @@ import MannerReviews from './pages/Reviews/MannerReviews.jsx'
 import Mypage from './pages/Mypage/Mypage.jsx'
 import MyPosts from './pages/MyPosts/MyPosts.jsx'
 import Record from './pages/Record/Record.jsx'
+import ProfileReviews from './pages/Reviews/ProfileReviews.jsx'
 import ReviewDone from './pages/Reviews/ReviewDone.jsx'
 import ReviewList from './pages/Reviews/ReviewList.jsx'
 import ReviewWrite from './pages/Reviews/ReviewWrite.jsx'
@@ -58,6 +59,7 @@ function App() {
             <Route path="/reviews/done" element={<ReviewDone />} />
             <Route path="/reviews/:postId/:userId" element={<ReviewWrite />} />
             <Route path="/profile/:id" element={<ProfileView />} />
+            <Route path="/profile/:id/reviews" element={<ProfileReviews />} />
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout />}>
                 <Route path="/home" element={<Placeholder title="홈" />} />

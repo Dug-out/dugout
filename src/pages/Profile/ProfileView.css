@@ -148,6 +148,17 @@
     color: var(--text-400);
 }
 
+.profile-view__more {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-height: 44px;
+    margin: -10px 0 -10px auto;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-500);
+}
+
 .profile-view__empty {
     display: flex;
     align-items: center;

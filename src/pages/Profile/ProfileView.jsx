@@ -1,7 +1,8 @@
-import {useParams} from 'react-router'
-import {Header, Icon, LoadState} from '../../components'
-import {PROFILE, SIGNUP} from '../../constants/policy.js'
+import {Link, useParams} from 'react-router'
+import {Header, Icon, LoadState, ReviewItem} from '../../components'
+import {PROFILE, REVIEW, SIGNUP} from '../../constants/policy.js'
 import useProfile from '../../hooks/useProfile.js'
+import useReceivedReviews from '../../hooks/useReceivedReviews.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './ProfileView.css'
 
@@ -15,17 +16,19 @@ function ProfileView() {
         <div className="profile-view">
             <Header title="프로필" />
             <LoadState status={status} errorTitle="프로필을 불러오지 못했어요" onRetry={reload} />
-            {status === 'ready' && <ProfileBody profile={profile} />}
+            {status === 'ready' && <ProfileBody id={id} profile={profile} />}
         </div>
     )
 }
 
 /** 불러온 프로필로 그리는 본문 */
-function ProfileBody({profile}) {
+function ProfileBody({id, profile}) {
     const {nickname, team: teamCode, gender, age, headline, bio, avatar, manner} = profile
     // 응원팀 코드로 팀 이름('LG 트윈스' 등)을 찾는다
     const team = SIGNUP.TEAMS.find((t) => t.code === teamCode)
     const summary = mannerSummary(manner)
+    // 받은 후기 · 프로필에는 최근 것만 보여 주고 전체는 따로 본다
+    const {reviews, total} = useReceivedReviews(id, REVIEW.PROFILE_PREVIEW_COUNT)
 
     return (
         <>
@@ -63,17 +66,28 @@ function ProfileBody({profile}) {
                     </section>
                 )}
 
-                {/* 받은 매너 후기 · 아직 후기 테이블이 없어 빈 상태만 보여 준다 */}
+                {/* 받은 매너 후기 · 최근 3개와 전체보기 */}
                 <section className="profile-view__card">
                     <div className="profile-view__head">
                         <h2 className="profile-view__card-title">받은 매너 후기</h2>
-                        <span className="profile-view__count">0</span>
-                        {/* 후기가 생기면 여기에 "전체보기" 링크(Profile-reviews)와 최근 후기 3개를 보여 준다 */}
+                        <span className="profile-view__count">{total}</span>
+                        {total > 0 && (
+                            <Link to={`/profile/${id}/reviews`} className="profile-view__more">
+                                전체보기
+                                <Icon name="chevronRight" size={16} />
+                            </Link>
+                        )}
                     </div>
-                    <div className="profile-view__empty">
-                        <Icon name="info" size={13} />
-                        아직 받은 매너 후기가 없어요
-                    </div>
+                    {reviews.length === 0 ? (
+                        <div className="profile-view__empty">
+                            <Icon name="info" size={13} />
+                            아직 받은 매너 후기가 없어요
+                        </div>
+                    ) : (
+                        reviews.map(({id: reviewId, score, comment}) => (
+                            <ReviewItem key={reviewId} score={score} comment={comment} />
+                        ))
+                    )}
                 </section>
             </main>
         </>
