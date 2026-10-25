@@ -99,8 +99,15 @@ function PostContent({post, refresh}) {
 
     // 참여 신청 시트가 열려 있는지
     const [applyOpen, setApplyOpen] = useState(false)
-    // 신청을 보낸 뒤 "신청을 보냈어요" 안내 창이 열려 있는지
-    const [appliedOpen, setAppliedOpen] = useState(false)
+    // 신청 결과 안내 창 · null(안 보임), {ok: true}(성공), {ok: false, message}(실패)
+    const [result, setResult] = useState(null)
+
+    // 신청이 끝났을 때 · 성공이든 실패든 시트를 닫고 결과를 안내하고, 마감 같은 변화를 반영하려고 글을 다시 불러온다
+    const handleApplyDone = (applyResult) => {
+        setApplyOpen(false)
+        setResult(applyResult)
+        refresh()
+    }
 
     const {title, imageUrl, isOpen, host, game, seat, ages, gender, description, capacity, joinedCount, members} = post
 
@@ -203,20 +210,15 @@ function PostContent({post, refresh}) {
                 <MateApplySheet
                     postId={post.id}
                     onClose={() => setApplyOpen(false)}
-                    onApplied={() => {
-                        setApplyOpen(false)
-                        setAppliedOpen(true)
-                        refresh()
-                    }}
-                    onFailed={refresh}
-               />
+                    onDone={handleApplyDone}
+                />
             )}
 
-            {/* 신청 완료 안내 창 */}
+            {/* 신청 성공 */}
             <Dialog
-                open={appliedOpen}
-                onClose={() => setAppliedOpen(false)}
-                onConfirm={() => setAppliedOpen(false)}
+                open={result?.ok === true}
+                onClose={() => setResult(null)}
+                onConfirm={() => setResult(null)}
                 image="/assets/pose-yay.png"
                 title="참여 신청을 보냈어요!"
                 description={
@@ -226,6 +228,19 @@ function PostContent({post, refresh}) {
                         수락 소식을 기다려 볼까요?
                     </>
                 }
+                confirmLabel="확인"
+                cancelLabel={null}
+                tone="primary"
+            />
+
+            {/* 신청 실패 · API 가 만든 한국어 문구를 그대로 보여 준다 */}
+            <Dialog
+                open={result?.ok === false}
+                onClose={() => setResult(null)}
+                onConfirm={() => setResult(null)}
+                image="/assets/pose-sad.png"
+                title="신청하지 못했어요"
+                description={result?.message}
                 confirmLabel="확인"
                 cancelLabel={null}
                 tone="primary"
