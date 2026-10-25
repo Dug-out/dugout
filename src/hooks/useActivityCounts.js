@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {getReviewTodos} from '../api/mateReviews.js'
+import {getReviewTodoCount} from '../api/mateReviews.js'
 import {getPendingApplicantCount} from '../api/mateMembers.js'
 
 /**
@@ -18,11 +18,11 @@ export default function useActivityCounts() {
         let stale = false
 
         // 한쪽이 실패해도 다른 쪽은 보여 준다
-        Promise.allSettled([getPendingApplicantCount(), getReviewTodos()]).then(([pending, todos]) => {
+        Promise.allSettled([getPendingApplicantCount(), getReviewTodoCount()]).then(([pending, waiting]) => {
             if (stale) return
             setCounts({
                 pending: pending.status === 'fulfilled' ? pending.value : null,
-                waiting: todos.status === 'fulfilled' ? todos.value.length : null,
+                waiting: waiting.status === 'fulfilled' ? waiting.value : null,
             })
         })
 

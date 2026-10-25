@@ -21,6 +21,14 @@ export async function getReviewTodos() {
     })
 }
 
+/** 평가 대기 수 · 목록은 받지 않고 개수만 센다 (마이페이지) */
+export async function getReviewTodoCount() {
+    const {count, error} = await supabase.rpc('my_review_todos', {}, {count: 'exact', head: true})
+    if (error) throw error
+
+    return count ?? 0
+}
+
 /** 내가 한 평가 목록 · 최근 것부터 */
 export async function getMyReviews() {
     const {data, error} = await supabase
