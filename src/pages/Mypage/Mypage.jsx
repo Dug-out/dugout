@@ -18,11 +18,11 @@ const COUNT_LABEL = {pending: '새 신청', waiting: '평가 대기'}
 const ACCOUNT_MENU = ['알림 설정', '로그아웃']
 
 /** 메뉴 한 줄 · 이름, 안내(선택), 오른쪽 화살표 · to 가 있으면 그 화면으로 이동하고, 없으면 눌러도 아직 아무 일도 없다 */
-function MenuRow({label, to, note, pill = false}) {
+function MenuRow({label, to, note}) {
     const content = (
         <>
             <span className="mypage__row-label">{label}</span>
-            {note && <span className={`mypage__row-note${pill ? ' mypage__row-note--pill' : ''}`}>{note}</span>}
+            {note && <span className="mypage__row-note">{note}</span>}
             <Icon name="chevronRight" size={18} />
         </>
     )
@@ -123,13 +123,7 @@ function MypageBody({profile}) {
                 {ACTIVITY_MENU.map(({label, to, count}) => {
                     const n = counts[count]
                     return (
-                        <MenuRow
-                            key={label}
-                            label={label}
-                            to={to}
-                            note={n > 0 ? `${COUNT_LABEL[count]} ${n}` : null}
-                            pill={count === 'pending'}
-                        />
+                        <MenuRow key={label} label={label} to={to} note={n > 0 ? `${COUNT_LABEL[count]} ${n}` : null} />
                     )
                 })}
             </section>
