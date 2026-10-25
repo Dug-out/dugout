@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {getSelectableGames} from '../api/mate.js'
+import {getSelectableGames} from '../api/games.js'
 
 /**
  * 모집 글에 고를 수 있는 경기(시작 전, 내 팀 경기)를 불러온다.

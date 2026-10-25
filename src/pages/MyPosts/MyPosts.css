@@ -5,3 +5,163 @@
     min-height: 100dvh;
     background: var(--bg);
 }
+
+.my-posts__body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 20px 20px;
+}
+
+/* ── 보기 구분 ── */
+.my-posts__tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 4px;
+    border-radius: var(--radius-input);
+    background: var(--gray-100);
+}
+
+.my-posts__tab {
+    min-height: 44px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    font-family: var(--font-base), sans-serif;
+    font-size: 14px;
+    color: var(--text-500);
+    cursor: pointer;
+}
+
+.my-posts__tab[aria-selected='true'] {
+    background: var(--surface);
+    box-shadow: 0 1px 3px rgba(20, 27, 51, 0.12);
+    font-weight: 700;
+    color: var(--navy-500);
+}
+
+.my-posts__tab:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: -2px;
+}
+
+/* ── 목록 ── */
+.my-posts__group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.my-posts__heading {
+    margin: 4px 0 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-400);
+}
+
+.my-posts__card {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+}
+
+.my-posts__link {
+    display: block;
+    color: var(--text-900);
+    text-decoration: none;
+}
+
+/* 사진 · 왼쪽 위에 상태 뱃지, 오른쪽 위에 D-day */
+.my-posts__cover {
+    position: relative;
+    display: block;
+    height: 120px;
+    overflow: hidden;
+}
+
+.my-posts__cover img {
+    display: block;
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+/* 지난 약속은 사진을 흐리게 */
+.my-posts__link--past .my-posts__cover img {
+    filter: grayscale(0.7);
+    opacity: 0.75;
+}
+
+.my-posts__badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: var(--navy-500);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--surface);
+}
+
+.my-posts__badge--host {
+    background: var(--red-500);
+}
+
+.my-posts__badge--ended {
+    background: color-mix(in srgb, var(--text-900) 72%, transparent);
+}
+
+.my-posts__dday {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    font-family: var(--font-number), sans-serif;
+    font-size: 13px;
+    color: var(--navy-500);
+}
+
+.my-posts__text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px 16px 16px;
+}
+
+.my-posts__title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.my-posts__link--past .my-posts__title {
+    color: var(--text-500);
+}
+
+.my-posts__lines {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 13px;
+}
+
+.my-posts__line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-500);
+}
+
+.my-posts__line svg {
+    flex: none;
+}
+
+.my-posts__line--main {
+    font-weight: 600;
+    color: var(--text-700);
+}

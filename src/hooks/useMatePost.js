@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {getMatePost} from '../api/mate.js'
+import {getMatePost} from '../api/matePosts.js'
 
 /**
  * 모집 글 하나를 불러온다.

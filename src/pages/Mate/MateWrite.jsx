@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {useNavigate} from "react-router";
-import {createMatePost} from "../../api/mate.js";
+import {createMatePost} from "../../api/matePosts.js";
 import {Button, Chip, Field, Icon, InlineMessage, PhotoPicker} from "../../components";
 import {MATE_POST} from "../../constants/policy.js";
 import useGoBack from "../../hooks/useGoBack.js";

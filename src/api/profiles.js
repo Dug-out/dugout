@@ -12,6 +12,21 @@ function updateErrorMessage({code}) {
 // 프로필 사진을 저장하는 버킷 (supabase/schema/04_storage.sql)
 const AVATAR_BUCKET = 'avatars'
 
+/** 브라우저에 저장된 로그인 정보에서 id를 읽고, 해당 사용자의 team을 조회 */
+export async function getMyTeam() {
+    const {data: {session}} = await supabase.auth.getSession()
+    const {id: userId} = session.user
+
+    const {data, error} = await supabase
+        .from('profiles')
+        .select('team')
+        .eq('id', userId)
+        .single()
+    if (error) throw error
+    const {team} = data
+    return team
+}
+
 /**
  * 프로필 한 명 · 로그인한 사람은 누구의 프로필이든 볼 수 있다
  * @param {string} id 보려는 사람의 id

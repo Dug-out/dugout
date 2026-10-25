@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {getMyTeam} from '../api/mate.js'
+import {getMyTeam} from '../api/profiles.js'
 
 /**
  * 내 응원팀 코드('KIA' 등)를 불러온다 · 아직 불러오지 못했거나 실패하면 null

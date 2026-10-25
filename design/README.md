@@ -41,7 +41,7 @@ Claude Design 캔버스의 "간소화 버전" 페이지를 그대로 내보낸 �
 - `Mate-write.dc.html` — 모집 글 쓰기
 - `Mate-manage.dc.html` — 신청자 관리 (수락 · 거절)
 - `Mate-chat-host.dc.html` — 채팅방 (방장, 상태: chat / menu / delete / closed)
-- `Mate-chat-host-menu.dc.html` — 방장 메뉴 ← 래퍼
+- `Mate-chat-host-menu.dc.html` — 방장 메뉴 (모집 글 수정 · 모임 삭제) ← 래퍼
 - `Mate-chat-host-closed.dc.html` — 모집 마감 후 ← 래퍼
 - `Mate-chat-host-delete.dc.html` — 모임 삭제 확인 ← 래퍼
 
