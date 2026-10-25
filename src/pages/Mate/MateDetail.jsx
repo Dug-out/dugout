@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react'
+import {useState} from 'react'
 import {Link, useLocation, useNavigate, useParams} from 'react-router'
 import {Button, Dialog, EmptyState, Header, Icon, Loading} from '../../components'
 import {MATE_POST} from '../../constants/policy.js'
@@ -7,13 +7,10 @@ import useMatePost from '../../hooks/useMatePost.js'
 import useMyTeam from '../../hooks/useMyTeam.js'
 import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import {formatManner} from '../../utils/manner.js'
-import MateApplySheet from './components/MateApplySheet.jsx'
 import './MateDetail.css'
 
 // 프로필 사진이 없을 때
 const DEFAULT_AVATAR = '/assets/profile-default.png'
-// 화면 아래 안내가 떠 있는 시간
-const TOAST_MS = 2000
 
 /**
  * 모집 글 상세 (Mate-detail.dc.html) · 주소의 id 로 글을 불러와 보여 준다.
@@ -24,7 +21,7 @@ function MateDetail() {
     const location = useLocation()
     const navigate = useNavigate()
     // status 는 loading | ready | error | notfound
-    const {status, post, reload, refresh} = useMatePost(id)
+    const {status, post, reload} = useMatePost(id)
 
     // 글쓰기에서 막 넘어왔으면 완료 창을 연 채로 시작
     const [createdOpen, setCreatedOpen] = useState(Boolean(location.state?.created))
@@ -35,24 +32,8 @@ function MateDetail() {
         navigate(location.pathname, {replace: true, state: null})
     }
 
-    // 화면 아래 잠깐 뜨는 안내
-    const [toast, setToast] = useState('')
-    const toastTimer = useRef(null)
-    useEffect(() => () => clearTimeout(toastTimer.current), [])
-    const showToast = (text) => {
-        clearTimeout(toastTimer.current)
-        setToast(text)
-        toastTimer.current = setTimeout(() => setToast(''), TOAST_MS)
-    }
-
     // 뒤로가기 · 이전 화면이 있으면 그리로, 주소로 바로 들어왔으면 홈으로
     const goBack = useGoBack()
-
-    // 신청이 끝났을 때 · 상태를 다시 불러와 아래 버튼을 "수락을 기다리고 있어요"로 바꾼다
-    const handleApplied = () => {
-        refresh()
-        showToast('참여 신청을 보냈어요')
-    }
 
     return (
         <div className="mate-detail">
@@ -84,7 +65,7 @@ function MateDetail() {
                     }
                />
             )}
-            {status === 'ready' && <PostContent post={post} onApplied={handleApplied}/>}
+            {status === 'ready' && <PostContent post={post}/>}
 
             {/* 올리기 완료 창 */}
             <Dialog
@@ -105,22 +86,14 @@ function MateDetail() {
                 tone="primary"
            />
 
-            {/* 안내 문구 · role="status": 화면 읽기 프로그램이 문구를 읽어 준다 */}
-            {toast && (
-                <p className="mate-detail__toast" role="status">
-                    {toast}
-                </p>
-            )}
         </div>
     )
 }
 
-/** 불러온 글 · 이미지, 제목과 방장, 정보 카드, 소개, 함께 가는 메이트, 아래 신청 영역 */
-function PostContent({post, onApplied}) {
+/** 불러온 글 · 이미지, 제목과 방장, 정보 카드, 소개, 함께 가는 메이트 */
+function PostContent({post}) {
     // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
     const myTeam = useMyTeam()
-    // 참여 신청 시트가 열려 있는지
-    const [applyOpen, setApplyOpen] = useState(false)
 
     const {title, imageUrl, isOpen, host, game, seat, ages, gender, description, capacity, joinedCount, members} = post
     // 남은 자리 / 인원 막대 길이
@@ -214,59 +187,7 @@ function PostContent({post, onApplied}) {
                     </ul>
                 </section>
             </main>
-
-            <ApplyBar post={post} onApply={() => setApplyOpen(true)}/>
-
-            {/* 참여 신청 시트 · 열 때마다 새로 만들어 입력이 비어 있다 */}
-            {applyOpen && (
-                <MateApplySheet
-                    postId={post.id}
-                    onClose={() => setApplyOpen(false)}
-                    onApplied={() => {
-                        setApplyOpen(false)
-                        onApplied()
-                    }}
-               />
-            )}
         </>
-    )
-}
-
-// 신청할 수 없는 이유 → 아래 버튼에 쓰는 문구 (내 신청 상태 기준)
-const STATUS_LABEL = {
-    pending: '수락을 기다리고 있어요',
-    rejected: '참여 신청이 거절됐어요',
-    left: '참여를 취소한 모집 글이에요',
-}
-
-/** 화면 아래 고정 영역 · 보는 사람과 글의 상태에 따라 버튼이 달라진다. 방장은 버튼이 없다. */
-function ApplyBar({post, onApply}) {
-    const {myStatus, isOpen, capacity, joinedCount, game} = post
-    // 화면이 뜬 시각 · 렌더링마다 바뀌지 않도록 한 번만 정한다
-    const [now] = useState(() => Date.now())
-
-    if (myStatus === 'host') return null
-
-    // 신청 가능한 상태가 아니면 이유를 꺼진 버튼으로 보여 준다
-    let disabledLabel = null
-    if (myStatus === 'accepted') disabledLabel = '채팅방 입장하기'
-    else if (myStatus) disabledLabel = STATUS_LABEL[myStatus]
-    else if (!isOpen) disabledLabel = '모집이 마감됐어요'
-    else if (joinedCount >= capacity) disabledLabel = '인원이 다 찼어요'
-    else if (new Date(game.gameAt).getTime() <= now) disabledLabel = '이미 시작한 경기예요'
-
-    return (
-        <div className="mate-detail__bottom">
-            {disabledLabel ? (
-                <Button block disabled>
-                    {disabledLabel}
-                </Button>
-            ) : (
-                <Button block onClick={onApply}>
-                    참여 신청하기 · {capacity - joinedCount}자리 남음
-                </Button>
-            )}
-        </div>
     )
 }
 
