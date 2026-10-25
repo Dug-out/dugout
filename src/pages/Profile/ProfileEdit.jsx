@@ -1,7 +1,17 @@
 import {useState} from 'react'
 import {checkNickname} from '../../api/auth.js'
 import {updateMyProfile} from '../../api/profiles.js'
-import {Button, Chip, Dialog, Field, Header, InlineMessage, LoadState, PhotoPicker, TeamPicker} from '../../components'
+import {
+    Button,
+    Chip,
+    Field,
+    Header,
+    InlineMessage,
+    LoadState,
+    NoticeDialog,
+    PhotoPicker,
+    TeamPicker,
+} from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useAvailability from '../../hooks/useAvailability.js'
 import useGoBack from '../../hooks/useGoBack.js'
@@ -184,29 +194,21 @@ function ProfileEditForm({profile}) {
             </div>
 
             {/* 저장 성공 · 확인(또는 바깥을 눌러 닫기)하면 마이페이지로 돌아간다 */}
-            <Dialog
+            <NoticeDialog
                 open={result?.ok === true}
                 onClose={goMypage}
-                onConfirm={goMypage}
-                image="/assets/pose-yay.png"
+                kind="success"
                 title="프로필을 저장했어요!"
                 description="바뀐 내용이 마이페이지에 반영됐어요."
-                confirmLabel="확인"
-                cancelLabel={null}
-                tone="primary"
             />
 
             {/* 저장 실패 · 확인하면 창만 닫고 입력 화면에 그대로 남는다 */}
-            <Dialog
+            <NoticeDialog
                 open={result?.ok === false}
                 onClose={closeResult}
-                onConfirm={closeResult}
-                image="/assets/pose-sad.png"
+                kind="failure"
                 title="저장하지 못했어요"
                 description={result?.message}
-                confirmLabel="확인"
-                cancelLabel={null}
-                tone="primary"
             />
         </form>
     )

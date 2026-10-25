@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {Link, useParams} from 'react-router'
 import {respondToApplicant} from '../../api/mateMembers.js'
-import {Button, Dialog, Header, Icon, LoadState} from '../../components'
+import {Button, Dialog, Header, Icon, LoadState, NoticeDialog} from '../../components'
 import useMateApplicants from '../../hooks/load/useMateApplicants.js'
 import useMyTeam from '../../hooks/load/useMyTeam.js'
 import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
@@ -143,16 +143,12 @@ function ManageContent({data, refresh}) {
             />
 
             {/* 처리 실패 */}
-            <Dialog
+            <NoticeDialog
                 open={failure !== ''}
                 onClose={() => setFailure('')}
-                onConfirm={() => setFailure('')}
-                image="/assets/pose-sad.png"
+                kind="failure"
                 title="처리하지 못했어요"
                 description={failure}
-                confirmLabel="확인"
-                cancelLabel={null}
-                tone="primary"
             />
         </main>
     )

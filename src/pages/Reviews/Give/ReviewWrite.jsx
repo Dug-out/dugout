@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {useNavigate, useParams} from 'react-router'
 import {createReview} from '../../../api/mateReviews.js'
-import {Button, Dialog, Field, Header, Icon, LoadState} from '../../../components'
+import {Button, Field, Header, Icon, LoadState, NoticeDialog} from '../../../components'
 import {PROFILE, REVIEW} from '../../../constants/policy.js'
 import useMyTeam from '../../../hooks/load/useMyTeam.js'
 import useReviewTarget from '../../../hooks/load/useReviewTarget.js'
@@ -175,16 +175,12 @@ function ReviewForm({target}) {
             </div>
 
             {/* 평가 실패 */}
-            <Dialog
+            <NoticeDialog
                 open={failure !== ''}
                 onClose={() => setFailure('')}
-                onConfirm={() => setFailure('')}
-                image="/assets/pose-sad.png"
+                kind="failure"
                 title="평가하지 못했어요"
                 description={failure}
-                confirmLabel="확인"
-                cancelLabel={null}
-                tone="primary"
             />
         </form>
     )
