@@ -6,7 +6,7 @@ import useMyPosts from '../../hooks/useMyPosts.js'
 import {formatDay, formatDday, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import './MyPosts.css'
 
-// 보기 구분 · 내가 연 약속은 방장, 참여한 약속은 방장이 아닌 약속(수락 대기 포함)
+// 보기 구분 · 내가 연 약속은 방장, 참여한 약속은 방장이 아닌 약속
 const TABS = [
     {key: 'all', label: '전체', match: () => true},
     {key: 'host', label: '내가 연 약속', match: (item) => item.role === 'host'},

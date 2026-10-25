@@ -15,7 +15,7 @@ export async function applyToMatePost({postId, message = ''}) {
     if (error) throw Object.assign(new Error(applyErrorMessage(error)), {cause: error})
 }
 
-/** 내 직관 약속 · 내가 방장이거나 참여(신청) 중인 모집 글을 가져온다 (거절당했거나 나간 글은 뺀다) */
+/** 내 직관 약속 · 내가 방장이거나 수락된 참여자인 모집 글을 가져온다 (수락 대기·거절·나간 글은 뺀다) */
 export async function getMyPosts() {
     const {data: {session}} = await supabase.auth.getSession()
     const {id: userId} = session.user
@@ -32,7 +32,7 @@ export async function getMyPosts() {
             )
         `)
         .eq('user_id', userId)
-        .in('status', ['pending', 'accepted'])
+        .eq('status', 'accepted')
     if (error) throw error
 
     const items = data.map((row) => {
