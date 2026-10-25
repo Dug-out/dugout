@@ -15,22 +15,20 @@ import './Button.css'
  * @param {{as?: import('react').ElementType, [prop: string]: any}} props
  */
 function Button({
-                    variant = 'primary',
-                    block = false,
-                    selected,
-                    as: Component = 'button',
-                    disabled = false,
-                    className = '',
-                    children,
-                    ...rest
-                }) {
+    variant = 'primary',
+    block = false,
+    selected,
+    as: Component = 'button',
+    disabled = false,
+    className = '',
+    children,
+    ...rest
+}) {
     const classes = ['btn', `btn--${variant}`, block && 'btn--block', selected && 'btn--selected', className]
         .filter(Boolean)
         .join(' ')
 
-    const props = Component === 'button'
-        ? {type: 'button', disabled}
-        : {'aria-disabled': disabled || undefined}
+    const props = Component === 'button' ? {type: 'button', disabled} : {'aria-disabled': disabled || undefined}
     if (variant === 'segment') props['aria-pressed'] = !!selected
 
     return (

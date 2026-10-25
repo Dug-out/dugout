@@ -28,3 +28,6 @@ dist-ssr
 # 개인 설정
 .claude/settings.local.json
 *.iml
+
+# 테스트용 시드 데이터 (저장소에 올리지 않는다)
+supabase/seed/

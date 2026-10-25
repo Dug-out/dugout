@@ -19,7 +19,7 @@ function TabBar() {
                 <NavLink key={to} to={to} className="tabbar__item">
                     {({isActive}) => (
                         <>
-                            <Icon name={icon} strokeWidth={isActive ? 2 : 1.8}/>
+                            <Icon name={icon} strokeWidth={isActive ? 2 : 1.8} />
                             {label}
                         </>
                     )}

@@ -1,0 +1,210 @@
+.mypage {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 14px;
+    padding: 12px 20px 24px;
+}
+
+.mypage__card {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--surface);
+    color: var(--text-900);
+}
+
+.mypage__card--profile {
+    padding: 18px;
+}
+
+/* ── 프로필 ── */
+.mypage__profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.mypage__avatar {
+    flex: none;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    object-fit: cover;
+}
+
+.mypage__who {
+    flex: 1;
+    min-width: 0;
+}
+
+.mypage__name {
+    margin: 0;
+    overflow: hidden;
+    font-size: 19px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mypage__meta {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--text-500);
+}
+
+/* ── 매너 타율 카드 ── */
+.mypage__manner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 16px;
+    padding: 12px 14px 14px;
+    overflow: hidden;
+    border-radius: var(--radius-card-sm);
+    background: var(--navy-gradient-card);
+    color: var(--surface);
+}
+
+/* 오른쪽 위 장식 동그라미 */
+.mypage__manner::before {
+    content: '';
+    position: absolute;
+    top: -18px;
+    right: -18px;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--surface) 6%, transparent);
+}
+
+.mypage__manner-title {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--on-navy-sub);
+}
+
+.mypage__ball circle {
+    fill: var(--surface);
+}
+
+.mypage__ball path {
+    fill: none;
+    stroke: var(--red-500);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+}
+
+.mypage__manner-more {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-left: auto;
+    font-weight: 600;
+    color: var(--surface);
+    text-decoration: none;
+}
+
+/* 구간 이름이 점수 숫자의 세로 가운데에 오도록 맞춘다 */
+.mypage__manner-score {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mypage__manner-num {
+    font-family: var(--font-number), serif;
+    font-size: 30px;
+    line-height: 1;
+}
+
+.mypage__manner-tier {
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+    background: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--navy-500);
+}
+
+.mypage__bar {
+    display: flex;
+    height: 5px;
+    overflow: hidden;
+    border-radius: 5px;
+    background: var(--on-navy-track);
+}
+
+.mypage__bar span {
+    border-radius: 5px;
+    background: var(--gold);
+}
+
+.mypage__manner-foot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--on-navy-sub);
+}
+
+/* ── 메뉴 ── */
+.mypage__section {
+    margin: 0 0 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-400);
+}
+
+.mypage__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 54px;
+    padding: 0 4px;
+    border: 0;
+    border-top: 1px solid var(--divider);
+    background: none;
+    font-family: var(--font-base), sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+    color: var(--text-900);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.mypage__row-label {
+    flex: 1;
+}
+
+.mypage__row-note {
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: var(--red-600);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--surface);
+}
+
+.mypage__row svg {
+    color: var(--gray-500);
+}
+
+.mypage__row--quiet {
+    min-height: 48px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-400);
+}
+
+.mypage__row:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: -2px;
+}

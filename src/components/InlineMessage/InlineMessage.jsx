@@ -13,8 +13,8 @@ function InlineMessage({tone = 'hint', className = '', children, ...rest}) {
 
     return (
         <span className={classes} role={tone === 'error' ? 'alert' : undefined} {...rest}>
-            {tone === 'success' && <Icon name="check" size={14} strokeWidth={2.6}/>}
-            {tone === 'error' && <Icon name="alert" size={14} strokeWidth={2.4}/>}
+            {tone === 'success' && <Icon name="check" size={14} strokeWidth={2.6} />}
+            {tone === 'error' && <Icon name="alert" size={14} strokeWidth={2.4} />}
             {children}
         </span>
     )

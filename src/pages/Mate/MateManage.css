@@ -1,0 +1,150 @@
+.mate-manage {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 100dvh;
+    background: var(--bg);
+}
+
+.mate-manage__body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 20px 28px;
+}
+
+/* ── 모집 현황 ── */
+.mate-manage__summary,
+.mate-manage__card {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--surface);
+}
+
+.mate-manage__game {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-400);
+}
+
+.mate-manage__title {
+    margin: 4px 0 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.mate-manage__bar {
+    display: block;
+    height: 8px;
+    margin-top: 12px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--gray-100);
+}
+
+.mate-manage__bar span {
+    display: block;
+    height: 100%;
+    background: var(--red-500);
+}
+
+.mate-manage__count {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: var(--text-500);
+}
+
+.mate-manage__heading {
+    margin: 8px 0 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.mate-manage__empty {
+    margin: 0;
+    padding: 20px 0;
+    font-size: 14px;
+    text-align: center;
+    color: var(--text-400);
+}
+
+/* ── 신청자 한 명 ── */
+.mate-manage__who {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mate-manage__avatar {
+    display: flex;
+    flex: none;
+}
+
+.mate-manage__avatar img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    object-fit: cover;
+}
+
+.mate-manage__name {
+    flex: 1;
+    min-width: 0;
+}
+
+.mate-manage__nickname {
+    margin: 0;
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mate-manage__meta {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: var(--text-400);
+}
+
+.mate-manage__state {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.mate-manage__state--pending {
+    color: var(--red-text);
+}
+
+.mate-manage__state--accepted {
+    color: var(--navy-500);
+}
+
+/* 신청할 때 쓴 한마디 */
+.mate-manage__message {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    border-radius: var(--radius-input);
+    background: var(--bg);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-700);
+}
+
+/* [거절] [수락] */
+.mate-manage__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.mate-manage__actions .btn {
+    height: 44px;
+    font-size: 14px;
+}

@@ -41,7 +41,7 @@ Claude Design 캔버스의 "간소화 버전" 페이지를 그대로 내보낸 �
 - `Mate-write.dc.html` — 모집 글 쓰기
 - `Mate-manage.dc.html` — 신청자 관리 (수락 · 거절)
 - `Mate-chat-host.dc.html` — 채팅방 (방장, 상태: chat / menu / delete / closed)
-- `Mate-chat-host-menu.dc.html` — 방장 메뉴 ← 래퍼
+- `Mate-chat-host-menu.dc.html` — 방장 메뉴 (모집 글 수정 · 모임 삭제) ← 래퍼
 - `Mate-chat-host-closed.dc.html` — 모집 마감 후 ← 래퍼
 - `Mate-chat-host-delete.dc.html` — 모임 삭제 확인 ← 래퍼
 
@@ -67,7 +67,11 @@ Claude Design 캔버스의 "간소화 버전" 페이지를 그대로 내보낸 �
 - `Empty-mate.dc.html` — 메이트 찾기 · 모집 글 없음
 - `Empty-record.dc.html` — 직관 기록 · 기록 없음
 - `Empty-posts.dc.html` — 내 직관 약속 · 약속 없음
-- `Empty-review.dc.html` — 메이트 평가 · 평가 대기 없음
+- `Empty-review.dc.html` — 메이트 평가 · 평가 대기 없음 (`Review-list` 카드 구조 그대로, 카드 안에 빈 안내)
+- `Empty-manner.dc.html` — 받은 매너 후기 · 후기 없음 (`Manner` 카드 구조 그대로, 카드 안에 빈 안내)
+
+### 로딩
+- `Loading.dc.html` — 로딩 중 (마스코트 흔들림 + 점 3개 깜빡임). 데이터 불러올 때 화면 가운데에 공통으로 사용
 
 ## 화면 이동 (주요 흐름)
 - `Splash` → `Login` ↔ `Signup` → `Signup-done` → `Profile-edit` 또는 `Home`
@@ -85,14 +89,13 @@ Claude Design 캔버스의 "간소화 버전" 페이지를 그대로 내보낸 �
 | `logo-base.png`, `logo-flag.png` | 스플래시 로고 애니메이션 |
 | `char-peek.png` | 로그인 로고 옆 마스코트 |
 | `profile-default.png` | 기본 프로필 사진 (모든 프로필 자리) |
-| `pose-hi.png` | 회원가입 인사 · 평가 대기 없음 빈 화면 |
-| `pose-cheer.png` | 직관 기록 없음 빈 화면 |
+| `pose-hi.png` | 회원가입 인사 |
 | `pose-yay.png` | 평가 완료 |
-| `pose-sad.png` | 채팅방 나가기 · 모임 삭제 확인 · 노쇼 안내 |
-| `pose-love.png`, `pose-shy.png` | 예비 (스티커 · 신청 대기 등) |
+| `pose-sad.png` | 채팅방 나가기 · 모임 삭제 확인 · 노쇼 안내 · 빈 화면 전체 (`Empty-*`) |
+| `pose-cheer.png`, `pose-love.png`, `pose-shy.png` | 예비 (스티커 · 신청 대기 등) |
 | `rate-up.png` / `rate-down.png` | 직관 승률 .500 이상 / 미만 · 기록 저장 완료 |
 | `rate-good.png` / `rate-soso.png` / `rate-bad.png` | 메이트 평가 점수 8↑ / 5~7 / 4↓ |
-| `empty-sleep.png` | 모집 글 없음 · 직관 약속 없음 |
-| `loading.png` | 로딩 상태 |
+| `loading.png` | 로딩 상태 (흔들림 + 통통 모션, 점 3개 깜빡임) |
+| `team-lg.png` … `team-kiwoom.png` | 응원팀 아이콘 10개 (회원가입 · 프로필 수정). 파일 이름은 `policy.js`의 `TEAMS[].icon` |
 | `mate-default.png` | 모집 글 기본 이미지 (목록 카드 · 상세 · 썸네일 공통, 1200×680) |
 | `mate-photo-sample.png` | 디자인 예시용 (사진 올렸을 때 미리보기). 앱에는 넣지 않아도 돼요 |

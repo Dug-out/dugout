@@ -1,0 +1,77 @@
+.loading {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 32px 40px;
+    text-align: center;
+    /* 0.3초 안에 불러오면 아무것도 보이지 않는다 · 그보다 오래 걸릴 때만 서서히 나타난다 */
+    animation: loading-appear 0.2s ease-out 0.3s both;
+}
+
+/* 캐릭터가 통통 튀며 좌우로 흔들린다 */
+.loading__image {
+    display: block;
+    width: 170px;
+    height: auto;
+    transform-origin: 50% 90%;
+    animation: loading-wob 1.2s ease-in-out infinite;
+}
+
+.loading__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 18px 0 0;
+    font-family: var(--font-emotion), serif;
+    font-size: 21px;
+    color: var(--navy-500);
+}
+
+.loading__dots {
+    display: flex;
+    gap: 5px;
+}
+
+.loading__dots span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--navy-500);
+    animation: loading-dot 1.2s infinite both;
+}
+
+.loading__dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading__dots span:nth-child(3) { animation-delay: 0.4s; }
+
+.loading__desc {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: var(--text-500);
+}
+
+@keyframes loading-wob {
+    0%, 100% { transform: translateY(0) rotate(-6deg); }
+    25% { transform: translateY(-8px) rotate(0); }
+    50% { transform: translateY(0) rotate(6deg); }
+    75% { transform: translateY(-8px) rotate(0); }
+}
+
+@keyframes loading-appear {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes loading-dot {
+    0%, 80%, 100% { opacity: 0.25; }
+    40% { opacity: 1; }
+}
+
+/* 움직임을 줄이는 설정이면 가만히 둔다 · .loading 은 0.3초 기다린 뒤 바로 나타나도록 지연만 남긴다(지속 시간은 tokens.css 가 줄여 준다) */
+@media (prefers-reduced-motion: reduce) {
+    .loading__image,
+    .loading__dots span {
+        animation: none;
+    }
+}

@@ -1,30 +1,36 @@
+/* 남은 높이의 한가운데에 놓는다 (아래 80px 여백은 탭바·하단 영역만큼 위로 올려 보이게 한다) */
 .empty {
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    padding: 0 20px;
+    justify-content: center;
+    padding: 0 32px 80px;
     text-align: center;
 }
 
 .empty__image {
     display: block;
-    width: 132px;
-    height: auto;
-    margin-bottom: 4px;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
 }
 
 .empty__title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text-900);
+    margin: 14px 0 0;
+    font-family: var(--font-emotion);
+    font-size: 23px;
+    font-weight: 400;
+    color: var(--navy-500);
 }
 
 .empty__desc {
-    font-size: 13px;
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
     color: var(--text-500);
 }
 
 .empty__action {
-    margin-top: 8px;
+    margin-top: 22px;
 }

@@ -1,4 +1,4 @@
-/* 상세 화면 전체 · 세로로 [헤더] [이미지] [위 영역] [본문] (Mate-detail.dc.html) */
+/* 상세 화면 전체 · 세로로 [헤더] [이미지] [위 영역] [본문] */
 .mate-detail {
     display: flex;
     flex-direction: column;
@@ -9,26 +9,6 @@
 /* 헤더 · 기존 Header를 쓰고 디자인처럼 아래 구분선만 없앤다 (Header.css는 고치지 않음) */
 .mate-detail .header {
     border-bottom: 0;
-}
-
-/* 공유 버튼 · 기존 뒤로가기 버튼과 같은 44×44 */
-.mate-detail__share {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    border: 0;
-    border-radius: var(--radius-input);
-    background: transparent;
-    color: var(--text-900);
-    cursor: pointer;
-}
-
-.mate-detail__share:focus-visible {
-    outline: 2px solid var(--navy-300);
-    outline-offset: -2px;
 }
 
 /* 대표 이미지 · 높이 220 · 가로는 화면 너비 (비율이 달라도 잘라서 채움) */
@@ -74,11 +54,19 @@
     overflow-wrap: anywhere; /* 띄어쓰기 없는 긴 제목도 줄바꿈 */
 }
 
-/* 방장 줄 · [사진 40] [닉네임 + 방장 / 매너 타율] */
+/* 방장 줄 · [사진 40] [닉네임 + 방장 / 매너 타율] [›] · 누르면 방장 프로필 */
 .mate-detail__host {
     display: flex;
     align-items: center;
     gap: 10px;
+    min-height: 44px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.mate-detail__host > svg {
+    flex: none;
+    color: var(--text-400);
 }
 
 .mate-detail__host img {
@@ -90,6 +78,7 @@
 
 .mate-detail__host-text {
     display: flex;
+    flex: 1;
     flex-direction: column;
 }
 
@@ -121,7 +110,7 @@
     flex: 1; /* 내용이 짧아도 화면 아래까지 회색 배경 */
     flex-direction: column;
     gap: 18px;
-    padding: 16px 20px max(28px, env(safe-area-inset-bottom)); /* 아래 버튼이 없어서 아이폰 홈 막대만큼 여백 */
+    padding: 16px 20px 28px;
 }
 
 /* 정보 카드 · 흰 카드 radius 16 */
@@ -284,7 +273,7 @@
     box-sizing: border-box;
     width: 48px;
     height: 48px;
-    border: 1.5px dashed var(--gray-300);
+    border: 2px dashed var(--gray-300);
     border-radius: 50%;
     color: var(--text-400);
     font-size: 13px;
@@ -294,25 +283,22 @@
     color: var(--text-500);
 }
 
-/* "링크를 복사했어요" · 화면 아래쪽에 잠깐 떠 있는 검은 알약 */
-.mate-detail__toast {
-    position: fixed;
-    bottom: calc(40px + env(safe-area-inset-bottom));
-    left: 50%;
-    z-index: 20;
-    margin: 0;
-    padding: 10px 16px;
-    border-radius: var(--radius-full);
-    background: color-mix(in srgb, var(--text-900) 88%, transparent);
-    color: var(--surface);
-    font-size: 13px;
-    font-weight: 600;
-    white-space: nowrap;
-    transform: translateX(-50%); /* 가운데 맞춤 */
-    animation: mate-toast-in 0.3s ease-out both; /* CLAUDE.md: 애니메이션 0.3~0.8초, 한 번만 */
+/* 멤버 한 명 · 누르면 그 사람 프로필 */
+.mate-detail__member-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: inherit;
+    text-decoration: none;
 }
 
-@keyframes mate-toast-in {
-    from { opacity: 0; transform: translate(-50%, 8px); }
-    to { opacity: 1; transform: translate(-50%, 0); }
+/* 화면 아래 고정 영역 · 신청 / 대기 / 마감 버튼 */
+.mate-detail__bottom {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    padding: 12px 20px calc(16px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--divider);
+    background: var(--surface);
 }
