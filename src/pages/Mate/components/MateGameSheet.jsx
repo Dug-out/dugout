@@ -14,7 +14,7 @@ const dayKey = (date) => `${date.getFullYear()}-${date.getMonth()}-${date.getDat
 const monthIndex = (date) => date.getFullYear() * 12 + date.getMonth()
 
 /**
- * 경기 선택 시트 (Mate-cal.dc.html) · 경기가 있는 날을 눌러 고르고 [이 경기로 선택]으로 확정한다
+ * 경기 선택 시트 · 경기가 있는 날을 눌러 고르고 [이 경기로 선택]으로 확정한다
  * @param {{myTeam: string | null, selectedId: number | null, onPick: (game: object) => void, onClose: () => void}} props
  */
 function MateGameSheet({myTeam, selectedId, onPick, onClose}) {

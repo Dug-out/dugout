@@ -42,7 +42,7 @@ function createErrorMessage(error) {
 // 모집 글 대표 이미지를 저장하는 버킷 (supabase/schema/04_storage.sql)
 const MATE_IMAGE_BUCKET = 'mate-images'
 
-/** 대표 이미지를 올린다 · {내 id}/{무작위 이름}.jpg 에 저장하고 파일 경로와 공개 주소를 돌려준다 */
+/** 대표 이미지를 올리고 파일 경로와 공개 주소를 돌려준다 */
 async function uploadMateImage(blob) {
     const {data: {session}} = await supabase.auth.getSession()
     const {id: userId} = session.user
@@ -57,11 +57,7 @@ async function uploadMateImage(blob) {
     return {path, url: publicUrl}
 }
 
-/**
- * [모집 글 올리기] 모집 글 저장 · 방장과 내 응원팀은 알아서 채운다
- * image: 대표 이미지(Blob) · 없으면 기본 이미지로 보인다. 글 저장에 실패하면 올려 둔 사진은 지운다.
- * @returns {Promise<{id: string}>} 새 글의 id
- */
+/** [모집 글 올리기] 모집 글 저장 · 방장과 내 응원팀은 알아서 채우고, image(Blob)가 있으면 함께 올린다 */
 export async function createMatePost({
                                          gameId,
                                          title,
@@ -72,7 +68,7 @@ export async function createMatePost({
                                          description = '',
                                          image = null
                                      }) {
-    // 내 팀을 못 불러오면 저장도 못 하므로, 다른 저장 실패와 같은 한국어 문구의 Error 로 던진다
+    // 내 팀을 모르면 저장할 수 없다
     const team = await getMyTeam().catch((cause) => {
         throw Object.assign(new Error(createErrorMessage({})), {cause})
     })
@@ -95,11 +91,87 @@ export async function createMatePost({
         .select('id')
         .single()
     if (error) {
-        // 글이 저장되지 않았으니 올려 둔 사진도 지운다 (지우지 못해도 글쓰기 오류가 우선이다)
-        if (uploaded) await supabase.storage.from(MATE_IMAGE_BUCKET).remove([uploaded.path]).catch(() => {
-        })
+        // 글이 저장되지 않았으니 올린 사진도 지운다
+        if (uploaded) await supabase.storage.from(MATE_IMAGE_BUCKET).remove([uploaded.path]).catch(() => {})
         throw Object.assign(new Error(createErrorMessage(error)), {cause: error})
     }
     const {id} = data
     return {id}
+}
+
+/** 모집 글 하나 · 글, 경기, 방장, 수락된 참여자, 내 신청 상태를 모아 가져온다 (없는 글이거나 다른 팀 글이면 null) */
+export async function getMatePost(id) {
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
+    const {id: userId} = session.user
+
+    // 글, 참여자, 내 신청 줄을 동시에 불러온다
+    const [postResult, membersResult, myResult] = await Promise.all([
+        supabase
+            .from('mate_posts')
+            .select(
+                `id, title, image_url, status, seat, capacity, ages, gender, description, host_id, joined_count,
+                host:profiles!host_id(nickname, avatar_url, manner_avg),
+                game:games(game_at, home_team, away_team, stadium)`,
+            )
+            .eq('id', id)
+            .maybeSingle(),
+        supabase.rpc('mate_post_members', {p: id}),
+        supabase.from('mate_members').select('role, status').eq('post_id', id).eq('user_id', userId).maybeSingle(),
+    ])
+
+    // 주소가 uuid 모양이 아니면(22P02) 없는 글과 같다
+    if (postResult.error?.code === '22P02') return null
+    if (postResult.error) throw postResult.error
+    if (membersResult.error) throw membersResult.error
+    if (myResult.error) throw myResult.error
+    // 없는 글이거나 다른 팀 글
+    if (!postResult.data) return null
+
+    const {data: post} = postResult
+    const {data: members} = membersResult
+    const {data: mine} = myResult
+
+    const {host: hostRow, game: gameRow} = post
+    return {
+        id: post.id,
+        myId: userId,
+        title: post.title,
+        imageUrl: post.image_url,
+        isOpen: post.status === 'open',
+        seat: post.seat,
+        capacity: post.capacity,
+        ages: post.ages,
+        gender: post.gender,
+        description: post.description,
+        joinedCount: post.joined_count,
+        host: {
+            id: post.host_id,
+            nickname: hostRow.nickname,
+            avatarUrl: hostRow.avatar_url,
+            manner: Number(hostRow.manner_avg),
+        },
+        game: {gameAt: gameRow.game_at, home: gameRow.home_team, away: gameRow.away_team, stadium: gameRow.stadium},
+        members: members.map((row) => {
+            const {user_id: memberId, role, nickname, avatar_url: avatarUrl} = row
+            return {userId: memberId, role, nickname, avatarUrl}
+        }),
+        // 내가 방장이면 'host', 신청한 적이 없으면 null
+        myStatus: mine ? (mine.role === 'host' ? 'host' : mine.status) : null,
+    }
+}
+
+/** 신청 실패 → 화면에 보여줄 문구 */
+function applyErrorMessage({code}) {
+    if (code === '23505') return '이미 신청한 모집 글이에요'
+    if (code === '42501') return '지금은 신청할 수 없어요. 모집이 마감됐거나 경기가 이미 시작됐을 수 있어요'
+    if (code === '23514') return '입력한 내용을 다시 확인해 주세요'
+    return '신청하지 못했어요. 잠시 후 다시 시도해 주세요'
+}
+
+/** 참여 신청 · 한마디와 함께 대기 상태로 신청한다 (수락은 방장이 한다) */
+export async function applyToMatePost({postId, message = ''}) {
+    const {error} = await supabase.from('mate_members').insert({post_id: postId, message: message.trim()})
+    if (error) throw Object.assign(new Error(applyErrorMessage(error)), {cause: error})
 }

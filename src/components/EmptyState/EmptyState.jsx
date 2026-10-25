@@ -1,7 +1,7 @@
 import './EmptyState.css'
 
 /**
- * 빈 화면 · 캐릭터 + 제목 + 설명 (Empty-*.dc.html)
+ * 빈 화면 · 캐릭터 + 제목 + 설명
  * image: 기본은 눈물 캐릭터(pose-sad.png) · description 은 줄바꿈이 필요하면 <br/> 를 넣은 JSX 로 넘긴다. action에 Button 등을 넣으면 아래에 붙는다.
  */
 function EmptyState({

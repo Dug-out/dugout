@@ -13,7 +13,7 @@ create table public.mate_posts (
   ages text[] not null default '{}' check (ages <@ array['10대','20대','30대','40대 이상']),
   gender text not null default '무관' check (gender in ('여성','남성','무관')),
   description text not null default '' check (char_length(description) <= 500),
-  image_url text check (image_url is null or (char_length(image_url) <= 500 and image_url like '%/storage/v1/object/public/mate-images/%')),  -- 대표 이미지 주소 (mate-images 버킷의 사진만, 비어 있으면 기본 이미지)
+  image_url text check (image_url is null or (char_length(image_url) <= 500 and image_url like '%/storage/v1/object/public/mate-images/%')),
   status text not null default 'open' check (status in ('open','closed')),
   created_at timestamptz not null default now()
 );

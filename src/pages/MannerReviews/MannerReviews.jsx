@@ -1,7 +1,7 @@
 import {Header, Icon} from '../../components'
 import './MannerReviews.css'
 
-/** 받은 매너 후기 (Manner.dc.html) · 아직 후기 테이블이 없어 빈 상태(Empty-manner.dc.html)만 보여 준다 */
+/** 받은 매너 후기 · 아직 후기 테이블이 없어 빈 상태만 보여 준다 */
 function MannerReviews() {
     return (
         <div className="manner-reviews">

@@ -1,4 +1,4 @@
-/* 글쓰기 화면 전체 · 흰 배경 (Mate-write.dc.html) */
+/* 글쓰기 화면 전체 · 흰 배경 */
 .mate-write {
     display: flex;
     flex-direction: column;
