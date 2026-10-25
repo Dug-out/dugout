@@ -5,11 +5,14 @@ import Login from './pages/Login/Login.jsx'
 import Signup from './pages/Signup/Signup.jsx'
 import SignupDone from './pages/Signup/SignupDone.jsx'
 import {TabLayout} from './components'
-import MannerReviews from './pages/MannerReviews/MannerReviews.jsx'
+import MannerReviews from './pages/Reviews/Received/MannerReviews.jsx'
 import Mypage from './pages/Mypage/Mypage.jsx'
 import MyPosts from './pages/MyPosts/MyPosts.jsx'
 import Record from './pages/Record/Record.jsx'
-import ReviewList from './pages/ReviewList/ReviewList.jsx'
+import ProfileReviews from './pages/Reviews/Received/ProfileReviews.jsx'
+import ReviewDone from './pages/Reviews/Give/ReviewDone.jsx'
+import ReviewList from './pages/Reviews/Give/ReviewList.jsx'
+import ReviewWrite from './pages/Reviews/Give/ReviewWrite.jsx'
 import ProfileView from './pages/Profile/ProfileView.jsx'
 import ProfileEdit from './pages/Profile/ProfileEdit.jsx'
 import Splash from './pages/Splash/Splash.jsx'
@@ -53,7 +56,10 @@ function App() {
             <Route path="/my/posts" element={<MyPosts />} />
             <Route path="/my/manner" element={<MannerReviews />} />
             <Route path="/my/reviews" element={<ReviewList />} />
+            <Route path="/reviews/done" element={<ReviewDone />} />
+            <Route path="/reviews/:postId/:userId" element={<ReviewWrite />} />
             <Route path="/profile/:id" element={<ProfileView />} />
+            <Route path="/profile/:id/reviews" element={<ProfileReviews />} />
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout />}>
                 <Route path="/home" element={<Placeholder title="홈" />} />

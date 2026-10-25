@@ -2,23 +2,27 @@ import {Link} from 'react-router'
 import {Button, Header, Icon, LoadState} from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useMyProfile from '../../hooks/useMyProfile.js'
+import useActivityCounts from '../../hooks/useActivityCounts.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './Mypage.css'
 
 // 내 활동 메뉴 · 눌렀을 때 이동할 화면
 const ACTIVITY_MENU = [
-    {label: '내 직관 약속', to: '/my/posts'},
-    {label: '메이트 평가하기', to: '/my/reviews'},
+    {label: '내 직관 약속', to: '/my/posts', count: 'pending'},
+    {label: '메이트 평가하기', to: '/my/reviews', count: 'waiting'},
     {label: '직관 기록', to: '/record'},
 ]
+// 내 활동 옆에 붙는 개수 이름
+const COUNT_LABEL = {pending: '새 신청', waiting: '평가 대기'}
 // 계정 메뉴 · 아직 기능을 연결하지 않았다 (화면만)
 const ACCOUNT_MENU = ['알림 설정', '로그아웃']
 
-/** 메뉴 한 줄 · 이름과 오른쪽 화살표 · to 가 있으면 그 화면으로 이동하고, 없으면 눌러도 아직 아무 일도 없다 */
-function MenuRow({label, to}) {
+/** 메뉴 한 줄 · 이름, 안내(선택), 오른쪽 화살표 · to 가 있으면 그 화면으로 이동하고, 없으면 눌러도 아직 아무 일도 없다 */
+function MenuRow({label, to, note}) {
     const content = (
         <>
             <span className="mypage__row-label">{label}</span>
+            {note && <span className="mypage__row-note">{note}</span>}
             <Icon name="chevronRight" size={18} />
         </>
     )
@@ -57,6 +61,8 @@ function MypageBody({profile}) {
     const team = SIGNUP.TEAMS.find((t) => t.code === teamCode)
     // 매너 타율 카드에 쓸 값 · 구간 이름, 막대 길이, 다음 구간까지 안내
     const summary = mannerSummary(manner)
+    // 내 활동 옆에 붙일 개수 (불러오기 전이나 실패하면 null → 보여 주지 않는다)
+    const counts = useActivityCounts()
 
     return (
         <>
@@ -114,9 +120,12 @@ function MypageBody({profile}) {
             {/* 내 활동 메뉴 */}
             <section className="mypage__card">
                 <h2 className="mypage__section">내 활동</h2>
-                {ACTIVITY_MENU.map(({label, to}) => (
-                    <MenuRow key={label} label={label} to={to} />
-                ))}
+                {ACTIVITY_MENU.map(({label, to, count}) => {
+                    const n = counts[count]
+                    return (
+                        <MenuRow key={label} label={label} to={to} note={n > 0 ? `${COUNT_LABEL[count]} ${n}` : null} />
+                    )
+                })}
             </section>
 
             {/* 계정 메뉴 */}
