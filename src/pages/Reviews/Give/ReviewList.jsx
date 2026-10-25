@@ -107,19 +107,21 @@ function ReviewListBody({todos, done}) {
     )
 }
 
-/** 메이트 한 줄 · 사진, 닉네임과 방장/메이트 뱃지, 경기 안내 줄, 오른쪽 action (done 이면 지난 평가라 흐리게) */
+/** 메이트 한 줄 · 사진(프로필 링크), 닉네임과 방장/메이트 뱃지, 경기 안내 줄, 오른쪽 action (done 이면 지난 평가라 흐리게) */
 function ReviewRow({person, meta, comment, action, done = false}) {
-    const {nickname, avatarUrl, isHost} = person
+    const {userId, nickname, avatarUrl, isHost} = person
 
     return (
         <div className={`review-list__row${done ? ' review-list__row--done' : ''}`}>
-            <img
-                className="review-list__avatar"
-                src={avatarUrl || PROFILE.DEFAULT_AVATAR}
-                alt=""
-                width="44"
-                height="44"
-            />
+            <Link to={`/profile/${userId}`} className="review-list__avatar-link" aria-label={`${nickname} 프로필 보기`}>
+                <img
+                    className="review-list__avatar"
+                    src={avatarUrl || PROFILE.DEFAULT_AVATAR}
+                    alt=""
+                    width="44"
+                    height="44"
+                />
+            </Link>
             <span className="review-list__who">
                 <span className="review-list__name">
                     <span className="review-list__nickname">{nickname}</span>
