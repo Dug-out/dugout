@@ -118,6 +118,7 @@
 
 .review-list__row--done {
     border-top: 1px solid var(--divider);
+    opacity: 0.6;
 }
 
 .review-list__row--done:first-of-type {
