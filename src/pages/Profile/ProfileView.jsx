@@ -5,7 +5,7 @@ import useProfile from '../../hooks/useProfile.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
 import './ProfileView.css'
 
-/** 다른 사람의 프로필 (Profile-view.dc.html) · 주소의 id 로 그 사람의 프로필을 불러온다 */
+/** 다른 사람의 프로필 · 주소의 id 로 그 사람의 프로필을 불러온다 */
 function ProfileView() {
     const {id} = useParams()
     // status 는 loading | ready | error

@@ -27,7 +27,7 @@ function MenuRow({label, to}) {
         : <button type="button" className="mypage__row">{content}</button>
 }
 
-/** 마이페이지 (My.dc.html) · 내 프로필, 매너 타율, 메뉴 */
+/** 마이페이지 · 내 프로필, 매너 타율, 메뉴 */
 function Mypage() {
     // 내 프로필 불러오기 · status 는 loading | ready | error
     const {status, profile, reload} = useMyProfile()

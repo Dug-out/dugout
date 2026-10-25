@@ -1,4 +1,4 @@
-/* 상세 화면 전체 · 세로로 [헤더] [이미지] [위 영역] [본문] (Mate-detail.dc.html) */
+/* 상세 화면 전체 · 세로로 [헤더] [이미지] [위 영역] [본문] */
 .mate-detail {
     display: flex;
     flex-direction: column;

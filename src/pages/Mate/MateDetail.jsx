@@ -16,7 +16,7 @@ const DEFAULT_AVATAR = '/assets/profile-default.png'
 const TOAST_MS = 2000
 
 /**
- * 모집 글 상세 (Mate-detail.dc.html) · 주소의 id 로 글을 불러와 보여 준다.
+ * 모집 글 상세 · 주소의 id 로 글을 불러와 보여 준다.
  * 글쓰기(MateWrite)가 저장에 성공하면 state.created 와 함께 이 화면으로 와서 "모집 글을 올렸어요!" 창을 띄운다.
  */
 function MateDetail() {

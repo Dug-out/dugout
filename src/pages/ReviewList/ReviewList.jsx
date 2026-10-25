@@ -1,7 +1,7 @@
 import {Header, Icon} from '../../components'
 import './ReviewList.css'
 
-/** 메이트 평가하기 (Review-list.dc.html) · 아직 평가 테이블이 없어 두 목록 모두 빈 상태로 보여 준다 */
+/** 메이트 평가하기 · 아직 평가 테이블이 없어 두 목록 모두 빈 상태로 보여 준다 */
 function ReviewList() {
     return (
         <div className="review-list">
@@ -14,7 +14,7 @@ function ReviewList() {
                         <span className="review-list__count">0</span>
                     </div>
                     <p className="review-list__sub">경기 후 7일 안에 평가할 수 있어요</p>
-                    {/* 비었을 때 (Empty-review.dc.html 문구) */}
+                    {/* 비었을 때 */}
                     <div className="review-list__empty">
                         <img src="/assets/pose-sad.png" alt="" width="520" height="520"/>
                         <strong>지금은 평가할 메이트가 없어요</strong>

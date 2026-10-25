@@ -2,7 +2,7 @@ import {Link} from 'react-router'
 import {Button, EmptyState, Header} from '../../components'
 import './MyPosts.css'
 
-/** 내 직관 약속 (My-posts.dc.html) · 아직 약속 테이블이 없어 빈 화면(Empty-posts.dc.html)만 보여 준다 */
+/** 내 직관 약속 · 아직 약속 테이블이 없어 빈 화면만 보여 준다 */
 function MyPosts() {
     return (
         <div className="my-posts">

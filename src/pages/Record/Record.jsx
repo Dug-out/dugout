@@ -1,6 +1,6 @@
 import {EmptyState, Header} from '../../components'
 
-/** 직관 기록 (Record.dc.html) · 아직 기록 테이블이 없어 빈 화면(Empty-record.dc.html)만 보여 준다 */
+/** 직관 기록 · 아직 기록 테이블이 없어 빈 화면만 보여 준다 */
 function Record() {
     return (
         <>
