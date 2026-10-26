@@ -114,6 +114,8 @@ export async function getMatePost(id) {
     const {title, image_url: imageUrl, status, seat, capacity, ages, gender, description} = post
     const {joined_count: joinedCount, host_id: hostId, host, game} = post
     const {nickname, avatar_url: avatarUrl, manner_avg: manner} = host
+    // 내가 방장이면 'host', 신청한 적이 없으면 null
+    const myStatus = mine ? (mine.role === 'host' ? 'host' : mine.status) : null
     const {game_at: gameAt, home_team: home, away_team: away, stadium} = game
     return {
         id: post.id,
@@ -133,8 +135,9 @@ export async function getMatePost(id) {
             const {user_id: memberId, role, nickname: memberName, avatar_url: memberAvatar} = row
             return {userId: memberId, role, nickname: memberName, avatarUrl: memberAvatar}
         }),
-        // 내가 방장이면 'host', 신청한 적이 없으면 null
-        myStatus: mine ? (mine.role === 'host' ? 'host' : mine.status) : null,
+        myStatus,
+        // 방장이거나 수락된 참여자인지 (채팅방에 들어갈 수 있는 사람)
+        isMember: myStatus === 'host' || myStatus === 'accepted',
     }
 }
 

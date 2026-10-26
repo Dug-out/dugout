@@ -18,6 +18,7 @@ import ProfileEdit from './pages/Profile/ProfileEdit.jsx'
 import Splash from './pages/Splash/Splash.jsx'
 import Mate from './pages/Mate/Mate.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
+import ChatRoom from './pages/Chat/ChatRoom.jsx'
 import MateDetail from './pages/Mate/MateDetail.jsx'
 import MateManage from './pages/Mate/MateManage.jsx'
 
@@ -71,6 +72,7 @@ function App() {
             <Route path="/mate/write" element={<MateWrite />} />
             <Route path="/mate/:id" element={<MateDetail />} />
             <Route path="/mate/:id/manage" element={<MateManage />} />
+            <Route path="/chat/:id" element={<ChatRoom />} />
         </Routes>
     )
 }
