@@ -151,11 +151,39 @@
     height: 6px;
 }
 
-/* 고른 경기 띠 · 진한 남색은 선택 버튼만 쓰도록 연한 바탕 */
-.mate-cal__picked {
+/* 고른 날의 경기 카드 */
+.mate-cal__game {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 56px;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-input);
+    background: var(--row-selected);
+    color: var(--text-900);
+}
+
+.mate-cal__game-text {
     display: flex;
     flex-direction: column;
     gap: 2px;
+}
+
+.mate-cal__game-main {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* 구장 · 작게 한 줄 */
+.mate-cal__game-sub {
+    font-size: 12px;
+    color: var(--text-500);
+}
+
+/* 아직 고른 날이 없을 때 */
+.mate-cal__hint {
+    margin: 0;
     padding: 12px 14px;
     border-radius: var(--radius-input);
     background: var(--gray-100);
@@ -163,15 +191,15 @@
     color: var(--text-500);
 }
 
-.mate-cal__picked--on {
-    background: var(--navy-50);
-    color: var(--text-500);
-}
-
-.mate-cal__picked strong {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--navy-500);
+/* 골라진 표시 · 남색 두꺼운 테두리 동그라미 */
+.mate-cal__radio {
+    flex: none;
+    box-sizing: border-box;
+    width: 18px;
+    height: 18px;
+    border: 5px solid var(--navy-500);
+    border-radius: 50%;
+    background: var(--surface);
 }
 
 /* 버튼 · 1 : 1.6 */
