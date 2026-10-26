@@ -6,13 +6,15 @@
 }
 
 .myplans__main {
-    display: flex;
     flex: 1;
-    flex-direction: column; /* 빈 화면(EmptyState)이 남은 높이의 가운데에 오도록 */
     padding: 16px 20px 28px;
 }
 
-.myplans__loading,
+/* 보여 줄 목록이 없을 때(빈 화면·불러오는 중)는 높이를 차지하지 않아 위의 빈 화면이 가운데에 온다 */
+.myplans__main:empty {
+    display: none;
+}
+
 .myplans__error {
     padding: 40px 20px;
     color: var(--text-500);
