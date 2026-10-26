@@ -63,6 +63,7 @@ const PATHS = {
             <path d="M4 11h16v4H4zM6 15v5M18 15v5" />
         </>
     ),
+    send: <path d="M4 12l16-8-6 16-2.5-6.5z" />,
     camera: (
         <>
             <path d="M4 8h3l2-3h6l2 3h3v11H4z" />
@@ -71,7 +72,7 @@ const PATHS = {
     ),
 }
 
-/** name: back | plus | check | alert | calendar | pin | home | mate | record | trade | my | chevronRight | camera | info | close | seat | chat */
+/** name: back | plus | check | alert | calendar | pin | home | mate | record | trade | my | chevronRight | camera | info | close | seat | chat | send */
 function Icon({name, size = 24, strokeWidth = 2, ...rest}) {
     return (
         <svg
