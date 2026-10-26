@@ -1,0 +1,230 @@
+.mate {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background: var(--bg);
+}
+
+/* ── 헤더 ── */
+.mate__head {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px 20px 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.mate__head-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mate__title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.mate__team {
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: var(--navy-50);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy-500);
+}
+
+/* 날짜 버튼 */
+.mate__date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-input);
+    background: var(--surface);
+    font-family: var(--font-base), sans-serif;
+    color: var(--navy-500);
+    cursor: pointer;
+}
+
+.mate__date-label {
+    flex: 1;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-900);
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 공통 Icon 에 아래 화살표가 없어서 오른쪽 화살표를 돌려 쓴다 */
+.mate__date-arrow {
+    flex: none;
+    color: var(--text-400);
+    transform: rotate(90deg);
+}
+
+/* 모집 중만 보기 · 정렬 */
+.mate__filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mate__open-only,
+.mate__sort-btn {
+    position: relative;
+    height: 32px;
+    border: 0;
+    background: transparent;
+    font-family: var(--font-base), sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* 보이는 높이는 32px, 누르는 영역은 44px */
+.mate__open-only::after,
+.mate__sort-btn::after {
+    position: absolute;
+    inset: -6px 0;
+    content: '';
+}
+
+.mate__open-only {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    font-weight: 600;
+    color: var(--text-700);
+}
+
+.mate__check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-chip-sm);
+    background: var(--surface);
+}
+
+.mate__open-only[aria-checked='true'] .mate__check {
+    border-color: var(--navy-500);
+    background: var(--navy-500);
+    color: var(--surface);
+}
+
+.mate__sort {
+    display: flex;
+    margin-right: -8px;
+}
+
+.mate__sort-btn {
+    padding: 0 8px;
+    font-weight: 500;
+    color: var(--text-400);
+}
+
+.mate__sort-btn[aria-checked='true'] {
+    font-weight: 700;
+    color: var(--navy-500);
+}
+
+.mate__date:focus-visible,
+.mate__open-only:focus-visible,
+.mate__sort-btn:focus-visible,
+.mate__fab:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: 2px;
+}
+
+/* ── 목록 ── */
+.mate__list {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 12px 20px 16px;
+}
+
+.mate__items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.mate__empty {
+    margin-top: 32px;
+}
+
+/* 무한 스크롤 감지용 빈 칸 · 다음 쪽 불러오는 중 · 다시 불러오기 */
+.mate__sentinel {
+    height: 1px;
+}
+
+.mate__more {
+    margin: 12px 0 0;
+    font-size: 13px;
+    color: var(--text-400);
+    text-align: center;
+}
+
+.mate__more-retry {
+    align-self: center;
+    margin-top: 8px;
+}
+
+/* 모집 마감 카드 · MateCard.css 는 그대로 두고 목록 안에서만 흑백으로 덮어쓴다 */
+.mate__list .mate-card:has(.mate-card__status--closed) .mate-card__image img {
+    filter: grayscale(0.7);
+    opacity: 0.75;
+}
+
+.mate__list .mate-card__status--closed {
+    background: color-mix(in srgb, var(--text-900) 72%, transparent);
+}
+
+.mate__list .mate-card:has(.mate-card__status--closed) .mate-card__bar span {
+    background: var(--gray-500);
+}
+
+.mate__list .mate-card:has(.mate-card__status--closed) .mate-card__count strong {
+    color: var(--gray-500);
+}
+
+/* ── 모집 글 쓰기 · 목록과 함께 흐르다가 탭바 바로 위에 멈춰 떠 있다 ── */
+.mate__fab-wrap {
+    position: sticky;
+    bottom: calc(102px + max(0px, env(safe-area-inset-bottom) - 22px));
+    z-index: 5;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+    pointer-events: none;
+}
+
+.mate__fab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 52px;
+    padding: 0 20px;
+    border-radius: var(--radius-full);
+    background: var(--red-500);
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--red-500) 32%, transparent);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--surface);
+    text-decoration: none;
+    pointer-events: auto;
+}

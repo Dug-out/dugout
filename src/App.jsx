@@ -16,7 +16,9 @@ import ReviewWrite from './pages/Reviews/Give/ReviewWrite.jsx'
 import ProfileView from './pages/Profile/ProfileView.jsx'
 import ProfileEdit from './pages/Profile/ProfileEdit.jsx'
 import Splash from './pages/Splash/Splash.jsx'
+import Mate from './pages/Mate/Mate.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
+import ChatRoom from './pages/Chat/ChatRoom.jsx'
 import MateDetail from './pages/Mate/MateDetail.jsx'
 import MateManage from './pages/Mate/MateManage.jsx'
 
@@ -63,12 +65,14 @@ function App() {
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout />}>
                 <Route path="/home" element={<Placeholder title="홈" />} />
+                <Route path="/mate" element={<Mate />} />
                 <Route path="/my" element={<Mypage />} />
                 <Route path="/record" element={<Record />} />
             </Route>
             <Route path="/mate/write" element={<MateWrite />} />
             <Route path="/mate/:id" element={<MateDetail />} />
             <Route path="/mate/:id/manage" element={<MateManage />} />
+            <Route path="/chat/:id" element={<ChatRoom />} />
         </Routes>
     )
 }

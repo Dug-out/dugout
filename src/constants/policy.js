@@ -15,6 +15,11 @@ export const MANNER = {
     ],
 }
 
+export const CHAT = {
+    MESSAGE_MAX: 500, // 메시지 한 개 글자 수
+    LOAD_COUNT: 100, // 채팅방을 열 때 불러오는 최근 메시지 수
+}
+
 export const REVIEW = {
     SCORE_MIN: 1,
     SCORE_MAX: 10,
@@ -45,6 +50,7 @@ export const PROFILE = {
 }
 
 export const MATE_POST = {
+    PAGE_SIZE: 10, // 메이트 찾기 목록을 한 번에 불러오는 개수 (무한 스크롤)
     MEMBERS_MIN: 2, // 본인 포함
     MEMBERS_MAX: 10,
     TITLE_MAX: 50,
