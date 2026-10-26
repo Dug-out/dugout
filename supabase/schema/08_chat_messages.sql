@@ -5,9 +5,6 @@
 ------------------------------------------
 alter table public.mate_members add column accepted_at timestamptz;
 
--- 이미 수락돼 있던 줄은 신청한 시각으로 채운다 (여러 번 실행해도 안전)
-update public.mate_members set accepted_at = created_at where status = 'accepted' and accepted_at is null;
-
 -- 수락되는 순간(방장 줄은 글을 올릴 때)의 시각을 넣는다
 create function public.set_accepted_at()
 returns trigger language plpgsql as $$
@@ -28,21 +25,21 @@ create trigger on_mate_member_accepted_at
   for each row execute function public.set_accepted_at();
 
 ------------------------------------------
--- 2. 메시지 테이블 · 사람이 보낸 메시지(message)와 시스템 안내(accepted, left)가 한 줄씩
---  · accepted: 참여 수락 / left: 채팅방 나감 (target_id 가 그 사람)
+-- 2. 메시지 테이블 · 사람이 보낸 메시지(message)와 시스템 안내가 한 줄씩
+--  · 안내 종류: accepted 참여 수락 · left 채팅방 나감 (target_id 가 그 사람) · post_edited 방장이 모집 글을 수정
+--  · 안내 종류는 목록으로 막지 않는다 → 새 안내는 트리거와 화면 문구만 더하면 된다 (안내 줄은 트리거만 넣을 수 있다)
 -- 안내 문구는 보는 사람에 따라 달라서(예: "나의 참여를 수락했어요") 글자가 아니라 종류와 대상을 저장한다
 ------------------------------------------
 create table public.chat_messages (
   id bigint generated always as identity primary key,
   post_id uuid not null references public.mate_posts (id) on delete cascade,
   sender_id uuid default auth.uid() references public.profiles (id) on delete cascade,  -- 시스템 안내는 null
-  kind text not null default 'message' check (kind in ('message','accepted','left')),
-  target_id uuid references public.profiles (id) on delete cascade,  -- accepted · left 에서 대상
+  kind text not null default 'message',
+  target_id uuid references public.profiles (id) on delete cascade,  -- 안내의 대상 (accepted · left)
   body text not null default '' check (char_length(body) <= 500),
   created_at timestamptz not null default now(),
-  check ((kind = 'message') = (sender_id is not null)),
-  check ((kind in ('accepted','left')) = (target_id is not null)),
-  check (kind <> 'message' or char_length(btrim(body)) >= 1)
+  constraint chat_messages_sender check ((kind = 'message') = (sender_id is not null)),
+  constraint chat_messages_body check (kind <> 'message' or char_length(btrim(body)) >= 1)
 );
 
 -- 채팅방 한 곳의 메시지를 시간순으로 빠르게
@@ -83,7 +80,7 @@ create policy "chat_messages_insert" on public.chat_messages
   with check (sender_id = auth.uid() and kind = 'message' and public.is_post_member(post_id));
 
 ------------------------------------------
--- 4. 시스템 안내 · 수락, 나감이 일어나면 채팅방에 자동으로 한 줄 남긴다
+-- 4. 시스템 안내 · 수락, 나감, 모집 글 수정이 일어나면 채팅방에 자동으로 한 줄 남긴다
 ------------------------------------------
 -- 참여자 수락·나감 (방장 줄은 제외)
 create function public.announce_member_change()
@@ -103,6 +100,23 @@ $$;
 create trigger on_mate_member_announce
   after update of status on public.mate_members
   for each row execute function public.announce_member_change();
+
+-- 방장이 모집 글의 제목·소개·대표 이미지를 고쳤을 때 (방장이 고칠 수 있는 항목은 이 셋뿐이다)
+create function public.announce_post_edited()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if new.title is distinct from old.title
+     or new.description is distinct from old.description
+     or new.image_url is distinct from old.image_url then
+    insert into public.chat_messages (post_id, sender_id, kind) values (new.id, null, 'post_edited');
+  end if;
+  return null;
+end;
+$$;
+
+create trigger on_mate_post_edited
+  after update of title, description, image_url on public.mate_posts
+  for each row execute function public.announce_post_edited();
 
 ------------------------------------------
 -- 5. 실시간 · 새 메시지가 올라오면 보고 있는 사람 화면에 바로 뜬다 (조회 규칙은 위와 같이 적용된다)

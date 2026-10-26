@@ -3,10 +3,10 @@ import {supabase} from '../lib/supabase.js'
 
 /**
  * 채팅방 메시지 · 처음에는 최근 것부터 CHAT.LOAD_COUNT 개를, afterId 가 있으면 그 번호보다 새 메시지를 가져온다 (오래된 것이 앞)
- * 사람이 보낸 메시지(message)와 시스템 안내(accepted: 수락 · left: 나감, target 이 그 사람)가 섞여 있다
+ * 사람이 보낸 메시지(message)와 시스템 안내(accepted: 수락 · left: 나감, target 이 그 사람 · post_edited: 방장이 글을 수정)가 섞여 있다
  * @param {string} postId 모집 글 id
  * @param {{afterId?: number | null}} [options]
- * @returns {Promise<{id: number, kind: 'message' | 'accepted' | 'left', body: string, createdAt: string,
+ * @returns {Promise<{id: number, kind: 'message' | 'accepted' | 'left' | 'post_edited', body: string, createdAt: string,
  *   sender: {id: string, nickname: string, avatarUrl: string | null} | null, target: {id: string, nickname: string} | null}[]>}
  */
 export async function getChatMessages(postId, {afterId = null} = {}) {
