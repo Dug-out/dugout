@@ -167,6 +167,23 @@
     margin-top: 32px;
 }
 
+/* 무한 스크롤 감지용 빈 칸 · 다음 쪽 불러오는 중 · 다시 불러오기 */
+.mate__sentinel {
+    height: 1px;
+}
+
+.mate__more {
+    margin: 12px 0 0;
+    font-size: 13px;
+    color: var(--text-400);
+    text-align: center;
+}
+
+.mate__more-retry {
+    align-self: center;
+    margin-top: 8px;
+}
+
 /* 모집 마감 카드 · MateCard.css 는 그대로 두고 목록 안에서만 흑백으로 덮어쓴다 */
 .mate__list .mate-card:has(.mate-card__status--closed) .mate-card__image img {
     filter: grayscale(0.7);

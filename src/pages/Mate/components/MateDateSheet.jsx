@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import {BottomSheet, Button, Icon} from '../../../components'
+import useSelectableGames from '../../../hooks/load/useSelectableGames.js'
 import {matchLabel} from '../../../utils/mateFormat.js'
 // 달력 모양은 경기 선택 시트와 같은 것을 쓴다
 import './MateGameSheet.css'
@@ -19,11 +20,13 @@ const startOfDay = (value) => {
 
 /**
  * 직관 날짜 선택 · 목록을 볼 날짜를 고른다 (지난 날은 못 고르고, 내 팀 경기 날은 빨간 점)
- * @param {{myTeam: string, games: object[], posts: object[], openOnly: boolean, initialDate: Date | null,
+ * @param {{myTeam: string | null, initialDate: Date | null,
  *          onApply: (date: Date | null, game: object | null) => void, onClose: () => void}} props
- *  [화면 틀] posts 는 "N개 보기" 개수를 세려고 받는 고정 글 · 기능을 붙이면 getMatePosts 로 센다
  */
-function MateDateSheet({myTeam, games, posts, openOnly, initialDate, onApply, onClose}) {
+function MateDateSheet({myTeam, initialDate, onApply, onClose}) {
+    // 시작 전 내 팀 경기 · 빨간 점 (못 불러오면 점 없이 날짜만 고를 수 있다)
+    const {games} = useSelectableGames()
+
     // 오늘 0시 · 이보다 앞은 지난 날
     const [today] = useState(() => startOfDay(Date.now()))
     // 고른 날 · 이미 고른 날짜가 있으면 그날, 없으면 오늘
@@ -43,9 +46,8 @@ function MateDateSheet({myTeam, games, posts, openOnly, initialDate, onApply, on
     const lastDay = new Date(view.year, view.month + 1, 0).getDate()
     const cells = [...Array.from({length: leading}, () => null), ...Array.from({length: lastDay}, (_, i) => i + 1)]
 
-    // 고른 날의 경기와 모집 글 수 · 버튼 문구 '10.22 모집 글 2개 보기'
+    // 고른 날의 경기 · 날짜 버튼 문구 'LG vs 두산' 에 쓴다
     const pickedGame = games.find((game) => isSameDay(game.gameAt, picked)) ?? null
-    const count = posts.filter((post) => isSameDay(post.game.gameAt, picked) && (!openOnly || post.isOpen)).length
     const monthDay = `${String(picked.getMonth() + 1).padStart(2, '0')}.${String(picked.getDate()).padStart(2, '0')}`
 
     return (
@@ -111,7 +113,7 @@ function MateDateSheet({myTeam, games, posts, openOnly, initialDate, onApply, on
 
                 <p className="mate-cal__legend">
                     <span className="mate-cal__dot" aria-hidden="true" />
-                    {myTeam} 경기
+                    {myTeam ?? '우리 팀'} 경기
                 </p>
 
                 <div className="mate-cal__actions">
@@ -119,7 +121,7 @@ function MateDateSheet({myTeam, games, posts, openOnly, initialDate, onApply, on
                         전체 날짜
                     </Button>
                     <Button block onClick={() => onApply(picked, pickedGame)}>
-                        {count > 0 ? `${monthDay} 모집 글 ${count}개 보기` : `${monthDay} 모집 글 보기`}
+                        {monthDay} 모집 글 보기
                     </Button>
                 </div>
             </div>
