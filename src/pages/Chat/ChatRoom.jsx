@@ -5,6 +5,7 @@ import {CHAT, PROFILE} from '../../constants/policy.js'
 import useChatMessages from '../../hooks/useChatMessages.js'
 import useMatePost from '../../hooks/load/useMatePost.js'
 import useMyTeam from '../../hooks/load/useMyTeam.js'
+import {chatNotice} from '../../utils/chatNotice.js'
 import {formatChatTime, formatDay, formatDday, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import './ChatRoom.css'
 
@@ -39,24 +40,6 @@ function ChatRoom() {
             {roomStatus === 'ready' && <ChatBody key={post.id} post={post} />}
         </div>
     )
-}
-
-/** 안내 줄 글자 · 보는 사람에 따라 달라진다 */
-function noticeText(message, post) {
-    const {kind, target} = message
-    if (kind === 'post_edited') return '방장이 모집 글을 수정했어요'
-    if (kind === 'deleted') return '방장이 모임을 삭제했어요'
-    if (kind === 'left') return `${target.nickname}님이 채팅방을 나갔어요`
-    if (target.id === post.myId) {
-        return (
-            <>
-                {post.host.nickname}님이 나의 참여를 수락했어요
-                <br />
-                이제부터 대화를 볼 수 있어요
-            </>
-        )
-    }
-    return post.myStatus === 'host' ? `${target.nickname}님의 참여를 수락했어요` : `${target.nickname}님이 참여했어요`
 }
 
 /** 불러온 채팅방 · 경기 카드, 메시지 목록, 입력창 */
@@ -118,10 +101,13 @@ function ChatBody({post}) {
                 {status === 'ready' &&
                     messages.map((message) => {
                         if (message.kind !== 'message') {
+                            const notice = chatNotice(message, post)
                             return (
-                                <p key={message.id} className="chat-room__notice">
-                                    {noticeText(message, post)}
-                                </p>
+                                notice && (
+                                    <p key={message.id} className="chat-room__notice">
+                                        {notice}
+                                    </p>
+                                )
                             )
                         }
                         const {sender, body, createdAt} = message
