@@ -10,8 +10,10 @@ import useLoad from './useLoad.js'
 export default function useChatMessages(postId) {
     // 1) 처음 채팅방을 열 때 불러온 최근 메시지 · 이 값은 다시 불러오기 전까지 그대로라서 새 메시지를 여기에 못 붙인다
     const {status, data, reload} = useLoad(() => getChatMessages(postId), [postId])
+
     // 2) 그 뒤에 새로 도착한 메시지 · 새 메시지는 따로 여기에 쌓는다
     const [arrived, setArrived] = useState(/** @type {object[]} */ ([]))
+
     // 3) 화면에 보여 줄 전체 메시지 = 1) + 2)
     const messages = data ? [...data, ...arrived] : []
 

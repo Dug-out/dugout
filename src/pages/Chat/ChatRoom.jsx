@@ -100,7 +100,7 @@ function ChatBody({post}) {
                 {status === 'ready' &&
                     messages.map((message) => {
                         if (message.kind !== 'message') {
-                            const notice = chatNotice(message, post)
+                            const notice = chatNotice(message)
                             return (
                                 notice && (
                                     <p key={message.id} className="chat-room__notice">
