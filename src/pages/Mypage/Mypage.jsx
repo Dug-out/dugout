@@ -10,9 +10,9 @@ import './Mypage.css'
 
 // 내 활동 메뉴 · 눌렀을 때 이동할 화면
 const ACTIVITY_MENU = [
-    {label: '내 직관 약속', to: '/record', count: 'pending'},
+    {label: '내 직관 약속', to: '/my/posts', count: 'pending'},
     {label: '메이트 평가하기', to: '/my/reviews', count: 'waiting'},
-    {label: '직관 기록', to: '/record?tab=list'},
+    {label: '직관 기록', to: '/record'},
 ]
 // 내 활동 옆에 붙는 개수 이름
 const COUNT_LABEL = {pending: '새 신청', waiting: '평가 대기'}

@@ -2,12 +2,12 @@ import {NavLink} from 'react-router'
 import Icon from '../Icon/Icon.jsx'
 import './TabBar.css'
 
-// 탭 5개 · 거래 탭 대신 "플랜"(AI 직관 플래너로 저장한 플랜 목록)을 넣는다
+// 탭 5개 · 거래 탭은 화면이 아직 없어 경로만 잡아 둔다
 const TABS = [
-    {to: '/mate', icon: 'mate', label: '메이트 찾기'},
-    {to: '/plans', icon: 'sparkle', label: '플랜'},
     {to: '/home', icon: 'home', label: '홈'},
-    {to: '/record', icon: 'record', label: '내 직관'},
+    {to: '/mate', icon: 'mate', label: '메이트 찾기'},
+    {to: '/record', icon: 'record', label: '직관 기록'},
+    {to: '/trade', icon: 'trade', label: '거래'},
     {to: '/my', icon: 'my', label: '마이'},
 ]
 
