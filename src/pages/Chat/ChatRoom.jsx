@@ -45,6 +45,7 @@ function ChatRoom() {
 function noticeText(message, post) {
     const {kind, target} = message
     if (kind === 'post_edited') return '방장이 모집 글을 수정했어요'
+    if (kind === 'deleted') return '방장이 모임을 삭제했어요'
     if (kind === 'left') return `${target.nickname}님이 채팅방을 나갔어요`
     if (target.id === post.myId) {
         return (
