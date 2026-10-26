@@ -1,7 +1,7 @@
 .myplans {
     display: flex;
+    flex: 1;
     flex-direction: column;
-    min-height: 100dvh;
     background: var(--bg);
 }
 
@@ -52,7 +52,7 @@
 
 .myplans__dock {
     position: sticky;
-    bottom: 0;
+    bottom: var(--tabbar-height); /* 탭바 바로 위에 붙는다 */
     z-index: 10;
 }
 

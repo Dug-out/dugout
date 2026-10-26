@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router'
 import {deleteSavedPlans, dday, fetchSavedPlans, updateChecklist} from '../../api/planner.js'
 import {fetchMyProfile} from '../../api/profile.js'
-import {Button, Dialog, EmptyState, Header, TabBar} from '../../components'
+import {Button, Dialog, EmptyState, Header} from '../../components'
 import Icon from '../../components/Icon/Icon.jsx'
 import {PREP_ITEMS} from '../../constants/planner.js'
 import {SIGNUP} from '../../constants/policy.js'
@@ -196,7 +196,6 @@ function MyPlans() {
                         </Button>
                     </div>
                 )}
-                <TabBar/>
             </div>
 
             <Dialog

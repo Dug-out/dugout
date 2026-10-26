@@ -63,7 +63,7 @@ function App() {
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout />}>
                 <Route path="/home" element={<Home />} />
-                <Route path="/mate" element={<Mate />} />
+                    <Route path="/mate" element={<Mate />} />
                 <Route path="/my" element={<Mypage />} />
                 <Route path="/record" element={<Record />} />
             </Route>
