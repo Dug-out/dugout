@@ -5,8 +5,20 @@ import {MATE_POST, SIGNUP} from '../../constants/policy.js'
 import useMatePostList from '../../hooks/load/useMatePostList.js'
 import useMyTeam from '../../hooks/load/useMyTeam.js'
 import {formatDay, formatDday, formatTime, matchLabel} from '../../utils/mateFormat.js'
-import MateDateSheet from './components/MateDateSheet.jsx'
+import MateGameSheet from './components/MateGameSheet.jsx'
 import './Mate.css'
+
+// 그날 0시
+const startOfDay = (value) => {
+    const date = new Date(value)
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate())
+}
+
+// 'MM.DD' · 달력 버튼 문구
+const monthDay = (value) => {
+    const date = new Date(value)
+    return `${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
+}
 
 // 카드 조건 태그 · [좌석] [나이대] [성별]
 const conditionTags = ({seat, ages, gender}) => [
@@ -21,9 +33,10 @@ function Mate() {
     const myTeam = useMyTeam()
     const teamName = SIGNUP.TEAMS.find((team) => team.code === myTeam)?.name
 
-    // 고른 날짜 (null 이면 전체) / 그날 내 팀 경기 (날짜 버튼 문구용)
-    const [date, setDate] = useState(null)
+    // 고른 날의 내 팀 경기 (null 이면 전체 날짜) · 경기가 있는 날만 고를 수 있다
     const [dateGame, setDateGame] = useState(null)
+    // 목록을 거를 날짜 · 고른 경기의 그날 0시
+    const date = dateGame ? startOfDay(dateGame.gameAt) : null
     // 모집 중인 글만 보기 / 정렬 · new 최신순, old 오래된순
     const [openOnly, setOpenOnly] = useState(false)
     const [sort, setSort] = useState('new')
@@ -37,15 +50,14 @@ function Mate() {
         sort,
     })
 
-    // 달력에서 날짜를 고르거나(날짜, 경기) [전체 날짜]를 눌렀을 때(null, null)
-    const applyDate = (nextDate, game) => {
-        setDate(nextDate)
+    // 달력에서 경기 날을 골랐을 때(경기) · [전체 날짜]를 눌렀을 때(null)
+    const applyDate = (game) => {
         setDateGame(game)
         setDateSheetOpen(false)
     }
 
-    // 날짜 버튼 문구 · '전체 날짜' / '10.22 (목) LG vs 두산' (경기 없는 날은 날짜만)
-    const dateLabel = !date ? '전체 날짜' : `${formatDay(date)}${dateGame ? ` ${matchLabel(dateGame, myTeam)}` : ''}`
+    // 날짜 버튼 문구 · '전체 날짜' / '10.22 (목) LG vs 두산'
+    const dateLabel = dateGame ? `${formatDay(dateGame.gameAt)} ${matchLabel(dateGame, myTeam)}` : '전체 날짜'
 
     return (
         <div className="mate">
@@ -137,13 +149,23 @@ function Mate() {
                 </div>
             </main>
 
-            {/* 날짜 달력 시트 · 열 때마다 지금 고른 날짜로 시작한다 */}
+            {/* 날짜 달력 시트 · 글쓰기 경기 선택과 같은 달력 (경기 있는 날만) · 열 때마다 지금 고른 날로 시작한다 */}
             {dateSheetOpen && (
-                <MateDateSheet
+                <MateGameSheet
                     myTeam={myTeam}
-                    initialDate={date}
-                    onApply={applyDate}
+                    title="직관 날짜 선택"
+                    selectedId={dateGame?.id ?? null}
                     onClose={() => setDateSheetOpen(false)}
+                    footer={(picked) => (
+                        <div className="mate-cal__actions">
+                            <Button variant="secondary" onClick={() => applyDate(null)}>
+                                전체 날짜
+                            </Button>
+                            <Button block disabled={!picked} onClick={() => applyDate(picked)}>
+                                {picked ? `${monthDay(picked.gameAt)} 모집 글 보기` : '날짜를 골라 주세요'}
+                            </Button>
+                        </div>
+                    )}
                 />
             )}
         </div>

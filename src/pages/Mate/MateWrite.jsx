@@ -5,7 +5,7 @@ import {Button, Chip, Field, Icon, InlineMessage, PhotoPicker} from '../../compo
 import {MATE_POST} from '../../constants/policy.js'
 import useGoBack from '../../hooks/useGoBack.js'
 import useMyTeam from '../../hooks/load/useMyTeam.js'
-import MateGameSheet from './components/MateGameSheet.jsx'
+import MateGameSheet, {PickedGame} from './components/MateGameSheet.jsx'
 import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import './MateWrite.css'
 
@@ -252,12 +252,29 @@ function MateWrite() {
             {gameSheetOpen && (
                 <MateGameSheet
                     myTeam={myTeam}
+                    title="경기 선택"
                     selectedId={form.game?.id ?? null}
                     onClose={() => setGameSheetOpen(false)}
-                    onPick={(game) => {
-                        set('game')(game)
-                        setGameSheetOpen(false)
-                    }}
+                    footer={(picked) => (
+                        <>
+                            <PickedGame picked={picked} myTeam={myTeam} />
+                            <div className="mate-cal__actions">
+                                <Button variant="secondary" onClick={() => setGameSheetOpen(false)}>
+                                    취소
+                                </Button>
+                                <Button
+                                    block
+                                    disabled={!picked}
+                                    onClick={() => {
+                                        set('game')(picked)
+                                        setGameSheetOpen(false)
+                                    }}
+                                >
+                                    이 경기로 선택
+                                </Button>
+                            </div>
+                        </>
+                    )}
                 />
             )}
         </div>

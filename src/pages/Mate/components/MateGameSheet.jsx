@@ -14,17 +14,20 @@ const dayKey = (date) => `${date.getFullYear()}-${date.getMonth()}-${date.getDat
 const monthIndex = (date) => date.getFullYear() * 12 + date.getMonth()
 
 /**
- * 경기 선택 시트 · 경기가 있는 날을 눌러 고르고 [이 경기로 선택]으로 확정한다
- * @param {{myTeam: string | null, selectedId: number | null, onPick: (game: object) => void, onClose: () => void}} props
+ * 경기 달력 시트 · 경기가 있는 날만 고를 수 있다 (글쓰기 경기 선택, 메이트 찾기 날짜 선택이 함께 쓴다)
+ * 제목과 아래 영역(고른 경기 띠 · 버튼)은 쓰는 화면이 넣는다.
+ * @param {{myTeam: string | null, title: string, selectedId: number | null, onClose: () => void,
+ *          footer: (picked: object | null) => import('react').ReactNode}} props
+ *  footer: 고른 경기(없으면 null)를 받아 아래 영역을 그린다 · 경기가 없거나 못 불러와도 그린다
  */
-function MateGameSheet({myTeam, selectedId, onPick, onClose}) {
+function MateGameSheet({myTeam, title, selectedId, onClose, footer}) {
     // status: loading | ready | error
     const {status, games, reload} = useSelectableGames()
 
     return (
-        <BottomSheet open onClose={onClose} label="경기 선택" closeLabel={null}>
+        <BottomSheet open onClose={onClose} label={title} closeLabel={null}>
             <div className="mate-game">
-                <h2 className="mate-game__title">경기 선택</h2>
+                <h2 className="mate-game__title">{title}</h2>
 
                 {status === 'loading' && <p className="mate-game__state">경기 일정을 불러오고 있어요</p>}
 
@@ -42,22 +45,19 @@ function MateGameSheet({myTeam, selectedId, onPick, onClose}) {
                 )}
 
                 {/* 경기를 불러온 뒤에 만든다 (처음 보여 줄 달을 경기로 정하므로) */}
-                {status === 'ready' && games.length > 0 && (
-                    <GameCalendar
-                        games={games}
-                        myTeam={myTeam}
-                        selectedId={selectedId}
-                        onPick={onPick}
-                        onClose={onClose}
-                    />
+                {status === 'ready' && games.length > 0 ? (
+                    <GameCalendar games={games} myTeam={myTeam} selectedId={selectedId} footer={footer} />
+                ) : (
+                    // 달력이 없어도 아래 영역은 보여 준다 (닫기 · 전체 날짜를 누를 수 있게)
+                    status !== 'loading' && footer(null)
                 )}
             </div>
         </BottomSheet>
     )
 }
 
-/** 달력 · 달 이동, 날짜 칸, 고른 경기 띠, 버튼 */
-function GameCalendar({games, myTeam, selectedId, onPick, onClose}) {
+/** 달력 · 달 이동, 날짜 칸, 아래 영역 */
+function GameCalendar({games, myTeam, selectedId, footer}) {
     // 날짜별 경기 · 같은 날 둘이면 먼저 열리는 경기
     const gameByDay = new Map()
     games.forEach((game) => {
@@ -156,29 +156,27 @@ function GameCalendar({games, myTeam, selectedId, onPick, onClose}) {
                 {myTeam ?? '우리 팀'} 경기
             </p>
 
-            {/* 고른 경기 띠 */}
-            <div className={`mate-cal__picked${picked ? ' mate-cal__picked--on' : ''}`} aria-live="polite">
-                {picked ? (
-                    <>
-                        <strong>
-                            {formatDay(picked.gameAt)} {formatTime(picked.gameAt)} · {matchLabel(picked, myTeam)}
-                        </strong>
-                        <span>{picked.stadium}</span>
-                    </>
-                ) : (
-                    '경기가 있는 날짜를 눌러 주세요'
-                )}
-            </div>
-
-            <div className="mate-cal__actions">
-                <Button variant="secondary" onClick={onClose}>
-                    취소
-                </Button>
-                <Button block disabled={!picked} onClick={() => onPick(picked)}>
-                    이 경기로 선택
-                </Button>
-            </div>
+            {/* 고른 경기 띠 · 버튼 (쓰는 화면이 정한다) */}
+            {footer(picked)}
         </>
+    )
+}
+
+/** 고른 경기 띠 · 글쓰기 경기 선택 시트의 아래 영역에서 쓴다 */
+export function PickedGame({picked, myTeam}) {
+    return (
+        <div className={`mate-cal__picked${picked ? ' mate-cal__picked--on' : ''}`} aria-live="polite">
+            {picked ? (
+                <>
+                    <strong>
+                        {formatDay(picked.gameAt)} {formatTime(picked.gameAt)} · {matchLabel(picked, myTeam)}
+                    </strong>
+                    <span>{picked.stadium}</span>
+                </>
+            ) : (
+                '경기가 있는 날짜를 눌러 주세요'
+            )}
+        </div>
     )
 }
 
