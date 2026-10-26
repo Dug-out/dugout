@@ -153,7 +153,6 @@ function MyPlans() {
                 <EmptyState
                     title="아직 저장한 플랜이 없어요"
                     description="조건만 고르면 AI가 경기를 추천해줘요"
-                    action={<Button variant="secondary" onClick={() => navigate('/home')}>AI 직관 플랜 짜기</Button>}
                 />
             )}
 
