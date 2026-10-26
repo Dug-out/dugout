@@ -2,12 +2,11 @@ import {CHAT} from '../constants/policy.js'
 import {supabase} from '../lib/supabase.js'
 
 /**
- * 채팅방 메시지 · 처음에는 최근 것부터 CHAT.LOAD_COUNT 개를, afterId 가 있으면 그 번호보다 새 메시지를 가져온다 (오래된 것이 앞)
- * 사람이 보낸 메시지(message)와 시스템 안내(accepted: 수락 · left: 나감, target 이 그 사람 · post_edited: 방장이 글을 수정 · deleted: 방장이 모임을 삭제)가 섞여 있다
+ * 채팅방 메시지 · 처음엔 최근 CHAT.LOAD_COUNT 개, afterId 가 있으면 그 번호보다 새 메시지 (오래된 것이 앞)
+ * 사람의 메시지(kind: message)와 시스템 안내(수락·나감 등)가 섞여 있다 → 안내 문구는 utils/chatNotice.js
  * @param {string} postId 모집 글 id
  * @param {{afterId?: number | null}} [options]
- * @returns {Promise<{id: number, kind: 'message' | 'accepted' | 'left' | 'post_edited' | 'deleted', body: string, createdAt: string,
- *   sender: {id: string, nickname: string, avatarUrl: string | null} | null, target: {id: string, nickname: string} | null}[]>}
+ * @returns {Promise<object[]>} {id, kind, body, createdAt, sender, target}
  */
 export async function getChatMessages(postId, {afterId = null} = {}) {
     let query = supabase
@@ -50,10 +49,7 @@ export async function sendChatMessage(postId, body) {
     if (error) throw Object.assign(new Error(sendErrorMessage(error)), {cause: error})
 }
 
-/**
- * 새 메시지가 올라오면 onNew 를 부른다 (Supabase Realtime) · 돌려준 함수를 부르면 받기를 멈춘다
- * 올라온 줄에는 보낸 사람 이름이 없어서 내용은 넘기지 않는다 → 받는 쪽이 getChatMessages 로 다시 가져온다
- */
+/** 새 메시지가 올라오면 onNew 를 부른다 (Supabase Realtime) · 돌려준 함수를 부르면 받기를 멈춘다. 내용은 넘기지 않으니 getChatMessages 로 다시 가져온다 */
 export function subscribeChat(postId, onNew) {
     const channel = supabase
         .channel(`chat:${postId}`)

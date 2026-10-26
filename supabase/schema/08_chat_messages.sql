@@ -26,9 +26,7 @@ create trigger on_mate_member_accepted_at
 
 ------------------------------------------
 -- 2. 메시지 테이블 · 사람이 보낸 메시지(message)와 시스템 안내가 한 줄씩
---  · 안내 종류: accepted 참여 수락 · left 채팅방 나감 (target_id 가 그 사람) · post_edited 방장이 모집 글을 수정
---    · deleted 방장이 모임을 삭제 (삭제 기능을 만들 때 안내를 넣는 트리거를 더한다)
---  · 안내 종류는 목록으로 막지 않는다 → 새 안내는 트리거와 화면 문구만 더하면 된다 (안내 줄은 트리거만 넣을 수 있다)
+-- accepted 수락 · left 나감 · post_edited 모집 글 수정 · deleted 모임 삭제
 -- 안내 문구는 보는 사람에 따라 달라서(예: "나의 참여를 수락했어요") 글자가 아니라 종류와 대상을 저장한다
 ------------------------------------------
 create table public.chat_messages (
@@ -55,7 +53,6 @@ revoke all on public.chat_messages from anon, authenticated;
 -- 3. 접근 규칙
 ------------------------------------------
 -- 이 글의 수락된 참여자이고, 그 메시지가 내가 수락된 뒤에 올라온 것인지
--- 정책 안에서 mate_members 를 다시 조회하면 정책이 끝없이 반복되므로 관리자 권한 함수로 확인한다
 create function public.can_read_chat(p uuid, t timestamptz)
 returns boolean language sql stable security definer set search_path = public as $$
   select exists (
