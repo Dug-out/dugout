@@ -6,7 +6,9 @@
 }
 
 .myplans__main {
+    display: flex;
     flex: 1;
+    flex-direction: column; /* 빈 화면(EmptyState)이 남은 높이의 가운데에 오도록 */
     padding: 16px 20px 28px;
 }
 
