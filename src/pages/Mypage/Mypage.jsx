@@ -1,4 +1,5 @@
-import {Link} from 'react-router'
+import {Link, useNavigate} from 'react-router'
+import {signOut} from '../../api/auth.js'
 import {getPendingApplicantCount} from '../../api/mateMembers.js'
 import {getReviewTodoCount} from '../../api/mateReviews.js'
 import {Button, Header, Icon, LoadState} from '../../components'
@@ -10,17 +11,17 @@ import './Mypage.css'
 
 // 내 활동 메뉴 · 눌렀을 때 이동할 화면
 const ACTIVITY_MENU = [
-    {label: '내 직관 약속', to: '/record', count: 'pending'},
+    {label: '내 직관 약속', to: '/my/posts', count: 'pending'},
     {label: '메이트 평가하기', to: '/my/reviews', count: 'waiting'},
-    {label: '직관 기록', to: '/record?tab=list'},
+    {label: '직관 기록', to: '/record'},
 ]
 // 내 활동 옆에 붙는 개수 이름
 const COUNT_LABEL = {pending: '새 신청', waiting: '평가 대기'}
-// 계정 메뉴 · 아직 기능을 연결하지 않았다 (화면만)
-const ACCOUNT_MENU = ['알림 설정', '로그아웃']
+// 계정 메뉴 · 알림 설정은 아직 화면만 (로그아웃은 아래에서 따로 연결)
+const ACCOUNT_MENU = ['알림 설정']
 
-/** 메뉴 한 줄 · 이름, 안내(선택), 오른쪽 화살표 · to 가 있으면 그 화면으로 이동하고, 없으면 눌러도 아직 아무 일도 없다 */
-function MenuRow({label, to, note}) {
+/** 메뉴 한 줄 · 이름, 안내(선택), 오른쪽 화살표 · to 가 있으면 그 화면으로 이동, onClick 이 있으면 누를 때 실행 */
+function MenuRow({label, to, note, onClick}) {
     const content = (
         <>
             <span className="mypage__row-label">{label}</span>
@@ -33,7 +34,7 @@ function MenuRow({label, to, note}) {
             {content}
         </Link>
     ) : (
-        <button type="button" className="mypage__row">
+        <button type="button" className="mypage__row" onClick={onClick}>
             {content}
         </button>
     )
@@ -67,6 +68,14 @@ function MypageBody({profile}) {
     const {data: pending} = useLoad(getPendingApplicantCount, [])
     const {data: waiting} = useLoad(getReviewTodoCount, [])
     const counts = {pending, waiting}
+
+    // 로그아웃 · 로그인 정보를 지우고 로그인 화면으로 (뒤로가기로 마이페이지에 돌아오지 않게 replace)
+    // 서버 요청이 실패해도 기기의 로그인 정보는 지워지므로 로그인 화면으로 보낸다
+    const navigate = useNavigate()
+    const logout = async () => {
+        await signOut().catch(() => {})
+        navigate('/login', {replace: true})
+    }
 
     return (
         <>
@@ -138,6 +147,7 @@ function MypageBody({profile}) {
                 {ACCOUNT_MENU.map((label) => (
                     <MenuRow key={label} label={label} />
                 ))}
+                <MenuRow label="로그아웃" onClick={logout} />
                 <button type="button" className="mypage__row mypage__row--quiet">
                     회원 탈퇴
                 </button>

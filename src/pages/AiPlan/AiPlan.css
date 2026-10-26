@@ -99,7 +99,7 @@
 }
 
 .rank-tile__date {
-    font-family: var(--font-number);
+    font-family: var(--font-number), serif;
     font-size: 17px;
     color: var(--text-900);
 }
@@ -303,7 +303,7 @@
     flex: none;
     width: 46px;
     padding-top: 1px;
-    font-family: var(--font-number);
+    font-family: var(--font-number), serif;
     font-size: 13px;
     color: var(--text-700);
 }
