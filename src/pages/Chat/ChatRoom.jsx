@@ -96,6 +96,8 @@ function ChatBody({post, onMembersChange}) {
     }
 
     const {game} = post
+    // 경기가 이미 시작했으면 D-day 대신 "종료"를 보여 준다 (D-day 는 지난 날짜도 D-DAY 로 나온다)
+    const started = new Date(game.gameAt) <= now
 
     return (
         <>
@@ -108,7 +110,9 @@ function ChatBody({post, onMembersChange}) {
                     </span>
                     <span className="chat-room__game-sub">{game.stadium}</span>
                 </span>
-                <span className="chat-room__dday">{formatDday(game.gameAt, now)}</span>
+                <span className={`chat-room__dday${started ? ' chat-room__dday--ended' : ''}`}>
+                    {started ? '종료' : formatDday(game.gameAt, now)}
+                </span>
             </Link>
 
             <div className="chat-room__list" aria-live="polite">

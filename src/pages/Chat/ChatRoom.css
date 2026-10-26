@@ -58,6 +58,11 @@
     font-size: 11px;
 }
 
+.chat-room__dday--ended {
+    background: var(--on-navy-track);
+    color: var(--on-navy-sub);
+}
+
 /* ── 메시지 목록 ── */
 .chat-room__list {
     display: flex;
