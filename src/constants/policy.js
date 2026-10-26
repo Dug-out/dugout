@@ -15,6 +15,11 @@ export const MANNER = {
     ],
 }
 
+export const CHAT = {
+    MESSAGE_MAX: 500, // 메시지 한 개 글자 수
+    LOAD_COUNT: 100, // 채팅방을 열 때 불러오는 최근 메시지 수
+}
+
 export const REVIEW = {
     SCORE_MIN: 1,
     SCORE_MAX: 10,

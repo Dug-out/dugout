@@ -69,27 +69,9 @@ const PATHS = {
             <circle cx="12" cy="13" r="3.5" />
         </>
     ),
-    chevron: <path d="M9 5l7 7-7 7" />,
-    sparkle: <path d="M12 3l1.8 5.6L19 10l-5.2 1.4L12 17l-1.8-5.6L5 10l5.2-1.4z" />,
-    cloud: <path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.1 12.1 3.5 3.5 0 0 0 7 18z" />,
-    won: (
-        <>
-            <path d="M4 8l3.5 10L12 11l4.5 7L20 8" />
-            <path d="M3 8h18M5 11h14" />
-        </>
-    ),
-    train: (
-        <>
-            <rect x="5" y="4" width="14" height="13" rx="4" />
-            <path d="M5 13h14M9 17l-2 3M15 17l2 3" />
-            <circle cx="9" cy="9.5" r="0.8" fill="currentColor" />
-            <circle cx="15" cy="9.5" r="0.8" fill="currentColor" />
-        </>
-    ),
-    bookmark: <path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4-6 4V5a1 1 0 0 1 1-1z" />,
 }
 
-/** name: back | plus | check | alert | calendar | pin | home | mate | record | trade | my | chevronRight | camera | info | close | seat | chat | chevron | sparkle | cloud | won | train | bookmark */
+/** name: back | plus | check | alert | calendar | pin | home | mate | record | trade | my | chevronRight | camera | info | close | seat | chat */
 function Icon({name, size = 24, strokeWidth = 2, ...rest}) {
     return (
         <svg
