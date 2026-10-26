@@ -58,7 +58,7 @@ function MateGameSheet({myTeam, title, selectedId, onClose, footer}) {
 
 /** 달력 · 달 이동, 날짜 칸, 아래 영역 */
 function GameCalendar({games, myTeam, selectedId, footer}) {
-    // 날짜별 경기 · 같은 날 둘이면 먼저 열리는 경기
+    // 날짜별 경기 · 하루에 한 경기 (같은 날 둘이면 먼저 열리는 경기)
     const gameByDay = new Map()
     games.forEach((game) => {
         const key = dayKey(new Date(game.gameAt))
@@ -156,27 +156,24 @@ function GameCalendar({games, myTeam, selectedId, footer}) {
                 {myTeam ?? '우리 팀'} 경기
             </p>
 
-            {/* 고른 경기 띠 · 버튼 (쓰는 화면이 정한다) */}
+            {/* 고른 날의 경기 카드 · 시각 · 경기 · 구장 */}
+            {picked ? (
+                <div className="mate-cal__game" aria-live="polite">
+                    <span className="mate-cal__radio" aria-hidden="true" />
+                    <span className="mate-cal__game-text">
+                        <span className="mate-cal__game-main">
+                            {formatDay(picked.gameAt)} {formatTime(picked.gameAt)} · {matchLabel(picked, myTeam)}
+                        </span>
+                        <span className="mate-cal__game-sub">{picked.stadium}</span>
+                    </span>
+                </div>
+            ) : (
+                <p className="mate-cal__hint">경기가 있는 날짜를 눌러 주세요</p>
+            )}
+
+            {/* 버튼 (쓰는 화면이 정한다) */}
             {footer(picked)}
         </>
-    )
-}
-
-/** 고른 경기 띠 · 글쓰기 경기 선택 시트의 아래 영역에서 쓴다 */
-export function PickedGame({picked, myTeam}) {
-    return (
-        <div className={`mate-cal__picked${picked ? ' mate-cal__picked--on' : ''}`} aria-live="polite">
-            {picked ? (
-                <>
-                    <strong>
-                        {formatDay(picked.gameAt)} {formatTime(picked.gameAt)} · {matchLabel(picked, myTeam)}
-                    </strong>
-                    <span>{picked.stadium}</span>
-                </>
-            ) : (
-                '경기가 있는 날짜를 눌러 주세요'
-            )}
-        </div>
     )
 }
 
