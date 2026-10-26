@@ -70,7 +70,6 @@ function ChatBody({post}) {
             await send(body)
             setText('')
         } catch (err) {
-            // API 가 만든 한국어 문구를 그대로 보여 준다
             setFailure(err.message)
         } finally {
             setBusy(false)

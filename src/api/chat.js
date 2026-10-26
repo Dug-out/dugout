@@ -49,7 +49,10 @@ export async function sendChatMessage(postId, body) {
     if (error) throw Object.assign(new Error(sendErrorMessage(error)), {cause: error})
 }
 
-/** 새 메시지가 올라오면 onNew 를 부른다 (Supabase Realtime) · 돌려준 함수를 부르면 받기를 멈춘다. 내용은 넘기지 않으니 getChatMessages 로 다시 가져온다 */
+/**
+ * 새 메시지 알림 받기 · 이 글의 새 줄이 올라오면 onNew() 를 부른다 (Supabase Realtime)
+ * 내용은 넘기지 않으니 받는 쪽이 getChatMessages 로 가져온다 / 돌려주는 함수를 부르면 받기를 멈춘다
+ */
 export function subscribeChat(postId, onNew) {
     const channel = supabase
         .channel(`chat:${postId}`)
@@ -60,6 +63,6 @@ export function subscribeChat(postId, onNew) {
         )
         .subscribe()
     return () => {
-        supabase.removeChannel(channel)
+        supabase.removeChannel(channel).then()
     }
 }
