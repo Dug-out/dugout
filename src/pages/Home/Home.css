@@ -212,7 +212,7 @@
 }
 
 .next-plan__date {
-    font-family: var(--font-number);
+    font-family: var(--font-number), serif;
     font-size: 17px;
 }
 
@@ -321,7 +321,7 @@
     height: 44px;
     border-radius: var(--radius-input);
     background: var(--gray-100);
-    font-family: var(--font-number);
+    font-family: var(--font-number), serif;
     font-size: 13px;
     color: var(--text-900);
 }
