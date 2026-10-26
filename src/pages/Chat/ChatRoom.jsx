@@ -13,11 +13,10 @@ import './ChatRoom.css'
 function ChatRoom() {
     const {id} = useParams()
     // status 는 loading | ready | error | notfound
-    const {status, post, reload} = useMatePost(id)
+    const {status, post, reload, refresh} = useMatePost(id)
 
     // 수락되지 않은 사람은 글을 볼 수 있어도 채팅방에는 못 들어온다
-    const allowed = post && (post.myStatus === 'host' || post.myStatus === 'accepted')
-    const roomStatus = status === 'ready' && !allowed ? 'notfound' : status
+    const roomStatus = status === 'ready' && !post.isMember ? 'notfound' : status
 
     return (
         <div className="chat-room">
@@ -37,14 +36,16 @@ function ChatRoom() {
                     backLabel: '모집 글로',
                 }}
             />
-            {roomStatus === 'ready' && <ChatBody key={post.id} post={post} />}
+            {roomStatus === 'ready' && <ChatBody key={post.id} post={post} onMembersChange={refresh} />}
         </div>
     )
 }
 
-/** 불러온 채팅방 · 경기 카드, 메시지 목록, 입력창 */
-function ChatBody({post}) {
-    const {status, messages, send, reload} = useChatMessages(post.id)
+/** 불러온 채팅방 · 경기 카드, 메시지 목록, 입력창 · 참여자가 들어오거나 나가면 onMembersChange 로 "멤버 N명"을 다시 읽게 한다 */
+function ChatBody({post, onMembersChange}) {
+    const {status, messages, send, reload} = useChatMessages(post.id, (fresh) => {
+        if (fresh.some((m) => m.kind === 'accepted' || m.kind === 'left')) onMembersChange()
+    })
     // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
     const myTeam = useMyTeam()
     // 화면이 뜬 시각 · D-day 계산에 쓴다
@@ -92,7 +93,7 @@ function ChatBody({post}) {
                 <span className="chat-room__dday">{formatDday(game.gameAt, now)}</span>
             </Link>
 
-            <div className="chat-room__list">
+            <div className="chat-room__list" aria-live="polite">
                 <LoadState status={status} errorTitle="대화를 불러오지 못했어요" onRetry={reload} />
                 {status === 'ready' && messages.length === 0 && (
                     <p className="chat-room__empty">아직 대화가 없어요. 첫 인사를 남겨 보세요 🙌</p>

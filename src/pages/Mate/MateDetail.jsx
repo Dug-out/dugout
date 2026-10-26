@@ -239,11 +239,11 @@ const STATUS_LABEL = {
 
 /** 화면 아래 고정 영역 · 보는 사람과 글의 상태에 따라 버튼이 달라진다. */
 function ApplyBar({post, onApply}) {
-    const {myStatus, isOpen, capacity, joinedCount} = post
+    const {myStatus, isMember, isOpen, capacity, joinedCount} = post
 
     // 보는 사람과 글의 상태에 따라 버튼 하나를 고른다
     let button
-    if (myStatus === 'host' || myStatus === 'accepted') {
+    if (isMember) {
         button = (
             <Button as={Link} to={`/chat/${post.id}`} block>
                 <Icon name="chat" size={20} />

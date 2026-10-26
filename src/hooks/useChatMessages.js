@@ -5,9 +5,10 @@ import useLoad from './useLoad.js'
 /**
  * 채팅방 메시지 · 처음 최근 것을 불러오고, 새 메시지는 실시간으로 뒤에 붙인다 (채팅방이 바뀌면 key={postId} 로 새로 만든다)
  * @param {string} postId 모집 글 id
+ * @param {(fresh: object[]) => void} [onArrive] 새 메시지가 도착했을 때 (처음 불러올 때는 부르지 않는다)
  * @returns {{status: 'loading' | 'ready' | 'error', messages: object[], send: (body: string) => Promise<void>, reload: () => void}}
  */
-export default function useChatMessages(postId) {
+export default function useChatMessages(postId, onArrive) {
     // 1) 처음 채팅방을 열 때 불러온 최근 메시지 · 이 값은 다시 불러오기 전까지 그대로라서 새 메시지를 여기에 못 붙인다
     const {status, data, reload} = useLoad(() => getChatMessages(postId), [postId])
 
@@ -23,11 +24,18 @@ export default function useChatMessages(postId) {
         lastIdRef.current = messages.at(-1)?.id ?? 0
     })
 
+    // onArrive 는 매번 새로 만들어져도 구독이 다시 연결되지 않게 ref 에 담아 쓴다
+    const onArriveRef = useRef(onArrive)
+    useEffect(() => {
+        onArriveRef.current = onArrive
+    })
+
     // 새 메시지를 가져와 뒤에 붙인다 (이미 있는 번호는 거른다)
     const fetchNew = useCallback(async () => {
         const fresh = await getChatMessages(postId, {afterId: lastIdRef.current})
         if (fresh.length === 0) return
         setArrived((prev) => [...prev, ...fresh.filter((m) => !prev.some((p) => p.id === m.id))])
+        onArriveRef.current?.(fresh)
     }, [postId])
 
     // 새 메시지 알림이 오면 가져온다
