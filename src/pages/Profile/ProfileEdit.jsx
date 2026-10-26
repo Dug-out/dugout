@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import {useLocation, useNavigate} from 'react-router'
 import {checkNickname} from '../../api/auth.js'
 import {updateMyProfile} from '../../api/profiles.js'
 import {
@@ -98,8 +99,11 @@ function ProfileEditForm({profile}) {
         }
     }
 
-    // 성공 안내 창을 닫을 때 · 온 화면(마이페이지)으로 돌아간다
-    const goMypage = useGoBack('/my')
+    // 성공 안내 창을 닫을 때 · 가입 직후에 왔으면 홈으로, 마이페이지에서 왔으면 그 화면으로 돌아간다
+    const location = useLocation()
+    const navigate = useNavigate()
+    const goBack = useGoBack('/my')
+    const goMypage = location.state?.fromSignup ? () => navigate('/home', {replace: true}) : goBack
     // 실패 안내 창을 닫을 때 · 창만 닫는다
     const closeResult = () => setResult(null)
 
