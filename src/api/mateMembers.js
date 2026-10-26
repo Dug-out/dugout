@@ -79,6 +79,30 @@ export async function getPendingApplicantCount() {
     return count ?? 0
 }
 
+/** 나가기 실패 → 화면에 보여줄 문구 */
+function leaveErrorMessage({code}) {
+    if (code === '23514') return '이미 나갔거나 나갈 수 없는 약속이에요'
+    return '나가지 못했어요. 잠시 후 다시 시도해 주세요'
+}
+
+/** 채팅방 나가기 = 직관 약속 취소 · 내 참여 줄을 나감으로 바꾼다 (자리가 나면 모집 글은 DB 가 다시 연다) */
+export async function leaveMatePost(postId) {
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
+    const {id: userId} = session.user
+
+    const {data, error} = await supabase
+        .from('mate_members')
+        .update({status: 'left'})
+        .eq('post_id', postId)
+        .eq('user_id', userId)
+        .select('user_id')
+    if (error) throw Object.assign(new Error(leaveErrorMessage(error)), {cause: error})
+    // 규칙(RLS)이 막으면 오류 없이 0줄이 바뀐다
+    if (data.length === 0) throw new Error('나갈 수 없는 약속이에요')
+}
+
 /**
  * 신청자 관리 · 방장이 자기 글의 대기 중 신청과 수락된 참여자를 한 번에 가져온다.
  * 없는 글이거나 내가 방장이 아니면 null 을 돌려준다.

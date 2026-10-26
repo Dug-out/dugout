@@ -7,6 +7,7 @@ import useMatePost from '../../hooks/load/useMatePost.js'
 import useMyTeam from '../../hooks/load/useMyTeam.js'
 import {chatNotice} from '../../utils/chatNotice.js'
 import {formatChatTime, formatDay, formatDday, formatTime, matchLabel} from '../../utils/mateFormat.js'
+import ChatMenu from './ChatMenu.jsx'
 import './ChatRoom.css'
 
 /** 모집 채팅방 · 글에 수락된 사람(방장 포함)만 들어올 수 있다 */
@@ -18,12 +19,28 @@ function ChatRoom() {
     // 수락되지 않은 사람은 글을 볼 수 있어도 채팅방에는 못 들어온다
     const roomStatus = status === 'ready' && !post.isMember ? 'notfound' : status
 
+    // ⋯ 메뉴가 열려 있는지 · 메뉴는 방장이 아닌 참여자에게만 있다 (방장 메뉴는 아직 없다)
+    const [menuOpen, setMenuOpen] = useState(false)
+    const hasMenu = post?.isMember && post.myStatus !== 'host'
+
     return (
         <div className="chat-room">
             <Header
                 title={post?.title ?? ''}
                 subtitle={post ? `멤버 ${post.joinedCount}명` : undefined}
                 backTo={`/mate/${id}`}
+                right={
+                    hasMenu && (
+                        <button
+                            type="button"
+                            className="chat-room__menu"
+                            aria-label="메뉴"
+                            onClick={() => setMenuOpen(true)}
+                        >
+                            <Icon name="more" size={22} />
+                        </button>
+                    )
+                }
             />
             <LoadState
                 status={roomStatus}
@@ -37,6 +54,7 @@ function ChatRoom() {
                 }}
             />
             {roomStatus === 'ready' && <ChatBody key={post.id} post={post} onMembersChange={refresh} />}
+            {hasMenu && <ChatMenu post={post} open={menuOpen} onClose={() => setMenuOpen(false)} />}
         </div>
     )
 }

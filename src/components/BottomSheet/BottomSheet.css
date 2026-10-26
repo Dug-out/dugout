@@ -17,6 +17,7 @@
 .sheet__item {
     display: flex;
     align-items: center;
+    gap: 12px;
     min-height: 52px;
     padding: 0 4px;
     border: 0;
