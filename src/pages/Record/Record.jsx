@@ -1,10 +1,10 @@
 import {EmptyState, Header} from '../../components'
 
-/** 직관 기록 · 아직 기록 테이블이 없어 빈 화면만 보여 준다 */
+/** 내 직관 탭 · 아직 기록 테이블이 없어 빈 화면만 보여 준다 */
 function Record() {
     return (
         <>
-            <Header large title="직관 기록" />
+            <Header large title="내 직관" />
             {/* "직관 기록하기" 버튼은 기록 쓰기 화면(Record-write)을 만들 때 action 으로 붙인다 */}
             <EmptyState
                 title="아직 직관 기록이 없어요"
