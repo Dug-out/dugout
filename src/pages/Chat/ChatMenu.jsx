@@ -1,7 +1,7 @@
 import {useState} from 'react'
-import {useNavigate} from 'react-router'
 import {leaveMatePost} from '../../api/mateMembers.js'
 import {BottomSheet, BottomSheetItem, Dialog, Icon, NoticeDialog} from '../../components'
+import useGoBack from '../../hooks/useGoBack.js'
 
 /**
  * 채팅방 ⋯ 메뉴와 거기서 여는 창들 · 지금은 참여자의 "채팅방 나가기"만 있다 (방장 메뉴는 여기에 더한다)
@@ -9,7 +9,8 @@ import {BottomSheet, BottomSheetItem, Dialog, Icon, NoticeDialog} from '../../co
  * @param {{post: {id: string, game: {gameAt: string}}, open: boolean, onClose: () => void}} props
  */
 function ChatMenu({post, open, onClose}) {
-    const navigate = useNavigate()
+    // 나간 뒤에는 모집 글 상세를 건너뛰고 그 앞 화면(메이트 찾기든 내 직관 약속이든 들어온 곳)으로 돌아간다
+    const goBack = useGoBack('/mate', 2)
 
     // 화면이 뜬 시각 · 경기가 이미 시작했는지 가리는 데 쓴다
     const [now] = useState(() => Date.now())
@@ -27,13 +28,13 @@ function ChatMenu({post, open, onClose}) {
         setDialog(started ? 'started' : 'leave')
     }
 
-    // 확인 창의 [나가기] · 성공하면 메이트 찾기로, 실패하면 안내 창을 띄운다
+    // 확인 창의 [나가기] · 성공하면 들어온 곳으로, 실패하면 안내 창을 띄운다
     const leave = async () => {
         if (leaving) return
         setLeaving(true)
         try {
             await leaveMatePost(post.id)
-            navigate('/mate', {replace: true})
+            goBack()
         } catch (err) {
             // API 가 만든 한국어 문구를 그대로 보여 준다
             setDialog(null)
