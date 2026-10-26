@@ -1,0 +1,213 @@
+.chat-room {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    background: var(--bg);
+}
+
+/* ── 경기 카드 ── */
+.chat-room__game {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: var(--navy-500);
+    color: var(--surface);
+    text-decoration: none;
+}
+
+.chat-room__game-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+.chat-room__game-main {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.chat-room__game-sub {
+    font-size: 12px;
+    color: var(--on-navy-sub);
+}
+
+.chat-room__dday {
+    flex: none;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    background: var(--red-500);
+    font-family: var(--font-number), serif;
+    font-size: 11px;
+}
+
+/* ── 메시지 목록 ── */
+.chat-room__list {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.chat-room__empty {
+    margin: auto;
+    font-size: 13px;
+    color: var(--text-500);
+}
+
+.chat-room__notice {
+    align-self: center;
+    max-width: 310px;
+    margin: 0;
+    padding: 6px 12px;
+    border-radius: 10px;
+    background: var(--gray-100);
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--text-500);
+}
+
+.chat-room__row {
+    display: flex;
+    align-self: flex-start;
+    gap: 8px;
+    max-width: 336px;
+}
+
+.chat-room__row--mine {
+    align-self: flex-end;
+    align-items: flex-end;
+    gap: 6px;
+    max-width: 330px;
+}
+
+.chat-room__avatar {
+    display: flex;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--navy-50);
+}
+
+.chat-room__avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chat-room__other {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.chat-room__name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-700);
+}
+
+.chat-room__host {
+    margin-left: 4px;
+    padding: 1px 5px;
+    border-radius: 5px;
+    background: var(--red-50);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--red-text);
+}
+
+.chat-room__line {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.chat-room__bubble {
+    margin: 0;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 4px 18px 18px 18px;
+    background: var(--surface);
+    font-size: 14px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.chat-room__bubble--mine {
+    border: 0;
+    border-radius: 18px 18px 4px 18px;
+    background: var(--navy-500);
+    color: var(--surface);
+}
+
+.chat-room__time {
+    flex: none;
+    font-size: 11px;
+    color: var(--text-400);
+}
+
+/* ── 입력창 · 아래 고정 ── */
+.chat-room__form {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px max(28px, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.chat-room__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+.chat-room__input {
+    flex: 1;
+    box-sizing: border-box;
+    min-width: 0;
+    height: 46px;
+    padding: 0 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-full);
+    background: var(--bg);
+    font-family: var(--font-base), sans-serif;
+    font-size: 16px; /* iOS 에서 입력할 때 화면이 확대되지 않게 */
+    color: var(--text-900);
+}
+
+.chat-room__send {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--navy-500);
+    color: var(--surface);
+    cursor: pointer;
+}
+
+.chat-room__send:disabled {
+    opacity: 0.4;
+    cursor: default;
+}

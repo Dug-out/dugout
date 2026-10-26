@@ -1,13 +1,20 @@
 import {useEffect, useState} from 'react'
 import {Navigate, Route, Routes, useLocation} from 'react-router'
 import {onAuthChange} from './api/auth.js'
+import AiPlan from './pages/AiPlan/AiPlan.jsx'
+import ChatRoom from './pages/Chat/ChatRoom.jsx'
+import Home from './pages/Home/Home.jsx'
 import Login from './pages/Login/Login.jsx'
+import Mate from './pages/Mate/Mate.jsx'
+import MateDetail from './pages/Mate/MateDetail.jsx'
+import MateManage from './pages/Mate/MateManage.jsx'
+import MateWrite from './pages/Mate/MateWrite.jsx'
+import MyPlans from './pages/MyPlans/MyPlans.jsx'
 import Signup from './pages/Signup/Signup.jsx'
 import SignupDone from './pages/Signup/SignupDone.jsx'
 import {TabLayout} from './components'
 import MannerReviews from './pages/Reviews/Received/MannerReviews.jsx'
 import Mypage from './pages/Mypage/Mypage.jsx'
-import MyPosts from './pages/MyPosts/MyPosts.jsx'
 import Record from './pages/Record/Record.jsx'
 import ProfileReviews from './pages/Reviews/Received/ProfileReviews.jsx'
 import ReviewDone from './pages/Reviews/Give/ReviewDone.jsx'
@@ -16,18 +23,9 @@ import ReviewWrite from './pages/Reviews/Give/ReviewWrite.jsx'
 import ProfileView from './pages/Profile/ProfileView.jsx'
 import ProfileEdit from './pages/Profile/ProfileEdit.jsx'
 import Splash from './pages/Splash/Splash.jsx'
-import Mate from './pages/Mate/Mate.jsx'
-import MateWrite from './pages/Mate/MateWrite.jsx'
-import MateDetail from './pages/Mate/MateDetail.jsx'
-import MateManage from './pages/Mate/MateManage.jsx'
 
 // 로그인하지 않아도 볼 수 있는 화면. 여기에 없는 주소는 모두 로그인해야 한다.
 const PUBLIC_PATHS = ['/', '/login', '/signup', '/signup/done']
-
-// 아직 만들지 않은 화면 자리 표시
-function Placeholder({title}) {
-    return <div style={{padding: 24}}>{title} (준비 중)</div>
-}
 
 function App() {
     const {pathname} = useLocation()
@@ -54,7 +52,6 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/signup/done" element={<SignupDone />} />
             <Route path="/profile/edit" element={<ProfileEdit />} />
-            <Route path="/my/posts" element={<MyPosts />} />
             <Route path="/my/manner" element={<MannerReviews />} />
             <Route path="/my/reviews" element={<ReviewList />} />
             <Route path="/reviews/done" element={<ReviewDone />} />
@@ -63,14 +60,17 @@ function App() {
             <Route path="/profile/:id/reviews" element={<ProfileReviews />} />
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout />}>
-                <Route path="/home" element={<Placeholder title="홈" />} />
+                <Route path="/home" element={<Home />} />
                 <Route path="/mate" element={<Mate />} />
                 <Route path="/my" element={<Mypage />} />
                 <Route path="/record" element={<Record />} />
             </Route>
+            <Route path="/ai-plan" element={<AiPlan />} />
+            <Route path="/plans" element={<MyPlans />} />
             <Route path="/mate/write" element={<MateWrite />} />
             <Route path="/mate/:id" element={<MateDetail />} />
             <Route path="/mate/:id/manage" element={<MateManage />} />
+            <Route path="/chat/:id" element={<ChatRoom />} />
         </Routes>
     )
 }

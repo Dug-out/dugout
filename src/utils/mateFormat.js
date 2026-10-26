@@ -28,3 +28,10 @@ export const formatDday = (value, now) => {
     const diff = Math.round((day(new Date(value)) - day(new Date(now))) / 86400000)
     return diff <= 0 ? 'D-DAY' : `D-${diff}`
 }
+
+/** 시각 → '오후 9:15' (채팅 메시지 옆에 쓴다) */
+export const formatChatTime = (value) => {
+    const d = new Date(value)
+    const hour = d.getHours()
+    return `${hour < 12 ? '오전' : '오후'} ${hour % 12 || 12}:${pad(d.getMinutes())}`
+}

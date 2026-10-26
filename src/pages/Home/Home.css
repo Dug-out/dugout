@@ -1,0 +1,370 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    background: var(--bg);
+}
+
+.home__logo {
+    display: block;
+    width: 108px;
+    height: 36px;
+}
+
+.home__main {
+    flex: 1;
+    padding: 4px 20px 32px;
+}
+
+.home__intro {
+    padding: 16px 0 20px;
+}
+
+.home__intro-sub {
+    margin: 0 0 4px;
+    font-size: 13px;
+    color: var(--text-500);
+}
+
+.home__intro-title {
+    margin: 0;
+    font-size: 21px;
+    font-weight: 800;
+    color: var(--text-900);
+}
+
+/* ── AI 직관 플래너 카드 ── */
+.planner-card {
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 24px 20px;
+    border-radius: var(--radius-card);
+    background: var(--navy-gradient-card);
+    color: var(--surface);
+}
+
+.planner-card__char {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 120px;
+    height: auto;
+}
+
+.planner-card__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.16);
+    color: var(--surface);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.planner-card__title {
+    margin: 12px 0 0;
+    max-width: 195px;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.35;
+    color: var(--surface);
+}
+
+.planner-card__desc {
+    margin: 8px 0 20px;
+    font-size: 13px;
+    color: var(--on-navy-sub);
+}
+
+.cond-group {
+    margin-bottom: 16px;
+}
+
+.cond-group__label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--on-navy-sub);
+}
+
+.cond-group__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cond-chip {
+    height: 38px;
+    padding: 0 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--surface);
+    font-family: var(--font-base), sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.cond-chip--selected {
+    border-color: var(--surface);
+    background: var(--surface);
+    color: var(--navy-500);
+    font-weight: 700;
+}
+
+.cond-chip:focus-visible {
+    outline: 2px solid var(--surface);
+    outline-offset: 2px;
+}
+
+.planner-card__submit {
+    margin-top: 4px;
+    background: var(--red-500);
+}
+
+.planner-card__caption {
+    margin: 10px 0 0;
+    color: var(--on-navy-sub);
+    font-size: 12px;
+    text-align: center;
+}
+
+/* ── 섹션 공통 ── */
+.home__section {
+    margin-top: 28px;
+}
+
+.home__section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.home__section-head h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-900);
+}
+
+.home__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    color: var(--text-500);
+    font-size: 13px;
+    text-decoration: none;
+}
+
+/* ── 내 다음 직관 ── */
+.next-plan {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+}
+
+.next-plan--empty {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--text-500);
+    font-size: 14px;
+}
+
+.next-plan__top {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.next-plan__dday {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    width: 58px;
+    border-radius: var(--radius-input);
+    background: var(--navy-500);
+    color: var(--surface);
+    text-align: center;
+}
+
+.next-plan__weekday {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--on-navy-sub);
+}
+
+.next-plan__date {
+    font-family: var(--font-number);
+    font-size: 17px;
+}
+
+.next-plan__d {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.next-plan__info {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.next-plan__title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-900);
+}
+
+.next-plan__sub {
+    font-size: 13px;
+    color: var(--text-500);
+}
+
+.next-plan__divider {
+    height: 1px;
+    background: var(--gray-100);
+}
+
+.next-plan__prep {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-900);
+}
+
+.next-plan__prep-count {
+    font-weight: 500;
+    color: var(--text-500);
+}
+
+.next-plan__chips {
+    display: flex;
+    gap: 8px;
+}
+
+.prep-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    color: var(--text-400);
+    font-family: var(--font-base), sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.prep-chip--done {
+    border-color: var(--navy-500);
+    background: var(--navy-500);
+    color: var(--surface);
+}
+
+/* ── 이번 주 메이트 모집글 ── */
+.mate-mini-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.mate-mini {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card-sm);
+    background: var(--surface);
+    color: inherit;
+    text-decoration: none;
+}
+
+.mate-mini__date {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    width: 52px;
+    height: 44px;
+    border-radius: var(--radius-input);
+    background: var(--gray-100);
+    font-family: var(--font-number);
+    font-size: 13px;
+    color: var(--text-900);
+}
+
+.mate-mini__d {
+    font-family: var(--font-base), sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-500);
+}
+
+.mate-mini__body {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mate-mini__title {
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-900);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mate-mini__sub {
+    overflow: hidden;
+    font-size: 12px;
+    color: var(--text-500);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mate-mini__badge {
+    flex: none;
+    padding: 4px 8px;
+    border-radius: var(--radius-chip-sm);
+    background: var(--red-50);
+    color: var(--red-text);
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
