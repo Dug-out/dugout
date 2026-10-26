@@ -36,7 +36,6 @@ function MateCard({
     className = '',
 }) {
     const Component = to ? Link : 'article'
-    const left = capacity - joined
     const classes = ['mate-card', className].filter(Boolean).join(' ')
 
     return (
@@ -89,7 +88,7 @@ function MateCard({
                         <strong>
                             {joined}/{capacity}
                         </strong>
-                        명{left > 0 && ` · ${left}자리 남음`}
+                        명
                     </span>
                 </span>
             </span>
