@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router'
 import {deleteSavedPlans, dday, fetchSavedPlans, updateChecklist} from '../../api/planner.js'
 import {fetchMyProfile} from '../../api/profile.js'
-import {Button, Dialog, EmptyState, Header, TabBar} from '../../components'
+import {Button, Dialog, EmptyState, Header, LoadState} from '../../components'
 import Icon from '../../components/Icon/Icon.jsx'
 import {PREP_ITEMS} from '../../constants/planner.js'
 import {SIGNUP} from '../../constants/policy.js'
@@ -147,17 +147,17 @@ function MyPlans() {
                 </button>
             }/>
 
+            {/* 불러오는 중 · 빈 화면은 다른 탭 화면처럼 페이지 바로 아래에 두어 남은 높이의 가운데에 온다 */}
+            {!error && plans === null && <LoadState status="loading" />}
+            {!error && plans?.length === 0 && (
+                <EmptyState
+                    title="아직 저장한 플랜이 없어요"
+                    description="조건만 고르면 AI가 경기를 추천해줘요"
+                />
+            )}
+
             <main className="myplans__main">
                 {error && <p className="myplans__error">{error}</p>}
-                {!error && plans === null && <p className="myplans__loading">불러오는 중…</p>}
-
-                {!error && plans?.length === 0 && (
-                    <EmptyState
-                        title="아직 저장한 플랜이 없어요"
-                        description="조건만 고르면 AI가 경기를 추천해줘요"
-                        action={<Button variant="secondary" onClick={() => navigate('/home')}>AI 직관 플랜 짜기</Button>}
-                    />
-                )}
 
                 {plans?.length > 0 && (
                     <>
@@ -196,7 +196,6 @@ function MyPlans() {
                         </Button>
                     </div>
                 )}
-                <TabBar/>
             </div>
 
             <Dialog

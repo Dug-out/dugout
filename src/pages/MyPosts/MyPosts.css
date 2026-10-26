@@ -1,4 +1,4 @@
-.record {
+.my-posts {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -6,48 +6,15 @@
     background: var(--bg);
 }
 
-/* ── 약속 · 기록 · 통계 ── */
-.record__tabs {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    margin: 0 20px;
-    padding: 4px;
-    border-radius: var(--radius-input);
-    background: var(--gray-100);
-}
-
-.record__tab {
-    min-height: 44px;
-    border: 0;
-    border-radius: 9px;
-    background: transparent;
-    font-family: var(--font-base), sans-serif;
-    font-size: 14px;
-    color: var(--text-500);
-    cursor: pointer;
-}
-
-.record__tab[aria-selected='true'] {
-    background: var(--surface);
-    box-shadow: 0 1px 3px rgba(20, 27, 51, 0.12);
-    font-weight: 700;
-    color: var(--navy-500);
-}
-
-.record__tab:focus-visible {
-    outline: 2px solid var(--navy-300);
-    outline-offset: -2px;
-}
-
-/* ── 약속 탭 ── */
-.record__posts-body {
+.my-posts__body {
     display: flex;
     flex-direction: column;
     gap: 12px;
     padding: 14px 20px 20px;
 }
 
-.record__posts-tabs {
+/* ── 보기 구분 ── */
+.my-posts__tabs {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     padding: 4px;
@@ -55,7 +22,7 @@
     background: var(--gray-100);
 }
 
-.record__posts-tab {
+.my-posts__tab {
     min-height: 44px;
     border: 0;
     border-radius: 9px;
@@ -66,32 +33,33 @@
     cursor: pointer;
 }
 
-.record__posts-tab[aria-selected='true'] {
+.my-posts__tab[aria-selected='true'] {
     background: var(--surface);
     box-shadow: 0 1px 3px rgba(20, 27, 51, 0.12);
     font-weight: 700;
     color: var(--navy-500);
 }
 
-.record__posts-tab:focus-visible {
+.my-posts__tab:focus-visible {
     outline: 2px solid var(--navy-300);
     outline-offset: -2px;
 }
 
-.record__posts-group {
+/* ── 목록 ── */
+.my-posts__group {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.record__posts-heading {
+.my-posts__heading {
     margin: 4px 0 0;
     font-size: 13px;
     font-weight: 700;
     color: var(--text-400);
 }
 
-.record__posts-card {
+.my-posts__card {
     overflow: hidden;
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
@@ -99,21 +67,21 @@
     box-shadow: var(--shadow-card);
 }
 
-.record__posts-link {
+.my-posts__link {
     display: block;
     color: var(--text-900);
     text-decoration: none;
 }
 
 /* 사진 · 왼쪽 위에 상태 뱃지, 오른쪽 위에 D-day */
-.record__posts-cover {
+.my-posts__cover {
     position: relative;
     display: block;
     height: 120px;
     overflow: hidden;
 }
 
-.record__posts-cover img {
+.my-posts__cover img {
     display: block;
     width: 100%;
     height: 120px;
@@ -121,12 +89,12 @@
 }
 
 /* 지난 약속은 사진을 흐리게 */
-.record__posts-link--past .record__posts-cover img {
+.my-posts__link--past .my-posts__cover img {
     filter: grayscale(0.7);
     opacity: 0.75;
 }
 
-.record__posts-badge {
+.my-posts__badge {
     position: absolute;
     top: 12px;
     left: 12px;
@@ -138,15 +106,15 @@
     color: var(--surface);
 }
 
-.record__posts-badge--host {
+.my-posts__badge--host {
     background: var(--red-500);
 }
 
-.record__posts-badge--ended {
+.my-posts__badge--ended {
     background: color-mix(in srgb, var(--text-900) 72%, transparent);
 }
 
-.record__posts-dday {
+.my-posts__dday {
     position: absolute;
     top: 12px;
     right: 12px;
@@ -158,48 +126,48 @@
     color: var(--navy-500);
 }
 
-.record__posts-text {
+.my-posts__text {
     display: flex;
     flex-direction: column;
     gap: 8px;
     padding: 14px 16px 16px;
 }
 
-.record__posts-title {
+.my-posts__title {
     font-size: 16px;
     font-weight: 700;
     line-height: 1.4;
 }
 
-.record__posts-link--past .record__posts-title {
+.my-posts__link--past .my-posts__title {
     color: var(--text-500);
 }
 
-.record__posts-lines {
+.my-posts__lines {
     display: flex;
     flex-direction: column;
     gap: 3px;
     font-size: 13px;
 }
 
-.record__posts-line {
+.my-posts__line {
     display: flex;
     align-items: center;
     gap: 6px;
     color: var(--text-500);
 }
 
-.record__posts-line svg {
+.my-posts__line svg {
     flex: none;
 }
 
-.record__posts-line--main {
+.my-posts__line--main {
     font-weight: 600;
     color: var(--text-700);
 }
 
 /* ── 새 신청 안내 ── */
-.record__posts-banner {
+.my-posts__banner {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -213,7 +181,7 @@
     text-decoration: none;
 }
 
-.record__posts-banner-count {
+.my-posts__banner-count {
     padding: 2px 8px;
     border-radius: var(--radius-full);
     background: var(--red-600);
@@ -221,6 +189,6 @@
     color: var(--surface);
 }
 
-.record__posts-banner-text {
+.my-posts__banner-text {
     flex: 1;
 }

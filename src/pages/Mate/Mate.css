@@ -23,8 +23,11 @@
 
 .mate__title {
     margin: 0;
-    font-size: 22px;
-    font-weight: 700;
+    /* 다른 탭 화면의 큰 제목(Header large)과 같은 글꼴 */
+    font-family: var(--font-emotion), sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--navy-500);
 }
 
 .mate__team {

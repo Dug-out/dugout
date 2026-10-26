@@ -3,7 +3,7 @@ import {Link, useNavigate} from 'react-router'
 import {countSavedPlans, dday} from '../../api/planner.js'
 import {fetchMyNextMeetup, updateMeetupChecklist} from '../../api/mate.js'
 import {fetchMyProfile} from '../../api/profile.js'
-import {Button, Header, TabBar} from '../../components'
+import {Button, Header} from '../../components'
 import Icon from '../../components/Icon/Icon.jsx'
 import {BUDGET_OPTIONS, DEFAULT_CONDITIONS, FOOD_OPTIONS, PREP_ITEMS, SEAT_OPTIONS, WHEN_OPTIONS, WITH_OPTIONS} from '../../constants/planner.js'
 import {MOCK_MATE_POSTS} from '../../constants/mate.js'
@@ -186,8 +186,6 @@ function Home() {
                     </ul>
                 </section>
             </main>
-
-            <TabBar/>
         </div>
     )
 }

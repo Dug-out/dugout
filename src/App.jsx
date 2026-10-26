@@ -10,6 +10,7 @@ import MateDetail from './pages/Mate/MateDetail.jsx'
 import MateManage from './pages/Mate/MateManage.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
 import MyPlans from './pages/MyPlans/MyPlans.jsx'
+import MyPosts from './pages/MyPosts/MyPosts.jsx'
 import Signup from './pages/Signup/Signup.jsx'
 import SignupDone from './pages/Signup/SignupDone.jsx'
 import {TabLayout} from './components'
@@ -52,6 +53,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/signup/done" element={<SignupDone />} />
             <Route path="/profile/edit" element={<ProfileEdit />} />
+            <Route path="/my/posts" element={<MyPosts />} />
             <Route path="/my/manner" element={<MannerReviews />} />
             <Route path="/my/reviews" element={<ReviewList />} />
             <Route path="/reviews/done" element={<ReviewDone />} />
@@ -61,12 +63,12 @@ function App() {
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout />}>
                 <Route path="/home" element={<Home />} />
+                <Route path="/plans" element={<MyPlans />} />
                 <Route path="/mate" element={<Mate />} />
                 <Route path="/my" element={<Mypage />} />
                 <Route path="/record" element={<Record />} />
             </Route>
             <Route path="/ai-plan" element={<AiPlan />} />
-            <Route path="/plans" element={<MyPlans />} />
             <Route path="/mate/write" element={<MateWrite />} />
             <Route path="/mate/:id" element={<MateDetail />} />
             <Route path="/mate/:id/manage" element={<MateManage />} />
