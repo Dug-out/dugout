@@ -45,6 +45,7 @@ export const PROFILE = {
 }
 
 export const MATE_POST = {
+    PAGE_SIZE: 10, // 메이트 찾기 목록을 한 번에 불러오는 개수 (무한 스크롤)
     MEMBERS_MIN: 2, // 본인 포함
     MEMBERS_MAX: 10,
     TITLE_MAX: 50,

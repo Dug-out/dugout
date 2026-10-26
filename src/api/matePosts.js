@@ -1,3 +1,4 @@
+import {MATE_POST} from '../constants/policy.js'
 import {supabase} from '../lib/supabase.js'
 import {getMyTeam} from './profiles.js'
 import {uploadErrorMessage} from './storage.js'
@@ -135,4 +136,56 @@ export async function getMatePost(id) {
         // 내가 방장이면 'host', 신청한 적이 없으면 null
         myStatus: mine ? (mine.role === 'host' ? 'host' : mine.status) : null,
     }
+}
+
+/**
+ * 메이트 찾기 목록 · 경기가 아직 시작 안 한 같은 팀 글 (무한 스크롤은 page 를 0, 1, 2… 로 올린다)
+ * @param {{date?: Date | null, openOnly?: boolean, sort?: 'new' | 'old', page?: number}} [options]
+ *  date: 고른 날(그날 경기의 글만, null 이면 전체) / sort: 'new' 최신순 · 'old' 오래된순(올린 시각 기준)
+ * @returns {Promise<{posts: object[], hasMore: boolean}>} hasMore: 다음 쪽이 있는지
+ */
+export async function getMatePosts({date = null, openOnly = false, sort = 'new', page = 0} = {}) {
+    const size = MATE_POST.PAGE_SIZE
+
+    let query = supabase
+        .from('mate_posts')
+        .select(
+            'id, title, image_url, status, seat, capacity, ages, gender, host_id, joined_count, host:profiles!host_id(nickname, avatar_url, manner_avg), game:games!inner(game_at, home_team, away_team, stadium)',
+        )
+        .gt('game.game_at', new Date().toISOString())
+    if (openOnly) query = query.eq('status', 'open')
+    if (date) {
+        // 고른 날 0시부터 다음 날 0시까지
+        const start = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+        const end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)
+        query = query.gte('game.game_at', start.toISOString()).lt('game.game_at', end.toISOString())
+    }
+
+    // 다음 쪽이 있는지 알려고 한 개 더 가져온다
+    const {data, error} = await query
+        .order('created_at', {ascending: sort === 'old'})
+        .order('id')
+        .range(page * size, page * size + size)
+    if (error) throw error
+
+    const posts = data.slice(0, size).map((row) => {
+        const {id, title, image_url: imageUrl, status, seat, capacity, ages, gender} = row
+        const {host_id: hostId, joined_count: joinedCount, host, game} = row
+        const {nickname, avatar_url: avatarUrl, manner_avg: manner} = host
+        const {game_at: gameAt, home_team: home, away_team: away, stadium} = game
+        return {
+            id,
+            title,
+            imageUrl,
+            isOpen: status === 'open',
+            seat,
+            ages,
+            gender,
+            capacity,
+            joinedCount,
+            host: {id: hostId, nickname, avatarUrl, manner: Number(manner)},
+            game: {gameAt, home, away, stadium},
+        }
+    })
+    return {posts, hasMore: data.length > size}
 }
