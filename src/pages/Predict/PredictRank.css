@@ -1,0 +1,47 @@
+/* 랭킹 · 카드 사이 간격 12px */
+.predict-rank {
+    gap: 12px;
+    padding-bottom: 16px;
+}
+
+/* ── 월간 / 시즌 전환 · 회색 바탕에 고른 쪽만 흰 버튼 ── */
+.predict-rank__period {
+    display: grid;
+    flex: none;
+    grid-template-columns: 1fr 1fr;
+    padding: 4px;
+    border-radius: var(--radius-input);
+    background: var(--gray-100);
+}
+
+.predict-rank__period-tab {
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    font-family: var(--font-base), sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-500);
+    cursor: pointer;
+}
+
+.predict-rank__period-tab[aria-selected='true'] {
+    background: var(--surface);
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--text-900) 12%, transparent);
+    font-weight: 700;
+    color: var(--navy-500);
+}
+
+/* ── 4~10위 목록 ── */
+.predict-rank__list {
+    flex: none;
+    margin: 0;
+    padding: 0 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--surface);
+    list-style: none;
+}

@@ -1,0 +1,27 @@
+/* 내 기록 · 카드 사이 간격만 예측하기 화면보다 좁다 (14px) */
+.predict-history {
+    gap: 14px;
+}
+
+/* ── 예측 내역 ── */
+.predict-history__list-wrap {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.predict-history__title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.predict-history__list {
+    margin: 0;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--surface);
+    list-style: none;
+}
