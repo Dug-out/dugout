@@ -70,6 +70,6 @@
 알림 목록, 비밀번호 찾기, 신고·차단(프로필 ⋯ 메뉴), 오류 상태 — 기존 화면 스타일과 빈 화면 틀(`Empty-*.dc.html`)을 따라 만든다.
 
 ## 작업 방식
-- 공통 컴포넌트(Header, TabBar, Button, Chip, Tag, Card, MateCard, ScoreTile, BottomSheet, Dialog, EmptyState, Loading, InlineMessage)를 먼저 만들고 화면에서 재사용한다.
+- 공통 컴포넌트(Header, TabBar, Button, Chip, Tag, Card, MateCard, BottomSheet, Dialog, EmptyState, Loading, InlineMessage)를 먼저 만들고 화면에서 재사용한다.
 - 문구(한국어)는 디자인 파일의 문구를 그대로 쓴다.
 - 한 번에 화면 하나씩, 디자인 파일과 나란히 비교하며 만든다.
