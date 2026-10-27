@@ -4,10 +4,10 @@ import {teamOf} from '../../../utils/predict.js'
 import './PlanGameCard.css'
 
 /**
- * 추천 경기 카드 · D-day와 날짜, 홈팀 vs 원정팀과 시작 시각, 구장과 모집 글 수
- * @param {{game: {gameAt: string, home: string, away: string, stadium: string}, mateCount: number}} props
+ * 추천 경기 카드 · D-day와 날짜, 홈팀 vs 원정팀과 시작 시각, 구장
+ * @param {{game: {gameAt: string, home: string, away: string, stadium: string}}} props
  */
-function PlanGameCard({game, mateCount}) {
+function PlanGameCard({game}) {
     // 화면이 뜬 시각 · D-day 계산에 쓴다
     const [now] = useState(() => Date.now())
 
@@ -39,7 +39,6 @@ function PlanGameCard({game, mateCount}) {
                     <circle cx="12" cy="10" r="2.6" fill="var(--surface)" />
                 </svg>
                 {game.stadium}
-                <span className="plan-game__mates">모집 글 {mateCount}개</span>
             </div>
         </section>
     )

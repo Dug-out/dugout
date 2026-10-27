@@ -17,7 +17,7 @@ function PlanResult() {
     if (!state?.plan) return <Navigate to="/plans" replace />
 
     const {conditions, plan} = state
-    const {myTeam, game, mateCount} = plan
+    const {myTeam, game} = plan
 
     return (
         <div className="plan-result">
@@ -36,7 +36,7 @@ function PlanResult() {
                 {game ? (
                     <>
                         <h2 className="plan-result__heading">조건에 맞는 경기를 골랐어요</h2>
-                        <PlanGameCard game={game} mateCount={mateCount} />
+                        <PlanGameCard game={game} />
                     </>
                 ) : (
                     <EmptyState

@@ -32,7 +32,7 @@ function matchesWhen(value, when) {
  *  2) 모집 중인 모집 글이 많은 경기 → 내 팀 홈 경기 → 날짜가 빠른 경기 순으로 가장 앞의 하나
  * @param {{conditions: {when: string}}} input
  * @returns {Promise<{myTeam: string, game: null | {id: number, gameAt: string, home: string, away: string, stadium: string,
- *   opponent: string, isHome: boolean}, mateCount: number}>} 후보가 없으면 game 이 null
+ *   opponent: string, isHome: boolean}}>} 후보가 없으면 game 이 null
  */
 export async function makePlan({conditions}) {
     const myTeam = await getMyTeam()
@@ -48,7 +48,7 @@ export async function makePlan({conditions}) {
     if (error) throw error
 
     const candidates = games.filter((row) => matchesWhen(row.game_at, conditions.when))
-    if (candidates.length === 0) return {myTeam, game: null, mateCount: 0}
+    if (candidates.length === 0) return {myTeam, game: null}
 
     // 후보 경기마다 모집 중인 글이 몇 개인지
     const {data: posts, error: postsError} = await supabase
@@ -69,7 +69,7 @@ export async function makePlan({conditions}) {
         // 후보는 이미 날짜 순이라, 같은 점수끼리는 날짜가 빠른 쪽이 앞에 남는다 (sort 는 같은 값의 순서를 바꾸지 않는다)
         .sort((a, b) => b.mateCount - a.mateCount || Number(b.isHome) - Number(a.isHome))
 
-    const {row, mateCount, isHome} = ranked[0]
+    const {row, isHome} = ranked[0]
     const {id, game_at: gameAt, home_team: home, away_team: away, stadium} = row
-    return {myTeam, game: {id, gameAt, home, away, stadium, opponent: isHome ? away : home, isHome}, mateCount}
+    return {myTeam, game: {id, gameAt, home, away, stadium, opponent: isHome ? away : home, isHome}}
 }
