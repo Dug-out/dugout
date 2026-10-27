@@ -25,3 +25,11 @@ export const FOOD_OPTIONS = [
 
 // 처음에 골라져 있는 조건
 export const DEFAULT_CONDITIONS = {when: 'any', seat: 'cheer', food: 'chicken'}
+
+// 플랜의 출발 위치 · 지도에서 고르는 화면이 생기기 전까지 항상 강남역이다
+export const DEFAULT_ORIGIN = {
+    lat: 37.498,
+    lng: 127.027,
+    label: '강남역 2번 출구 근처',
+    address: '서울 강남구 강남대로 396',
+}

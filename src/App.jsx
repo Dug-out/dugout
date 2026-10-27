@@ -10,6 +10,7 @@ import MateManage from './pages/Mate/MateManage.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
 import MyPosts from './pages/MyPosts/MyPosts.jsx'
 import Plan from './pages/Plan/Plan.jsx'
+import PlanResult from './pages/Plan/PlanResult.jsx'
 import Predict from './pages/Predict/Predict.jsx'
 import PredictHistory from './pages/Predict/PredictHistory.jsx'
 import PredictRank from './pages/Predict/PredictRank.jsx'
@@ -64,6 +65,7 @@ function App() {
             <Route element={<TabLayout />}>
                 <Route path="/home" element={<Home />} />
                 <Route path="/plans" element={<Plan />} />
+                <Route path="/plans/result" element={<PlanResult />} />
                 <Route path="/mate" element={<Mate />} />
                 <Route path="/my" element={<Mypage />} />
                 <Route path="/posts" element={<MyPosts />} />
