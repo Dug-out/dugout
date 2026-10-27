@@ -34,8 +34,18 @@ function matchesWhen(value, when) {
     return when === 'weekend' ? isWeekend : !isWeekend && hour >= 17
 }
 
+/** 배열을 무작위로 섞은 새 배열 (Fisher-Yates) */
+function shuffle(items) {
+    const result = [...items]
+    for (let i = result.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[result[i], result[j]] = [result[j], result[i]]
+    }
+    return result
+}
+
 /**
- * 구장 안 맛집 최대 2곳 · 구장과 고른 음식 종류가 같은 매장 (stadium_food, 위치가 적힌 매장을 먼저)
+ * 구장 안 맛집 2곳 · 구장과 고른 음식 종류가 같은 매장 중에서 무작위로 뽑는다 (stadium_food) · 플랜을 만들 때마다 다른 매장이 나온다
  * 맛집은 플랜에 꼭 필요한 정보가 아니라서, 조회가 실패하면 플랜 전체를 막지 않고 빈 목록으로 대신한다
  */
 async function getIndoorFoods(stadium, food) {
@@ -48,12 +58,11 @@ async function getIndoorFoods(stadium, food) {
         .select('id, name, category, location')
         .eq('stadium_code', code)
         .eq('category', category)
-        .order('location', {nullsFirst: false})
-        .order('name')
-        .limit(2)
     if (error) return []
 
-    return data.map(({id, name, category: foodCategory, location}) => ({id, name, category: foodCategory, location}))
+    return shuffle(data)
+        .slice(0, 2)
+        .map(({id, name, category: foodCategory, location}) => ({id, name, category: foodCategory, location}))
 }
 
 /**
