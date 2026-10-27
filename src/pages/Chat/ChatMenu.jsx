@@ -16,27 +16,28 @@ function ChatMenu({post, open, onClose, onEdited}) {
     // 나간 뒤에는 모집 글 상세를 건너뛰고 그 앞 화면(메이트 찾기든 내 직관 약속이든 들어온 곳)으로 돌아간다
     const goBack = useGoBack('/mate', 2)
 
-    // 화면이 뜬 시각 · 경기가 이미 시작했는지 가리는 데 쓴다
-    const [now] = useState(() => Date.now())
-    const started = new Date(post.game.gameAt) <= now
-
-    // 열려 있는 창: 'leave' 나가기 확인 / 'edit' 수정 시트 / 'started' 할 수 없다는 안내 / null 없음
+    // 열려 있는 창: 'leave' 나가기 확인 / 'edit' 수정 시트 / 'edited' 수정 완료 안내 / 'started' 할 수 없다는 안내 / null 없음
     const [dialog, setDialog] = useState(null)
     // 나가는 중인지 (중복 클릭 방지) / 실패 안내 문구
     const [leaving, setLeaving] = useState(false)
     const [failure, setFailure] = useState('')
 
-    // 메뉴에서 항목을 골랐을 때 · 이미 시작한 모임이면 어떤 항목이든 같은 안내를 한다
+    // 메뉴에서 항목을 골랐을 때 · 경기가 이미 시작했으면 어떤 항목이든 같은 안내를 한다 (고른 순간의 시각으로 가린다)
     const choose = (name) => {
+        const started = new Date(post.game.gameAt) <= Date.now()
         onClose()
         setDialog(started ? 'started' : name)
     }
 
-    // 수정 시트가 끝났을 때 · 성공하면 글을 다시 읽고, 실패하면 안내 창을 띄운다
+    // 수정 시트가 끝났을 때 · 성공하면 글을 다시 읽고 완료 안내를, 실패하면 실패 안내를 띄운다
     const handleEdited = ({ok, message}) => {
-        setDialog(null)
-        if (ok) onEdited()
-        else setFailure(message)
+        if (ok) {
+            setDialog('edited')
+            onEdited()
+        } else {
+            setDialog(null)
+            setFailure(message)
+        }
     }
 
     // 확인 창의 [나가기] · 성공하면 들어온 곳으로, 실패하면 안내 창을 띄운다
@@ -87,6 +88,15 @@ function ChatMenu({post, open, onClose, onEdited}) {
                     </>
                 }
                 confirmLabel="나가기"
+            />
+
+            {/* 수정 완료 */}
+            <NoticeDialog
+                open={dialog === 'edited'}
+                onClose={() => setDialog(null)}
+                kind="success"
+                title="모집 글을 수정했어요!"
+                description="바뀐 내용이 채팅방과 모집 글에 반영됐어요."
             />
 
             {/* 이미 시작한 모임 · 수정과 나가기 모두 이 안내 하나 · 확인 버튼만 있다 */}
