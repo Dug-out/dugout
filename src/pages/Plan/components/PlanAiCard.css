@@ -1,13 +1,13 @@
-/* 남색에서 빨강으로 이어지는 연한 테두리 · 왼쪽 위 모서리만 뾰족한 말풍선 */
+/* 연한 빨강에서 분홍으로 이어지는 테두리 · 왼쪽 위 모서리만 뾰족한 말풍선 */
 .plan-ai {
     padding: 1px;
     border-radius: 5px 22px 22px 22px;
     background: linear-gradient(
         135deg,
-        color-mix(in srgb, var(--navy-500) 32%, var(--surface)),
-        color-mix(in srgb, var(--red-500) 32%, var(--surface))
+        color-mix(in srgb, var(--red-500) 38%, var(--surface)),
+        color-mix(in srgb, var(--red-500) 14%, var(--surface))
     );
-    box-shadow: 0 8px 20px color-mix(in srgb, var(--navy-500) 8%, transparent);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--red-500) 10%, transparent);
 }
 
 .plan-ai__inner {
@@ -18,7 +18,7 @@
     overflow: hidden;
     padding: 14px 16px 12px;
     border-radius: 4px 21px 21px 21px;
-    background: linear-gradient(180deg, var(--surface) 55%, var(--red-25));
+    background: linear-gradient(180deg, var(--surface) 40%, var(--red-25));
 }
 
 .plan-ai__deco {
@@ -45,14 +45,14 @@
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--navy-500), var(--red-600));
+    background: linear-gradient(135deg, var(--red-500), var(--red-600));
     color: var(--surface);
 }
 
 .plan-ai__name {
     font-size: 13.5px;
     font-weight: 700;
-    color: var(--navy-500);
+    color: var(--red-text);
 }
 
 .plan-ai__source {
@@ -63,10 +63,10 @@
     height: 22px;
     padding: 0 8px;
     border-radius: var(--radius-full);
-    background: var(--navy-50);
+    background: var(--red-50);
     font-size: 11px;
     font-weight: 700;
-    color: var(--navy-500);
+    color: var(--red-text);
 }
 
 .plan-ai__headline {
@@ -99,8 +99,9 @@
     align-items: center;
     height: 26px;
     padding: 0 10px;
+    border: 1px solid color-mix(in srgb, var(--red-500) 28%, var(--surface));
     border-radius: var(--radius-full);
-    background: var(--red-50);
+    background: var(--surface);
     font-size: 12px;
     font-weight: 700;
     color: var(--red-text);
