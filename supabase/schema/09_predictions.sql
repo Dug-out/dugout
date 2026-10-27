@@ -61,38 +61,39 @@ create policy "predictions_update_before_start" on public.predictions
 ------------------------------------------
 -- 3. 채점 · 경기가 끝난 것으로 바뀌는 순간 그 경기의 예측에 점수를 채운다
 --  · 승·무·패를 맞히면 10점
---  · 스코어까지 맞히면 10점 + (그 경기 참여자 수 ÷ 스코어를 맞힌 사람 수), 소수점은 버린다
+--  · 스코어까지 맞히면 10점 + (참여자 수 ÷ 스코어를 맞힌 사람 수), 소수점은 버린다
+--    참여자 수와 맞힌 사람 수는 응원팀별로 따로 센다 (LG 팬은 LG 팬끼리, 두산 팬은 두산 팬끼리)
 --  · 빗나가면 0점
 -- 점수는 경기 종료 때 한 번 정해지고 그 뒤에는 바뀌지 않는다
 -- predictions.points 는 사용자가 못 바꾸므로 관리자 권한 함수가 대신 채운다
 ------------------------------------------
 create function public.grade_predictions()
 returns trigger language plpgsql security definer set search_path = public as $$
-declare
-  total int;
-  exact int;
-  bonus int;
 begin
-  select count(*),
-         count(*) filter (where home_score = new.home_score and away_score = new.away_score)
-    into total, exact
-  from public.predictions
-  where game_id = new.id;
-
-  bonus := case when exact > 0 then total / exact else 0 end;
-
+  with scored as (
+    select
+      p.id, p.home_score, p.away_score,
+      count(*) over (partition by pr.team) as total,
+      count(*) filter (where p.home_score = new.home_score and p.away_score = new.away_score)
+        over (partition by pr.team) as exact
+    from public.predictions p
+    join public.profiles pr on pr.id = p.user_id
+    where p.game_id = new.id
+  )
   update public.predictions p
   set points = case
-    when p.home_score = new.home_score and p.away_score = new.away_score then 10 + bonus
-    when sign(p.home_score - p.away_score) = sign(new.home_score - new.away_score) then 10
+    when s.home_score = new.home_score and s.away_score = new.away_score then 10 + s.total / s.exact
+    when sign(s.home_score - s.away_score) = sign(new.home_score - new.away_score) then 10
     else 0
   end
-  where p.game_id = new.id;
+  from scored s
+  where p.id = s.id;
 
   return null;
 end;
 $$;
 
+-- 경기가 끝난 것(finished)으로 바뀌는 순간 위 함수를 부른다
 create trigger on_game_finished
   after update of status on public.games
   for each row
