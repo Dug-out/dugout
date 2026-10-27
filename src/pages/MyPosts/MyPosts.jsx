@@ -24,16 +24,7 @@ function MyPosts() {
             <Header large title="내 직관" />
             <LoadState status={status} errorTitle="약속을 불러오지 못했어요" onRetry={reload} />
             {status === 'ready' && data.length === 0 && (
-                <EmptyState
-                    title="아직 잡힌 직관 약속이 없어요"
-                    description={
-                        <>
-                            모집 글에 참여하거나
-                            <br />
-                            직접 글을 올려 메이트를 모아 보세요
-                        </>
-                    }
-                />
+                <EmptyState title="아직 잡힌 직관 약속이 없어요" description="직접 글을 올려 메이트를 모아 보세요" />
             )}
             {status === 'ready' && data.length > 0 && <PostList items={data} />}
         </div>
