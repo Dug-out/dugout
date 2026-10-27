@@ -73,27 +73,27 @@
 .planner-card__chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 6px 5px;
 }
 
 .planner-card__chip {
     position: relative;
-    height: 36px;
-    padding: 0 14px;
+    height: 32px;
+    padding: 0 11px;
     border: 1px solid rgba(255, 255, 255, 0.32);
     border-radius: var(--radius-full);
     background: rgba(255, 255, 255, 0.06);
     color: color-mix(in srgb, var(--surface) 88%, var(--on-navy-sub));
     font-family: var(--font-base), sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
 }
 
-/* 보이는 높이는 36px, 누르는 영역은 44px */
+/* 보이는 높이는 32px, 누르는 영역은 44px */
 .planner-card__chip::after {
     position: absolute;
-    inset: -4px 0;
+    inset: -6px 0;
     content: '';
 }
 
