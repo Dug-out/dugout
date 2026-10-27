@@ -3,6 +3,7 @@ import {useLocation, useNavigate} from 'react-router'
 import {makePlan} from '../../api/plan.js'
 import {Header, Icon, NoticeDialog} from '../../components'
 import {DEFAULT_CONDITIONS, DEFAULT_ORIGIN} from '../../constants/planner.js'
+import OriginMap from './components/OriginMap.jsx'
 import PlanLoading from './components/PlanLoading.jsx'
 import './Plan.css'
 
@@ -17,7 +18,8 @@ function Plan() {
     const {state} = useLocation()
     // 홈에서 고른 조건 · 탭바로 바로 들어오면 기본 조건
     const conditions = state?.conditions ?? DEFAULT_CONDITIONS
-    const origin = DEFAULT_ORIGIN
+    // 출발 위치 · 처음엔 강남역이고, 지도에서 고르면 그 위치로 바뀐다
+    const [origin, setOrigin] = useState(DEFAULT_ORIGIN)
 
     // 플랜을 짜는 중인지 / 실패 안내 문구
     const [making, setMaking] = useState(false)
@@ -67,7 +69,9 @@ function Plan() {
                 <h2 className="plan__title">어디서 출발하세요?</h2>
             </div>
 
-            {/* 출발 위치 · 지도로 고르는 화면이 생기기 전까지는 강남역 하나로 정해져 있다 */}
+            <OriginMap initial={DEFAULT_ORIGIN} onChange={setOrigin} />
+
+            {/* 지금 고른 출발 위치 */}
             <div className="plan__sheet">
                 <div className="plan__place">
                     <span className="plan__pin">
@@ -75,7 +79,7 @@ function Plan() {
                     </span>
                     <span className="plan__place-text">
                         <strong>{origin.label}</strong>
-                        <span>{origin.address}</span>
+                        {origin.address && <span>{origin.address}</span>}
                     </span>
                 </div>
                 <button type="button" className="plan__make" onClick={startMaking}>

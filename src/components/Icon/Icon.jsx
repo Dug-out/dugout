@@ -114,6 +114,19 @@ const PATHS = {
         </>
     ),
     food: <path d="M7 3v7M4.5 3v4.5a2.5 2.5 0 0 0 5 0V3M7 10v11M17 3c-2.2 1.6-3 4-3 7h3v11" />,
+    search: (
+        <>
+            <circle cx="11" cy="11" r="6.5" />
+            <path d="M16 16l4 4" />
+        </>
+    ),
+    locate: (
+        <>
+            <circle cx="12" cy="12" r="6" />
+            <circle cx="12" cy="12" r="2" fill="currentColor" />
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+        </>
+    ),
     external: <path d="M8 16L16 8M9.5 8H16v6.5" />,
     exit: (
         <>
@@ -123,7 +136,7 @@ const PATHS = {
     ),
 }
 
-/** name: back | plus | check | alert | calendar | pin | home | mate | plan | posts | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | more | exit | edit | trash | ticket | external | food */
+/** name: back | plus | check | alert | calendar | pin | home | mate | plan | posts | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | more | exit | edit | trash | ticket | external | food | search | locate */
 function Icon({name, size = 24, strokeWidth = 2, ...rest}) {
     return (
         <svg
