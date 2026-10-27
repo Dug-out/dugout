@@ -1,4 +1,4 @@
-import {FOOD_OPTIONS, PLAN_WINDOW_DAYS, STADIUM_CODE_BY_NAME} from '../constants/planner.js'
+import {FOOD_OPTIONS, PLAN_WINDOW_DAYS, SEAT_OPTIONS, STADIUM_CODE_BY_NAME} from '../constants/planner.js'
 import {supabase} from '../lib/supabase.js'
 import {getMyTeam} from './profiles.js'
 
@@ -66,14 +66,44 @@ async function getIndoorFoods(stadium, food) {
 }
 
 /**
+ * 같은 경기 · 고른 좌석의 모집 중인 모임 · 최근 글 2개와 전체 개수 (mate_posts)
+ * 모임은 플랜에 꼭 필요한 정보가 아니라서, 조회가 실패하면 플랜 전체를 막지 않고 빈 목록으로 대신한다
+ */
+async function getSeatMates(gameId, seat) {
+    const seatLabel = SEAT_OPTIONS.find((option) => option.value === seat)?.label
+    if (!seatLabel) return {count: 0, items: []}
+
+    const {data, count, error} = await supabase
+        .from('mate_posts')
+        .select('id, title, seat, capacity, joined_count, host:profiles!host_id(nickname, avatar_url)', {
+            count: 'exact',
+        })
+        .eq('game_id', gameId)
+        .eq('seat', seatLabel)
+        .eq('status', 'open')
+        .order('created_at', {ascending: false})
+        .limit(2)
+    if (error) return {count: 0, items: []}
+
+    const items = data.map((row) => {
+        const {id, title, seat: postSeat, capacity, joined_count: joined, host} = row
+        const {nickname, avatar_url: avatarUrl} = host
+        return {id, title, seat: postSeat, capacity, joined, host: nickname, avatarUrl}
+    })
+    return {count: count ?? items.length, items}
+}
+
+/**
  * 직관 플랜 만들기 · 조건에 맞는 경기 하나를 고른다 (AI 가 아니라 규칙)
  *  1) 오늘부터 PLAN_WINDOW_DAYS 일 안의 예정 경기 중 "언제" 조건에 맞는 것이 후보 (내 팀 경기만 오는 건 DB 규칙)
  *  2) 모집 중인 모집 글이 많은 경기 → 내 팀 홈 경기 → 날짜가 빠른 경기 순으로 가장 앞의 하나
  * @param {{conditions: {when: string, food: string}}} input
  * @returns {Promise<{myTeam: string, game: null | {id: number, gameAt: string, home: string, away: string, stadium: string,
  *   opponent: string, isHome: boolean}, foods: {id: string, name: string, category: string, location: string | null}[],
+ *   mates: {count: number, items: {id: string, title: string, seat: string, capacity: number, joined: number, host: string,
+ *   avatarUrl: string | null}[]},
  *   ai?: {highlight: string, point: string, tags: string[], sourceCount: number}}>}
- *  후보가 없으면 game 이 null · foods 는 구장 안 맛집 · ai 는 AI 경기 포인트 (없으면 말풍선을 숨긴다)
+ *  후보가 없으면 game 이 null · foods 는 구장 안 맛집 · mates 는 같은 경기·좌석의 모집 글 · ai 는 AI 경기 포인트 (없으면 말풍선을 숨긴다)
  */
 export async function makePlan({conditions}) {
     const myTeam = await getMyTeam()
@@ -89,7 +119,7 @@ export async function makePlan({conditions}) {
     if (error) throw error
 
     const candidates = games.filter((row) => matchesWhen(row.game_at, conditions.when))
-    if (candidates.length === 0) return {myTeam, game: null, foods: []}
+    if (candidates.length === 0) return {myTeam, game: null, foods: [], mates: {count: 0, items: []}}
 
     // 후보 경기마다 모집 중인 글이 몇 개인지
     const {data: posts, error: postsError} = await supabase
@@ -112,11 +142,15 @@ export async function makePlan({conditions}) {
 
     const {row, isHome} = ranked[0]
     const {id, game_at: gameAt, home_team: home, away_team: away, stadium} = row
-    const foods = await getIndoorFoods(stadium, conditions.food)
+    const [foods, mates] = await Promise.all([
+        getIndoorFoods(stadium, conditions.food),
+        getSeatMates(id, conditions.seat),
+    ])
     return {
         myTeam,
         game: {id, gameAt, home, away, stadium, opponent: isHome ? away : home, isHome},
         foods,
+        mates,
         ai: TEMP_AI,
     }
 }

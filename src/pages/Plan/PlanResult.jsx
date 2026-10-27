@@ -7,6 +7,7 @@ import {teamOf} from '../../utils/predict.js'
 import ConditionBar from './components/ConditionBar.jsx'
 import PlanAiCard from './components/PlanAiCard.jsx'
 import PlanGameCard from './components/PlanGameCard.jsx'
+import PlanMates from './components/PlanMates.jsx'
 import PlanSteps from './components/PlanSteps.jsx'
 import {FoodCard, FoodEmpty, RouteCard, TicketCard} from './components/PlanStepCards.jsx'
 import './PlanResult.css'
@@ -24,7 +25,7 @@ function PlanResult() {
     const {conditions, plan} = state
     // 출발 위치 · 지도로 고르는 화면이 생기기 전까지는 강남역
     const origin = state.origin ?? DEFAULT_ORIGIN
-    const {myTeam, game, foods = [], ai} = plan
+    const {myTeam, game, foods = [], mates = {count: 0, items: []}, ai} = plan
 
     return (
         <div className="plan-result">
@@ -99,6 +100,8 @@ function PlanResult() {
                                 ]}
                             />
                         </section>
+
+                        <PlanMates seat={labelOf(SEAT_OPTIONS, conditions.seat)} mates={mates} />
                     </>
                 ) : (
                     <EmptyState
