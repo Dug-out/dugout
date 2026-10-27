@@ -61,24 +61,6 @@ export async function getMyPosts() {
     })
 }
 
-/** 새 신청 수 · 내가 방장인 글 중 경기가 아직 안 지난 글의 대기 중 신청을 센다 */
-export async function getPendingApplicantCount() {
-    const {
-        data: {session},
-    } = await supabase.auth.getSession()
-    const {id: userId} = session.user
-
-    const {count, error} = await supabase
-        .from('mate_members')
-        .select('post:mate_posts!inner(host_id, game:games!inner(game_at))', {count: 'exact', head: true})
-        .eq('status', 'pending')
-        .eq('post.host_id', userId)
-        .gt('post.game.game_at', new Date().toISOString())
-    if (error) throw error
-
-    return count ?? 0
-}
-
 /** 나가기 실패 → 화면에 보여줄 문구 */
 function leaveErrorMessage({code}) {
     if (code === '23514') return '이미 나갔거나 나갈 수 없는 약속이에요'

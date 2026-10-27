@@ -19,7 +19,6 @@ import SignupDone from './pages/Signup/SignupDone.jsx'
 import {TabLayout} from './components'
 import MannerReviews from './pages/Reviews/Received/MannerReviews.jsx'
 import Mypage from './pages/Mypage/Mypage.jsx'
-import Record from './pages/Record/Record.jsx'
 import ProfileReviews from './pages/Reviews/Received/ProfileReviews.jsx'
 import ReviewDone from './pages/Reviews/Give/ReviewDone.jsx'
 import ReviewList from './pages/Reviews/Give/ReviewList.jsx'
@@ -56,7 +55,6 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/signup/done" element={<SignupDone />} />
             <Route path="/profile/edit" element={<ProfileEdit />} />
-            <Route path="/my/posts" element={<MyPosts />} />
             <Route path="/my/manner" element={<MannerReviews />} />
             <Route path="/my/reviews" element={<ReviewList />} />
             <Route path="/reviews/done" element={<ReviewDone />} />
@@ -69,7 +67,7 @@ function App() {
                 <Route path="/plans" element={<MyPlans />} />
                 <Route path="/mate" element={<Mate />} />
                 <Route path="/my" element={<Mypage />} />
-                <Route path="/record" element={<Record />} />
+                <Route path="/posts" element={<MyPosts />} />
             </Route>
             <Route path="/ai-plan" element={<AiPlan />} />
             <Route path="/predict" element={<Predict />} />

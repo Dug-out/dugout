@@ -14,14 +14,14 @@ const TABS = [
     {key: 'joined', label: '참여한 약속', match: (item) => item.role !== 'host'},
 ]
 
-/** 내 직관 약속 · 약속이 없으면 빈 화면을 보여 준다 */
+/** "내 직관" 탭 · 내가 연 약속과 참여한 약속 · 약속이 없으면 빈 화면을 보여 준다 */
 function MyPosts() {
     // status 는 loading | ready | error
     const {status, data, reload} = useMyPosts()
 
     return (
         <div className="my-posts">
-            <Header title="내 직관 약속" backTo="/my" />
+            <Header large title="내 직관" />
             <LoadState status={status} errorTitle="약속을 불러오지 못했어요" onRetry={reload} />
             {status === 'ready' && data.length === 0 && (
                 <EmptyState
