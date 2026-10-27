@@ -1,0 +1,88 @@
+.predict {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh; /* CLAUDE.md: 높이는 100dvh */
+    background: var(--bg);
+}
+
+/* 헤더 · 아래 구분선은 안쪽 탭이 대신 그어서 헤더 구분선만 없앤다 (Header.css는 고치지 않음) */
+.predict .header {
+    border-bottom: 0;
+}
+
+.predict__main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 16px;
+    padding: 14px 20px 20px;
+}
+
+/* ── 예측할 경기가 없을 때 · 가운데 빈 화면 ── */
+.predict__main--empty {
+    align-items: center;
+    justify-content: center;
+    padding: 0 32px 60px;
+}
+
+/* 빈 화면 버튼 · 지난 예측 보기 / 예측하러 가기 */
+.predict__empty-btn {
+    height: 50px;
+    padding: 0 28px;
+    border-color: var(--border-strong);
+    color: var(--text-700);
+}
+
+/* ── 하단 고정 버튼 ── */
+.predict__bottom {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    padding: 10px 20px calc(12px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--gray-100);
+    background: var(--surface);
+}
+
+.predict__done {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.predict__done-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.predict__done-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy-500);
+}
+
+.predict__done-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--navy-500);
+    font-size: 12px;
+    color: var(--surface);
+}
+
+.predict__done-pick {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.predict__edit {
+    height: 52px;
+    border: 1.5px solid var(--navy-500);
+    color: var(--navy-500);
+}

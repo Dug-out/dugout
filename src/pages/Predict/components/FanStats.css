@@ -1,0 +1,130 @@
+/* 팬 예측 비율 카드 */
+.fan-stats {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 16px 16px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--surface);
+}
+
+.fan-stats__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.fan-stats__title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.fan-stats__total {
+    font-size: 12px;
+    color: var(--text-400);
+}
+
+.fan-stats__empty {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-500);
+}
+
+/* ── 승/무/패 막대 ── */
+.fan-stats__rates {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.fan-stats__bar {
+    display: flex;
+    gap: 3px;
+    height: 6px;
+}
+
+.fan-stats__seg {
+    border-radius: 1px;
+}
+
+.fan-stats__seg:first-child {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.fan-stats__seg:last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.fan-stats__seg--win {
+    background: var(--navy-500);
+}
+
+.fan-stats__seg--draw {
+    background: var(--gray-500);
+}
+
+.fan-stats__seg--lose {
+    background: var(--red-500);
+}
+
+.fan-stats__labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-500);
+}
+
+.fan-stats__labels strong {
+    font-size: 14px;
+}
+
+.fan-stats__pct--win {
+    color: var(--navy-500);
+}
+
+.fan-stats__pct--draw {
+    color: var(--text-500);
+}
+
+.fan-stats__pct--lose {
+    color: var(--red-text);
+}
+
+/* ── 가장 많이 예측한 스코어 · 금색 상자 ── */
+.fan-stats__top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gold);
+    border-radius: var(--radius-btn);
+    background: color-mix(in srgb, var(--gold) 25%, var(--surface));
+}
+
+.fan-stats__top-label {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 700;
+    color: color-mix(in srgb, var(--sparkle) 45%, var(--text-900));
+}
+
+.fan-stats__top-score {
+    font-family: var(--font-number);
+    font-size: 24px;
+    line-height: 1;
+    color: var(--navy-500);
+}
+
+.fan-stats__top-pct {
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: var(--red-500);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--surface);
+}
