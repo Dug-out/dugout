@@ -77,18 +77,19 @@ export function FoodEmpty() {
 export function RouteCard({origin, arriveTime, link}) {
     return (
         <div className="plan-card plan-card--route">
-            <div className="plan-route">
-                <span className="plan-route__point">
-                    <span className="plan-route__label">출발지</span>
-                    <strong>{origin.label}</strong>
-                </span>
-                <Icon name="chevronRight" size={20} className="plan-route__arrow" />
-                <span className="plan-route__point plan-route__point--end">
-                    <span className="plan-route__label">도착 목표</span>
-                    <strong>{arriveTime}</strong>
-                    <span className="plan-route__note">경기 {ARRIVE_BEFORE_MINUTES}분 전</span>
-                </span>
-            </div>
+            <dl className="plan-route">
+                <div className="plan-route__row">
+                    <dt>출발지</dt>
+                    <dd>{origin.label}</dd>
+                </div>
+                <div className="plan-route__row">
+                    <dt>도착 목표</dt>
+                    <dd>
+                        {arriveTime}
+                        <span className="plan-route__note"> · 경기 {ARRIVE_BEFORE_MINUTES}분 전</span>
+                    </dd>
+                </div>
+            </dl>
             {link && (
                 <a className="plan-route__link" href={link} target="_blank" rel="noopener noreferrer">
                     카카오맵으로 길찾기
