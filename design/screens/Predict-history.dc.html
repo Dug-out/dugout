@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>승부 예측 · 내 기록</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+@keyframes aitick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ai-tick{animation:aitick 18s linear infinite;width:max-content}
+.ai-tick:hover{animation-play-state:paused}
+@media (prefers-reduced-motion: reduce){.ai-tick{animation:none}}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 800px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="flex: none; display: flex; align-items: center; gap: 4px; padding: 12px 12px 8px; background: #FFFFFF"><a href="Home.dc.html" aria-label="홈으로" style="width: 44px; height: 44px; flex: none; color: #141B33; display: flex; align-items: center; justify-content: center; border-radius: 12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a><h1 style="margin: 0; flex: 1; font-size: 17px; font-weight: 700">승부 예측</h1></header><nav aria-label="승부 예측 메뉴" style="flex: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: #FFFFFF; border-bottom: 1px solid #E3E6F0; padding: 0 12px"><a href="Predict.dc.html" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #6B7390">예측하기</a><a href="Predict-rank.dc.html" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #6B7390">랭킹</a><a href="Predict-history.dc.html" aria-current="page" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #1B2A5C; box-shadow: inset 0 -2.5px 0 #1B2A5C">내 기록</a></nav>
+<main style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding: 14px 20px 20px">
+<section aria-label="내 누적 점수" style="flex: none; border-radius: 20px; background: linear-gradient(165deg, #24356B 0%, #1B2A5C 60%, #141F47 100%); color: #FFFFFF; padding: 18px 12px; display: flex; align-items: stretch"><span style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center"><span style="font-size: 12px; font-weight: 600; color: #C9D1EA">10월 누적 점수</span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 30px; line-height: 1.1; color: #FFD58A">300<span style="font-size: 16px; margin-left: 2px">점</span></span><span style="font-size: 13px; font-weight: 700; color: #1B2A5C; background: #FFFFFF; padding: 2px 10px; border-radius: 999px">랭킹 5위</span></span><span aria-hidden="true" style="width: 1px; background: rgba(255,255,255,0.16)"></span><span style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center"><span style="font-size: 12px; font-weight: 600; color: #C9D1EA">2026 시즌 누적 점수</span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 30px; line-height: 1.1; color: #FFD58A">480<span style="font-size: 16px; margin-left: 2px">점</span></span><span style="font-size: 13px; font-weight: 700; color: #1B2A5C; background: #FFFFFF; padding: 2px 10px; border-radius: 999px">랭킹 12위</span></span></section>
+
+<section style="flex: none; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: baseline; justify-content: space-between"><h2 style="margin: 0; font-size: 15px; font-weight: 700">예측 내역</h2></div>
+<ul style="margin: 0; padding: 0 14px; list-style: none; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px">
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
+<li style="display: flex; align-items: center; gap: 12px; min-height: 60px; border-top: {{r.line}}">
+<span style="width: 50px; flex: none; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">{{r.date}}</span><span style="font-size: 12px; color: #6B7390">vs {{r.opp}}</span></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 13px"><span style="color: #6B7390">예측</span> <strong>{{r.mine}}</strong></span><span style="font-size: 13px"><span style="color: #6B7390">결과</span> <span style="color: #2F3756">{{r.real}}</span></span></span>
+<span style="flex: none; min-width: 64px; height: 30px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 0 10px; border-radius: 999px; border: 1.5px solid {{r.line2}}; background: {{r.chipBg}}; color: {{r.chipColor}}; font-family: 'Black Han Sans', sans-serif; font-size: 16px"><sc-if value="{{r.isExact}}" hint-placeholder-val="{{false}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4" fill="currentColor"></circle></svg></sc-if><sc-if value="{{r.isHit}}" hint-placeholder-val="{{true}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if><sc-if value="{{r.isWait}}" hint-placeholder-val="{{false}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2.5 2"></path></svg></sc-if><span aria-label="{{r.aria}}">{{r.chip}}</span></span>
+</li>
+</sc-for>
+</ul>
+</section>
+</main>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const C = { exact: ['#E63946', '#FFFFFF', '#E63946', '스코어 적중'], hit: ['#E8ECF7', '#1B2A5C', '#E8ECF7', '승부 적중'], miss: ['#F1F2F6', '#8A93B0', '#F1F2F6', '빗나감'], wait: ['#FFFFFF', '#8A93B0', '#E3E6F0', '경기 전'] };
+    const list = [
+      ['10.22', '두산', '승 5 : 3', '경기 전', 'wait', ''],
+      ['10.20', '두산', '승 5 : 3', '승 5 : 3', 'exact', '+42'],
+      ['10.18', 'NC', '승 4 : 2', '승 3 : 1', 'hit', '+10'],
+      ['10.17', 'NC', '승 7 : 5', '승 7 : 5', 'exact', '+56'],
+      ['10.16', 'NC', '승 5 : 2', '승 5 : 3', 'hit', '+10'],
+      ['10.15', '키움', '패 2 : 4', '승 3 : 2', 'miss', '0'],
+      ['10.14', '키움', '승 3 : 2', '패 2 : 4', 'miss', '0'],
+      ['10.13', '키움', '무 3 : 3', '무 4 : 4', 'hit', '+10']
+    ];
+    return {
+      rows: list.map((r, i) => ({ date: r[0], opp: r[1], mine: r[2], real: r[3], chip: r[5], chipBg: C[r[4]][0], chipColor: C[r[4]][1], line2: C[r[4]][2], aria: C[r[4]][3] + ' ' + (r[5] || ''), isExact: r[4] === 'exact', isHit: r[4] === 'hit', isWait: r[4] === 'wait', line: i === 0 ? 'none' : '1px solid #F1F2F6' }))
+    };
+  }
+}
+</script>
+</body>
+</html>

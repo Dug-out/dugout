@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>승부 예측</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+@keyframes aitick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ai-tick{animation:aitick 18s linear infinite;width:max-content}
+.ai-tick:hover{animation-play-state:paused}
+@media (prefers-reduced-motion: reduce){.ai-tick{animation:none}}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 920px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="flex: none; display: flex; align-items: center; gap: 4px; padding: 12px 12px 8px; background: #FFFFFF"><a href="Home.dc.html" aria-label="홈으로" style="width: 44px; height: 44px; flex: none; color: #141B33; display: flex; align-items: center; justify-content: center; border-radius: 12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a><h1 style="margin: 0; flex: 1; font-size: 17px; font-weight: 700">승부 예측</h1></header><nav aria-label="승부 예측 메뉴" style="flex: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: #FFFFFF; border-bottom: 1px solid #E3E6F0; padding: 0 12px"><a href="Predict.dc.html" aria-current="page" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #1B2A5C; box-shadow: inset 0 -2.5px 0 #1B2A5C">예측하기</a><a href="Predict-rank.dc.html" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #6B7390">랭킹</a><a href="Predict-history.dc.html" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #6B7390">내 기록</a></nav>
+<main style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; padding: 14px 20px 20px">
+
+<section aria-label="오늘 경기" style="flex: none; position: relative; overflow: hidden; border-radius: 20px; background: linear-gradient(165deg, #24356B 0%, #1B2A5C 55%, #141F47 100%); color: #FFFFFF; padding: 14px 16px 14px; display: flex; flex-direction: column; gap: 12px">
+<span aria-hidden="true" style="position: absolute; right: -30px; top: -30px; width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.05)"></span>
+<div style="position: relative; display: flex; align-items: center; justify-content: space-between"><span style="font-size: 13px; color: #C9D1EA">10.22 (목) 18:30 · 잠실야구장</span><span role="timer" aria-label="예측 마감까지 9시간 12분 40초" style="display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; background: #E63946; padding: 3px 10px; border-radius: 999px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2.5 2M9 2.5h6"></path></svg>마감 9:12:40</span></div>
+
+
+<div style="position: relative; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center">
+<span style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 64px; height: 64px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><img src="assets/team-lg.png" alt="" width="48" height="48" style="width: 48px; height: 48px; object-fit: contain"></span><span style="font-size: 15px; font-weight: 700">LG <span style="font-size: 10px; background: #D62839; padding: 1px 5px; border-radius: 5px; vertical-align: 2px">MY</span></span></span>
+<span style="font-family: 'Black Han Sans', sans-serif; font-size: 22px; color: #6F7DAA">VS</span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 64px; height: 64px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><img src="assets/team-doosan.png" alt="" width="48" height="48" style="width: 48px; height: 48px; object-fit: contain"></span><span style="font-size: 15px; font-weight: 700">두산</span></span>
+</div>
+<div style="position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; border-top: 1px solid rgba(255,255,255,0.14); padding-top: 10px; font-size: 13px"><span style="color: #9AA6CC">올 시즌 상대 전적</span><span style="font-weight: 700">LG 9승 1무 6패</span></div>
+</section>
+
+
+<section aria-label="스코어 예측" style="flex: none; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 20px; padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 6px 18px rgba(27,42,92,0.06)">
+<div role="region" aria-label="AI 경기 브리핑" style="flex: none; display: flex; align-items: center; height: 44px; border-radius: 12px; background: linear-gradient(90deg, #1B2A5C, #34478A); overflow: hidden">
+<span style="flex: none; height: 100%; display: flex; align-items: center; gap: 5px; padding: 0 12px 0 14px; background: #141F47; color: #FFD58A; font-size: 12px; font-weight: 700; white-space: nowrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8zM19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9z"></path></svg>AI 브리핑</span>
+<span style="flex: 1; min-width: 0; height: 100%; overflow: hidden; display: flex; align-items: center; -webkit-mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 24px), transparent); mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 24px), transparent)"><span class="ai-tick" style="display: flex; padding-left: 16px"><span style="flex: none; padding-right: 40px; font-size: 13px; font-weight: 600; color: #FFFFFF; white-space: nowrap">LG 최근 5경기 4승 1패 상승세 · 두산은 3연패 탈출을 노려요 · 잠실 홈 6연승 도전 · AI 예상은 LG 4 : 3 승리 (58%)</span><span aria-hidden="true" style="display: contents"><span style="flex: none; padding-right: 40px; font-size: 13px; font-weight: 600; color: #FFFFFF; white-space: nowrap">LG 최근 5경기 4승 1패 상승세 · 두산은 3연패 탈출을 노려요 · 잠실 홈 6연승 도전 · AI 예상은 LG 4 : 3 승리 (58%)</span></span></span></span>
+</div>
+<div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center">
+<span style="display: flex; flex-direction: column; align-items: center; gap: 10px"><span style="font-size: 14px; font-weight: 700; color: #2F3756">LG</span><span aria-live="polite" style="width: 72px; height: 72px; border-radius: 18px; background: {{boxA}}; border: 2px solid {{lineA}}; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: 'Black Han Sans', sans-serif; font-size: 40px; line-height: 1; color: {{numA}}">{{sA}}</span><span style="width: 104px; display: flex; align-items: center; border: 1.5px solid #D5DAE8; border-radius: 14px; overflow: hidden"><button onClick="{{decA}}" aria-label="LG 점수 내리기" style="flex: 1; height: 42px; border: none; background: transparent; color: #1B2A5C; display: flex; align-items: center; justify-content: center; padding: 0; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg></button><span aria-hidden="true" style="width: 1.5px; height: 24px; background: #E3E6F0"></span><button onClick="{{incA}}" aria-label="LG 점수 올리기" style="flex: 1; height: 42px; border: none; background: transparent; color: #1B2A5C; display: flex; align-items: center; justify-content: center; padding: 0; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button></span></span>
+<span style="font-family: 'Black Han Sans', sans-serif; font-size: 30px; color: #B4BBD0; margin-bottom: 4px">:</span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 10px"><span style="font-size: 14px; font-weight: 700; color: #2F3756">두산</span><span aria-live="polite" style="width: 72px; height: 72px; border-radius: 18px; background: {{boxB}}; border: 2px solid {{lineB}}; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: 'Black Han Sans', sans-serif; font-size: 40px; line-height: 1; color: {{numB}}">{{sB}}</span><span style="width: 104px; display: flex; align-items: center; border: 1.5px solid #D5DAE8; border-radius: 14px; overflow: hidden"><button onClick="{{decB}}" aria-label="두산 점수 내리기" style="flex: 1; height: 42px; border: none; background: transparent; color: #1B2A5C; display: flex; align-items: center; justify-content: center; padding: 0; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg></button><span aria-hidden="true" style="width: 1.5px; height: 24px; background: #E3E6F0"></span><button onClick="{{incB}}" aria-label="두산 점수 올리기" style="flex: 1; height: 42px; border: none; background: transparent; color: #1B2A5C; display: flex; align-items: center; justify-content: center; padding: 0; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button></span></span>
+</div>
+<sc-if value="{{has}}" hint-placeholder-val="{{false}}"><span style="align-self: center; font-size: 13px; font-weight: 700; color: #FFFFFF; background: {{resBg}}; padding: 4px 14px; border-radius: 999px">{{resLabel}} 예측</span></sc-if>
+</section>
+
+<section aria-label="LG팬 예측 현황" style="flex: none; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: baseline; justify-content: space-between"><h2 style="margin: 0; font-size: 16px; font-weight: 700">LG팬은 이렇게 봤어요</h2><span style="font-size: 12px; color: #6B7390">1,284명 참여</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div aria-hidden="true" style="display: flex; gap: 3px; height: 6px"><span style="width: 64%; border-radius: 3px 1px 1px 3px; background: #1B2A5C"></span><span style="width: 7%; border-radius: 1px; background: #8A93B0"></span><span style="flex: 1; border-radius: 1px 3px 3px 1px; background: #E63946"></span></div>
+<div style="display: flex; justify-content: space-between; font-size: 12px; color: #5A6380"><span><strong style="color: #1B2A5C; font-size: 14px">64%</strong> 승리</span><span><strong style="color: #5A6380; font-size: 14px">7%</strong> 무승부</span><span><strong style="color: #C21F31; font-size: 14px">29%</strong> 패배</span></div>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 14px; background: #FFF4E0; border: 1.5px solid #FFD58A"><span style="flex: 1; font-size: 13px; font-weight: 700; color: #8A5A00">🔥 가장 많이 예측한 스코어</span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 24px; line-height: 1; color: #1B2A5C">5 : 3</span><span style="font-size: 12px; font-weight: 700; color: #FFFFFF; background: #E63946; padding: 2px 8px; border-radius: 999px">14%</span></div>
+
+</section>
+</main>
+
+<div style="flex: none; padding: 10px 20px 12px; background: #FFFFFF; border-top: 1px solid #EEF0F6">
+<sc-if value="{{isOpen}}" hint-placeholder-val="{{true}}"><button onClick="{{submit}}" style="width: 100%; height: 54px; border: none; border-radius: 14px; background: {{submitBg}}; color: #FFFFFF; font-size: 16px; font-weight: 700; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">{{submitLabel}}</button></sc-if>
+<sc-if value="{{isDone}}" hint-placeholder-val="{{false}}"><div style="display: flex; flex-direction: column; gap: 10px"><div style="display: flex; align-items: center; justify-content: space-between"><span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #1B2A5C"><span style="width: 20px; height: 20px; border-radius: 50%; background: #1B2A5C; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 12px">✓</span>예측 완료</span><span style="font-size: 15px; font-weight: 700">{{myPick}}</span></div><button onClick="{{edit}}" style="width: 100%; height: 52px; border: 1.5px solid #1B2A5C; border-radius: 14px; background: #FFFFFF; color: #1B2A5C; font-size: 16px; font-weight: 700; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">예측 수정하기</button></div></sc-if>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"initialState":{"editor":"enum","options":["open","done"],"default":"open"},"$preview":{"width":390,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const D = this.props.initialState === 'done';
+    const done = st.done !== undefined ? st.done : D;
+    const a = st.a !== undefined ? st.a : (D ? 5 : null);
+    const b = st.b !== undefined ? st.b : (D ? 3 : null);
+    const has = a !== null && b !== null;
+    const A = a === null ? 0 : a, B = b === null ? 0 : b;
+    const out = A > B ? 'win' : (A < B ? 'lose' : 'draw');
+    const label = { win: 'LG 승리', draw: '무승부', lose: 'LG 패배' };
+    const color = { win: '#1B2A5C', draw: '#8A93B0', lose: '#E63946' };
+    const go = (x, y) => { if (!done) this.setState({ a: x, b: y }); };
+    return {
+      isOpen: !done, isDone: done, has: has,
+      resLabel: label[out], resBg: color[out],
+      sA: a === null ? '–' : a, sB: b === null ? '–' : b,
+      boxA: a === null ? '#F7F8FC' : '#EEF1F9', boxB: b === null ? '#F7F8FC' : '#EEF1F9',
+      lineA: a === null ? '#E3E6F0' : '#C9D1EA', lineB: b === null ? '#E3E6F0' : '#C9D1EA',
+      numA: a === null ? '#C9CEDC' : '#1B2A5C', numB: b === null ? '#C9CEDC' : '#1B2A5C',
+      decA: () => go(Math.max(0, A - 1), B), incA: () => go(Math.min(30, A + 1), B),
+      decB: () => go(A, Math.max(0, B - 1)), incB: () => go(A, Math.min(30, B + 1)),
+      submitBg: has ? '#1B2A5C' : '#B4BBD0',
+      submitLabel: has ? '예측 완료하기' : '스코어를 정해 주세요',
+      submit: () => { if (has) this.setState({ done: true }); },
+      edit: () => this.setState({ done: false, a: a, b: b }),
+      myPick: label[out] + ' ' + A + ' : ' + B
+    };
+  }
+}
+</script>
+</body>
+</html>
