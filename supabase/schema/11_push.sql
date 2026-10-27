@@ -129,12 +129,24 @@ create trigger on_mate_member_result_push
 ------------------------------------------
 create or replace function public.push_prediction_result()
 returns trigger language plpgsql security definer set search_path = public as $$
+declare
+  game record;
+  my_team text;
+  match text;
 begin
-  if new.points > 10 then
-    perform public.notify_push(new.user_id, '스코어 적중!', '+' || new.points || '점을 얻었어요', '/predict/history');
-  else
-    perform public.notify_push(new.user_id, '승부 적중!', '+' || new.points || '점을 얻었어요', '/predict/history');
-  end if;
+  select home_team, away_team into game from public.games where id = new.game_id;
+  select team into my_team from public.profiles where id = new.user_id;
+
+  -- 경기 이름은 내 응원팀을 앞에 쓴다 (예: LG vs 두산)
+  match := case when game.away_team = my_team then game.away_team || ' vs ' || game.home_team
+                else game.home_team || ' vs ' || game.away_team end;
+
+  perform public.notify_push(
+    new.user_id,
+    case when new.points > 10 then '스코어 적중!' else '승부 적중!' end,
+    match || ' · +' || new.points || '점을 얻었어요',
+    '/predict/history'
+  );
   return null;
 end;
 $$;
