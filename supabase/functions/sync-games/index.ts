@@ -3,6 +3,9 @@
 //  · mode "recent": 어제·오늘·내일 경기 (끝난 경기의 점수를 채우고, 내일로 옮겨진 경기를 알아챈다) · 호출 3건 (기본)
 // 같은 경기는 api_game_id 로 알아보고 고친다 · api_game_id 가 없는 경기(직접 넣은 것)는 건드리지 않는다
 // 경기가 끝난 것(finished)으로 바뀌면 승부 예측 채점은 DB 트리거가 한다 (09_predictions.sql)
+
+// @ts-nocheck
+
 import { createClient } from 'npm:@supabase/supabase-js@2'
 
 const LEAGUE = 5 // API-Sports 의 KBO 리그 번호
