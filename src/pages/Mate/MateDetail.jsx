@@ -72,7 +72,13 @@ function MateDetail() {
 }
 
 // 신청 조건(나이대 · 성별)에 맞지 않을 때의 안내
-const CONDITION_MESSAGE = '참여 조건에 맞지 않아 신청할 수 없어요. 나이대와 성별 조건을 확인해 주세요'
+const CONDITION_MESSAGE = (
+    <>
+        참여 조건에 맞지 않아 신청할 수 없어요.
+        <br />
+        나이대와 성별 조건을 확인해 주세요
+    </>
+)
 
 /** 불러온 글 · 이미지, 제목과 방장, 정보 카드, 소개, 함께 가는 메이트, 아래 신청 영역 */
 function PostContent({post, refresh}) {
