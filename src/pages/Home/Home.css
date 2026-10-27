@@ -26,8 +26,8 @@
     padding: 0 4px;
 }
 
-/* 이번 주 내 팀 경기 수 */
-.home__week {
+/* 제목 위 고정 문구 */
+.home__tagline {
     display: flex;
     align-items: center;
     align-self: flex-start;
@@ -37,7 +37,7 @@
     color: var(--red-text);
 }
 
-.home__week-dot {
+.home__tagline-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
