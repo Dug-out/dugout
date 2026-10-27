@@ -4,6 +4,7 @@
 ------------------------------------------
 create table public.games (
   id bigint generated always as identity primary key,
+  api_game_id bigint unique,  -- 외부 경기 정보(API-Sports)의 경기 번호 · 같은 경기를 다시 받으면 새 줄 대신 이 줄을 고친다 (직접 넣은 경기는 비어 있다)
   home_team text not null check (home_team in ('LG','두산','KIA','삼성','롯데','한화','SSG','NC','KT','키움')),
   away_team text not null check (away_team in ('LG','두산','KIA','삼성','롯데','한화','SSG','NC','KT','키움')),
   stadium text not null,
