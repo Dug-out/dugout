@@ -4,12 +4,11 @@ import {Button, Header, Icon, LoadState} from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
 import useMyProfile from '../../hooks/load/useMyProfile.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
+import PushSetting from './components/PushSetting.jsx'
 import './Mypage.css'
 
 // 내 활동 메뉴 · 눌렀을 때 이동할 화면
 const ACTIVITY_MENU = [{label: '메이트 평가하기', to: '/my/reviews'}]
-// 계정 메뉴 · 알림 설정은 아직 화면만 (로그아웃은 아래에서 따로 연결)
-const ACCOUNT_MENU = ['알림 설정']
 
 /** 메뉴 한 줄 · 이름, 오른쪽 화살표 · to 가 있으면 그 화면으로 이동, onClick 이 있으면 누를 때 실행 */
 function MenuRow({label, to, onClick}) {
@@ -127,9 +126,7 @@ function MypageBody({profile}) {
             {/* 계정 메뉴 */}
             <section className="mypage__card">
                 <h2 className="mypage__section">계정</h2>
-                {ACCOUNT_MENU.map((label) => (
-                    <MenuRow key={label} label={label} />
-                ))}
+                <PushSetting />
                 <MenuRow label="로그아웃" onClick={logout} />
                 <button type="button" className="mypage__row mypage__row--quiet">
                     회원 탈퇴
