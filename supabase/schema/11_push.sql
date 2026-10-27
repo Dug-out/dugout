@@ -134,11 +134,12 @@ declare
   my_team text;
   match text;
 begin
-  select home_team, away_team into game from public.games where id = new.game_id;
+  select home_team, away_team, game_at into game from public.games where id = new.game_id;
   select team into my_team from public.profiles where id = new.user_id;
 
-  -- 경기 이름은 내 응원팀을 앞에 쓴다 (예: LG vs 두산)
-  match := case when game.away_team = my_team then game.away_team || ' vs ' || game.home_team
+  -- 경기 이름은 내 응원팀을 앞에 쓰고 날짜(한국 시간)를 붙인다 (예: 10.26 LG vs 두산)
+  match := to_char(game.game_at at time zone 'Asia/Seoul', 'MM.DD') || ' ' ||
+           case when game.away_team = my_team then game.away_team || ' vs ' || game.home_team
                 else game.home_team || ' vs ' || game.away_team end;
 
   perform public.notify_push(
