@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {Link} from 'react-router'
-import {Button, EmptyState, Header, Icon, LoadState} from '../../components'
+import {EmptyState, Header, Icon, LoadState} from '../../components'
 import {MATE_POST} from '../../constants/policy.js'
 import useMyPosts from '../../hooks/load/useMyPosts.js'
 import useMyTeam from '../../hooks/load/useMyTeam.js'
@@ -32,11 +32,6 @@ function MyPosts() {
                             <br />
                             직접 글을 올려 메이트를 모아 보세요
                         </>
-                    }
-                    action={
-                        <Button as={Link} to="/mate">
-                            메이트 찾으러 가기
-                        </Button>
                     }
                 />
             )}
