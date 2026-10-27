@@ -1,10 +1,14 @@
 import {Link, Navigate, useLocation} from 'react-router'
 import {Button, EmptyState, Header} from '../../components'
 import {FOOD_OPTIONS, SEAT_OPTIONS, WHEN_OPTIONS} from '../../constants/planner.js'
+import {endEstimate, ticketOf} from '../../utils/plan.js'
+import {formatTime} from '../../utils/mateFormat.js'
 import {teamOf} from '../../utils/predict.js'
 import ConditionBar from './components/ConditionBar.jsx'
 import PlanAiCard from './components/PlanAiCard.jsx'
 import PlanGameCard from './components/PlanGameCard.jsx'
+import PlanSteps from './components/PlanSteps.jsx'
+import {TicketCard, WatchCard} from './components/PlanStepCards.jsx'
 import './PlanResult.css'
 
 // 옵션 값 → 보이는 글자
@@ -39,6 +43,42 @@ function PlanResult() {
                         <h2 className="plan-result__heading">조건에 맞는 경기를 골랐어요</h2>
                         <PlanGameCard game={game} />
                         {ai && <PlanAiCard ai={ai} />}
+
+                        <section className="plan-result__plan" aria-label="나의 직관 플랜">
+                            <div className="plan-result__plan-head">
+                                <h2 className="plan-result__plan-title">나의 직관 플랜</h2>
+                                <span className="plan-result__end">{endEstimate(game.gameAt)} 종료 예상</span>
+                            </div>
+                            <PlanSteps
+                                steps={[
+                                    {
+                                        key: 'ticket',
+                                        time: '미리',
+                                        title: '티켓 예매하기',
+                                        children: (
+                                            <TicketCard
+                                                game={game}
+                                                myTeam={myTeam}
+                                                seat={labelOf(SEAT_OPTIONS, conditions.seat)}
+                                                ticket={ticketOf(game)}
+                                            />
+                                        ),
+                                    },
+                                    {
+                                        key: 'watch',
+                                        time: formatTime(game.gameAt),
+                                        title: '경기 관람',
+                                        children: (
+                                            <WatchCard
+                                                game={game}
+                                                myTeam={myTeam}
+                                                seat={labelOf(SEAT_OPTIONS, conditions.seat)}
+                                            />
+                                        ),
+                                    },
+                                ]}
+                            />
+                        </section>
                     </>
                 ) : (
                     <EmptyState

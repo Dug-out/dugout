@@ -107,6 +107,19 @@ const PATHS = {
             <path d="M6 7l1 13h10l1-13M9 7V4h6v3" />
         </>
     ),
+    ticket: (
+        <>
+            <path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z" />
+            <path d="M14.5 7v2M14.5 11v2M14.5 15v2" />
+        </>
+    ),
+    ball: (
+        <>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M7 4.5c2.2 2.2 2.2 12.8 0 15M17 4.5c-2.2 2.2-2.2 12.8 0 15" />
+        </>
+    ),
+    external: <path d="M8 16L16 8M9.5 8H16v6.5" />,
     exit: (
         <>
             <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3" />
@@ -115,7 +128,7 @@ const PATHS = {
     ),
 }
 
-/** name: back | plus | check | alert | calendar | pin | home | mate | plan | posts | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | more | exit | edit | trash */
+/** name: back | plus | check | alert | calendar | pin | home | mate | plan | posts | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | more | exit | edit | trash | ticket | ball | external */
 function Icon({name, size = 24, strokeWidth = 2, ...rest}) {
     return (
         <svg

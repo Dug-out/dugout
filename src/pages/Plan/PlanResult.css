@@ -27,3 +27,32 @@
     font-weight: 400;
     color: var(--navy-500);
 }
+
+/* 나의 직관 플랜 */
+.plan-result__plan {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 6px;
+}
+
+.plan-result__plan-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 4px;
+}
+
+.plan-result__plan-title {
+    margin: 0;
+    font-family: var(--font-emotion), sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--navy-500);
+}
+
+.plan-result__end {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-400);
+}

@@ -37,3 +37,27 @@ export const DEFAULT_ORIGIN = {
 
 // 추천 경기를 찾는 기간 · 오늘부터 며칠 안의 경기를 후보로 본다
 export const PLAN_WINDOW_DAYS = 7
+
+// 경기 한 번에 걸리는 평균 시간(분) · "종료 예상" 시각에 쓴다 (3시간 10분)
+export const GAME_MINUTES = 190
+
+// 티켓 예매처 · 정규시즌은 홈팀이 쓰는 곳이 구단마다 다르다 (홈경기 표는 홈팀이 판다)
+// 예매처는 구단이 바꿀 수 있어서 시즌 전에 구단 공지로 다시 확인한다 · NC 는 예매처를 확인하지 못해 구단 공식 사이트로 둔다
+export const TICKET_SITES = {
+    LG: {name: '티켓링크', url: 'https://www.ticketlink.co.kr'},
+    한화: {name: '티켓링크', url: 'https://www.ticketlink.co.kr'},
+    삼성: {name: '티켓링크', url: 'https://www.ticketlink.co.kr'},
+    KT: {name: '티켓링크', url: 'https://www.ticketlink.co.kr'},
+    KIA: {name: '티켓링크', url: 'https://www.ticketlink.co.kr'},
+    두산: {name: '놀티켓', url: 'https://nol.yanolja.com/ticket'},
+    키움: {name: '놀티켓', url: 'https://nol.yanolja.com/ticket'},
+    롯데: {name: '롯데 자이언츠 예매', url: 'https://ticket.giantsclub.com'},
+    SSG: {name: 'SSG닷컴 티켓', url: 'https://ticket.ssg.com'},
+    NC: {name: 'NC 다이노스', url: 'https://www.ncdinos.com'},
+}
+
+// 포스트시즌(가을야구)은 어느 팀 경기든 놀티켓에서만 판다
+export const POSTSEASON_TICKET = {name: '놀티켓', url: 'https://nol.yanolja.com/ticket/genre/sports/postseason'}
+
+// 시즌별 포스트시즌 시작일(한국 시간) · 이 날부터의 경기는 포스트시즌으로 본다 · 시즌마다 추가한다
+export const POSTSEASON_START = {2026: '2026-10-14'}
