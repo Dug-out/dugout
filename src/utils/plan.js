@@ -29,10 +29,10 @@ export const endEstimate = (gameAt) => formatTime(new Date(new Date(gameAt).getT
 /** 구장 도착 목표 시각 '18:00' · 경기 시작 ARRIVE_BEFORE_MINUTES 분 전 */
 export const arriveAt = (gameAt) => formatTime(new Date(new Date(gameAt).getTime() - ARRIVE_BEFORE_MINUTES * 60 * 1000))
 
-/** 카카오맵 길찾기 링크 (출발지 → 구장) · 구장 위치를 모르면 null */
+/** 카카오맵 대중교통 길찾기 링크 (출발지 → 구장) · 구장 위치를 모르면 null · /by/traffic 이 대중교통이고 /link/from 은 자동차 길로 열린다 */
 export const routeLink = (origin, stadium) => {
     const coords = STADIUM_COORDS[STADIUM_CODE_BY_NAME[stadium]]
     if (!coords) return null
     const point = (name, {lat, lng}) => `${encodeURIComponent(name)},${lat},${lng}`
-    return `https://map.kakao.com/link/from/${point(origin.label, origin)}/to/${point(stadium, coords)}`
+    return `https://map.kakao.com/link/by/traffic/${point(origin.label, origin)}/${point(stadium, coords)}`
 }
