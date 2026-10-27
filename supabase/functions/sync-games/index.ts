@@ -1,6 +1,6 @@
 // KBO 경기 가져오기 (Supabase Edge Function) · API-Sports 에서 받아 games 에 넣거나 고친다
 //  · mode "full": 올해 전체 경기 (일정이 바뀌었거나 새 경기가 생겼는지 맞춘다) · 호출 1건
-//  · mode "recent": 어제와 오늘 경기 (끝난 경기의 점수를 채운다) · 호출 2건 (기본)
+//  · mode "recent": 어제·오늘·내일 경기 (끝난 경기의 점수를 채우고, 내일로 옮겨진 경기를 알아챈다) · 호출 3건 (기본)
 // 같은 경기는 api_game_id 로 알아보고 고친다 · api_game_id 가 없는 경기(직접 넣은 것)는 건드리지 않는다
 // 경기가 끝난 것(finished)으로 바뀌면 승부 예측 채점은 DB 트리거가 한다 (09_predictions.sql)
 import { createClient } from 'npm:@supabase/supabase-js@2'
@@ -105,7 +105,7 @@ Deno.serve(async (req) => {
     const games =
       mode === 'full'
         ? await fetchGames({ season })
-        : (await Promise.all([kstDate(-1), kstDate()].map((date) => fetchGames({ season, date })))).flat()
+        : (await Promise.all([kstDate(-1), kstDate(), kstDate(1)].map((date) => fetchGames({ season, date })))).flat()
 
     const rows = games.map((game) => toRow(game, season)).filter((row) => row !== null)
 
@@ -116,7 +116,23 @@ Deno.serve(async (req) => {
       if (error) throw new Error(error.message)
     }
 
-    return Response.json({ mode, season, received: games.length, saved: rows.length })
+    // 전체를 받았을 때, 이제 API 목록에 없는 예정 경기는 취소로 돌린다 (날짜가 옮겨지며 번호가 바뀐 경기가 유령으로 남지 않게)
+    // 응답이 비정상으로 적게 오면 전부 취소해 버리지 않도록 건너뛴다
+    let canceled = 0
+    if (mode === 'full' && rows.length >= 100) {
+      const ids = rows.map((row) => row.api_game_id)
+      const { data, error } = await supabase
+        .from('games')
+        .update({ status: 'canceled' })
+        .eq('status', 'scheduled')
+        .not('api_game_id', 'is', null)
+        .not('api_game_id', 'in', `(${ids.join(',')})`)
+        .select('id')
+      if (error) throw new Error(error.message)
+      canceled = data.length
+    }
+
+    return Response.json({ mode, season, received: games.length, saved: rows.length, canceled })
   } catch (err) {
     return Response.json({ error: String(err instanceof Error ? err.message : err) }, { status: 500 })
   }
