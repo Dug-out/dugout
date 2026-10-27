@@ -2,8 +2,8 @@ import './PlanSteps.css'
 
 /**
  * 나의 직관 플랜 · 번호가 이어지는 세로 단계 목록 (번호는 목록 순서대로 1, 2, 3 … 마지막 단계만 빨강)
- * @param {{steps: {key: string, time?: string, title: string, children: import('react').ReactNode}[]}} props
- *  time: 단계 시각 ('17:30') · 없으면 생략
+ * @param {{steps: {key: string, time?: string, title: string, children?: import('react').ReactNode}[]}} props
+ *  time: 단계 시각 ('17:30') · 없으면 생략 / children: 제목 아래 카드 · 없으면 제목만
  */
 function PlanSteps({steps}) {
     return (

@@ -8,7 +8,7 @@ import ConditionBar from './components/ConditionBar.jsx'
 import PlanAiCard from './components/PlanAiCard.jsx'
 import PlanGameCard from './components/PlanGameCard.jsx'
 import PlanSteps from './components/PlanSteps.jsx'
-import {TicketCard, WatchCard} from './components/PlanStepCards.jsx'
+import {TicketCard} from './components/PlanStepCards.jsx'
 import './PlanResult.css'
 
 // 옵션 값 → 보이는 글자
@@ -68,13 +68,6 @@ function PlanResult() {
                                         key: 'watch',
                                         time: formatTime(game.gameAt),
                                         title: '경기 관람',
-                                        children: (
-                                            <WatchCard
-                                                game={game}
-                                                myTeam={myTeam}
-                                                seat={labelOf(SEAT_OPTIONS, conditions.seat)}
-                                            />
-                                        ),
                                     },
                                 ]}
                             />

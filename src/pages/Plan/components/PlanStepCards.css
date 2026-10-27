@@ -27,11 +27,6 @@
     color: var(--navy-500);
 }
 
-.plan-card__icon--red {
-    background: var(--red-50);
-    color: var(--red-600);
-}
-
 .plan-card__text {
     display: flex;
     flex: 1;

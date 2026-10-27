@@ -38,20 +38,3 @@ export function TicketCard({game, myTeam, seat, ticket}) {
         <div className="plan-card">{body}</div>
     )
 }
-
-/** 경기 관람 카드 · 플레이볼, 구장과 좌석 */
-export function WatchCard({game, myTeam, seat}) {
-    return (
-        <div className="plan-card">
-            <span className="plan-card__icon plan-card__icon--red">
-                <Icon name="ball" size={20} />
-            </span>
-            <span className="plan-card__text">
-                <strong>{matchLabel(game, myTeam)} 플레이볼</strong>
-                <span>
-                    {game.stadium} · {seat}
-                </span>
-            </span>
-        </div>
-    )
-}
