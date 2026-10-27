@@ -1,0 +1,21 @@
+.plan-result {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background: var(--bg);
+}
+
+.plan-result__main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 16px;
+    padding: 12px 16px 28px;
+}
+
+.plan-result__heading {
+    margin: 4px 4px -6px;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text-900);
+}
