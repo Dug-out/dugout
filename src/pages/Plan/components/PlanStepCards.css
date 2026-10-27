@@ -57,3 +57,22 @@
     font-weight: 700;
     color: var(--surface);
 }
+
+/* 맛집 사진 자리 · 사진이 생기기 전까지 색 배경 */
+.plan-card__photo {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: linear-gradient(140deg, var(--gold), color-mix(in srgb, var(--red-500) 55%, var(--gold)));
+    color: var(--surface);
+}
+
+.plan-card--empty {
+    justify-content: center;
+    background: var(--gray-100);
+    text-align: center;
+}

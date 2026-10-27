@@ -1,14 +1,14 @@
 import {Link, Navigate, useLocation} from 'react-router'
 import {Button, EmptyState, Header} from '../../components'
 import {FOOD_OPTIONS, SEAT_OPTIONS, WHEN_OPTIONS} from '../../constants/planner.js'
-import {endEstimate, ticketOf} from '../../utils/plan.js'
+import {arriveAt, endEstimate, ticketOf} from '../../utils/plan.js'
 import {formatTime} from '../../utils/mateFormat.js'
 import {teamOf} from '../../utils/predict.js'
 import ConditionBar from './components/ConditionBar.jsx'
 import PlanAiCard from './components/PlanAiCard.jsx'
 import PlanGameCard from './components/PlanGameCard.jsx'
 import PlanSteps from './components/PlanSteps.jsx'
-import {TicketCard} from './components/PlanStepCards.jsx'
+import {FoodCard, FoodEmpty, TicketCard} from './components/PlanStepCards.jsx'
 import './PlanResult.css'
 
 // 옵션 값 → 보이는 글자
@@ -22,7 +22,7 @@ function PlanResult() {
     if (!state?.plan) return <Navigate to="/plans" replace />
 
     const {conditions, plan} = state
-    const {myTeam, game, ai} = plan
+    const {myTeam, game, foods = [], ai} = plan
 
     return (
         <div className="plan-result">
@@ -62,6 +62,21 @@ function PlanResult() {
                                                 seat={labelOf(SEAT_OPTIONS, conditions.seat)}
                                                 ticket={ticketOf(game)}
                                             />
+                                        ),
+                                    },
+                                    {
+                                        key: 'food',
+                                        time: arriveAt(game.gameAt),
+                                        title: '구장 도착 · 먹거리 사기',
+                                        tag: '구장 안',
+                                        children: (
+                                            <div className="plan-result__foods">
+                                                {foods.length > 0 ? (
+                                                    foods.map((food) => <FoodCard key={food.id} food={food} />)
+                                                ) : (
+                                                    <FoodEmpty />
+                                                )}
+                                            </div>
                                         ),
                                     },
                                     {

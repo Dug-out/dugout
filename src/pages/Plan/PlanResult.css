@@ -56,3 +56,10 @@
     font-weight: 600;
     color: var(--text-400);
 }
+
+/* 구장 안 맛집 카드들 */
+.plan-result__foods {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

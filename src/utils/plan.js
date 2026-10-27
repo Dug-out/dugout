@@ -1,5 +1,11 @@
 // AI 직관 플랜 화면에서 쓰는 계산 · 글자 함수 모음
-import {GAME_MINUTES, POSTSEASON_TICKET, POSTSEASON_START, TICKET_SITES} from '../constants/planner.js'
+import {
+    ARRIVE_BEFORE_MINUTES,
+    GAME_MINUTES,
+    POSTSEASON_START,
+    POSTSEASON_TICKET,
+    TICKET_SITES,
+} from '../constants/planner.js'
 import {formatTime} from './mateFormat.js'
 
 // 경기 시각의 한국 시간 날짜 'YYYY-MM-DD'
@@ -17,3 +23,6 @@ export const ticketOf = ({home, gameAt}) => (isPostseason(gameAt) ? POSTSEASON_T
 
 /** 경기 종료 예상 시각 '21:40' · 시작 시각에 평균 경기 시간을 더한다 */
 export const endEstimate = (gameAt) => formatTime(new Date(new Date(gameAt).getTime() + GAME_MINUTES * 60 * 1000))
+
+/** 구장 도착 목표 시각 '18:00' · 경기 시작 ARRIVE_BEFORE_MINUTES 분 전 */
+export const arriveAt = (gameAt) => formatTime(new Date(new Date(gameAt).getTime() - ARRIVE_BEFORE_MINUTES * 60 * 1000))

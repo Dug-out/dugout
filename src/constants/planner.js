@@ -61,3 +61,19 @@ export const POSTSEASON_TICKET = {name: '놀티켓', url: 'https://nol.yanolja.c
 
 // 시즌별 포스트시즌 시작일(한국 시간) · 이 날부터의 경기는 포스트시즌으로 본다 · 시즌마다 추가한다
 export const POSTSEASON_START = {2026: '2026-10-14'}
+
+// 경기 시작 몇 분 전까지 구장에 도착할지
+export const ARRIVE_BEFORE_MINUTES = 30
+
+// games.stadium(구장 이름) → stadium_food.stadium_code · 구장 안 맛집을 찾을 때 쓴다 (이름은 supabase/functions/sync-games 의 구장 표와 같다)
+export const STADIUM_CODE_BY_NAME = {
+    잠실야구장: 'JAMSIL',
+    KT위즈파크: 'SUWON',
+    고척스카이돔: 'GOCHEOK',
+    SSG랜더스필드: 'INCHEON',
+    '한화생명 볼파크': 'DAEJEON',
+    라이온즈파크: 'DAEGU',
+    챔피언스필드: 'GWANGJU',
+    NC파크: 'CHANGWON',
+    사직야구장: 'BUSAN',
+}

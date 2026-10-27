@@ -38,3 +38,33 @@ export function TicketCard({game, myTeam, seat, ticket}) {
         <div className="plan-card">{body}</div>
     )
 }
+
+/**
+ * 구장 안 맛집 카드 · 사진 자리(아직 사진이 없어 색 배경), 매장 이름, 구장 안 위치(있을 때), 음식 종류
+ * @param {{food: {name: string, category: string, location: string | null}}} props
+ */
+export function FoodCard({food}) {
+    return (
+        <div className="plan-card">
+            <span className="plan-card__photo">
+                <Icon name="food" size={22} />
+            </span>
+            <span className="plan-card__text">
+                <strong>{food.name}</strong>
+                {food.location && <span>{food.location}</span>}
+                <span>{food.category}</span>
+            </span>
+        </div>
+    )
+}
+
+/** 구장 안 맛집이 없을 때 안내 */
+export function FoodEmpty() {
+    return (
+        <div className="plan-card plan-card--empty">
+            <span className="plan-card__text">
+                <span>이 구장의 구장 안 맛집 정보가 아직 없어요</span>
+            </span>
+        </div>
+    )
+}
