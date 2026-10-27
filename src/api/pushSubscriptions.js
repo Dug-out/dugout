@@ -31,7 +31,7 @@ export async function enablePush() {
 
     // 서비스 워커는 앱을 빌드해 올린 곳에서만 있다
     const registration = await navigator.serviceWorker.getRegistration()
-    if (!registration) throw new Error('지금은 알림을 켤 수 없어요. 앱을 새로 열고 다시 시도해 주세요')
+    if (!registration) throw new Error('지금은 알림을 켤 수 없어요')
 
     const subscription =
         (await registration.pushManager.getSubscription()) ??
