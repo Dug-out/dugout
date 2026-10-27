@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {useNavigate} from 'react-router'
+import {Link, useNavigate} from 'react-router'
 import {fetchMyProfile} from '../../api/profile.js'
 import {Button, Header} from '../../components'
 import Icon from '../../components/Icon/Icon.jsx'
@@ -69,6 +69,23 @@ function Home() {
                     </Button>
                     <p className="planner-card__caption">응원팀과 출발 지역은 프로필 정보로 반영돼요</p>
                 </section>
+
+                {/* 승부 예측으로 가는 카드 · 경기마다 바뀌지 않고 항상 같은 안내 */}
+                <Link to="/predict" className="predict-banner" aria-label="승부 예측하러 가기">
+                    <span className="predict-banner__text">
+                        <span className="predict-banner__chip">승부 예측</span>
+                        <span className="predict-banner__title">
+                            {profile ? profile.team : '우리 팀'} 오늘은
+                            <br />
+                            이길까요, 질까요?
+                        </span>
+                        <span className="predict-banner__go">
+                            승부 예측하러 가기
+                            <Icon name="chevronRight" size={15} strokeWidth={2.4} />
+                        </span>
+                    </span>
+                    <img className="predict-banner__char" src="/assets/rate-up.png" alt="" width="92" height="100" />
+                </Link>
             </main>
         </div>
     )
