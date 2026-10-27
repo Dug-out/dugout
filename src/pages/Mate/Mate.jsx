@@ -115,16 +115,9 @@ function Mate() {
 
             {/* 목록 · 모집 마감 카드는 Mate.css 에서 흑백으로 덮어쓴다 */}
             <main className="mate__list">
-                <LoadState
-                    className="mate__empty"
-                    status={status}
-                    errorTitle="모집 글을 불러오지 못했어요"
-                    onRetry={reload}
-                />
+                <LoadState status={status} errorTitle="모집 글을 불러오지 못했어요" onRetry={reload} />
                 {status === 'ready' && posts.length === 0 && (
                     <EmptyState
-                        className="mate__empty"
-                        image="/assets/empty-sleep.png"
                         title="조건에 맞는 모집 글이 없어요"
                         description="직접 글을 올려 같이 갈 메이트를 모아 보세요"
                     />

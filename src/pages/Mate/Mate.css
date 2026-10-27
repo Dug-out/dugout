@@ -166,10 +166,6 @@
     list-style: none;
 }
 
-.mate__empty {
-    margin-top: 32px;
-}
-
 /* 무한 스크롤 감지용 빈 칸 · 다음 쪽 불러오는 중 · 다시 불러오기 */
 .mate__sentinel {
     height: 1px;
