@@ -2,7 +2,7 @@ import Icon from '../../../components/Icon/Icon.jsx'
 import './PlanAiCard.css'
 
 /**
- * AI 경기 포인트 카드 · "덕아웃 AI 분석" 머리줄, 강조 문구 + 이어지는 한 문장, 분석 키워드(태그), 안내 한 줄
+ * AI 경기 포인트 카드 · "덕아웃 AI 분석" 머리줄, 강조 문구 + 이어지는 한 문장, 분석 키워드(태그)
  * @param {{ai: {highlight: string, point: string, tags: string[], sourceCount: number}}} props
  */
 function PlanAiCard({ai}) {
@@ -35,11 +35,6 @@ function PlanAiCard({ai}) {
                         </span>
                     ))}
                 </div>
-
-                <p className="plan-ai__note">
-                    <Icon name="info" size={13} />
-                    AI가 기사와 경기 일정을 분석한 결과예요. 실제와 다를 수 있어요.
-                </p>
             </div>
         </section>
     )
