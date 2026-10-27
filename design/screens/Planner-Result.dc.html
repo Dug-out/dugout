@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>AI 직관 플랜</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1820px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="flex: none; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; padding: 8px 12px; background: #FFFFFF">
+<a href="Home.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #141B33"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<h1 style="margin: 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 22px; font-weight: 400; color: #1B2A5C">AI 직관 플랜</h1>
+<a href="Home.dc.html" style="min-height: 44px; padding: 0 8px; display: flex; align-items: center; font-size: 13px; font-weight: 600; color: #5A6380">조건 수정</a>
+</header>
+
+<main style="display: flex; flex-direction: column; gap: 16px; padding: 12px 16px 28px">
+
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="font-size: 12px; font-weight: 700; color: #FFFFFF; background: #D62839; padding: 4px 10px; border-radius: 999px">LG 트윈스</span>
+<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">이번 주</span>
+<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">친구랑</span>
+<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">응원석</span>
+<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">4만원 이하</span>
+</div>
+
+<section aria-label="추천 경기" style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0 4px; font-size: 19px; font-weight: 700">이번 주 추천 경기</h2>
+<div role="radiogroup" aria-label="추천 경기 선택" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button type="button" role="radio" aria-checked="{{t.checked}}" onClick="{{t.pick}}" style="padding: 12px 6px; border-radius: 16px; border: 1.5px solid {{t.border}}; background: {{t.bg}}; color: {{t.fg}}; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<span style="font-size: 11px; font-weight: 700; opacity: 0.85">{{t.rank}}순위</span>
+<span style="font-family: 'Black Han Sans', sans-serif; font-size: 18px; line-height: 1.1">{{t.day}}</span>
+<span style="font-size: 12px; font-weight: 600">vs {{t.opp}}</span>
+<span style="font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px; background: {{t.scoreBg}}; color: {{t.scoreFg}}">추천 {{t.score}}</span>
+</button>
+</sc-for>
+</div>
+</section>
+
+<section aria-label="선택한 플랜" style="position: relative; border-radius: 22px; overflow: hidden; background: linear-gradient(160deg, #22346E 0%, #1B2A5C 60%, #162250 100%); color: #FFFFFF; padding: 20px; box-shadow: 0 10px 24px rgba(27,42,92,0.22); display: flex; flex-direction: column; gap: 12px">
+<svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true" style="position: absolute; right: -80px; bottom: -96px; opacity: 0.07"><path d="M100 12 L188 100 L100 188 L12 100 Z" fill="none" stroke="#FFFFFF" stroke-width="10"></path><path d="M100 60 L140 100 L100 140 L60 100 Z" fill="#FFFFFF"></path></svg>
+<div style="position: relative; display: flex; align-items: center; gap: 8px">
+<span style="font-size: 12px; font-weight: 600; color: #C9D1EA">{{p.date}} · {{p.park}}</span>
+<span style="margin-left: auto; font-size: 11px; font-weight: 700; background: #FFD58A; color: #1B2A5C; padding: 2px 8px; border-radius: 6px">{{p.tag}}</span>
+</div>
+<span style="position: relative; font-family: 'Black Han Sans', sans-serif; font-size: 34px; line-height: 1.05">LG vs {{p.opp}}</span>
+<div style="position: relative; display: flex; flex-direction: column; gap: 6px">
+<span style="display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; font-weight: 700"><span>AI 예상 승률 <span style="font-size: 11px; font-weight: 500; color: #C9D1EA">· {{p.winBasis}}</span></span><span>LG {{p.win}}%</span></span>
+<span style="display: flex; height: 10px; border-radius: 10px; overflow: hidden; background: rgba(255,255,255,0.16)" role="img" aria-label="LG 예상 승률 {{p.win}}%"><span style="width: {{p.win}}%; background: #E63946; border-radius: 10px"></span></span>
+</div>
+<div aria-label="선발 투수" style="position: relative; display: flex; flex-direction: column; gap: 10px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.14)">
+<div style="display: flex; align-items: center; gap: 6px">
+<span style="font-size: 12px; font-weight: 700; color: #C9D1EA">선발 투수</span>
+<span style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: {{p.sp.badgeBg}}; color: {{p.sp.badgeFg}}; border: {{p.sp.badgeBorder}}">{{p.sp.badge}}</span>
+<span style="margin-left: auto; font-size: 11px; color: #C9D1EA">{{p.sp.note}}</span>
+</div>
+<sc-if value="{{p.sp.known}}" hint-placeholder-val="{{true}}">
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 8px">
+<span style="display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 12px; background: {{p.sp.boxBg}}"><span style="font-size: 11px; color: #C9D1EA">LG</span><strong style="font-size: 15px">{{p.sp.lg}}</strong><span style="font-size: 11px; color: #C9D1EA">ERA {{p.sp.lgEra}}</span></span>
+<span style="font-family: 'Black Han Sans', sans-serif; font-size: 14px; color: #C9D1EA">VS</span>
+<span style="display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 12px; background: {{p.sp.boxBg}}; text-align: right"><span style="font-size: 11px; color: #C9D1EA">{{p.opp}}</span><strong style="font-size: 15px">{{p.sp.op}}</strong><span style="font-size: 11px; color: #C9D1EA">ERA {{p.sp.opEra}}</span></span>
+</div>
+</sc-if>
+<sc-if value="{{p.sp.unknown}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 12px; border: 1.5px dashed rgba(255,255,255,0.32)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFD58A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+<span style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 13px">{{p.sp.announce}} 발표 예정</strong><span style="font-size: 11px; color: #C9D1EA">플랜을 저장하면 발표될 때 알려드려요</span></span>
+</div>
+</sc-if>
+</div>
+</section>
+
+<section aria-label="AI 추천 이유" style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1B2A5C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg>이 경기를 추천한 이유</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{p.reasons}}" as="r" hint-placeholder-count="3">
+<li style="display: flex; gap: 8px; align-items: flex-start; font-size: 14px; line-height: 1.45"><span style="flex: none; width: 20px; height: 20px; margin-top: 1px; border-radius: 50%; background: #E8ECF7; color: #1B2A5C; display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span><span>{{r}}</span></li>
+</sc-for>
+</ul>
+</section>
+
+<section aria-label="플랜 요약" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #5A6380; display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 19h10a3.5 3.5 0 0 0 .3-7 5 5 0 0 0-9.6 1.2A3 3 0 0 0 8 19z"></path></svg>날씨</span>
+<strong style="font-size: 15px">{{p.weather}}</strong>
+<span style="font-size: 12px; color: #5A6380">{{p.rain}}</span>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #5A6380; display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v5M3 11h18v5H3zM6 16v4M18 16v4"></path></svg>추천 좌석</span>
+<strong style="font-size: 15px">{{p.seat}}</strong>
+<span style="font-size: 12px; color: #5A6380">{{p.seatNote}}</span>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #5A6380; display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9 9.5h4.5a1.75 1.75 0 0 1 0 3.5h-3a1.75 1.75 0 0 0 0 3.5H15M12 7v2M12 16.5v1.5"></path></svg>예상 비용 (1인)</span>
+<strong style="font-size: 15px">[예상 금액]</strong>
+<span style="font-size: 12px; color: #5A6380">티켓 + 먹거리 기준</span>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #5A6380; display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="14" rx="3"></rect><path d="M5 11h14M8 21l1.5-4M16 21l-1.5-4"></path></svg>가는 길</span>
+<strong style="font-size: 15px">{{p.transit}}</strong>
+<span style="font-size: 12px; color: #5A6380">{{p.transitNote}}</span>
+</div>
+</section>
+
+<section aria-label="직관 타임라인" style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0 0 8px; font-size: 16px; font-weight: 700">직관 타임라인</h2>
+<sc-for list="{{p.timeline}}" as="s" hint-placeholder-count="4">
+<div style="display: grid; grid-template-columns: 52px 16px minmax(0, 1fr); gap: 8px; align-items: start">
+<span style="font-family: 'Black Han Sans', sans-serif; font-size: 15px; color: #1B2A5C; padding-top: 1px">{{s.time}}</span>
+<span style="display: flex; flex-direction: column; align-items: center; align-self: stretch"><span style="width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: {{s.dot}}; flex: none"></span><span style="flex: 1; width: 2px; background: {{s.line}}; min-height: 28px"></span></span>
+<span style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 14px"><strong style="font-size: 14px">{{s.title}}</strong><span style="font-size: 12px; color: #5A6380">{{s.note}}</span></span>
+</div>
+</sc-for>
+</section>
+
+<section aria-label="같이 갈 메이트" style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700">이 경기 같이 갈 메이트</h2>
+<span style="font-size: 12px; color: #5A6380">모집글 {{p.mateCount}}개</span>
+</div>
+<sc-if value="{{p.hasMates}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{p.mates}}" as="m" hint-placeholder-count="2">
+<a href="Mate-detail.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 14px; background: #F7F8FC; color: #141B33">
+<img src="assets/profile-default.png" alt="" width="36" height="36" style="display: block; width: 36px; height: 36px; border-radius: 50%; flex: none">
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.title}}</strong><span style="font-size: 12px; color: #5A6380">{{m.host}} · {{m.seat}} · {{m.cur}}/{{m.max}}명</span></span>
+<span style="flex: none; font-size: 11px; font-weight: 700; color: #1B2A5C; background: #E8ECF7; padding: 3px 8px; border-radius: 999px">취향 {{m.match}}%</span>
+</a>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{p.noMates}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px; border: 2px dashed #D5DAE8; border-radius: 14px; text-align: center">
+<strong style="font-size: 14px">아직 이 경기 모집글이 없어요</strong>
+<span style="font-size: 12px; color: #5A6380; line-height: 1.5">아래 '이 일정으로 모임 만들기'로<br>첫 모집글을 올려보세요</span>
+</div>
+</sc-if>
+</section>
+
+<section aria-label="플랜 저장 및 모임 만들기" style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 14px rgba(27,42,92,0.06)">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 700; color: #5A6380">모임글에 자동으로 채워져요</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">{{p.date}}</span>
+<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">{{p.seat}}</span>
+<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">1인 4만원 이하</span>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); gap: 8px">
+<button type="button" onClick="{{save}}" aria-pressed="{{savedAttr}}" style="height: 54px; border-radius: 14px; border: 1.5px solid #1B2A5C; background: {{saveBg}}; color: {{saveFg}}; font-family: 'IBM Plex Sans KR', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px">
+<sc-if value="{{notSaved}}" hint-placeholder-val="{{true}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.5L5 21V4.5a1 1 0 0 1 1-1z"></path></svg>플랜 저장</sc-if>
+<sc-if value="{{saved}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>저장됨</sc-if>
+</button>
+<a href="Mate-write.dc.html" style="height: 54px; border-radius: 14px; background: #D62839; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 15px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5"></path><path d="M19 8v6M16 11h6"></path></svg>이 일정으로 모임 만들기</a>
+</div>
+<sc-if value="{{saved}}" hint-placeholder-val="{{false}}">
+<span role="status" style="font-size: 12px; color: #5A6380; text-align: center">저장했어요 · 홈의 '내 다음 직관'에서 준비 상황을 챙겨드려요</span>
+</sc-if>
+</section>
+</main>
+<nav aria-label="하단 메뉴" style="flex: none; margin-top: auto; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); background: #FFFFFF; border-top: 1px solid #E3E6F0; padding: 6px 4px 22px"><a href="Home.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #1B2A5C; font-size: 11px; font-weight: 700"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg>홈</a><a href="Plan.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c.7 4.6 2.4 6.3 7 7-4.6.7-6.3 2.4-7 7-.7-4.6-2.4-6.3-7-7 4.6-.7 6.3-2.4 7-7z"></path></svg>플랜</a><a href="Mate.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5"></path><circle cx="17" cy="9" r="2.8"></circle><path d="M16.5 14.6c2.6.2 4.4 2 5 5.4"></path></svg>메이트 찾기</a><a href="My-posts.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"></rect><path d="M9 8.5h6M9 12h6M9 15.5h4"></path></svg>내 직관</a><a href="My.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c.8-4 4-6.5 8-6.5s7.2 2.5 8 6.5"></path></svg>마이</a></nav></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1820}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const idx = st.idx || 0;
+    const plans = [
+      {
+        day: '10.22', date: '10.22 (목) 18:30', opp: '두산', park: '잠실야구장', score: 92, tag: '플랜 조건 100% 일치', win: 58,
+        starters: { status: 'confirmed', lg: '임찬규', lgEra: '3.12', op: '곽빈', opEra: '3.45' },
+        reasons: ['LG 선발 임찬규가 최근 3경기 연속 호투, 예상 승률 58%', '퇴근 후 도착 가능한 18:30 홈 경기', '1루 응원석 잔여석 여유 · 예산 안'],
+        weather: '맑음 18°', rain: '강수 확률 10%', seat: '1루 응원석', seatNote: '2연석 가능',
+        transit: '지하철 약 40분', transitNote: '2호선 종합운동장역',
+        timeline: [['17:30', '잠실 도착', '게이트 혼잡 전 입장 추천'], ['17:45', '먹거리 픽업', '구장 먹거리 추천 보기'], ['18:30', '플레이볼', '1루 응원석 응원 시작'], ['21:40', '경기 종료 예상', '막차까지 여유 있어요']],
+        mates: [
+          { title: '목요일 퇴근 직관 같이 가요!', host: '직관요정', seat: '1루 응원석', cur: 2, max: 4, match: 92 },
+          { title: '치맥하면서 편하게 보실 분', host: '잠실치킨러', seat: '테이블석', cur: 1, max: 2, match: 78 }
+        ]
+      },
+      {
+        day: '10.25', date: '10.25 (일) 14:00', opp: 'KT', park: '수원 KT위즈파크', score: 84, tag: '이번 주 최고 승률', win: 61,
+        starters: { status: 'unknown', announce: '10.24 (토) 저녁' },
+        reasons: ['팀 전력 기준 이번 주 예상 승률이 가장 높아요 (61%)', '주말 낮 경기라 친구와 일정 맞추기 쉬워요', '원정 응원단 모집글이 활발해요'],
+        weather: '흐림 16°', rain: '강수 확률 30%', seat: '3루 원정 응원석', seatNote: '원정팬 구역',
+        transit: '지하철 약 1시간 20분', transitNote: '1호선 화서역 · 버스 환승',
+        timeline: [['12:40', '수원 도착', '원정석 게이트 위치 안내'], ['13:00', '먹거리 픽업', '구장 명물 추천 보기'], ['14:00', '플레이볼', '원정 응원단과 응원'], ['17:10', '경기 종료 예상', '귀가 교통 혼잡 주의']],
+        mates: [
+          { title: '수원 원정 외야 응원단 모여라', host: '엘린이', seat: '외야석', cur: 3, max: 3, match: 85 }
+        ]
+      },
+      {
+        day: '10.24', date: '10.24 (토) 17:00', opp: 'KT', park: '수원 KT위즈파크', score: 77, tag: '주말 저녁 경기', win: 54,
+        starters: { status: 'expected', lg: '손주영', lgEra: '3.58', op: '고영표', opEra: '3.66' },
+        reasons: ['토요일 저녁이라 일정 부담이 적어요', '로테이션상 예상 선발이 비슷해 접전 예상 (54%)', '예산 안에서 좋은 자리를 고를 수 있어요'],
+        weather: '맑음 17°', rain: '강수 확률 0%', seat: '3루 원정 응원석', seatNote: '2연석 가능',
+        transit: '지하철 약 1시간 20분', transitNote: '1호선 화서역 · 버스 환승',
+        timeline: [['15:40', '수원 도착', '원정석 게이트 위치 안내'], ['16:10', '먹거리 픽업', '구장 명물 추천 보기'], ['17:00', '플레이볼', '원정 응원석 응원 시작'], ['20:10', '경기 종료 예상', '막차까지 여유 있어요']],
+        mates: []
+      }
+    ];
+    const cur = plans[idx];
+    const tabs = plans.map((x, i) => {
+      const on = i === idx;
+      return {
+        rank: i + 1, day: x.day, opp: x.opp, score: x.score,
+        checked: on ? 'true' : 'false',
+        bg: on ? '#1B2A5C' : '#FFFFFF', fg: on ? '#FFFFFF' : '#141B33', border: on ? '#1B2A5C' : '#E3E6F0',
+        scoreBg: on ? '#FFD58A' : '#E8ECF7', scoreFg: '#1B2A5C',
+        pick: () => this.setState({ idx: i, saved: false })
+      };
+    });
+    const n = cur.timeline.length;
+    const s = cur.starters;
+    const spStyle = {
+      confirmed: { badge: '확정', badgeBg: '#FFFFFF', badgeFg: '#1B2A5C', badgeBorder: '1px solid #FFFFFF', note: 'KBO 발표', boxBg: 'rgba(255,255,255,0.12)', basis: '선발 반영' },
+      expected: { badge: '예상', badgeBg: 'transparent', badgeFg: '#FFFFFF', badgeBorder: '1px dashed rgba(255,255,255,0.5)', note: '로테이션 기준 추정', boxBg: 'rgba(255,255,255,0.06)', basis: '예상 선발 반영' },
+      unknown: { badge: '발표 전', badgeBg: 'transparent', badgeFg: '#FFD58A', badgeBorder: '1px dashed rgba(255,213,138,0.6)', note: '경기 전날 저녁 공개', boxBg: 'transparent', basis: '팀 전력 기준' }
+    }[s.status];
+    const p = Object.assign({}, cur, {
+      sp: Object.assign({}, s, spStyle, { known: s.status !== 'unknown', unknown: s.status === 'unknown' }),
+      winBasis: spStyle.basis,
+      timeline: cur.timeline.map((s, i) => ({ time: s[0], title: s[1], note: s[2], dot: s[1] === '플레이볼' ? '#E63946' : '#1B2A5C', line: i === n - 1 ? 'transparent' : '#E3E6F0' })),
+      hasMates: cur.mates.length > 0,
+      noMates: cur.mates.length === 0,
+      mateCount: cur.mates.length
+    });
+    const saved = !!st.saved;
+    return {
+      tabs: tabs,
+      p: p,
+      saved: saved,
+      notSaved: !saved,
+      savedAttr: saved ? 'true' : 'false',
+      saveBg: saved ? '#1B2A5C' : '#FFFFFF',
+      saveFg: saved ? '#FFFFFF' : '#1B2A5C',
+      save: () => this.setState({ saved: !saved })
+    };
+  }
+}
+</script>
+</body>
+</html>

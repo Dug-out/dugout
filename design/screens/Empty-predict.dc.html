@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>승부 예측 · 경기 없음</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="flex: none; display: flex; align-items: center; gap: 4px; padding: 12px 12px 8px; background: #FFFFFF"><a href="Home.dc.html" aria-label="홈으로" style="width: 44px; height: 44px; flex: none; color: #141B33; display: flex; align-items: center; justify-content: center; border-radius: 12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a><h1 style="margin: 0; flex: 1; font-size: 17px; font-weight: 700">승부 예측</h1></header><nav aria-label="승부 예측 메뉴" style="flex: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: #FFFFFF; border-bottom: 1px solid #E3E6F0; padding: 0 12px"><a href="Predict.dc.html" aria-current="page" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #1B2A5C; box-shadow: inset 0 -2.5px 0 #1B2A5C">예측하기</a><a href="Predict-rank.dc.html" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #6B7390">랭킹</a><a href="Predict-history.dc.html" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #6B7390">내 기록</a></nav>
+<main style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 32px 60px; text-align: center">
+<img src="assets/pose-sad.png" alt="" width="150" height="150" style="display: block; width: 150px; height: 150px; object-fit: contain">
+<h2 style="margin: 14px 0 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 23px; font-weight: 400; color: #1B2A5C">예측할 경기가 없어요</h2>
+<p style="margin: 8px 0 0; font-size: 14px; line-height: 1.6; color: #5A6380">다음 LG 경기 일정이 나오면<br>바로 예측할 수 있어요</p>
+<a href="Predict-history.dc.html" style="margin-top: 22px; height: 50px; padding: 0 28px; border-radius: 14px; border: 1px solid #D5DAE8; background: #FFFFFF; color: #2F3756; font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center">지난 예측 보기</a>
+</main>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

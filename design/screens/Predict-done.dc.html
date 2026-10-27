@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>승부 예측 · 예측 완료</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+@keyframes aitick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ai-tick{animation:aitick 18s linear infinite;width:max-content}
+.ai-tick:hover{animation-play-state:paused}
+@media (prefers-reduced-motion: reduce){.ai-tick{animation:none}}
+</style>
+</helmet>
+<div style="width: 390px; height: 920px; overflow: hidden; background: #F7F8FC">
+<dc-import name="Predict" initial-state="done" hint-size="390px,920px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

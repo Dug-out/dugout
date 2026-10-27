@@ -51,7 +51,7 @@ a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
 <span style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{g.tags}}" as="t" hint-placeholder-count="3"><span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #EEF0F6; padding: 4px 10px; border-radius: 999px">{{t}}</span></sc-for></span>
 <span style="height: 1px; background: #EEF0F6"></span>
 <span style="display: flex; align-items: center; gap: 8px"><img src="assets/profile-default.png" alt="" width="24" height="24" style="width: 24px; height: 24px; border-radius: 50%; flex: none"><span style="font-size: 13px; font-weight: 600; color: #2F3756">{{g.host}}</span><span style="font-size: 12px; color: #6B7390">매너 타율 <strong style="color: #1B2A5C">{{g.manner}}</strong></span></span>
-<span style="display: flex; align-items: center; gap: 10px"><span style="flex: 1; height: 6px; border-radius: 6px; background: #EEF0F6; overflow: hidden; display: flex"><span style="width: {{g.pct}}; background: {{g.barColor}}; border-radius: 6px"></span></span><span style="font-size: 12px; color: #5A6380; flex: none"><strong style="font-family: 'Black Han Sans', sans-serif; font-weight: 400; font-size: 14px; color: {{g.barColor}}">{{g.cur}}/{{g.max}}</strong>명 · {{g.leftLabel}}</span></span>
+<span style="display: flex; align-items: center; gap: 10px"><span style="flex: 1; height: 6px; border-radius: 6px; background: #EEF0F6; overflow: hidden; display: flex"><span style="width: {{g.pct}}; background: {{g.barColor}}; border-radius: 6px"></span></span><span style="font-size: 12px; color: #5A6380; flex: none"><strong style="font-family: 'Black Han Sans', sans-serif; font-weight: 400; font-size: 14px; color: {{g.barColor}}">{{g.cur}}/{{g.max}}</strong>명</span></span>
 </span>
 </a>
 </sc-for>
@@ -70,40 +70,42 @@ a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
 
 <sc-if value="{{calOpen}}" hint-placeholder-val="{{false}}">
 <div aria-hidden="true" onClick="{{closeCal}}" style="position: absolute; inset: 0; background: rgba(15,26,61,0.55)"></div>
-<div role="dialog" aria-modal="true" aria-labelledby="bcalTitle" style="position: absolute; left: 0; right: 0; bottom: 0; background: #FFFFFF; border-radius: 24px 24px 0 0; padding: 10px 20px 28px; display: flex; flex-direction: column; gap: 10px">
+<div role="dialog" aria-modal="true" aria-labelledby="bcalTitle" style="position: absolute; left: 0; right: 0; bottom: 0; background: #FFFFFF; border-radius: 24px 24px 0 0; padding: 10px 20px 28px; display: flex; flex-direction: column; gap: 12px">
 <span aria-hidden="true" style="align-self: center; width: 40px; height: 4px; border-radius: 4px; background: #D5DAE8"></span>
-<div style="display: flex; align-items: center; gap: 4px">
-<h2 id="bcalTitle" style="margin: 0; flex: 1; font-size: 19px; font-weight: 700">직관 날짜 선택</h2>
-<button aria-label="이전 달" style="width: 40px; height: 40px; border: none; background: transparent; color: #5A6380; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
-<span style="font-size: 15px; font-weight: 600">2026.10</span>
-<button aria-label="다음 달" style="width: 40px; height: 40px; border: none; background: transparent; color: #5A6380; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+<h2 id="bcalTitle" style="margin: 6px 0 0; font-size: 20px; font-weight: 700">직관 날짜 선택</h2>
+<div style="display: flex; align-items: center; justify-content: center; gap: 18px">
+<button aria-label="이전 달" style="width: 40px; height: 40px; border: none; background: transparent; color: #8A93B0; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+<span style="font-size: 17px; font-weight: 700">2026.10</span>
+<button aria-label="다음 달" style="width: 40px; height: 40px; border: none; background: transparent; color: #8A93B0; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
 </div>
-<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); font-size: 12px; color: #5A6380; text-align: center; font-weight: 500">
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); font-size: 13px; color: #5A6380; text-align: center; font-weight: 500; padding: 4px 0 6px">
 <span style="color: #C21F31">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
 </div>
-<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); row-gap: 2px">
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); row-gap: 4px">
 <sc-for list="{{cells}}" as="c" hint-placeholder-count="35">
 <div style="height: 50px; display: flex; justify-content: center">
 <sc-if value="{{c.isSel}}" hint-placeholder-val="{{false}}">
-<button onClick="{{c.pick}}" aria-label="{{c.aria}}" aria-pressed="true" style="width: 44px; height: 50px; border: none; background: transparent; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; cursor: pointer"><span style="width: 34px; height: 34px; border-radius: 50%; background: #1B2A5C; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; font-family: 'IBM Plex Sans KR', sans-serif">{{c.label}}</span><span style="font-size: 10px; font-weight: 700; color: #1B2A5C; height: 12px">{{c.count}}</span></button>
+<button onClick="{{c.pick}}" aria-label="{{c.aria}}" aria-pressed="true" style="position: relative; width: 44px; height: 50px; border: none; background: transparent; padding: 0; display: flex; align-items: flex-start; justify-content: center; cursor: pointer"><span style="width: 36px; height: 36px; border-radius: 50%; background: #1B2A5C; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; font-family: 'IBM Plex Sans KR', sans-serif">{{c.label}}</span><sc-if value="{{c.gameOnly}}" hint-placeholder-val="{{true}}"><span style="position: absolute; bottom: 4px; left: 50%; margin-left: -2.5px; width: 5px; height: 5px; border-radius: 50%; background: #E63946"></span></sc-if></button>
 </sc-if>
 <sc-if value="{{c.isPast}}" hint-placeholder-val="{{false}}">
-<span style="width: 44px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #B4BBD0">{{c.label}}</span>
+<span style="width: 44px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 15px; color: #B4BBD0">{{c.label}}</span>
 </sc-if>
 <sc-if value="{{c.isPlain}}" hint-placeholder-val="{{true}}">
-<button onClick="{{c.pick}}" aria-label="{{c.aria}}" style="width: 44px; height: 50px; border: none; background: transparent; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; cursor: pointer">
-<span style="width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #141B33; font-family: 'IBM Plex Sans KR', sans-serif">{{c.label}}</span>
-<sc-if value="{{c.hasBolt}}" hint-placeholder-val="{{false}}"><span style="font-size: 10px; font-weight: 700; color: #FFFFFF; background: #D62839; border-radius: 999px; padding: 0 5px; height: 12px; line-height: 12px">{{c.count}}</span></sc-if>
-<sc-if value="{{c.gameOnly}}" hint-placeholder-val="{{true}}"><span style="width: 5px; height: 5px; margin: 3px 0 4px; border-radius: 50%; background: #E63946"></span></sc-if>
-<sc-if value="{{c.noGame}}" hint-placeholder-val="{{false}}"><span style="height: 12px"></span></sc-if>
+<button onClick="{{c.pick}}" aria-label="{{c.aria}}" style="position: relative; width: 44px; height: 50px; border: none; background: transparent; padding: 0; display: flex; align-items: flex-start; justify-content: center; cursor: pointer">
+<span style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 15px; color: {{c.numColor}}; font-family: 'IBM Plex Sans KR', sans-serif">{{c.label}}</span>
+<sc-if value="{{c.gameOnly}}" hint-placeholder-val="{{true}}"><span style="position: absolute; bottom: 4px; left: 50%; margin-left: -2.5px; width: 5px; height: 5px; border-radius: 50%; background: #E63946"></span></sc-if>
 </button>
 </sc-if>
 </div>
 </sc-for>
 </div>
-<div style="display: flex; align-items: center; gap: 14px; font-size: 12px; color: #5A6380">
-<span style="display: flex; align-items: center; gap: 5px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #E63946"></span>LG 경기</span>
-</div>
+<div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #5A6380"><span style="width: 7px; height: 7px; border-radius: 50%; background: #E63946"></span>LG 경기</div>
+<sc-if value="{{calHasGame}}" hint-placeholder-val="{{true}}">
+<div style="background: #E9ECF5; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 15px; font-weight: 700; color: #1B2A5C">{{calGameLabel}}</span><span style="font-size: 13px; color: #5A6380">{{calGameSub}}</span></div>
+</sc-if>
+<sc-if value="{{calNoGame}}" hint-placeholder-val="{{false}}">
+<div style="background: #F1F2F6; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 15px; font-weight: 700; color: #5A6380">{{calDayLabel}}</span><span style="font-size: 13px; color: #8A93B0">이 날은 LG 경기가 없어요</span></div>
+</sc-if>
 <div style="display: grid; grid-template-columns: 1fr 1.6fr; gap: 8px">
 <button onClick="{{clearDay}}" style="height: 52px; border: 1px solid #D5DAE8; background: #FFFFFF; color: #2F3756; border-radius: 14px; font-size: 15px; font-weight: 600; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">전체 날짜</button>
 <button onClick="{{applyCal}}" style="height: 52px; border: none; background: #1B2A5C; color: #FFFFFF; border-radius: 14px; font-size: 15px; font-weight: 700; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">{{applyLabel}}</button>
@@ -141,7 +143,7 @@ class Component extends DCLogic {
       const past = d < 21;
       const n = countOf(d);
       cells.push({ label: String(d), aria: '10월 ' + d + '일', count: '', isSel: !past && d === calSel, isPast: past, isPlain: !past && d !== calSel,
-        hasBolt: false, gameOnly: !!sched[d], noGame: !sched[d], pick: () => this.setState({ calSel: d }) });
+        hasBolt: false, gameOnly: !!sched[d], noGame: !sched[d], numColor: sched[d] ? '#141B33' : '#B4BBD0', pick: () => this.setState({ calSel: d }) });
     }
     const openOnly = !!st.openOnly;
     const groups = all
@@ -169,6 +171,10 @@ class Component extends DCLogic {
       openOnly: openOnly, notOpenOnly: !openOnly, openOnlyAria: openOnly ? 'true' : 'false',
       toggleOpenOnly: () => this.setState({ openOnly: !openOnly }),
       calOpen: calOpen,
+      calHasGame: !!sched[calSel], calNoGame: !sched[calSel],
+      calGameLabel: sched[calSel] ? '10.' + calSel + ' (' + days[dow(calSel)] + ') 18:30 · LG vs ' + sched[calSel][0] : '',
+      calGameSub: sched[calSel] ? ({ '잠실': '잠실야구장', '수원': '수원 KT위즈파크', '대전': '대전 한화생명 볼파크' })[sched[calSel][1]] : '',
+      calDayLabel: '10.' + calSel + ' (' + days[dow(calSel)] + ')',
       openCal: () => this.setState({ calOpen: true, calSel: sel || 22 }),
       closeCal: () => this.setState({ calOpen: false }),
       applyCal: () => this.setState({ calOpen: false, sel: calSel }),
