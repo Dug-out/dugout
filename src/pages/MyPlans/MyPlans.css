@@ -1,0 +1,240 @@
+.myplans {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background: var(--bg);
+}
+
+.myplans__main {
+    flex: 1;
+    padding: 16px 20px 28px;
+}
+
+/* 보여 줄 목록이 없을 때(빈 화면·불러오는 중)는 높이를 차지하지 않아 위의 빈 화면이 가운데에 온다 */
+.myplans__main:empty {
+    display: none;
+}
+
+.myplans__error {
+    padding: 40px 20px;
+    color: var(--text-500);
+    font-size: 14px;
+    text-align: center;
+}
+
+/* ── 선택 삭제 툴바 ── */
+.myplans__toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.myplans__link {
+    height: 32px;
+    padding: 0 2px;
+    border: 0;
+    background: none;
+    color: var(--navy-500);
+    font-family: var(--font-base), sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.myplans__write {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: none;
+    color: var(--navy-500);
+    cursor: pointer;
+}
+
+.myplans__dock {
+    position: sticky;
+    bottom: var(--tabbar-height); /* 탭바 바로 위에 붙는다 */
+    z-index: 10;
+}
+
+.myplans__bottom {
+    box-sizing: border-box;
+    padding: 12px 20px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+}
+
+.plan-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* ── 플랜 카드 (Home "내 다음 직관" 카드와 같은 스타일) ── */
+.plan-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+}
+
+.plan-item--selected {
+    border-color: var(--navy-500);
+}
+
+.plan-item__check {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: 24px;
+    height: 24px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--surface);
+    cursor: pointer;
+}
+
+.plan-item__check--on {
+    border-color: var(--navy-500);
+    background: var(--navy-500);
+}
+
+.plan-item__delete {
+    flex: none;
+    align-self: center;
+    height: 32px;
+    padding: 0 4px;
+    border: 0;
+    background: none;
+    color: var(--red-text);
+    font-family: var(--font-base), sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.plan-item__missing {
+    color: var(--text-400);
+    font-size: 13px;
+}
+
+.plan-item__top {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.plan-item__dday {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    width: 58px;
+    border-radius: var(--radius-input);
+    background: var(--navy-500);
+    color: var(--surface);
+    text-align: center;
+}
+
+.plan-item__weekday {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--on-navy-sub);
+}
+
+.plan-item__date {
+    font-family: var(--font-number);
+    font-size: 17px;
+}
+
+.plan-item__d {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.plan-item__info {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.plan-item__title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-900);
+}
+
+.plan-item__sub {
+    font-size: 13px;
+    color: var(--text-500);
+}
+
+.plan-item__divider {
+    height: 1px;
+    background: var(--gray-100);
+}
+
+.plan-item__prep {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-900);
+}
+
+.plan-item__prep-count {
+    font-weight: 500;
+    color: var(--text-500);
+}
+
+.plan-item__chips {
+    display: flex;
+    gap: 8px;
+}
+
+.prep-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    color: var(--text-400);
+    font-family: var(--font-base), sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.prep-chip--done {
+    border-color: var(--navy-500);
+    background: var(--navy-500);
+    color: var(--surface);
+}
+
+.prep-chip:disabled {
+    opacity: 0.5;
+    cursor: default;
+}

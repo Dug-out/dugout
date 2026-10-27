@@ -8,6 +8,8 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      // 푸시 알림 코드(public/push-sw.js)를 자동으로 만들어지는 서비스 워커가 함께 불러온다
+      workbox: { importScripts: ['push-sw.js'] },
       includeAssets: ['favicon.png', 'apple-touch-icon.png'],
       manifest: {
         name: '덕아웃',

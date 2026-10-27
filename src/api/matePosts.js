@@ -192,3 +192,21 @@ export async function getMatePosts({date = null, openOnly = false, sort = 'new',
     })
     return {posts, hasMore: data.length > size}
 }
+
+/** 수정 실패 → 화면에 보여줄 문구 */
+function updateErrorMessage({code}) {
+    if (code === '23514' || code === '23502') return '입력한 내용을 다시 확인해 주세요'
+    return '수정하지 못했어요. 잠시 후 다시 시도해 주세요'
+}
+
+/** 모집 글 수정 · 방장이 제목과 소개만 고친다 (고치면 채팅방에 안내가 남는다: DB 트리거) */
+export async function updateMatePost(id, {title, description}) {
+    const {data, error} = await supabase
+        .from('mate_posts')
+        .update({title: title.trim(), description: description.trim()})
+        .eq('id', id)
+        .select('id')
+    if (error) throw Object.assign(new Error(updateErrorMessage(error)), {cause: error})
+    // 규칙(RLS)이 막으면 오류 없이 0줄이 바뀐다
+    if (data.length === 0) throw new Error('수정할 수 없는 모집 글이에요')
+}

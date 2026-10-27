@@ -104,7 +104,8 @@ function SignupDone() {
 
             {/* 자기소개를 작성하러 가거나, 홈으로 간다 */}
             <div className="done__actions">
-                <Button as={Link} to="/profile/edit" block>
+                {/* 가입 직후라는 표시를 실어 보낸다 · 프로필을 저장하면 이 화면이 아니라 홈으로 가게 (replace 로 이 화면은 기록에서 뺀다) */}
+                <Button as={Link} to="/profile/edit" state={{fromSignup: true}} replace block>
                     자기소개 작성하러 가기
                 </Button>
                 <Button as={Link} to="/home" variant="text" block>

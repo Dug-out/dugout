@@ -23,8 +23,11 @@
 
 .mate__title {
     margin: 0;
-    font-size: 22px;
-    font-weight: 700;
+    /* 다른 탭 화면의 큰 제목(Header large)과 같은 글꼴 */
+    font-family: var(--font-emotion), sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--navy-500);
 }
 
 .mate__team {
@@ -161,10 +164,6 @@
     margin: 0;
     padding: 0;
     list-style: none;
-}
-
-.mate__empty {
-    margin-top: 32px;
 }
 
 /* 무한 스크롤 감지용 빈 칸 · 다음 쪽 불러오는 중 · 다시 불러오기 */

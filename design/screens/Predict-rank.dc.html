@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>승부 예측 · 랭킹</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+@keyframes aitick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ai-tick{animation:aitick 18s linear infinite;width:max-content}
+.ai-tick:hover{animation-play-state:paused}
+@media (prefers-reduced-motion: reduce){.ai-tick{animation:none}}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 880px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="flex: none; display: flex; align-items: center; gap: 4px; padding: 12px 12px 8px; background: #FFFFFF"><a href="Home.dc.html" aria-label="홈으로" style="width: 44px; height: 44px; flex: none; color: #141B33; display: flex; align-items: center; justify-content: center; border-radius: 12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a><h1 style="margin: 0; flex: 1; font-size: 17px; font-weight: 700">승부 예측</h1></header><nav aria-label="승부 예측 메뉴" style="flex: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: #FFFFFF; border-bottom: 1px solid #E3E6F0; padding: 0 12px"><a href="Predict.dc.html" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #6B7390">예측하기</a><a href="Predict-rank.dc.html" aria-current="page" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #1B2A5C; box-shadow: inset 0 -2.5px 0 #1B2A5C">랭킹</a><a href="Predict-history.dc.html" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #6B7390">내 기록</a></nav>
+<main style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 14px 20px 16px">
+<div role="tablist" aria-label="기간" style="flex: none; display: grid; grid-template-columns: 1fr 1fr; background: #EEF0F6; border-radius: 12px; padding: 4px"><sc-if value="{{onMonth}}" hint-placeholder-val="{{true}}"><button role="tab" aria-selected="true" style="height: 36px; border: none; background: #FFFFFF; border-radius: 9px; color: #1B2A5C; font-size: 14px; font-weight: 700; box-shadow: 0 1px 3px rgba(20,27,51,0.12); font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">월간</button></sc-if><sc-if value="{{offMonth}}" hint-placeholder-val="{{false}}"><button role="tab" aria-selected="false" onClick="{{setMonth}}" style="height: 36px; border: none; background: transparent; color: #5A6380; font-size: 14px; font-weight: 500; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">월간</button></sc-if><sc-if value="{{onSeason}}" hint-placeholder-val="{{false}}"><button role="tab" aria-selected="true" style="height: 36px; border: none; background: #FFFFFF; border-radius: 9px; color: #1B2A5C; font-size: 14px; font-weight: 700; box-shadow: 0 1px 3px rgba(20,27,51,0.12); font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">시즌</button></sc-if><sc-if value="{{offSeason}}" hint-placeholder-val="{{true}}"><button role="tab" aria-selected="false" onClick="{{setSeason}}" style="height: 36px; border: none; background: transparent; color: #5A6380; font-size: 14px; font-weight: 500; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">시즌</button></sc-if></div>
+<section aria-label="상위 3명" style="flex: none; border-radius: 20px; background: linear-gradient(165deg, #24356B 0%, #1B2A5C 60%, #141F47 100%); color: #FFFFFF; padding: 16px 12px 18px; display: flex; flex-direction: column; gap: 12px">
+<span style="text-align: center; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 19px">{{crown}}</span>
+<div style="display: grid; grid-template-columns: 1fr 1.2fr 1fr; align-items: start"><span style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding-top: 30px"><span style="position: relative"><img src="assets/profile-default.png" alt="" width="64" height="64" style="display: block; width: 64px; height: 64px; border-radius: 50%; background: #FFFFFF; border: 3px solid {{p2.ring}}"><span style="position: absolute; left: 50%; bottom: -11px; transform: translateX(-50%); width: 22px; height: 22px; border-radius: 50%; background: {{p2.ring}}; color: #1B2A5C; font-family: 'Black Han Sans', sans-serif; font-size: 13px; display: flex; align-items: center; justify-content: center">2</span></span><span style="margin-top: 13px; font-size: 13px; font-weight: 700; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p2.name}}</span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 16px; color: #FFD58A">{{p2.pts}}</span></span><span style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding-top: 0px"><span style="position: relative"><img src="assets/profile-default.png" alt="" width="92" height="92" style="display: block; width: 92px; height: 92px; border-radius: 50%; background: #FFFFFF; border: 4px solid {{p1.ring}}"><span style="position: absolute; left: 50%; bottom: -14px; transform: translateX(-50%); width: 28px; height: 28px; border-radius: 50%; background: {{p1.ring}}; color: #1B2A5C; font-family: 'Black Han Sans', sans-serif; font-size: 19px; display: flex; align-items: center; justify-content: center">1</span></span><span style="margin-top: 16px; font-size: 15px; font-weight: 700; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p1.name}}</span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 20px; color: #FFD58A">{{p1.pts}}</span></span><span style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding-top: 42px"><span style="position: relative"><img src="assets/profile-default.png" alt="" width="52" height="52" style="display: block; width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; border: 3px solid {{p3.ring}}"><span style="position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%); width: 20px; height: 20px; border-radius: 50%; background: {{p3.ring}}; color: #1B2A5C; font-family: 'Black Han Sans', sans-serif; font-size: 11px; display: flex; align-items: center; justify-content: center">3</span></span><span style="margin-top: 12px; font-size: 12px; font-weight: 700; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p3.name}}</span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 15px; color: #FFD58A">{{p3.pts}}</span></span></div>
+</section>
+<ol style="flex: none; margin: 0; padding: 0 14px; list-style: none; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px">
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
+<li style="display: flex; align-items: center; gap: 10px; min-height: 52px; border-top: {{r.line}}; margin: 0 -14px; padding: 0 14px; background: {{r.bg}}"><span style="width: 24px; text-align: center; font-family: 'Black Han Sans', sans-serif; font-size: 16px; color: #5A6380">{{r.rank}}</span><img src="assets/profile-default.png" alt="" width="34" height="34" style="width: 34px; height: 34px; border-radius: 50%; background: #EEF0F6"><span style="flex: 1; min-width: 0; font-size: 14px; font-weight: {{r.weight}}">{{r.name}}</span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 16px; color: #1B2A5C">{{r.pts}}</span></li>
+</sc-for>
+</ol>
+</main>
+<div style="flex: none; display: flex; align-items: center; gap: 10px; padding: 10px 20px; background: #E8ECF7; border-top: 1px solid #D5DAE8"><span style="width: 28px; text-align: center; font-family: 'Black Han Sans', sans-serif; font-size: 18px; color: #1B2A5C">{{meRank}}</span><img src="assets/profile-default.png" alt="" width="34" height="34" style="width: 34px; height: 34px; border-radius: 50%; background: #FFFFFF"><span style="flex: 1; font-size: 14px; font-weight: 700">직관요정 <span style="font-size: 11px; color: #FFFFFF; background: #1B2A5C; padding: 1px 6px; border-radius: 999px; vertical-align: 1px">나</span></span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 18px; color: #1B2A5C">{{mePts}}</span></div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":880}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const per = st.per || 'month';
+    const data = {
+      month: [['승요장인', 410], ['쌍둥이직관', 380], ['엘린이', 350], ['잠실직관러', 320], ['직관요정', 300], ['야구는9회말', 290], ['트윈스덕후', 270], ['응원가장인', 250], ['오지환짱', 240], ['잠실불꽃남', 220]],
+      season: [['승요장인', 820], ['엘린이', 760], ['쌍둥이직관', 740], ['트윈스덕후', 700], ['야구는9회말', 680], ['잠실직관러', 640], ['오지환짱', 610], ['응원가장인', 590], ['잠실불꽃남', 540], ['쌍둥이팬', 520], ['엘지팬9년차', 500], ['직관요정', 480]]
+    }[per];
+    const rings = ['#FFD58A', '#D5DAE8', '#E7B98C'];
+    const p = (i) => ({ name: data[i][0], pts: data[i][1] + '점', ring: rings[i] });
+    const meI = data.findIndex((r) => r[0] === '직관요정');
+    return {
+      onMonth: per === 'month', offMonth: per !== 'month', onSeason: per === 'season', offSeason: per !== 'season',
+      setMonth: () => this.setState({ per: 'month' }), setSeason: () => this.setState({ per: 'season' }),
+      crown: per === 'month' ? '10월 적중왕' : '2026 시즌 적중왕',
+      p1: p(0), p2: p(1), p3: p(2),
+      rows: data.slice(3, 10).map((r, i) => ({ rank: i + 4, name: r[0] === '직관요정' ? '직관요정 (나)' : r[0], pts: r[1], line: i === 0 ? 'none' : '1px solid #F1F2F6', bg: r[0] === '직관요정' ? '#F4F6FC' : 'transparent', weight: r[0] === '직관요정' ? 700 : 600 })),
+      meRank: meI + 1, mePts: data[meI][1] + '점'
+    };
+  }
+}
+</script>
+</body>
+</html>

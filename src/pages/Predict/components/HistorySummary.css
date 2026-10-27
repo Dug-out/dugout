@@ -1,0 +1,52 @@
+/* 내 누적 점수 카드 · 남색 그라데이션 */
+.history-summary {
+    display: flex;
+    flex: none;
+    align-items: stretch;
+    padding: 18px 12px;
+    border-radius: var(--radius-card);
+    background: var(--navy-gradient);
+    color: var(--surface);
+}
+
+.history-summary__item {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+}
+
+.history-summary__line {
+    width: 1px;
+    background: color-mix(in srgb, var(--surface) 16%, transparent);
+}
+
+.history-summary__label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--on-navy-sub);
+}
+
+.history-summary__points {
+    font-family: var(--font-number);
+    font-size: 30px;
+    line-height: 1.1;
+    color: var(--gold);
+}
+
+.history-summary__unit {
+    margin-left: 2px;
+    font-size: 16px;
+}
+
+/* 순위 · 흰 알약 */
+.history-summary__rank {
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy-500);
+}

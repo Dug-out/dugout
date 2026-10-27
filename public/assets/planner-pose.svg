@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" width="220" height="240">
+  <g stroke="#1B2A5C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- body / jersey -->
+    <path d="M52 238 C50 200 68 178 110 176 C152 178 170 200 168 238 Z" fill="#1B2A5C"/>
+    <path d="M110 180 L110 238" stroke="#FFFFFF" stroke-width="2" opacity="0.5"/>
+    <!-- ears -->
+    <path d="M44 70 C14 66 4 104 12 130 C18 150 40 152 50 138 C58 124 60 92 58 78 Z" fill="#FBF6EC"/>
+    <path d="M176 70 C206 66 216 104 208 130 C202 150 180 152 170 138 C162 124 160 92 162 78 Z" fill="#FBF6EC"/>
+    <!-- head -->
+    <path d="M110 44 C160 44 182 76 182 112 C182 150 152 172 110 172 C68 172 38 150 38 112 C38 76 60 44 110 44 Z" fill="#FBF6EC"/>
+    <!-- cap -->
+    <path d="M48 86 C48 40 78 18 110 18 C142 18 172 40 172 86 C140 76 80 76 48 86 Z" fill="#1B2A5C"/>
+    <path d="M44 88 C78 72 142 72 176 88 C178 96 172 98 166 96 C132 86 88 86 54 96 C48 98 42 96 44 88 Z" fill="#1B2A5C"/>
+    <circle cx="110" cy="17" r="6" fill="#1B2A5C"/>
+  </g>
+  <path d="M100 38 L100 66 L108 66 C120 66 126 60 126 52 C126 44 120 38 108 38 Z M106 44 L108 44 C115 44 119 47 119 52 C119 57 115 60 108 60 L106 60 Z" fill="#E63946" fill-rule="evenodd"/>
+  <!-- cheeks + stitch -->
+  <ellipse cx="62" cy="134" rx="13" ry="8" fill="#F7B9B9" opacity="0.7"/>
+  <ellipse cx="158" cy="134" rx="13" ry="8" fill="#F7B9B9" opacity="0.7"/>
+  <g stroke="#E63946" stroke-width="2.6" stroke-linecap="round" fill="none">
+    <path d="M174 132 C170 140 170 152 174 160"/>
+    <path d="M167 138 l8 1 M166 146 l8 0 M167 154 l8 -1"/>
+  </g>
+  <!-- glasses -->
+  <g stroke="#1B2A5C" stroke-width="4.5" fill="#FFFFFF" fill-opacity="0.35">
+    <circle cx="84" cy="116" r="19"/>
+    <circle cx="136" cy="116" r="19"/>
+    <path d="M103 114 C107 109 113 109 117 114" fill="none"/>
+    <path d="M65 112 L48 106 M155 112 L172 106" fill="none"/>
+  </g>
+  <path d="M74 106 l6 -4" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <path d="M126 106 l6 -4" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <!-- eyes, nose, mouth -->
+  <ellipse cx="86" cy="118" rx="4.5" ry="5.5" fill="#1B2A5C"/>
+  <ellipse cx="134" cy="118" rx="4.5" ry="5.5" fill="#1B2A5C"/>
+  <circle cx="87.5" cy="116" r="1.6" fill="#FFFFFF"/>
+  <circle cx="135.5" cy="116" r="1.6" fill="#FFFFFF"/>
+  <ellipse cx="110" cy="138" rx="6" ry="4.5" fill="#1B2A5C"/>
+  <path d="M110 142 C110 148 104 151 100 148 M110 142 C110 148 116 151 120 148" stroke="#1B2A5C" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- notebook -->
+  <g transform="rotate(-10 78 196)" stroke="#1B2A5C" stroke-width="4.5" stroke-linejoin="round">
+    <rect x="40" y="160" width="76" height="72" rx="8" fill="#FFFFFF"/>
+    <rect x="40" y="160" width="76" height="14" rx="6" fill="#E63946"/>
+    <g stroke-width="2.6" stroke-linecap="round" fill="none">
+      <path d="M50 188 l4 4 l7 -8"/><path d="M68 188 h36" stroke="#C9D1EA"/>
+      <path d="M50 204 l4 4 l7 -8"/><path d="M68 204 h30" stroke="#C9D1EA"/>
+      <rect x="50" y="215" width="10" height="9" rx="2"/><path d="M68 220 h34" stroke="#C9D1EA"/>
+    </g>
+    <circle cx="56" cy="160" r="3" fill="#FFFFFF" stroke-width="2.4"/>
+    <circle cx="78" cy="160" r="3" fill="#FFFFFF" stroke-width="2.4"/>
+    <circle cx="100" cy="160" r="3" fill="#FFFFFF" stroke-width="2.4"/>
+  </g>
+  <!-- left paw holding notebook -->
+  <ellipse cx="38" cy="222" rx="13" ry="15" fill="#FBF6EC" stroke="#1B2A5C" stroke-width="4.5"/>
+  <!-- pencil -->
+  <g transform="rotate(38 152 196)" stroke="#1B2A5C" stroke-width="4" stroke-linejoin="round">
+    <rect x="144" y="150" width="16" height="62" rx="3" fill="#FFD58A"/>
+    <rect x="144" y="146" width="16" height="12" rx="3" fill="#F7B9B9"/>
+    <path d="M144 212 L152 230 L160 212 Z" fill="#FBF6EC"/>
+    <path d="M149.5 224 L152 230 L154.5 224 Z" fill="#1B2A5C" stroke-width="2"/>
+  </g>
+  <!-- right paw holding pencil -->
+  <ellipse cx="150" cy="200" rx="14" ry="15" fill="#FBF6EC" stroke="#1B2A5C" stroke-width="4.5"/>
+  <!-- sparkles -->
+  <path d="M196 30 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3 l9 -3 Z" fill="#FFD58A"/>
+  <path d="M22 34 l2 6 l6 2 l-6 2 l-2 6 l-2 -6 l-6 -2 l6 -2 Z" fill="#FFD58A"/>
+</svg>

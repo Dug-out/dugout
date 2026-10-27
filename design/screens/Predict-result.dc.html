@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>예측 결과</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+@keyframes aitick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ai-tick{animation:aitick 18s linear infinite;width:max-content}
+.ai-tick:hover{animation-play-state:paused}
+@media (prefers-reduced-motion: reduce){.ai-tick{animation:none}}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="flex: none; display: flex; align-items: center; gap: 4px; padding: 12px 12px 8px; border-bottom: 1px solid #EEF0F6"><a href="Predict.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; flex: none; color: #141B33; display: flex; align-items: center; justify-content: center; border-radius: 12px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a><h1 style="margin: 0; font-size: 17px; font-weight: 700">예측 결과</h1></header>
+<main style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 16px; padding: 20px 20px 32px">
+<section aria-label="경기 결과" style="flex: none; border-radius: 20px; background: linear-gradient(165deg, #24356B 0%, #1B2A5C 55%, #141F47 100%); color: #FFFFFF; padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 12px; color: #C9D1EA; text-align: center">10.20 (화) 18:30 · 잠실 · 경기 종료</span>
+<div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center"><span style="display: flex; flex-direction: column; align-items: center"><span style="font-size: 14px; font-weight: 700">LG <span style="font-size: 10px; background: #D62839; padding: 1px 5px; border-radius: 5px; vertical-align: 2px">MY</span></span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 44px; line-height: 1.1">5</span></span><span style="font-size: 13px; font-weight: 700; color: #1B2A5C; background: #FFFFFF; padding: 3px 12px; border-radius: 999px">LG 승리</span><span style="display: flex; flex-direction: column; align-items: center"><span style="font-size: 14px; font-weight: 700">두산</span><span style="font-family: 'Black Han Sans', sans-serif; font-size: 44px; line-height: 1.1; color: #C9D1EA">3</span></span></div>
+</section>
+
+<section aria-label="획득 점수" style="flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center">
+<sc-if value="{{hit}}" hint-placeholder-val="{{true}}"><img src="assets/rate-up.png" alt="" width="160" height="172" style="display: block; width: 160px; height: 172px; object-fit: contain"></sc-if>
+<sc-if value="{{miss}}" hint-placeholder-val="{{false}}"><img src="assets/rate-down.png" alt="" width="190" height="172" style="display: block; width: 190px; height: 172px; object-fit: contain"></sc-if>
+<h2 aria-label="{{headline}}" style="margin: 2px 0 0; font-family: 'Black Han Sans', sans-serif; font-size: 64px; font-weight: 400; line-height: 1; color: {{totalColor}}">{{bigPts}}<span style="font-size: 28px; margin-left: 2px">점</span></h2>
+
+</section>
+
+<section aria-label="채점" style="flex: none; background: #F7F8FC; border: 1px solid #E3E6F0; border-radius: 18px; padding: 6px 18px 8px">
+<div style="display: flex; align-items: center; justify-content: space-between; min-height: 50px; font-size: 15px"><span style="color: #5A6380">내 예측</span><strong>{{myPick}}</strong></div>
+<div style="display: flex; align-items: center; justify-content: space-between; min-height: 48px; border-top: 1px solid #E8EBF3; font-size: 15px"><span style="color: #5A6380">승패</span><span style="display: flex; align-items: center; gap: 8px"><span style="font-weight: 700; font-size: 16px; color: {{resColor}}">{{resMark}}</span><strong style="width: 44px; text-align: right">{{resPts}}</strong></span></div>
+<div style="display: flex; align-items: center; justify-content: space-between; min-height: 48px; border-top: 1px solid #E8EBF3; font-size: 15px"><span style="color: #5A6380">스코어</span><span style="display: flex; align-items: center; gap: 8px"><span style="font-weight: 700; font-size: 16px; color: {{scoreColor}}">{{scoreMark}}</span><strong style="width: 44px; text-align: right">{{scorePts}}</strong></span></div>
+<div style="display: flex; align-items: center; justify-content: space-between; min-height: 54px; border-top: 1.5px solid #D5DAE8; font-size: 16px; font-weight: 700"><span>획득 점수</span><span style="font-family: 'Black Han Sans', sans-serif; font-weight: 400; font-size: 26px; color: {{totalColor}}">{{total}}</span></div>
+</section>
+
+
+
+</main>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["hit","miss"],"default":"hit"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const hit = (this.props.variant || 'hit') === 'hit';
+    return hit ? {
+      hit: true, miss: false, headline: '42점 획득', bigPts: '+42', streak: '이번 달 누적 300점',
+      myPick: 'LG 승리 · 5 : 3', resMark: '✓', resColor: '#1B2A5C', resPts: '+10', scoreMark: '◎', scoreColor: '#C21F31', scorePts: '+32',
+      total: '+42점', totalColor: '#C21F31', rankFrom: '12위', rankTo: '5위', rankDiff: '▲7', rankColor: '#C21F31'
+    } : {
+      hit: false, miss: true, headline: '0점', bigPts: '0', streak: '이번 달 누적 270점',
+      myPick: 'LG 패배 · 2 : 4', resMark: '✕', resColor: '#8A93B0', resPts: '0', scoreMark: '✕', scoreColor: '#8A93B0', scorePts: '0',
+      total: '0점', totalColor: '#8A93B0', rankFrom: '12위', rankTo: '15위', rankDiff: '▼3', rankColor: '#5A6380'
+    };
+  }
+}
+</script>
+</body>
+</html>

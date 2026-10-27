@@ -86,3 +86,14 @@ export function onAuthChange(callback) {
     } = supabase.auth.onAuthStateChange((_event, session) => callback(session))
     return () => subscription.unsubscribe()
 }
+
+/**
+ * 로그아웃 · 저장된 로그인 세션을 지운다
+ *
+ * signOut: 서버에 로그아웃을 알리고 브라우저 저장소의 토큰을 지운다.
+ *  끝나면 onAuthChange 콜백이 session 없이 불려 로그인이 필요한 화면은 로그인으로 보낸다.
+ */
+export async function signOut() {
+    const {error} = await supabase.auth.signOut()
+    if (error) throw error
+}
