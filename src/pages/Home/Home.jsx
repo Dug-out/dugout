@@ -1,14 +1,10 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import {useNavigate} from 'react-router'
-import {fetchMyProfile} from '../../api/profile.js'
 import {Button, Header} from '../../components'
 import Icon from '../../components/Icon/Icon.jsx'
 import {DEFAULT_CONDITIONS, FOOD_OPTIONS, SEAT_OPTIONS, WHEN_OPTIONS, WITH_OPTIONS} from '../../constants/planner.js'
-import {SIGNUP} from '../../constants/policy.js'
 import PredictBanner from './components/PredictBanner.jsx'
 import './Home.css'
-
-const teamName = (code) => SIGNUP.TEAMS.find((t) => t.code === code)?.name ?? code
 
 function ConditionGroup({label, options, value, onChange}) {
     return (
@@ -29,14 +25,7 @@ function ConditionGroup({label, options, value, onChange}) {
 /** 홈 · AI 직관 플래너 */
 function Home() {
     const navigate = useNavigate()
-    const [profile, setProfile] = useState(null)
     const [conditions, setConditions] = useState(DEFAULT_CONDITIONS)
-
-    useEffect(() => {
-        let alive = true
-        fetchMyProfile().then((p) => alive && setProfile(p)).catch((e) => console.error(e))
-        return () => { alive = false }
-    }, [])
 
     const set = (key) => (value) => setConditions((prev) => ({...prev, [key]: value}))
 
@@ -50,7 +39,6 @@ function Home() {
 
             <main className="home__main">
                 <div className="home__intro">
-                    <p className="home__intro-sub">{profile ? `${teamName(profile.team)} 팬 · ${profile.nickname}님` : ' '}</p>
                     <h2 className="home__intro-title">이번 주, 어디로 직관 갈까요?</h2>
                 </div>
 
@@ -71,7 +59,7 @@ function Home() {
                     <p className="planner-card__caption">응원팀과 출발 지역은 프로필 정보로 반영돼요</p>
                 </section>
 
-                <PredictBanner team={profile?.team} />
+                <PredictBanner />
             </main>
         </div>
     )

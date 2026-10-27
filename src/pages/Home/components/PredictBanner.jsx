@@ -1,12 +1,14 @@
 import {Link} from 'react-router'
 import Icon from '../../../components/Icon/Icon.jsx'
+import useMyTeam from '../../../hooks/load/useMyTeam.js'
 import './PredictBanner.css'
 
 /**
- * 승부 예측으로 가는 카드 · 경기마다 바뀌지 않고 항상 같은 안내
- * @param {{team?: string}} props team: 내 응원팀 코드('LG' 등) · 아직 모르면 "우리 팀"
+ * 승부 예측으로 가는 카드 · 경기마다 바뀌지 않고 항상 같은 안내 · 내 응원팀을 아직 모르면 "우리 팀"
  */
-function PredictBanner({team}) {
+function PredictBanner() {
+    const team = useMyTeam()
+
     return (
         <Link to="/predict" className="predict-banner" aria-label="승부 예측하러 가기">
             <span className="predict-banner__text">

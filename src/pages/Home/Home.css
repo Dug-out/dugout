@@ -20,12 +20,6 @@
     padding: 16px 0 20px;
 }
 
-.home__intro-sub {
-    margin: 0 0 4px;
-    font-size: 13px;
-    color: var(--text-500);
-}
-
 .home__intro-title {
     margin: 0;
     font-size: 21px;
