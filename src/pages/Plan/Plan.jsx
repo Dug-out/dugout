@@ -1,7 +1,8 @@
-import {useEffect, useState} from 'react'
-import {Link, useLocation, useNavigate} from 'react-router'
-import {Header, Icon, Loading} from '../../components'
+import {useCallback, useEffect, useState} from 'react'
+import {useLocation, useNavigate} from 'react-router'
+import {Header, Icon} from '../../components'
 import {DEFAULT_CONDITIONS, DEFAULT_ORIGIN, FOOD_OPTIONS, SEAT_OPTIONS, WHEN_OPTIONS} from '../../constants/planner.js'
+import PlanLoading from './components/PlanLoading.jsx'
 import './Plan.css'
 
 // 옵션 값 → 칩에 보이는 글자
@@ -18,14 +19,19 @@ function Plan() {
     // 플랜을 짜는 중인지
     const [making, setMaking] = useState(false)
 
+    const goResult = useCallback(
+        () => navigate('/plans/result', {state: {conditions, origin}}),
+        [navigate, conditions, origin],
+    )
+
     // 플랜 짜기 · 아직 서버를 붙이지 않아서 잠깐 로딩을 보여 주고 결과 화면(빈 화면)으로 간다
     useEffect(() => {
         if (!making) return
-        const timer = setTimeout(() => navigate('/plans/result', {state: {conditions, origin}}), 1500)
+        const timer = setTimeout(goResult, 2000)
         return () => clearTimeout(timer)
-    }, [making, navigate, conditions, origin])
+    }, [making, goResult])
 
-    if (making) return <Loading />
+    if (making) return <PlanLoading onSkip={goResult} />
 
     const chips = [
         labelOf(WHEN_OPTIONS, conditions.when),
@@ -45,9 +51,6 @@ function Plan() {
                             {chip}
                         </span>
                     ))}
-                    <Link to="/home" className="plan__edit">
-                        조건 수정
-                    </Link>
                 </div>
             </div>
 
