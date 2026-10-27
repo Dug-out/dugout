@@ -126,11 +126,3 @@
     font-weight: 700;
     cursor: pointer;
 }
-
-.planner-card__caption {
-    position: relative;
-    margin: -6px 0 0;
-    font-size: 11.5px;
-    color: var(--on-navy-sub);
-    text-align: center;
-}

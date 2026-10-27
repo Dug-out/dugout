@@ -65,7 +65,6 @@ function PlannerCard() {
                 <Icon name="sparkle" size={18} strokeWidth={2.2} />
                 AI 직관 플랜 짜기
             </button>
-            <p className="planner-card__caption">출발 위치는 다음 화면에서 골라요</p>
         </section>
     )
 }
