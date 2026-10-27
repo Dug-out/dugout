@@ -3,6 +3,7 @@ import {Button, EmptyState, Header} from '../../components'
 import {FOOD_OPTIONS, SEAT_OPTIONS, WHEN_OPTIONS} from '../../constants/planner.js'
 import {teamOf} from '../../utils/predict.js'
 import ConditionBar from './components/ConditionBar.jsx'
+import PlanAiCard from './components/PlanAiCard.jsx'
 import PlanGameCard from './components/PlanGameCard.jsx'
 import './PlanResult.css'
 
@@ -17,7 +18,7 @@ function PlanResult() {
     if (!state?.plan) return <Navigate to="/plans" replace />
 
     const {conditions, plan} = state
-    const {myTeam, game} = plan
+    const {myTeam, game, ai} = plan
 
     return (
         <div className="plan-result">
@@ -37,6 +38,7 @@ function PlanResult() {
                     <>
                         <h2 className="plan-result__heading">조건에 맞는 경기를 골랐어요</h2>
                         <PlanGameCard game={game} />
+                        {ai && <PlanAiCard ai={ai} />}
                     </>
                 ) : (
                     <EmptyState

@@ -4,6 +4,14 @@ import {getMyTeam} from './profiles.js'
 
 const DAY_MS = 24 * 60 * 60 * 1000
 
+// AI 경기 포인트 · AI 를 붙이기 전까지 모든 경기에 같은 임시 문구를 쓴다 (나중에 경기마다 AI 가 만든 글로 바뀐다)
+const TEMP_AI = {
+    highlight: '직관 가기 딱 좋은 경기예요!',
+    point: '고른 조건에 잘 맞는 일정이라 응원하기 좋은 날이에요.',
+    tags: ['조건 일치', '응원 열기'],
+    sourceCount: 3,
+}
+
 /** 경기 시작 시각의 한국 시간 요일(Mon~Sun)과 시(0~23) */
 function kstDayAndHour(value) {
     const parts = new Intl.DateTimeFormat('en-US', {
@@ -32,7 +40,8 @@ function matchesWhen(value, when) {
  *  2) 모집 중인 모집 글이 많은 경기 → 내 팀 홈 경기 → 날짜가 빠른 경기 순으로 가장 앞의 하나
  * @param {{conditions: {when: string}}} input
  * @returns {Promise<{myTeam: string, game: null | {id: number, gameAt: string, home: string, away: string, stadium: string,
- *   opponent: string, isHome: boolean}}>} 후보가 없으면 game 이 null
+ *   opponent: string, isHome: boolean}, ai?: {highlight: string, point: string, tags: string[], sourceCount: number}}>}
+ *  후보가 없으면 game 이 null · ai 는 AI 경기 포인트 (없으면 말풍선을 숨긴다)
  */
 export async function makePlan({conditions}) {
     const myTeam = await getMyTeam()
@@ -71,5 +80,5 @@ export async function makePlan({conditions}) {
 
     const {row, isHome} = ranked[0]
     const {id, game_at: gameAt, home_team: home, away_team: away, stadium} = row
-    return {myTeam, game: {id, gameAt, home, away, stadium, opponent: isHome ? away : home, isHome}}
+    return {myTeam, game: {id, gameAt, home, away, stadium, opponent: isHome ? away : home, isHome}, ai: TEMP_AI}
 }
