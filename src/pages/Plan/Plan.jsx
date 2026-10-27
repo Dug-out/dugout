@@ -5,6 +5,9 @@ import {DEFAULT_CONDITIONS, DEFAULT_ORIGIN} from '../../constants/planner.js'
 import PlanLoading from './components/PlanLoading.jsx'
 import './Plan.css'
 
+// 플랜 짜는 중 화면이 보이는 시간(ms) · 서버를 붙이면 응답이 올 때까지로 바꾼다
+const LOADING_MS = 2500
+
 /** AI 직관 플랜 · 출발 위치 화면 (/plans) · 출발 위치를 보여 주고(홈에서 고른 조건은 결과 화면에 넘긴다), 플랜을 짜면 결과 화면으로 간다 */
 function Plan() {
     const navigate = useNavigate()
@@ -24,11 +27,11 @@ function Plan() {
     // 플랜 짜기 · 아직 서버를 붙이지 않아서 잠깐 로딩을 보여 주고 결과 화면(빈 화면)으로 간다
     useEffect(() => {
         if (!making) return
-        const timer = setTimeout(goResult, 2000)
+        const timer = setTimeout(goResult, LOADING_MS)
         return () => clearTimeout(timer)
     }, [making, goResult])
 
-    if (making) return <PlanLoading onSkip={goResult} />
+    if (making) return <PlanLoading ms={LOADING_MS} onSkip={goResult} />
 
     return (
         <div className="plan">
