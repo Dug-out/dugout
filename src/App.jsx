@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react'
 import {Navigate, Route, Routes, useLocation} from 'react-router'
 import {onAuthChange} from './api/auth.js'
-import AiPlan from './pages/AiPlan/AiPlan.jsx'
 import ChatRoom from './pages/Chat/ChatRoom.jsx'
 import Home from './pages/Home/Home.jsx'
 import Login from './pages/Login/Login.jsx'
@@ -10,6 +9,7 @@ import MateDetail from './pages/Mate/MateDetail.jsx'
 import MateManage from './pages/Mate/MateManage.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
 import MyPosts from './pages/MyPosts/MyPosts.jsx'
+import Plan from './pages/Plan/Plan.jsx'
 import Predict from './pages/Predict/Predict.jsx'
 import PredictHistory from './pages/Predict/PredictHistory.jsx'
 import PredictRank from './pages/Predict/PredictRank.jsx'
@@ -63,7 +63,7 @@ function App() {
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout />}>
                 <Route path="/home" element={<Home />} />
-                <Route path="/plans" element={<AiPlan />} />
+                <Route path="/plans" element={<Plan />} />
                 <Route path="/mate" element={<Mate />} />
                 <Route path="/my" element={<Mypage />} />
                 <Route path="/posts" element={<MyPosts />} />
