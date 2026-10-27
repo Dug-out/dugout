@@ -8,7 +8,7 @@ notify pgrst, 'reload schema';
 
 ------------------------------------------
 -- 2. 정해진 시간마다 경기 가져오기 · sync-games 함수(supabase/functions/sync-games)를 먼저 배포한 뒤 실행한다
---  · 10분마다: 어제와 오늘 경기 (끝난 경기의 점수를 채운다)
+--  · 한국 시간 낮 12시~밤 12시에 10분마다: 어제와 오늘 경기 (끝난 경기의 점수를 채운다)
 --  · 하루 한 번(한국 시간 새벽 4시): 올해 전체 경기 (일정 변경과 새 경기를 맞춘다)
 -- 준비: 아래 둘을 실행하기 전에 <프로젝트-ref> 를 본인 프로젝트 주소의 앞부분으로 바꾸고,
 --       비밀 문구를 Vault 에 한 번 저장한다 (함수의 SYNC_SECRET 과 같은 값)
@@ -21,7 +21,7 @@ select cron.unschedule(jobid) from cron.job where jobname in ('sync-games-recent
 
 select cron.schedule(
   'sync-games-recent',
-  '*/10 * * * *',
+  '*/10 3-14 * * *',  -- 한국 시간 12시~24시 (UTC 3시~14시)
   $$
   select net.http_post(
     url := 'https://<프로젝트-ref>.supabase.co/functions/v1/sync-games',
