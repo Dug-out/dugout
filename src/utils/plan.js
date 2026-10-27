@@ -1,4 +1,4 @@
-// AI 직관 플랜 화면에서 쓰는 계산 · 글자 함수 모음
+// 직관 플랜 화면에서 쓰는 계산 · 글자 함수 모음
 import {
     ARRIVE_BEFORE_MINUTES,
     GAME_MINUTES,

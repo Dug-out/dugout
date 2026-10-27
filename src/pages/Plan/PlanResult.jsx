@@ -15,7 +15,7 @@ import './PlanResult.css'
 // 옵션 값 → 보이는 글자
 const labelOf = (options, value, key = 'label') => options.find((option) => option.value === value)?.[key]
 
-/** AI 직관 플랜 · 결과 화면 (/plans/result) · 출발 화면이 만든 플랜(state.plan)을 보여 준다 */
+/** 직관 플랜 · 결과 화면 (/plans/result) · 출발 화면이 만든 플랜(state.plan)을 보여 준다 */
 function PlanResult() {
     const {state} = useLocation()
 
@@ -29,7 +29,7 @@ function PlanResult() {
 
     return (
         <div className="plan-result">
-            <Header title="AI 직관 플랜" backTo="/plans" />
+            <Header title="직관 플랜" backTo="/plans" />
 
             <main className="plan-result__main">
                 <ConditionBar

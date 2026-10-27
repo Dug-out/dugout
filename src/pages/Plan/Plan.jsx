@@ -12,7 +12,7 @@ const LOADING_MS = 2500
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-/** AI 직관 플랜 · 출발 위치 화면 (/plans) · 출발 위치를 보여 주고(홈에서 고른 조건은 플랜 만들기에 쓴다), 플랜을 짜면 결과 화면으로 간다 */
+/** 직관 플랜 · 출발 위치 화면 (/plans) · 출발 위치를 보여 주고(홈에서 고른 조건은 플랜 만들기에 쓴다), 플랜을 짜면 결과 화면으로 간다 */
 function Plan() {
     const navigate = useNavigate()
     const {state} = useLocation()
@@ -63,7 +63,7 @@ function Plan() {
 
     return (
         <div className="plan">
-            <Header title="AI 직관 플랜" backTo="/home" />
+            <Header title="직관 플랜" backTo="/home" />
 
             <div className="plan__head">
                 <h2 className="plan__title">어디서 출발하세요?</h2>

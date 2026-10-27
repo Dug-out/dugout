@@ -11,13 +11,13 @@ const GROUPS = [
     {key: 'food', label: '선호 음식', options: FOOD_OPTIONS},
 ]
 
-/** 홈 · AI 직관 플래너 카드 · 언제 / 좌석 / 선호 음식을 하나씩 고르고 플랜 만들기 화면(/plans)으로 간다 */
+/** 홈 · 직관 플래너 카드 · 언제 / 좌석 / 선호 음식을 하나씩 고르고 플랜 만들기 화면(/plans)으로 간다 */
 function PlannerCard() {
     const navigate = useNavigate()
     const [conditions, setConditions] = useState(DEFAULT_CONDITIONS)
 
     return (
-        <section className="planner-card" aria-label="AI 직관 플래너">
+        <section className="planner-card" aria-label="직관 플래너">
             {/* 오른쪽 아래 흐린 다이아몬드 장식 */}
             <svg className="planner-card__deco" width="200" height="200" viewBox="0 0 200 200" aria-hidden="true">
                 <path d="M100 12 L188 100 L100 188 L12 100 Z" fill="none" stroke="currentColor" strokeWidth="10" />
@@ -28,7 +28,7 @@ function PlannerCard() {
             <div className="planner-card__head">
                 <span className="planner-card__badge">
                     <Icon name="sparkle" size={11} strokeWidth={2.4} />
-                    AI 직관 플래너
+                    직관 플래너
                 </span>
                 <p className="planner-card__title">
                     조건만 고르면
@@ -63,7 +63,7 @@ function PlannerCard() {
                 onClick={() => navigate('/plans', {state: {conditions}})}
             >
                 <Icon name="sparkle" size={18} strokeWidth={2.2} />
-                AI 직관 플랜 짜기
+                직관 플랜 짜기
             </button>
         </section>
     )

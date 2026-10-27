@@ -1,4 +1,4 @@
-// AI 직관 플래너 · 조건 고르기 옵션 (홈 플래너 카드) · value 는 플랜 만들기에 넘기는 값, label 은 칩에 보이는 글자
+// 직관 플래너 · 조건 고르기 옵션 (홈 플래너 카드) · value 는 플랜 만들기에 넘기는 값, label 은 칩에 보이는 글자
 // short: 플랜 결과의 "고른 조건" 칸에 쓰는 짧은 글자
 export const WHEN_OPTIONS = [
     {value: 'weekday', label: '평일 저녁 경기', short: '평일 저녁'},

@@ -3,7 +3,7 @@ import PlannerCard from './components/PlannerCard.jsx'
 import PredictBanner from './components/PredictBanner.jsx'
 import './Home.css'
 
-/** 홈 · AI 직관 플래너 + 승부 예측 카드 */
+/** 홈 · 직관 플래너 + 승부 예측 카드 */
 function Home() {
     return (
         <div className="home">
