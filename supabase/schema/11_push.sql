@@ -145,7 +145,7 @@ begin
   perform public.notify_push(
     new.user_id,
     case when new.points > 10 then '스코어 적중!' else '승부 적중!' end,
-    match || ' · +' || new.points || '점을 얻었어요',
+    match || ' +' || new.points || '점을 얻었어요',
     '/predict/history'
   );
   return null;
