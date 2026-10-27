@@ -6,7 +6,7 @@ import {MATE_POST, PROFILE} from '../../constants/policy.js'
 import useGoBack from '../../hooks/useGoBack.js'
 import useMatePost from '../../hooks/load/useMatePost.js'
 import useMyTeam from '../../hooks/load/useMyTeam.js'
-import {applyConditionMessage} from '../../utils/applyCondition.js'
+import {meetsApplyCondition} from '../../utils/applyCondition.js'
 import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import {formatManner} from '../../utils/manner.js'
 import MateApplySheet from './components/MateApplySheet.jsx'
@@ -71,6 +71,9 @@ function MateDetail() {
     )
 }
 
+// 신청 조건(나이대 · 성별)에 맞지 않을 때의 안내
+const CONDITION_MESSAGE = '참여 조건에 맞지 않아 신청할 수 없어요. 나이대와 성별 조건을 확인해 주세요'
+
 /** 불러온 글 · 이미지, 제목과 방장, 정보 카드, 소개, 함께 가는 메이트, 아래 신청 영역 */
 function PostContent({post, refresh}) {
     // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
@@ -89,9 +92,8 @@ function PostContent({post, refresh}) {
         if (checking) return
         setChecking(true)
         try {
-            const message = applyConditionMessage(post, await getMyProfile())
-            if (message) setResult({ok: false, message})
-            else setApplyOpen(true)
+            if (meetsApplyCondition(post, await getMyProfile())) setApplyOpen(true)
+            else setResult({ok: false, message: CONDITION_MESSAGE})
         } catch {
             // 프로필을 못 불러와도 신청은 막지 않는다 (신청은 방장이 보고 수락한다)
             setApplyOpen(true)
