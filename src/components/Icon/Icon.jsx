@@ -88,7 +88,6 @@ const PATHS = {
             <path d="M9 8.5h6M9 12h6M9 15.5h4" />
         </>
     ),
-    bookmark: <path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4-6 4V5a1 1 0 0 1 1-1z" />,
     more: (
         <>
             <circle cx="5" cy="12" r="1.8" fill="currentColor" stroke="none" />
@@ -116,7 +115,7 @@ const PATHS = {
     ),
 }
 
-/** name: back | plus | check | alert | calendar | pin | home | mate | plan | posts | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | bookmark | more | exit | edit | trash */
+/** name: back | plus | check | alert | calendar | pin | home | mate | plan | posts | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | more | exit | edit | trash */
 function Icon({name, size = 24, strokeWidth = 2, ...rest}) {
     return (
         <svg

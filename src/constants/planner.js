@@ -14,14 +14,6 @@ export const DEFAULT_CONDITIONS = {
     food: '상관없음',
 }
 
-// 직관 준비 체크리스트 · 홈 "내 다음 직관" 카드와 "플랜" 탭 목록에서 같이 쓴다.
-export const PREP_ITEMS = [
-    {key: 'ticket', label: '티켓'},
-    {key: 'mate', label: '메이트'},
-    {key: 'food', label: '먹거리'},
-    {key: 'transit', label: '교통'},
-]
-
 // public.games.stadium(짧은 구장 이름 텍스트) → stadiums.code. games는 코드가 아니라 이 이름만 갖고 있어서
 // 날씨·대기질·맛집 조회에 필요한 위경도를 찾으려면 먼저 이 매핑으로 코드를 알아내야 한다.
 export const STADIUM_CODE_BY_NAME = {

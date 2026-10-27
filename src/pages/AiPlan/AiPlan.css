@@ -516,10 +516,6 @@
     gap: 8px;
 }
 
-.aiplan__actions .btn--secondary {
-    flex: none;
-}
-
 .aiplan__make {
     flex: 1;
     background: var(--red-500);

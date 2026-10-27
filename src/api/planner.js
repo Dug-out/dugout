@@ -1,27 +1,6 @@
 import {supabase} from '../lib/supabase.js'
 import {MOCK_STADIUMS, STADIUM_CODE_BY_NAME} from '../constants/planner.js'
 
-const todayStr = () => new Date().toISOString().slice(0, 10)
-
-/** saved_plans 등이 아직 Supabase에 없을 때(schema_ai_planner.sql 미실행)만 나는 에러 */
-const isMissingTable = (error) => error.code === 'PGRST205' || error.code === '42P01'
-
-// saved_plans 테이블이 생기기 전까지 저장 플랜을 localStorage에 흉내 내 보관한다.
-// 테이블이 생기면 아래 함수들이 먼저 Supabase를 시도하고, missing-table 에러일 때만 이쪽으로 빠진다.
-const LOCAL_PLANS_KEY = 'dugout.mockSavedPlans.v1'
-
-function readLocalPlans() {
-    try {
-        return JSON.parse(localStorage.getItem(LOCAL_PLANS_KEY)) ?? []
-    } catch {
-        return []
-    }
-}
-
-function writeLocalPlans(plans) {
-    localStorage.setItem(LOCAL_PLANS_KEY, JSON.stringify(plans))
-}
-
 /** games.game_at(UTC로 내려오는 timestamptz)을 한국 시간 기준 '날짜'·'시간' 문자열로 쪼갠다 */
 export function splitGameAt(isoString) {
     const parts = new Intl.DateTimeFormat('en-CA', {
@@ -111,11 +90,6 @@ export function addMinutes(timeStr, delta) {
     return `${hh}:${mm}`
 }
 
-export const dday = (dateStr) => {
-    const diff = Math.round((new Date(`${dateStr}T00:00:00`) - new Date(`${todayStr()}T00:00:00`)) / 86400000)
-    return diff === 0 ? 'D-DAY' : `D-${diff}`
-}
-
 /** 맛집 목록(카카오 로컬 API 실데이터)에서 선호 음식 카테고리를 앞으로 당겨서 보여준다 */
 export function sortFoodByPreferred(list, preferredCategory) {
     if (!preferredCategory || preferredCategory === '상관없음') return list
@@ -162,76 +136,4 @@ export function buildReasons({game, conditions, foodSpot}) {
         )
     }
     return reasons
-}
-
-/** "플랜" 탭 · 저장한 플랜 전체 목록(최신순) */
-export async function fetchSavedPlans(userId) {
-    const {data, error} = await supabase
-        .from('saved_plans')
-        .select('*, games(*)')
-        .eq('user_id', userId)
-        .order('created_at', {ascending: false})
-    if (!error) return data
-    if (!isMissingTable(error)) throw error
-
-    return readLocalPlans()
-        .filter((p) => p.user_id === userId)
-        .sort((a, b) => b.created_at.localeCompare(a.created_at))
-        .map((plan) => ({...plan, games: null}))
-}
-
-export async function countSavedPlans(userId) {
-    const {count, error} = await supabase
-        .from('saved_plans')
-        .select('id', {count: 'exact', head: true})
-        .eq('user_id', userId)
-    if (!error) return count ?? 0
-    if (!isMissingTable(error)) throw error
-
-    return readLocalPlans().filter((p) => p.user_id === userId).length
-}
-
-export async function savePlan({userId, gameId, companionType, seatZone}) {
-    const {data, error} = await supabase
-        .from('saved_plans')
-        .insert({
-            user_id: userId,
-            game_id: gameId,
-            companion_type: companionType,
-            seat_zone: seatZone,
-        })
-        .select()
-        .single()
-    if (!error) return data
-    if (!isMissingTable(error)) throw error
-
-    console.warn('[planner] saved_plans 테이블이 아직 없어 로컬(localStorage)에 임시로 저장해요. supabase/schema_ai_planner.sql을 실행하면 사라져요.')
-    const plan = {
-        id: `mock-plan-${Date.now()}`,
-        user_id: userId,
-        game_id: gameId,
-        companion_type: companionType,
-        seat_zone: seatZone,
-        checklist: {ticket: false, mate: false, food: false, transit: false},
-        created_at: new Date().toISOString(),
-    }
-    writeLocalPlans([...readLocalPlans(), plan])
-    return plan
-}
-
-export async function updateChecklist(planId, checklist) {
-    const {error} = await supabase.from('saved_plans').update({checklist}).eq('id', planId)
-    if (!error) return
-    if (!isMissingTable(error)) throw error
-
-    writeLocalPlans(readLocalPlans().map((p) => (p.id === planId ? {...p, checklist} : p)))
-}
-
-/** "플랜" 탭 · 하나 또는 여러 개를 한 번에 삭제 (단일 삭제도 배열 길이 1로 호출) */
-export async function deleteSavedPlans(planIds) {
-    const {error} = await supabase.from('saved_plans').delete().in('id', planIds)
-    if (!error) return
-    if (!isMissingTable(error)) throw error
-
-    writeLocalPlans(readLocalPlans().filter((p) => !planIds.includes(p.id)))
 }

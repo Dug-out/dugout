@@ -1,6 +1,6 @@
 import {useEffect, useMemo, useState} from 'react'
 import {useLocation, useNavigate} from 'react-router'
-import {addMinutes, buildReasons, fetchUpcomingGames, matchChecklist, matchPercent, rankGames, savePlan, sortFoodByPreferred, sortIndoorFoodBySeat} from '../../api/planner.js'
+import {addMinutes, buildReasons, fetchUpcomingGames, matchChecklist, matchPercent, rankGames, sortFoodByPreferred, sortIndoorFoodBySeat} from '../../api/planner.js'
 import {fetchMyProfile} from '../../api/profile.js'
 import {fetchGameWeather} from '../../api/weather.js'
 import {fetchIndoorStadiumFood, fetchNearbyStadiumFood} from '../../api/stadiumFood.js'
@@ -51,7 +51,6 @@ function AiPlan() {
     const [games, setGames] = useState(null)
     const [error, setError] = useState('')
     const [selectedId, setSelectedId] = useState(null)
-    const [saved, setSaved] = useState(false)
     const [liveWeather, setLiveWeather] = useState(null)
     const [indoorFood, setIndoorFood] = useState(null)
     const [nearbyFood, setNearbyFood] = useState(null)
@@ -180,20 +179,6 @@ function AiPlan() {
     // Gemini가 만든 추천 이유가 있으면 그걸 쓰고, 조회 전이거나 실패했으면 규칙 기반으로 대신한다.
     const reasons = aiReasons ?? buildReasons({game: displayGame, conditions, foodSpot: topFood})
     const wantsMate = conditions.with === '메이트 구해요'
-
-    const handleSave = async () => {
-        try {
-            await savePlan({
-                userId: profile.id,
-                gameId: game.id,
-                companionType: conditions.with,
-                seatZone: conditions.seat,
-            })
-            setSaved(true)
-        } catch (e) {
-            setError(e.message)
-        }
-    }
 
     const handleCreateMeetup = () => {
         navigate('/mate/write', {
@@ -334,9 +319,6 @@ function AiPlan() {
                     </div>
                 </div>
                 <div className="aiplan__actions">
-                    <Button variant="secondary" onClick={handleSave} disabled={saved}>
-                        <Icon name="bookmark" size={16}/> {saved ? '저장됨' : '플랜 저장'}
-                    </Button>
                     <Button variant="primary" className="aiplan__make" onClick={handleCreateMeetup}>
                         <Icon name="plus" size={16}/> 이 일정으로 모임 만들기
                     </Button>

@@ -36,15 +36,6 @@ export const REVIEW = {
         s >= REVIEW.GOOD_SCORE ? 'rate-good' : s >= 5 ? 'rate-soso' : s >= 1 ? 'rate-bad' : 'rate-noshow',
 }
 
-export const RECORD = {
-    MEMO_MAX: 100,
-    // 직관 승률 .500 기준으로 캐릭터 2종
-    mood: (rate) =>
-        rate >= 0.5
-            ? {name: '승리요정', image: 'rate-up', line: '내가 가면 이긴다! 오늘도 출격'}
-            : {name: '눈물요정', image: 'rate-down', line: '다음 직관은 꼭 이길 거야…'},
-}
-
 export const PROFILE = {
     DEFAULT_AVATAR: '/assets/profile-default.png', // 프로필 사진이 없을 때
 }
