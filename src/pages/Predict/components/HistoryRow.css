@@ -1,0 +1,90 @@
+/* 예측 내역 한 줄 · 첫 줄 말고는 위에 옅은 선 */
+.history-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 60px;
+}
+
+.history-row + .history-row {
+    border-top: 1px solid var(--divider);
+}
+
+.history-row__game {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    width: 50px;
+}
+
+.history-row__date {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.history-row__opp {
+    font-size: 12px;
+    color: var(--text-400);
+}
+
+.history-row__scores {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+    font-size: 13px;
+}
+
+.history-row__key {
+    color: var(--text-400);
+}
+
+.history-row__real {
+    color: var(--text-700);
+}
+
+/* ── 점수 배지 · 상태마다 색이 다르다 ── */
+.history-row__badge {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    box-sizing: border-box;
+    min-width: 64px;
+    height: 30px;
+    padding: 0 10px;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius-full);
+    font-family: var(--font-number);
+    font-size: 16px;
+}
+
+/* 스코어 적중 · 빨강 */
+.history-row__badge--exact {
+    border-color: var(--red-500);
+    background: var(--red-500);
+    color: var(--surface);
+}
+
+/* 승부 적중 · 연남색 */
+.history-row__badge--hit {
+    border-color: var(--navy-50);
+    background: var(--navy-50);
+    color: var(--navy-500);
+}
+
+/* 빗나감 · 회색 */
+.history-row__badge--miss {
+    border-color: var(--divider);
+    background: var(--divider);
+    color: var(--gray-500);
+}
+
+/* 경기 전 · 흰 바탕 + 테두리 */
+.history-row__badge--wait {
+    border-color: var(--border);
+    background: var(--surface);
+    color: var(--gray-500);
+}

@@ -1,0 +1,106 @@
+/* 랭킹 한 줄 · 목록 안에서는 첫 줄 말고 위에 옅은 선 */
+.rank-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    margin: 0 -14px;
+    padding: 0 14px;
+}
+
+.rank-row + .rank-row {
+    border-top: 1px solid var(--divider);
+}
+
+/* 목록 안 내 줄 · 연한 바탕 + 굵게 */
+.rank-row--me {
+    background: var(--row-selected);
+}
+
+.rank-row__rank {
+    flex: none;
+    width: 24px;
+    font-family: var(--font-number);
+    font-size: 16px;
+    color: var(--text-500);
+    text-align: center;
+}
+
+.rank-row__photo {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    object-fit: cover;
+}
+
+.rank-row__name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rank-row--me .rank-row__name {
+    font-weight: 700;
+}
+
+.rank-row__points {
+    flex: none;
+    font-family: var(--font-number);
+    font-size: 16px;
+    color: var(--navy-500);
+}
+
+/* ── 화면 아래 고정된 내 줄 · 연남색 띠 ── */
+.rank-row--bar {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    min-height: 0;
+    margin: 0;
+    padding: 10px 20px calc(10px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--border-strong);
+    background: var(--navy-50);
+}
+
+.rank-row--bar .rank-row__rank {
+    width: 28px;
+    font-size: 18px;
+    color: var(--navy-500);
+}
+
+/* 순위가 없을 때 "내 순위" 글자 · 숫자 칸(28px)에 안 들어가서 글자 길이만큼 넓히고 작은 글씨로 */
+.rank-row--bar .rank-row__rank--empty {
+    width: auto;
+    font-family: var(--font-base), sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.rank-row--bar .rank-row__photo {
+    background: var(--surface);
+}
+
+.rank-row--bar .rank-row__name {
+    font-weight: 700;
+}
+
+.rank-row--bar .rank-row__points {
+    font-size: 18px;
+}
+
+/* "나" 알약 */
+.rank-row__me {
+    padding: 1px 6px;
+    border-radius: var(--radius-full);
+    background: var(--navy-500);
+    font-size: 11px;
+    color: var(--surface);
+    vertical-align: 1px;
+}

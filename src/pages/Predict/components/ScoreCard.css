@@ -1,0 +1,188 @@
+/* 스코어 예측 카드 · 흰 카드 */
+.score-card {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 16px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--navy-500) 6%, transparent);
+}
+
+/* ── AI 브리핑 띠 ── */
+.score-card__ai {
+    display: flex;
+    flex: none;
+    align-items: center;
+    height: 44px;
+    overflow: hidden;
+    border-radius: var(--radius-input);
+    background: linear-gradient(90deg, var(--navy-500), var(--navy-300));
+}
+
+.score-card__ai-label {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 5px;
+    height: 100%;
+    padding: 0 12px 0 14px;
+    background: var(--navy-700);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+    white-space: nowrap;
+}
+
+/* 글자가 흐르는 창 · 양 끝은 흐리게 */
+.score-card__ai-window {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 16px, black calc(100% - 24px), transparent);
+}
+
+.score-card__ai-tick {
+    display: flex;
+    width: max-content;
+    padding-left: 16px;
+    animation: score-card-tick 18s linear infinite;
+}
+
+.score-card__ai-tick:hover {
+    animation-play-state: paused;
+}
+
+.score-card__ai-text {
+    flex: none;
+    padding-right: 40px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--surface);
+    white-space: nowrap;
+}
+
+@keyframes score-card-tick {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .score-card__ai-tick {
+        animation: none;
+    }
+}
+
+/* ── 점수판 ── */
+.score-card__board {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+.score-card__team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.score-card__team-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-700);
+}
+
+/* 점수 상자 · 안 정했으면 흐리게 */
+.score-card__box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 72px;
+    height: 72px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    background: var(--bg);
+    font-family: var(--font-number);
+    font-size: 40px;
+    line-height: 1;
+    color: color-mix(in srgb, var(--gray-300) 70%, var(--surface));
+}
+
+.score-card__box--filled {
+    border-color: var(--on-navy-sub);
+    background: color-mix(in srgb, var(--navy-50) 60%, var(--surface));
+    color: var(--navy-500);
+}
+
+.score-card__stepper {
+    display: flex;
+    align-items: center;
+    width: 104px;
+    overflow: hidden;
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--radius-btn);
+}
+
+.score-card__step {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--navy-500);
+    cursor: pointer;
+}
+
+.score-card__step:disabled {
+    color: var(--gray-300);
+    cursor: default;
+}
+
+.score-card__step-line {
+    width: 1.5px;
+    height: 24px;
+    background: var(--border);
+}
+
+.score-card__colon {
+    margin-bottom: 4px;
+    font-family: var(--font-number);
+    font-size: 30px;
+    color: var(--gray-300);
+}
+
+/* ── 결과 배지 · 승 남색 / 무 회색 / 패 빨강 ── */
+.score-card__result {
+    align-self: center;
+    padding: 4px 14px;
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--surface);
+}
+
+.score-card__result--win {
+    background: var(--navy-500);
+}
+
+.score-card__result--draw {
+    background: var(--gray-500);
+}
+
+.score-card__result--lose {
+    background: var(--red-500);
+}

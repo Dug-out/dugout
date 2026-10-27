@@ -1,0 +1,123 @@
+/* 상위 3명 단상 · 남색 그라데이션 */
+.rank-podium {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 12px 18px;
+    border-radius: var(--radius-card);
+    background: var(--navy-gradient);
+    color: var(--surface);
+}
+
+.rank-podium__title {
+    font-family: var(--font-emotion);
+    font-size: 19px;
+    text-align: center;
+}
+
+/* 2위 · 1위 · 3위 · 가운데가 조금 넓다 */
+.rank-podium__places {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    align-items: start;
+}
+
+/* ── 한 자리 · 순위마다 크기 · 높이 · 테두리 색이 다르다 ── */
+.rank-podium__place {
+    --ring: var(--gold);
+    --size: 92px;
+    --badge: 28px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+.rank-podium__place--2 {
+    --ring: var(--border-strong);
+    --size: 64px;
+    --badge: 22px;
+
+    padding-top: 30px;
+}
+
+/* 동메달 색 · 토큰에 없어서 금색에 빨강 · 회색을 조금 섞어 만든다 (디자인 #E7B98C 와 비슷) */
+.rank-podium__place--3 {
+    --ring: color-mix(in srgb, color-mix(in srgb, var(--gold) 85%, var(--red-text)) 85%, var(--gray-400));
+    --size: 52px;
+    --badge: 20px;
+
+    padding-top: 42px;
+}
+
+.rank-podium__photo {
+    position: relative;
+    margin-bottom: calc(var(--badge) / 2 + 2px);
+}
+
+.rank-podium__photo img {
+    display: block;
+    box-sizing: border-box;
+    width: var(--size);
+    height: var(--size);
+    border: 3px solid var(--ring);
+    border-radius: 50%;
+    background: var(--surface);
+    object-fit: cover;
+}
+
+.rank-podium__place--1 .rank-podium__photo img {
+    border-width: 4px;
+}
+
+/* 사진 아래 걸친 순위 동그라미 */
+.rank-podium__rank {
+    position: absolute;
+    bottom: calc(var(--badge) / -2);
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--badge);
+    height: var(--badge);
+    border-radius: 50%;
+    background: var(--ring);
+    transform: translateX(-50%);
+    font-family: var(--font-number);
+    font-size: calc(var(--badge) * 0.62);
+    color: var(--navy-500);
+}
+
+.rank-podium__name {
+    max-width: 100px;
+    overflow: hidden;
+    font-size: 13px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rank-podium__points {
+    font-family: var(--font-number);
+    font-size: 16px;
+    color: var(--gold);
+}
+
+.rank-podium__place--1 .rank-podium__name {
+    font-size: 15px;
+}
+
+.rank-podium__place--1 .rank-podium__points {
+    font-size: 20px;
+}
+
+.rank-podium__place--3 .rank-podium__name {
+    font-size: 12px;
+}
+
+.rank-podium__place--3 .rank-podium__points {
+    font-size: 15px;
+}

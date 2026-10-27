@@ -11,6 +11,9 @@ import MateManage from './pages/Mate/MateManage.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
 import MyPlans from './pages/MyPlans/MyPlans.jsx'
 import MyPosts from './pages/MyPosts/MyPosts.jsx'
+import Predict from './pages/Predict/Predict.jsx'
+import PredictHistory from './pages/Predict/PredictHistory.jsx'
+import PredictRank from './pages/Predict/PredictRank.jsx'
 import Signup from './pages/Signup/Signup.jsx'
 import SignupDone from './pages/Signup/SignupDone.jsx'
 import {TabLayout} from './components'
@@ -69,6 +72,9 @@ function App() {
                 <Route path="/record" element={<Record />} />
             </Route>
             <Route path="/ai-plan" element={<AiPlan />} />
+            <Route path="/predict" element={<Predict />} />
+            <Route path="/predict/history" element={<PredictHistory />} />
+            <Route path="/predict/rank" element={<PredictRank />} />
             <Route path="/mate/write" element={<MateWrite />} />
             <Route path="/mate/:id" element={<MateDetail />} />
             <Route path="/mate/:id/manage" element={<MateManage />} />
