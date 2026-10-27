@@ -1,7 +1,10 @@
 import {useEffect, useMemo, useState} from 'react'
 import {useLocation, useNavigate} from 'react-router'
-import {addMinutes, buildReasons, fetchUpcomingGames, matchChecklist, matchPercent, rankGames, savePlan, stadiumFood} from '../../api/planner.js'
+import {addMinutes, buildReasons, fetchUpcomingGames, matchChecklist, matchPercent, rankGames, savePlan, sortFoodByPreferred, sortIndoorFoodBySeat} from '../../api/planner.js'
 import {fetchMyProfile} from '../../api/profile.js'
+import {fetchGameWeather} from '../../api/weather.js'
+import {fetchIndoorStadiumFood, fetchNearbyStadiumFood} from '../../api/stadiumFood.js'
+import {fetchAiReasons} from '../../api/aiReasons.js'
 import {Button, Header} from '../../components'
 import Icon from '../../components/Icon/Icon.jsx'
 import {DEFAULT_CONDITIONS} from '../../constants/planner.js'
@@ -10,7 +13,6 @@ import {SIGNUP} from '../../constants/policy.js'
 import './AiPlan.css'
 
 const teamName = (code) => SIGNUP.TEAMS.find((t) => t.code === code)?.name ?? code
-const won = (n) => `${n.toLocaleString('ko-KR')}원`
 // 실제 예매처 딥링크는 팀마다 달라서 함부로 추측하지 않는다 — 검색 결과로 보낸다.
 const ticketSearchUrl = (label) => `https://search.naver.com/search.naver?query=${encodeURIComponent(`${label} 티켓 예매`)}`
 
@@ -39,7 +41,7 @@ function MateSection({mates}) {
     )
 }
 
-/** AI 직관 플랜 · 조건에 맞춰 더미 경기 데이터를 규칙 기반으로 추천한다 (LLM 연결 전 테스트용) */
+/** AI 직관 플랜 · 경기 추천 순위는 규칙 기반(scoreGame), "추천 이유" 문장은 Gemini(plan-recommend)가 생성 */
 function AiPlan() {
     const navigate = useNavigate()
     const {state} = useLocation()
@@ -50,6 +52,10 @@ function AiPlan() {
     const [error, setError] = useState('')
     const [selectedId, setSelectedId] = useState(null)
     const [saved, setSaved] = useState(false)
+    const [liveWeather, setLiveWeather] = useState(null)
+    const [indoorFood, setIndoorFood] = useState(null)
+    const [nearbyFood, setNearbyFood] = useState(null)
+    const [aiReasons, setAiReasons] = useState(null)
 
     useEffect(() => {
         fetchMyProfile().then(setProfile).catch((e) => setError(e.message))
@@ -57,9 +63,9 @@ function AiPlan() {
 
     useEffect(() => {
         if (!profile) return
-        fetchUpcomingGames(profile.team)
+        fetchUpcomingGames()
             .then(setGames)
-            .catch((e) => setError('더미 데이터를 불러오지 못했어요. supabase/schema_ai_planner.sql을 Supabase에 먼저 실행해 주세요.\n' + e.message))
+            .catch((e) => setError('경기 일정을 불러오지 못했어요.\n' + e.message))
     }, [profile])
 
     const ranked = useMemo(() => {
@@ -68,6 +74,64 @@ function AiPlan() {
     }, [games, profile, conditions])
 
     const selected = ranked.find((r) => r.game.id === selectedId) ?? ranked[0]
+
+    // 구장 정보가 있으면 Open-Meteo(날씨·대기질) · stadium_food 테이블(구장 내 맛집, DB) ·
+    // 카카오 로컬 API(구장 주변 맛집)를 같이 받아오고, 그 결과를 바탕으로 Gemini(plan-recommend)에게
+    // "추천 이유" 문장을 만들어 달라고 한다.
+    useEffect(() => {
+        let alive = true
+        const game = selected?.game
+        const stadium = game?.stadiums
+
+        const task = !game || !stadium
+            ? Promise.resolve([null, [], null])
+            : Promise.all([
+                fetchGameWeather({lat: stadium.lat, lng: stadium.lng, date: game.game_date, startTime: game.start_time}).catch((e) => {
+                    console.error(e)
+                    return null
+                }),
+                fetchIndoorStadiumFood(game.stadium_code).catch((e) => {
+                    console.error(e)
+                    return []
+                }),
+                fetchNearbyStadiumFood({lat: stadium.lat, lng: stadium.lng, stadiumCode: game.stadium_code}).catch((e) => {
+                    console.error(e)
+                    return null
+                }),
+            ])
+
+        task.then(([weather, indoor, nearbyRaw]) => {
+            if (!alive) return null
+            setLiveWeather(weather)
+            setIndoorFood(indoor)
+            // "구장 내" 목록과 겹치는 이름은 Edge Function이 서버에서 이미 빼고 내려준다.
+            setNearbyFood(nearbyRaw)
+            if (!game) return null
+
+            const topFood = sortIndoorFoodBySeat(indoor ?? [], conditions.seat, conditions.food)[0]
+                ?? sortFoodByPreferred(nearbyRaw ?? [], conditions.food)[0]
+            const opponent = game.home_team === profile.team ? game.away_team : game.home_team
+            return fetchAiReasons({
+                teamName: teamName(profile.team),
+                game: {
+                    date: game.game_date,
+                    startTime: game.start_time,
+                    stadiumName: stadium.name,
+                    opponentName: teamName(opponent),
+                    isHome: game.home_team === profile.team,
+                },
+                conditions: {when: conditions.when, with: conditions.with, seat: conditions.seat, food: conditions.food},
+                weather: weather ? {desc: weather.weather_desc, temp: weather.weather_temp, rainChance: weather.rain_chance, airGrade: weather.air_grade} : null,
+                // 구장 내 항목은 location("3루 3층"), 구장 주변 항목은 walkMin(도보 분)을 쓴다 — 둘 다 있을 리 없다.
+                foodSpot: topFood ? {name: topFood.name, category: topFood.category, location: topFood.location ?? null, walkMin: topFood.walk_min ?? null} : null,
+            }).catch((e) => {
+                console.error(e)
+                return null
+            })
+        }).then((reasons) => { if (alive) setAiReasons(reasons) })
+
+        return () => { alive = false }
+    }, [selected, profile?.team, conditions.when, conditions.with, conditions.seat, conditions.food])
 
     if (error) {
         return (
@@ -91,18 +155,30 @@ function AiPlan() {
         return (
             <div className="aiplan">
                 <Header title="AI 직관 플랜" backTo="/home"/>
-                <p className="aiplan__loading">추천할 수 있는 경기가 없어요. 더미 경기 데이터를 확인해 주세요.</p>
+                <p className="aiplan__loading">곧 열리는 우리 팀 경기가 아직 없어요. 경기 일정이 나오면 다시 확인해 주세요.</p>
             </div>
         )
     }
 
-    const {game, seat} = selected
+    const {game} = selected
     const stadium = game.stadiums
+    // liveWeather가 있으면(Open-Meteo 조회 성공) 더미 weather_desc·weather_temp·rain_chance를 실제 값으로 덮어쓴다.
+    const displayGame = liveWeather ? {...game, ...liveWeather} : game
     const mates = MOCK_MATE_POSTS.filter((p) => p.gameDate === game.game_date)
-    const checklist = matchChecklist(game, seat, conditions, mates.length)
+    // 구장 내는 좌석 조건과 같은 방향(내야/외야)부터, 구장 주변은 선호 음식부터 당겨서 보여준다.
+    // 화면엔 너무 길지 않게 5개씩만 — 일치 여부(foodHit)·1순위(topFood)는 자르기 전 전체 목록으로 판단한다.
+    const indoorFoodAll = sortIndoorFoodBySeat(indoorFood ?? [], conditions.seat, conditions.food)
+    const nearbyFoodAll = sortFoodByPreferred(nearbyFood ?? [], conditions.food)
+    const indoorFoodList = indoorFoodAll.slice(0, 5)
+    const nearbyFoodList = nearbyFoodAll.slice(0, 5)
+    const topFood = indoorFoodAll[0] ?? nearbyFoodAll[0]
+    const foodHit = conditions.food === '상관없음'
+        || indoorFoodAll.some((f) => f.category === conditions.food)
+        || nearbyFoodAll.some((f) => f.category === conditions.food)
+    const checklist = {...matchChecklist(game, conditions, mates.length), food: foodHit}
     const match = matchPercent(checklist)
-    const reasons = buildReasons({game, seat, conditions})
-    const food = stadiumFood(game.stadium_code, conditions.food)
+    // Gemini가 만든 추천 이유가 있으면 그걸 쓰고, 조회 전이거나 실패했으면 규칙 기반으로 대신한다.
+    const reasons = aiReasons ?? buildReasons({game: displayGame, conditions, foodSpot: topFood})
     const wantsMate = conditions.with === '메이트 구해요'
 
     const handleSave = async () => {
@@ -111,8 +187,7 @@ function AiPlan() {
                 userId: profile.id,
                 gameId: game.id,
                 companionType: conditions.with,
-                seatZone: seat?.zone ?? '미정',
-                budgetTier: conditions.budget,
+                seatZone: conditions.seat,
             })
             setSaved(true)
         } catch (e) {
@@ -125,8 +200,7 @@ function AiPlan() {
             state: {
                 gameId: game.id,
                 date: `${game.game_date.slice(5).replace('-', '.')}(${game.start_time.slice(0, 5)})`,
-                seat: seat?.zone,
-                budget: conditions.budget,
+                seat: conditions.seat,
             },
         })
     }
@@ -143,7 +217,6 @@ function AiPlan() {
                     <span className="cond-summary__tag">{conditions.when}</span>
                     <span className="cond-summary__tag">{conditions.with}</span>
                     <span className="cond-summary__tag">{conditions.seat}</span>
-                    <span className="cond-summary__tag">{conditions.budget}</span>
                     <span className="cond-summary__tag">{conditions.food}</span>
                 </div>
 
@@ -172,14 +245,12 @@ function AiPlan() {
                     <div className="game-card__checklist">
                         <span className={`cond-check ${checklist.when ? 'cond-check--hit' : ''}`}>{checklist.when ? '✓' : '✕'} {conditions.when}</span>
                         <span className={`cond-check ${checklist.with ? 'cond-check--hit' : ''}`}>{checklist.with ? '✓' : '✕'} {conditions.with}</span>
-                        <span className={`cond-check ${checklist.seat ? 'cond-check--hit' : ''}`}>{checklist.seat ? '✓' : '✕'} {conditions.seat}</span>
-                        <span className={`cond-check ${checklist.budget ? 'cond-check--hit' : ''}`}>{checklist.budget ? '✓' : '✕'} {conditions.budget}</span>
                         <span className={`cond-check ${checklist.food ? 'cond-check--hit' : ''}`}>{checklist.food ? '✓' : '✕'} {conditions.food}</span>
                     </div>
 
                     <div className="game-card__weather">
                         <Icon name="cloud" size={16}/>
-                        <span>{game.weather_desc} {game.weather_temp}° · 강수확률 {game.rain_chance}%</span>
+                        <span>{displayGame.weather_desc} {displayGame.weather_temp}° · 강수확률 {displayGame.rain_chance}%{liveWeather ? ` · 대기질 ${liveWeather.air_grade}` : ''}</span>
                     </div>
                 </section>
 
@@ -197,42 +268,48 @@ function AiPlan() {
                 <div className="info-grid">
                     <div className="info-tile">
                         <span className="info-tile__label"><Icon name="cloud" size={16}/>날씨</span>
-                        <span className="info-tile__value">{game.weather_desc} {game.weather_temp}°</span>
-                        <span className="info-tile__sub">강수확률 {game.rain_chance}%</span>
+                        <span className="info-tile__value">{displayGame.weather_desc} {displayGame.weather_temp}°</span>
+                        <span className="info-tile__sub">강수확률 {displayGame.rain_chance}%{liveWeather ? ` · 대기질 ${liveWeather.air_grade}` : ''}</span>
                     </div>
                     <div className="info-tile">
-                        <span className="info-tile__label"><Icon name="pin" size={16}/>추천 좌석</span>
-                        <span className="info-tile__value">{seat?.zone ?? '잔여석 없음'}</span>
-                        <span className="info-tile__sub">{seat?.note ?? '구역 기준 추천'}</span>
-                        {seat && (
-                            <a className="info-tile__link" href={ticketSearchUrl(teamName(profile.team))} target="_blank" rel="noreferrer">
-                                좌석 확인하기 ›
-                            </a>
-                        )}
-                    </div>
-                    <div className="info-tile">
-                        <span className="info-tile__label"><Icon name="won" size={16}/>예상 비용 (1인)</span>
-                        <span className="info-tile__value">{seat ? won(seat.price) : '-'}</span>
-                        <span className="info-tile__sub">티켓 + 먹거리 기준</span>
+                        <span className="info-tile__label"><Icon name="pin" size={16}/>좌석</span>
+                        <span className="info-tile__value">{conditions.seat}</span>
+                        <span className="info-tile__sub">선택하신 좌석 조건</span>
+                        <a className="info-tile__link" href={ticketSearchUrl(teamName(profile.team))} target="_blank" rel="noreferrer">
+                            좌석 확인하기 ›
+                        </a>
                     </div>
                     <div className="info-tile">
                         <span className="info-tile__label"><Icon name="train" size={16}/>가는 길</span>
-                        <span className="info-tile__value">지하철 약 {stadium?.transit_minutes}분</span>
-                        <span className="info-tile__sub">{stadium?.transit_line}</span>
+                        <span className="info-tile__value">{stadium?.transit_line ?? '정보 없음'}</span>
+                        <span className="info-tile__sub">가장 가까운 지하철역</span>
                     </div>
                 </div>
 
-                <h3 className="aiplan__h3">구장 맛집 · 카페</h3>
-                {food.length === 0 && <p className="aiplan__empty-mate">이 구장의 맛집 정보가 아직 없어요</p>}
+                <h3 className="aiplan__h3">구장 내 맛집</h3>
+                {indoorFoodList.length === 0 && <p className="aiplan__empty-mate">이 구장의 구장 내 맛집 정보가 아직 없어요</p>}
                 <ul className="food-list">
-                    {food.map((f) => (
+                    {indoorFoodList.map((f) => (
                         <li key={f.name} className="food-row">
                             <span className="food-row__cat">{f.category}</span>
                             <span className="food-row__body">
                                 <strong>{f.name}</strong>
-                                <em>도보 {f.walk_min}분 · {f.price}</em>
+                                <em>{f.location ?? '구장 내'}</em>
                             </span>
-                            <span className="food-row__rating">★ {f.rating}</span>
+                        </li>
+                    ))}
+                </ul>
+
+                <h3 className="aiplan__h3">구장 주변 맛집</h3>
+                {nearbyFoodList.length === 0 && <p className="aiplan__empty-mate">이 구장 주변 맛집 정보가 아직 없어요</p>}
+                <ul className="food-list">
+                    {nearbyFoodList.map((f) => (
+                        <li key={f.name} className="food-row">
+                            <span className="food-row__cat">{f.category}</span>
+                            <span className="food-row__body">
+                                <strong>{f.name}</strong>
+                                <em>도보 {f.walk_min}분</em>
+                            </span>
                         </li>
                     ))}
                 </ul>
@@ -240,8 +317,8 @@ function AiPlan() {
                 <h3 className="aiplan__h3">직관 타임라인</h3>
                 <ul className="timeline">
                     <li><span className="timeline__time">{addMinutes(game.start_time, -60)}</span><span className="timeline__dot"/><span className="timeline__body"><strong>{stadium?.name} 도착</strong><em>게이트 혼잡 전 입장 추천</em></span></li>
-                    <li><span className="timeline__time">{addMinutes(game.start_time, -45)}</span><span className="timeline__dot"/><span className="timeline__body"><strong>먹거리 픽업</strong><em>{food[0] ? `${food[0].name} 추천` : '구장 먹거리 추천 보기'}</em></span></li>
-                    <li><span className="timeline__time">{game.start_time?.slice(0, 5)}</span><span className="timeline__dot timeline__dot--red"/><span className="timeline__body"><strong>플레이볼</strong><em>{seat ? `${seat.zone} 응원 시작` : '경기 시작'}</em></span></li>
+                    <li><span className="timeline__time">{addMinutes(game.start_time, -45)}</span><span className="timeline__dot"/><span className="timeline__body"><strong>먹거리 픽업</strong><em>{topFood ? `${topFood.name} 추천` : '구장 먹거리 추천 보기'}</em></span></li>
+                    <li><span className="timeline__time">{game.start_time?.slice(0, 5)}</span><span className="timeline__dot timeline__dot--red"/><span className="timeline__body"><strong>플레이볼</strong><em>{conditions.seat} 응원 시작</em></span></li>
                     <li><span className="timeline__time">{addMinutes(game.start_time, 190)}</span><span className="timeline__dot"/><span className="timeline__body"><strong>경기 종료 예상</strong><em>막차까지 여유 있어요</em></span></li>
                 </ul>
 
@@ -253,8 +330,7 @@ function AiPlan() {
                     <span>모임 글에 자동으로 채워져요</span>
                     <div className="aiplan__autofill-chips">
                         <span>{game.game_date.slice(5).replace('-', '.')}({game.start_time?.slice(0, 5)})</span>
-                        <span>{seat?.zone ?? '좌석 미정'}</span>
-                        <span>1인 {conditions.budget === '상관없음' ? '예산 무관' : conditions.budget}</span>
+                        <span>{conditions.seat}</span>
                     </div>
                 </div>
                 <div className="aiplan__actions">
