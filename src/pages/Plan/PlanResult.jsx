@@ -68,7 +68,6 @@ function PlanResult() {
                                         key: 'food',
                                         time: arriveAt(game.gameAt),
                                         title: '구장 도착 · 먹거리 사기',
-                                        tag: '구장 안',
                                         children: (
                                             <div className="plan-result__foods">
                                                 {foods.length > 0 ? (
