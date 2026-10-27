@@ -5,6 +5,20 @@
     background: var(--bg);
 }
 
+/* ── 헤더 ⋯ 메뉴 버튼 ── */
+.chat-room__menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-900);
+    cursor: pointer;
+}
+
 /* ── 경기 카드 ── */
 .chat-room__game {
     display: flex;
@@ -42,6 +56,11 @@
     background: var(--red-500);
     font-family: var(--font-number), serif;
     font-size: 11px;
+}
+
+.chat-room__dday--ended {
+    background: var(--on-navy-track);
+    color: var(--on-navy-sub);
 }
 
 /* ── 메시지 목록 ── */
