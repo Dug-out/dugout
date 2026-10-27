@@ -1,14 +1,14 @@
 import {Link, Navigate, useLocation} from 'react-router'
 import {Button, EmptyState, Header} from '../../components'
-import {FOOD_OPTIONS, SEAT_OPTIONS, WHEN_OPTIONS} from '../../constants/planner.js'
-import {arriveAt, endEstimate, ticketOf} from '../../utils/plan.js'
+import {DEFAULT_ORIGIN, FOOD_OPTIONS, SEAT_OPTIONS, WHEN_OPTIONS} from '../../constants/planner.js'
+import {arriveAt, endEstimate, routeLink, ticketOf} from '../../utils/plan.js'
 import {formatTime} from '../../utils/mateFormat.js'
 import {teamOf} from '../../utils/predict.js'
 import ConditionBar from './components/ConditionBar.jsx'
 import PlanAiCard from './components/PlanAiCard.jsx'
 import PlanGameCard from './components/PlanGameCard.jsx'
 import PlanSteps from './components/PlanSteps.jsx'
-import {FoodCard, FoodEmpty, TicketCard} from './components/PlanStepCards.jsx'
+import {FoodCard, FoodEmpty, RouteCard, TicketCard} from './components/PlanStepCards.jsx'
 import './PlanResult.css'
 
 // 옵션 값 → 보이는 글자
@@ -22,6 +22,8 @@ function PlanResult() {
     if (!state?.plan) return <Navigate to="/plans" replace />
 
     const {conditions, plan} = state
+    // 출발 위치 · 지도로 고르는 화면이 생기기 전까지는 강남역
+    const origin = state.origin ?? DEFAULT_ORIGIN
     const {myTeam, game, foods = [], ai} = plan
 
     return (
@@ -61,6 +63,17 @@ function PlanResult() {
                                                 myTeam={myTeam}
                                                 seat={labelOf(SEAT_OPTIONS, conditions.seat)}
                                                 ticket={ticketOf(game)}
+                                            />
+                                        ),
+                                    },
+                                    {
+                                        key: 'route',
+                                        title: '출발하기',
+                                        children: (
+                                            <RouteCard
+                                                origin={origin}
+                                                arriveTime={arriveAt(game.gameAt)}
+                                                link={routeLink(origin, game.stadium)}
                                             />
                                         ),
                                     },

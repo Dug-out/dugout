@@ -4,6 +4,8 @@ import {
     GAME_MINUTES,
     POSTSEASON_START,
     POSTSEASON_TICKET,
+    STADIUM_CODE_BY_NAME,
+    STADIUM_COORDS,
     TICKET_SITES,
 } from '../constants/planner.js'
 import {formatTime} from './mateFormat.js'
@@ -26,3 +28,11 @@ export const endEstimate = (gameAt) => formatTime(new Date(new Date(gameAt).getT
 
 /** 구장 도착 목표 시각 '18:00' · 경기 시작 ARRIVE_BEFORE_MINUTES 분 전 */
 export const arriveAt = (gameAt) => formatTime(new Date(new Date(gameAt).getTime() - ARRIVE_BEFORE_MINUTES * 60 * 1000))
+
+/** 카카오맵 길찾기 링크 (출발지 → 구장) · 구장 위치를 모르면 null */
+export const routeLink = (origin, stadium) => {
+    const coords = STADIUM_COORDS[STADIUM_CODE_BY_NAME[stadium]]
+    if (!coords) return null
+    const point = (name, {lat, lng}) => `${encodeURIComponent(name)},${lat},${lng}`
+    return `https://map.kakao.com/link/from/${point(origin.label, origin)}/to/${point(stadium, coords)}`
+}

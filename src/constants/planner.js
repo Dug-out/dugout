@@ -77,3 +77,16 @@ export const STADIUM_CODE_BY_NAME = {
     NC파크: 'CHANGWON',
     사직야구장: 'BUSAN',
 }
+
+// 구장 위치(위도·경도) · 카카오맵 길찾기 링크의 도착지로 쓴다 · 키는 STADIUM_CODE_BY_NAME 의 코드 (supabase/schema_ai_planner.sql 의 stadiums 와 같은 값)
+export const STADIUM_COORDS = {
+    JAMSIL: {lat: 37.51215, lng: 127.071976},
+    SUWON: {lat: 37.299759, lng: 127.009781},
+    GOCHEOK: {lat: 37.498333, lng: 126.866667},
+    INCHEON: {lat: 37.435139, lng: 126.690806},
+    DAEJEON: {lat: 36.317, lng: 127.3891},
+    DAEGU: {lat: 35.84111, lng: 128.68167},
+    GWANGJU: {lat: 35.168339, lng: 126.888992},
+    CHANGWON: {lat: 35.2225, lng: 128.5822},
+    BUSAN: {lat: 35.194077, lng: 129.061584},
+}
