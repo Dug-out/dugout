@@ -5,7 +5,7 @@ import {fetchMyProfile} from '../../api/profile.js'
 import {fetchGameWeather} from '../../api/weather.js'
 import {fetchIndoorStadiumFood, fetchNearbyStadiumFood} from '../../api/stadiumFood.js'
 import {fetchAiReasons} from '../../api/aiReasons.js'
-import {Button, Header} from '../../components'
+import {Header} from '../../components'
 import Icon from '../../components/Icon/Icon.jsx'
 import {DEFAULT_CONDITIONS} from '../../constants/planner.js'
 import {MOCK_MATE_POSTS} from '../../constants/mate.js'
@@ -135,7 +135,7 @@ function AiPlan() {
     if (error) {
         return (
             <div className="aiplan">
-                <Header title="AI 직관 플랜" backTo="/home"/>
+                <Header large title="AI 직관 플랜"/>
                 <p className="aiplan__error">{error}</p>
             </div>
         )
@@ -144,7 +144,7 @@ function AiPlan() {
     if (!profile || !games) {
         return (
             <div className="aiplan">
-                <Header title="AI 직관 플랜" backTo="/home"/>
+                <Header large title="AI 직관 플랜"/>
                 <p className="aiplan__loading">불러오는 중…</p>
             </div>
         )
@@ -153,7 +153,7 @@ function AiPlan() {
     if (ranked.length === 0) {
         return (
             <div className="aiplan">
-                <Header title="AI 직관 플랜" backTo="/home"/>
+                <Header large title="AI 직관 플랜"/>
                 <p className="aiplan__loading">곧 열리는 우리 팀 경기가 아직 없어요. 경기 일정이 나오면 다시 확인해 주세요.</p>
             </div>
         )
@@ -180,19 +180,9 @@ function AiPlan() {
     const reasons = aiReasons ?? buildReasons({game: displayGame, conditions, foodSpot: topFood})
     const wantsMate = conditions.with === '메이트 구해요'
 
-    const handleCreateMeetup = () => {
-        navigate('/mate/write', {
-            state: {
-                gameId: game.id,
-                date: `${game.game_date.slice(5).replace('-', '.')}(${game.start_time.slice(0, 5)})`,
-                seat: conditions.seat,
-            },
-        })
-    }
-
     return (
         <div className="aiplan">
-            <Header title="AI 직관 플랜" backTo="/home" right={
+            <Header large title="AI 직관 플랜" right={
                 <button type="button" className="aiplan__edit" onClick={() => navigate('/home')}>조건 수정</button>
             }/>
 
@@ -309,21 +299,6 @@ function AiPlan() {
 
                 {!wantsMate && <MateSection mates={mates}/>}
             </main>
-
-            <div className="aiplan__bottom">
-                <div className="aiplan__autofill">
-                    <span>모임 글에 자동으로 채워져요</span>
-                    <div className="aiplan__autofill-chips">
-                        <span>{game.game_date.slice(5).replace('-', '.')}({game.start_time?.slice(0, 5)})</span>
-                        <span>{conditions.seat}</span>
-                    </div>
-                </div>
-                <div className="aiplan__actions">
-                    <Button variant="primary" className="aiplan__make" onClick={handleCreateMeetup}>
-                        <Icon name="plus" size={16}/> 이 일정으로 모임 만들기
-                    </Button>
-                </div>
-            </div>
         </div>
     )
 }

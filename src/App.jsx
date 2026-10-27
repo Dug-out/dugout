@@ -9,7 +9,6 @@ import Mate from './pages/Mate/Mate.jsx'
 import MateDetail from './pages/Mate/MateDetail.jsx'
 import MateManage from './pages/Mate/MateManage.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
-import MyPlans from './pages/MyPlans/MyPlans.jsx'
 import MyPosts from './pages/MyPosts/MyPosts.jsx'
 import Predict from './pages/Predict/Predict.jsx'
 import PredictHistory from './pages/Predict/PredictHistory.jsx'
@@ -64,12 +63,11 @@ function App() {
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout />}>
                 <Route path="/home" element={<Home />} />
-                <Route path="/plans" element={<MyPlans />} />
+                <Route path="/plans" element={<AiPlan />} />
                 <Route path="/mate" element={<Mate />} />
                 <Route path="/my" element={<Mypage />} />
                 <Route path="/posts" element={<MyPosts />} />
             </Route>
-            <Route path="/ai-plan" element={<AiPlan />} />
             <Route path="/predict" element={<Predict />} />
             <Route path="/predict/history" element={<PredictHistory />} />
             <Route path="/predict/rank" element={<PredictRank />} />

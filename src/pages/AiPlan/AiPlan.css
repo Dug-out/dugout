@@ -1,7 +1,7 @@
 .aiplan {
     display: flex;
+    flex: 1;
     flex-direction: column;
-    min-height: 100dvh;
     background: var(--bg);
 }
 
@@ -473,50 +473,4 @@
     font-size: 13px;
     font-weight: 700;
     color: var(--text-700);
-}
-
-/* ── 하단 고정 바 ── */
-.aiplan__bottom {
-    position: sticky;
-    bottom: 0;
-    box-sizing: border-box;
-    padding: 12px 20px max(12px, env(safe-area-inset-bottom));
-    border-top: 1px solid var(--border);
-    background: var(--surface);
-}
-
-.aiplan__autofill {
-    margin-bottom: 10px;
-}
-
-.aiplan__autofill > span:first-child {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 11px;
-    color: var(--text-400);
-}
-
-.aiplan__autofill-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.aiplan__autofill-chips span {
-    padding: 4px 10px;
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-full);
-    color: var(--text-700);
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.aiplan__actions {
-    display: flex;
-    gap: 8px;
-}
-
-.aiplan__make {
-    flex: 1;
-    background: var(--red-500);
 }

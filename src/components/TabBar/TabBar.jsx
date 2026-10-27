@@ -2,7 +2,7 @@ import {NavLink} from 'react-router'
 import Icon from '../Icon/Icon.jsx'
 import './TabBar.css'
 
-// 탭 5개 · 홈 → 플랜(지금은 빈 화면) → 메이트 찾기 → 내 직관(내 직관 약속) → 마이
+// 탭 5개 · 홈 → 플랜(AI 직관 플랜) → 메이트 찾기 → 내 직관(내 직관 약속) → 마이
 const TABS = [
     {to: '/home', icon: 'home', label: '홈'},
     {to: '/plans', icon: 'plan', label: '플랜'},

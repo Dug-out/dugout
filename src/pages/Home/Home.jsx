@@ -40,7 +40,7 @@ function Home() {
 
     const set = (key) => (value) => setConditions((prev) => ({...prev, [key]: value}))
 
-    const goToPlan = () => navigate('/ai-plan', {state: {conditions}})
+    const goToPlan = () => navigate('/plans', {state: {conditions}})
 
     return (
         <div className="home">
