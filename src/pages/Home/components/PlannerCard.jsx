@@ -62,7 +62,6 @@ function PlannerCard() {
                 className="planner-card__submit"
                 onClick={() => navigate('/plans', {state: {conditions}})}
             >
-                <Icon name="sparkle" size={18} strokeWidth={2.2} />
                 직관 플랜 짜기
             </button>
         </section>
