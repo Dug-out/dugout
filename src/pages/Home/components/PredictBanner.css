@@ -1,0 +1,78 @@
+.predict-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow: hidden;
+    box-sizing: border-box;
+    min-height: 108px;
+    margin-top: 16px;
+    padding: 16px 12px 16px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    color: var(--text-900);
+    text-decoration: none;
+}
+
+/* 오른쪽 위 연한 원 */
+.predict-banner::before {
+    position: absolute;
+    top: -36px;
+    right: -36px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--gold) 28%, var(--surface));
+    content: '';
+}
+
+.predict-banner__text {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.predict-banner__chip {
+    align-self: flex-start;
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
+    background: var(--red-500);
+    color: var(--surface);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.predict-banner__title {
+    font-family: var(--font-emotion), sans-serif;
+    font-size: 20px;
+    line-height: 1.3;
+    color: var(--navy-500);
+}
+
+.predict-banner__go {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--red-text);
+}
+
+.predict-banner__char {
+    position: relative;
+    flex: none;
+    width: 100px;
+    height: 100px;
+    margin: -6px 0 -10px;
+    object-fit: contain;
+}
+
+.predict-banner:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: 2px;
+}

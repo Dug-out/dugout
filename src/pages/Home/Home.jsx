@@ -5,6 +5,7 @@ import {Button, Header} from '../../components'
 import Icon from '../../components/Icon/Icon.jsx'
 import {DEFAULT_CONDITIONS, FOOD_OPTIONS, SEAT_OPTIONS, WHEN_OPTIONS, WITH_OPTIONS} from '../../constants/planner.js'
 import {SIGNUP} from '../../constants/policy.js'
+import PredictBanner from './components/PredictBanner.jsx'
 import './Home.css'
 
 const teamName = (code) => SIGNUP.TEAMS.find((t) => t.code === code)?.name ?? code
@@ -69,6 +70,8 @@ function Home() {
                     </Button>
                     <p className="planner-card__caption">응원팀과 출발 지역은 프로필 정보로 반영돼요</p>
                 </section>
+
+                <PredictBanner team={profile?.team} />
             </main>
         </div>
     )
