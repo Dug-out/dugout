@@ -16,7 +16,7 @@ function ChatMenu({post, open, onClose, onEdited}) {
     // 나간 뒤에는 모집 글 상세를 건너뛰고 그 앞 화면(메이트 찾기든 내 직관 약속이든 들어온 곳)으로 돌아간다
     const goBack = useGoBack('/mate', 2)
 
-    // 열려 있는 창: 'leave' 나가기 확인 / 'edit' 수정 시트 / 'edited' 수정 완료 안내 / 'started' 할 수 없다는 안내 / null 없음
+    // 열려 있는 창: 'leave' 나가기 확인 / 'edit' 수정 시트 / 'edited' 수정 완료 안내 / 'delete' 삭제 불가 안내 / 'started' 할 수 없다는 안내 / null 없음
     const [dialog, setDialog] = useState(null)
     // 나가는 중인지 (중복 클릭 방지) / 실패 안내 문구
     const [leaving, setLeaving] = useState(false)
@@ -59,10 +59,22 @@ function ChatMenu({post, open, onClose, onEdited}) {
         <>
             <BottomSheet open={open} onClose={onClose} label="채팅방 메뉴">
                 {isHost ? (
-                    <BottomSheetItem onClick={() => choose('edit')}>
-                        <Icon name="edit" size={20} />
-                        모집 글 수정하기
-                    </BottomSheetItem>
+                    <>
+                        <BottomSheetItem onClick={() => choose('edit')}>
+                            <Icon name="edit" size={20} />
+                            모집 글 수정하기
+                        </BottomSheetItem>
+                        <BottomSheetItem
+                            danger
+                            onClick={() => {
+                                onClose()
+                                setDialog('delete')
+                            }}
+                        >
+                            <Icon name="trash" size={20} />
+                            모임 삭제하기
+                        </BottomSheetItem>
+                    </>
                 ) : (
                     <BottomSheetItem danger onClick={() => choose('leave')}>
                         <Icon name="exit" size={20} />
@@ -106,6 +118,15 @@ function ChatMenu({post, open, onClose, onEdited}) {
                 kind="failure"
                 title="지금은 할 수 없어요"
                 description="이미 진행된 모임은 수정하거나 나갈 수 없어요."
+            />
+
+            {/* 모임 삭제 · 아직 삭제는 되지 않고 안내만 한다 */}
+            <NoticeDialog
+                open={dialog === 'delete'}
+                onClose={() => setDialog(null)}
+                kind="failure"
+                title="삭제할 수 없어요"
+                description="모임 삭제는 아직 지원하지 않아요."
             />
 
             {/* 나가기·수정 실패 */}
