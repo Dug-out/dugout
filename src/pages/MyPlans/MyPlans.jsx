@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router'
-import {deleteSavedPlans, dday, fetchSavedPlans, updateChecklist} from '../../api/planner.js'
+import {deleteSavedPlans, dday, fetchSavedPlans, splitGameAt, updateChecklist} from '../../api/planner.js'
 import {fetchMyProfile} from '../../api/profile.js'
 import {Button, Dialog, EmptyState, Header, LoadState} from '../../components'
 import Icon from '../../components/Icon/Icon.jsx'
@@ -17,13 +17,14 @@ function PlanItem({plan, selecting, selected, onToggleSelect, onToggleChecklist,
     if (!game) {
         return (
             <li className="plan-item">
-                <span className="plan-item__missing">경기 정보를 찾을 수 없어요 (더미 데이터가 바뀌었을 수 있어요)</span>
+                <span className="plan-item__missing">경기 정보를 찾을 수 없어요</span>
             </li>
         )
     }
 
-    const weekday = new Date(`${game.game_date}T00:00:00`).toLocaleDateString('ko-KR', {weekday: 'long'})
-    const [mm, dd] = game.game_date.slice(5).split('-')
+    const {date: gameDate, time: startTime} = splitGameAt(game.game_at)
+    const weekday = new Date(`${gameDate}T00:00:00`).toLocaleDateString('ko-KR', {weekday: 'long'})
+    const [mm, dd] = gameDate.slice(5).split('-')
 
     return (
         <li className={`plan-item ${selected ? 'plan-item--selected' : ''}`}>
@@ -37,11 +38,11 @@ function PlanItem({plan, selecting, selected, onToggleSelect, onToggleChecklist,
                 <div className="plan-item__dday">
                     <span className="plan-item__weekday">{weekday}</span>
                     <span className="plan-item__date">{mm}.{dd}</span>
-                    <span className="plan-item__d">{dday(game.game_date)}</span>
+                    <span className="plan-item__d">{dday(gameDate)}</span>
                 </div>
                 <div className="plan-item__info">
-                    <span className="plan-item__title">{teamName(game.home_team)} vs {teamName(game.away_team)} · {game.stadiums?.name} {game.start_time?.slice(0, 5)}</span>
-                    <span className="plan-item__sub">{plan.seat_zone} · {plan.companion_type} · {plan.budget_tier}</span>
+                    <span className="plan-item__title">{teamName(game.home_team)} vs {teamName(game.away_team)} · {game.stadium} {startTime.slice(0, 5)}</span>
+                    <span className="plan-item__sub">{plan.seat_zone} · {plan.companion_type}</span>
                 </div>
                 {!selecting && (
                     <button type="button" className="plan-item__delete" onClick={() => onDelete(plan)}>삭제</button>
@@ -103,12 +104,12 @@ function MyPlans() {
     const createMeetupFromPlan = (plan) => {
         const game = plan.games
         if (!game) return
+        const {date, time} = splitGameAt(game.game_at)
         navigate('/mate/write', {
             state: {
                 gameId: game.id,
-                date: `${game.game_date.slice(5).replace('-', '.')}(${game.start_time.slice(0, 5)})`,
+                date: `${date.slice(5).replace('-', '.')}(${time.slice(0, 5)})`,
                 seat: plan.seat_zone,
-                budget: plan.budget_tier,
             },
         })
     }
