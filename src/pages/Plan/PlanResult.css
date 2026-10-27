@@ -19,3 +19,11 @@
     font-weight: 700;
     color: var(--text-900);
 }
+
+/* 헤더 제목은 다른 하위 화면과 달리 감성 글꼴(Jua) 남색 */
+.plan-result .header__title {
+    font-family: var(--font-emotion), sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--navy-500);
+}

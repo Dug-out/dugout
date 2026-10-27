@@ -1,5 +1,4 @@
 import {useState} from 'react'
-import Icon from '../../../components/Icon/Icon.jsx'
 import {formatDay, formatDday, formatTime} from '../../../utils/mateFormat.js'
 import {teamOf} from '../../../utils/predict.js'
 import './PlanGameCard.css'
@@ -14,6 +13,12 @@ function PlanGameCard({game, mateCount}) {
 
     return (
         <section className="plan-game" aria-label="추천 경기">
+            {/* 가운데 흐린 다이아몬드 장식 */}
+            <svg className="plan-game__deco" width="220" height="220" viewBox="0 0 200 200" aria-hidden="true">
+                <path d="M100 12 L188 100 L100 188 L12 100 Z" fill="none" stroke="currentColor" strokeWidth="10" />
+                <path d="M100 60 L140 100 L100 140 L60 100 Z" fill="currentColor" />
+            </svg>
+
             <div className="plan-game__top">
                 <span className="plan-game__dday">{formatDday(game.gameAt, now)}</span>
                 <span className="plan-game__day">{formatDay(game.gameAt)}</span>
@@ -29,7 +34,10 @@ function PlanGameCard({game, mateCount}) {
             </div>
 
             <div className="plan-game__foot">
-                <Icon name="pin" size={14} />
+                <svg className="plan-game__pin" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z" fill="currentColor" />
+                    <circle cx="12" cy="10" r="2.6" fill="var(--surface)" />
+                </svg>
                 {game.stadium}
                 <span className="plan-game__mates">모집 글 {mateCount}개</span>
             </div>
