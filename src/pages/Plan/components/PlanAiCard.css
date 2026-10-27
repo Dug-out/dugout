@@ -40,7 +40,7 @@
 }
 
 .plan-ai__highlight {
-    color: var(--red-text);
+    font-weight: 700;
 }
 
 .plan-ai__tags {
@@ -55,8 +55,8 @@
     height: 24px;
     padding: 0 9px;
     border-radius: var(--radius-full);
-    background: var(--navy-50);
+    background: var(--red-50);
     font-size: 12px;
     font-weight: 700;
-    color: var(--navy-500);
+    color: var(--red-text);
 }
