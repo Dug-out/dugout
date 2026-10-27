@@ -18,7 +18,7 @@ function PlanResult() {
     if (!state?.plan) return <Navigate to="/plans" replace />
 
     const {conditions, plan} = state
-    const{myTeam, game, ai} = plan
+    const {myTeam, game, ai} = plan
 
     return (
         <div className="plan-result">
