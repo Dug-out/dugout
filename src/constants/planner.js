@@ -1,15 +1,27 @@
-// AI 직관 플래너 · 조건 칩 옵션
+// AI 직관 플래너 · 조건 고르기 옵션 (홈 플래너 카드) · value 는 플랜 만들기에 넘기는 값, label 은 칩에 보이는 글자
+export const WHEN_OPTIONS = [
+    {value: 'weekday', label: '평일 저녁 경기'},
+    {value: 'weekend', label: '주말 경기'},
+    {value: 'any', label: '상관 없음'},
+]
 
-export const WHEN_OPTIONS = ['평일', '저녁', '아무때나']
-export const WITH_OPTIONS = ['메이트 구해요', '친구랑', '데이트', '혼자']
-// games엔 좌석 잔여석 데이터가 없어서, 이 값은 화면·Gemini 문구에 쓰는 사용자 선호일 뿐 DB 조회는 안 한다.
-export const SEAT_OPTIONS = ['내야석', '외야석', '응원석', '테이블석']
-// stadium_food.category(supabase/schema_stadium_food.sql)와 같은 값 — 카카오 로컬 API 검색 키워드와도 맞춘다.
-export const FOOD_OPTIONS = ['치킨', '피자·버거', '카페·디저트', '분식·간식', '한식·고기·주류', '양식·아시안', '상관없음']
+// 좌석 이름은 모집 글(mate_posts.seat)과 같다
+export const SEAT_OPTIONS = [
+    {value: 'infield', label: '내야석'},
+    {value: 'outfield', label: '외야석'},
+    {value: 'cheer', label: '응원석'},
+    {value: 'table', label: '테이블석'},
+]
 
-export const DEFAULT_CONDITIONS = {
-    when: '아무때나',
-    with: '친구랑',
-    seat: '응원석',
-    food: '상관없음',
-}
+// 음식 이름은 구장 안 맛집(stadium_food.category)과 같다
+export const FOOD_OPTIONS = [
+    {value: 'chicken', label: '치킨'},
+    {value: 'pizza', label: '피자·버거'},
+    {value: 'cafe', label: '카페·디저트'},
+    {value: 'snack', label: '분식·간식'},
+    {value: 'korean', label: '한식·고기·주류'},
+    {value: 'western', label: '양식·아시안'},
+]
+
+// 처음에 골라져 있는 조건
+export const DEFAULT_CONDITIONS = {when: 'any', seat: 'cheer', food: 'chicken'}

@@ -12,118 +12,50 @@
 }
 
 .home__main {
+    display: flex;
     flex: 1;
-    padding: 4px 20px 32px;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px 16px 24px;
 }
 
 .home__intro {
-    padding: 16px 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0 4px;
+}
+
+/* 이번 주 내 팀 경기 수 */
+.home__week {
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--red-text);
+}
+
+.home__week-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red-500);
 }
 
 .home__intro-title {
     margin: 0;
-    font-size: 21px;
-    font-weight: 800;
+    font-family: var(--font-emotion), sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 1.3;
     color: var(--text-900);
 }
 
-/* ── AI 직관 플래너 카드 ── */
-.planner-card {
-    position: relative;
-    overflow: hidden;
-    box-sizing: border-box;
-    padding: 24px 20px;
-    border-radius: var(--radius-card);
-    background: var(--navy-gradient-card);
-    color: var(--surface);
-}
-
-.planner-card__char {
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    width: 120px;
-    height: auto;
-}
-
-.planner-card__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 10px;
-    border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.16);
-    color: var(--surface);
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.planner-card__title {
-    margin: 12px 0 0;
-    max-width: 195px;
-    font-size: 22px;
-    font-weight: 800;
-    line-height: 1.35;
-    color: var(--surface);
-}
-
-.planner-card__desc {
-    margin: 8px 0 20px;
-    font-size: 13px;
-    color: var(--on-navy-sub);
-}
-
-.cond-group {
-    margin-bottom: 16px;
-}
-
-.cond-group__label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--on-navy-sub);
-}
-
-.cond-group__row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.cond-chip {
-    height: 38px;
-    padding: 0 16px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: var(--radius-full);
-    background: transparent;
-    color: var(--surface);
-    font-family: var(--font-base), sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.cond-chip--selected {
-    border-color: var(--surface);
-    background: var(--surface);
+/* "플랜부터" 아래 노란 형광펜 */
+.home__mark {
+    background: linear-gradient(transparent 64%, var(--gold) 64%);
     color: var(--navy-500);
-    font-weight: 700;
+    font-style: normal;
 }
-
-.cond-chip:focus-visible {
-    outline: 2px solid var(--surface);
-    outline-offset: 2px;
-}
-
-.planner-card__submit {
-    margin-top: 4px;
-    background: var(--red-500);
-}
-
-.planner-card__caption {
-    margin: 10px 0 0;
-    color: var(--on-navy-sub);
-    font-size: 12px;
-    text-align: center;
-}
-
