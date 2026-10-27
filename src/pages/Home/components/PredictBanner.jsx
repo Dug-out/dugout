@@ -21,7 +21,7 @@ function PredictBanner({team}) {
                     <Icon name="chevronRight" size={15} strokeWidth={2.4} />
                 </span>
             </span>
-            <img className="predict-banner__char" src="/assets/rate-up.png" alt="" width="92" height="100" />
+            <img className="predict-banner__char" src="/assets/predict.png" alt="" width="581" height="640" />
         </Link>
     )
 }
