@@ -43,7 +43,7 @@ function Team({code, side}) {
 
     return (
         <span className="plan-game__team">
-            {team.icon && <img className="plan-game__logo" src={team.icon} alt="" width="72" height="72" />}
+            {team.icon && <img className="plan-game__logo" src={team.icon} alt="" width="240" height="240" />}
             <strong className="plan-game__name">{team.label}</strong>
             <span className="plan-game__side">{side}</span>
         </span>
