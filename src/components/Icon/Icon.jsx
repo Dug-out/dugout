@@ -95,6 +95,12 @@ const PATHS = {
             <circle cx="19" cy="12" r="1.8" fill="currentColor" stroke="none" />
         </>
     ),
+    edit: (
+        <>
+            <path d="M4 20h4L19 9l-4-4L4 16z" />
+            <path d="M13.5 6.5l4 4" />
+        </>
+    ),
     exit: (
         <>
             <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3" />
@@ -103,7 +109,7 @@ const PATHS = {
     ),
 }
 
-/** name: back | plus | check | alert | calendar | pin | home | mate | record | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | bookmark | more | exit */
+/** name: back | plus | check | alert | calendar | pin | home | mate | record | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | bookmark | more | exit | edit */
 function Icon({name, size = 24, strokeWidth = 2, ...rest}) {
     return (
         <svg

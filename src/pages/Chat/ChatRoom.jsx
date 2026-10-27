@@ -19,9 +19,9 @@ function ChatRoom() {
     // 수락되지 않은 사람은 글을 볼 수 있어도 채팅방에는 못 들어온다
     const roomStatus = status === 'ready' && !post.isMember ? 'notfound' : status
 
-    // ⋯ 메뉴가 열려 있는지 · 메뉴는 방장이 아닌 참여자에게만 있다 (방장 메뉴는 아직 없다)
+    // ⋯ 메뉴가 열려 있는지 · 참여자는 나가기, 방장은 모집 글 수정이 있다
     const [menuOpen, setMenuOpen] = useState(false)
-    const hasMenu = post?.isMember && post.myStatus !== 'host'
+    const hasMenu = post?.isMember
 
     return (
         <div className="chat-room">
@@ -54,7 +54,7 @@ function ChatRoom() {
                 }}
             />
             {roomStatus === 'ready' && <ChatBody key={post.id} post={post} onMembersChange={refresh} />}
-            {hasMenu && <ChatMenu post={post} open={menuOpen} onClose={() => setMenuOpen(false)} />}
+            {hasMenu && <ChatMenu post={post} open={menuOpen} onClose={() => setMenuOpen(false)} onEdited={refresh} />}
         </div>
     )
 }
