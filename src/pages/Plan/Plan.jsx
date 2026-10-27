@@ -1,14 +1,11 @@
 import {useCallback, useEffect, useState} from 'react'
 import {useLocation, useNavigate} from 'react-router'
 import {Header, Icon} from '../../components'
-import {DEFAULT_CONDITIONS, DEFAULT_ORIGIN, FOOD_OPTIONS, SEAT_OPTIONS, WHEN_OPTIONS} from '../../constants/planner.js'
+import {DEFAULT_CONDITIONS, DEFAULT_ORIGIN} from '../../constants/planner.js'
 import PlanLoading from './components/PlanLoading.jsx'
 import './Plan.css'
 
-// 옵션 값 → 칩에 보이는 글자
-const labelOf = (options, value) => options.find((option) => option.value === value)?.label
-
-/** AI 직관 플랜 · 출발 위치 화면 (/plans) · 홈에서 고른 조건과 출발 위치를 보여 주고, 플랜을 짜면 결과 화면으로 간다 */
+/** AI 직관 플랜 · 출발 위치 화면 (/plans) · 출발 위치를 보여 주고(홈에서 고른 조건은 결과 화면에 넘긴다), 플랜을 짜면 결과 화면으로 간다 */
 function Plan() {
     const navigate = useNavigate()
     const {state} = useLocation()
@@ -33,25 +30,12 @@ function Plan() {
 
     if (making) return <PlanLoading onSkip={goResult} />
 
-    const chips = [
-        labelOf(WHEN_OPTIONS, conditions.when),
-        labelOf(SEAT_OPTIONS, conditions.seat),
-        labelOf(FOOD_OPTIONS, conditions.food),
-    ]
-
     return (
         <div className="plan">
             <Header title="AI 직관 플랜" backTo="/home" />
 
             <div className="plan__head">
                 <h2 className="plan__title">어디서 출발하세요?</h2>
-                <div className="plan__chips">
-                    {chips.map((chip) => (
-                        <span key={chip} className="plan__chip">
-                            {chip}
-                        </span>
-                    ))}
-                </div>
             </div>
 
             {/* 출발 위치 · 지도로 고르는 화면이 생기기 전까지는 강남역 하나로 정해져 있다 */}
