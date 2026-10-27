@@ -7,16 +7,16 @@
         color-mix(in srgb, var(--red-500) 38%, var(--surface)),
         color-mix(in srgb, var(--red-500) 14%, var(--surface))
     );
-    box-shadow: 0 8px 20px color-mix(in srgb, var(--red-500) 10%, transparent);
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--red-500) 5%, transparent);
 }
 
 .plan-ai__inner {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     overflow: hidden;
-    padding: 14px 16px 12px;
+    padding: 12px 14px 12px;
     border-radius: 4px 21px 21px 21px;
     background: linear-gradient(180deg, var(--surface) 40%, var(--red-25));
 }
@@ -26,7 +26,7 @@
     top: -14px;
     right: -10px;
     color: var(--red-500);
-    opacity: 0.1;
+    opacity: 0.07;
 }
 
 .plan-ai__head {
@@ -42,8 +42,8 @@
     flex: none;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--red-500), var(--red-600));
     color: var(--surface);
@@ -71,9 +71,9 @@
 
 .plan-ai__headline {
     position: relative;
-    margin: 4px 0 0;
+    margin: 2px 0 0;
     font-family: var(--font-emotion), sans-serif;
-    font-size: 21px;
+    font-size: 19px;
     line-height: 1.35;
     color: var(--navy-500);
 }
@@ -81,9 +81,9 @@
 .plan-ai__point {
     position: relative;
     margin: 0;
-    font-size: 14.5px;
+    font-size: 13.5px;
     font-weight: 500;
-    line-height: 1.65;
+    line-height: 1.6;
     color: var(--text-700);
 }
 
@@ -97,8 +97,8 @@
 .plan-ai__tag {
     display: inline-flex;
     align-items: center;
-    height: 26px;
-    padding: 0 10px;
+    height: 24px;
+    padding: 0 9px;
     border: 1px solid color-mix(in srgb, var(--red-500) 28%, var(--surface));
     border-radius: var(--radius-full);
     background: var(--surface);
