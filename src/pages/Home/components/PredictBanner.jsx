@@ -21,7 +21,7 @@ function PredictBanner({team}) {
                     <Icon name="chevronRight" size={15} strokeWidth={2.4} />
                 </span>
             </span>
-            <img className="predict-banner__char" src="/assets/predict.png" alt="" width="581" height="640" />
+            <img className="predict-banner__char" src="/assets/predict.png" alt="" width="1024" height="1024" />
         </Link>
     )
 }
