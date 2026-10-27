@@ -123,6 +123,30 @@ create trigger on_mate_member_result_push
   when (old.status = 'pending' and new.status in ('accepted', 'rejected'))
   execute function public.push_applicant_result();
 
+------------------------------------------
+-- 6. 승부 예측 결과 → 예측한 사람에게 알림 · 채점되어 점수가 채워지는 순간 한 번 · 누르면 내 기록 화면
+--  · 스코어 적중(11점 이상) / 승부 적중(10점) / 빗나감(0점)
+------------------------------------------
+create or replace function public.push_prediction_result()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if new.points = 0 then
+    perform public.notify_push(new.user_id, '예측 빗나감', '아쉽게 빗나갔어요', '/predict/history');
+  elsif new.points > 10 then
+    perform public.notify_push(new.user_id, '스코어 적중!', '+' || new.points || '점을 얻었어요', '/predict/history');
+  else
+    perform public.notify_push(new.user_id, '승부 적중!', '+' || new.points || '점을 얻었어요', '/predict/history');
+  end if;
+  return null;
+end;
+$$;
+
+create trigger on_prediction_graded_push
+  after update of points on public.predictions
+  for each row
+  when (old.points is null and new.points is not null)
+  execute function public.push_prediction_result();
+
 -- 준비: 아래 두 값을 Vault 에 한 번 저장한다 (SQL Editor 에서 실행)
 --   select vault.create_secret('https://<프로젝트-ref>.supabase.co', 'project_url');
 --   select vault.create_secret('정한-비밀-문구', 'push_secret');   -- send-push 함수의 PUSH_SECRET 과 같은 값

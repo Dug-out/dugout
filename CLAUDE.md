@@ -64,7 +64,7 @@
 - 로그인: `supabase.auth.signInWithPassword({ email, password })`. "비밀번호 찾기"만 있다.
 - 테이블과 RLS: `supabase/schema/`. 후기 작성자(`reviewer_id`)는 다른 사람에게 내려주지 않는다 → `public_reviews` 뷰만 조회.
 - 서비스 워커에 개인정보·로그인 응답을 캐시하지 않는다. 정적 파일만 캐시.
-- 푸시 알림(`supabase/schema/11_push.sql`, `supabase/functions/send-push`, `public/push-sw.js`): 새 참여 신청은 방장에게(누르면 신청자 관리), 수락·거절은 신청자에게(수락은 채팅방, 거절은 모집 글로 이동). DB 트리거가 `notify_push` 로 `send-push` Edge Function 을 불러 구독된 기기마다 Web Push 를 보낸다. 서비스 워커는 계속 vite-plugin-pwa 가 자동으로 만들고, 푸시 코드는 `public/push-sw.js` 를 `workbox.importScripts` 로 함께 불러온다. 구독은 마이페이지 "알림 설정" 스위치로 기기마다 켜고 끈다(`push_subscriptions`). VAPID 공개 키는 `.env` 의 `VITE_VAPID_PUBLIC_KEY`, 비밀 키와 `PUSH_SECRET` 은 Edge Function 비밀값에만 둔다. iOS 는 홈 화면에 추가한 앱에서만 받는다.
+- 푸시 알림(`supabase/schema/11_push.sql`, `supabase/functions/send-push`, `public/push-sw.js`): 새 참여 신청은 방장에게(누르면 신청자 관리), 수락·거절은 신청자에게(수락은 채팅방, 거절은 모집 글로 이동). 승부 예측은 채점되어 점수가 채워지는 순간 예측한 사람에게 결과를 알린다(스코어 적중 · 승부 적중 · 빗나감, 누르면 내 기록). DB 트리거가 `notify_push` 로 `send-push` Edge Function 을 불러 구독된 기기마다 Web Push 를 보낸다. 서비스 워커는 계속 vite-plugin-pwa 가 자동으로 만들고, 푸시 코드는 `public/push-sw.js` 를 `workbox.importScripts` 로 함께 불러온다. 구독은 마이페이지 "알림 설정" 스위치로 기기마다 켜고 끈다(`push_subscriptions`). VAPID 공개 키는 `.env` 의 `VITE_VAPID_PUBLIC_KEY`, 비밀 키와 `PUSH_SECRET` 은 Edge Function 비밀값에만 둔다. iOS 는 홈 화면에 추가한 앱에서만 받는다.
 
 ## 아직 디자인 없는 화면
 알림 목록, 비밀번호 찾기, 신고·차단(프로필 ⋯ 메뉴), 오류 상태 — 기존 화면 스타일과 빈 화면 틀(`Empty-*.dc.html`)을 따라 만든다.
