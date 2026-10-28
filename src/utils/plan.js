@@ -36,3 +36,7 @@ export const routeLink = (origin, stadium) => {
     const point = (name, {lat, lng}) => `${encodeURIComponent(name)},${lat},${lng}`
     return `https://map.kakao.com/link/by/traffic/${point(origin.label, origin)}/${point(stadium, coords)}`
 }
+
+/** 출발 시각 '17:20' · 도착 목표(경기 시작 ARRIVE_BEFORE_MINUTES 분 전)에서 총 이동 시간을 뺀다 */
+export const leaveAt = (gameAt, totalMinutes) =>
+    formatTime(new Date(new Date(gameAt).getTime() - (ARRIVE_BEFORE_MINUTES + totalMinutes) * 60 * 1000))

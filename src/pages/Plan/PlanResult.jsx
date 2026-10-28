@@ -1,7 +1,7 @@
 import {Link, Navigate, useLocation} from 'react-router'
 import {Button, EmptyState, Header} from '../../components'
 import {DEFAULT_ORIGIN, FOOD_OPTIONS, SEAT_OPTIONS, WHEN_OPTIONS} from '../../constants/planner.js'
-import {arriveAt, endEstimate, routeLink, ticketOf} from '../../utils/plan.js'
+import {arriveAt, endEstimate, leaveAt, routeLink, ticketOf} from '../../utils/plan.js'
 import {formatTime} from '../../utils/mateFormat.js'
 import {teamOf} from '../../utils/predict.js'
 import ConditionBar from './components/ConditionBar.jsx'
@@ -25,7 +25,7 @@ function PlanResult() {
     const {conditions, plan} = state
     // 출발 위치 · 지도로 고르는 화면이 생기기 전까지는 강남역
     const origin = state.origin ?? DEFAULT_ORIGIN
-    const {myTeam, game, foods = [], mates = {count: 0, items: []}, ai} = plan
+    const {myTeam, game, foods = [], mates = {count: 0, items: []}, route = null, ai} = plan
 
     return (
         <div className="plan-result">
@@ -69,11 +69,15 @@ function PlanResult() {
                                     },
                                     {
                                         key: 'route',
+                                        time: route ? leaveAt(game.gameAt, route.total) : undefined,
                                         title: '출발하기',
+                                        meta: route ? `대중교통 ${route.total}분` : undefined,
                                         children: (
                                             <RouteCard
                                                 origin={origin}
                                                 arriveTime={arriveAt(game.gameAt)}
+                                                leaveTime={route ? leaveAt(game.gameAt, route.total) : null}
+                                                route={route}
                                                 link={routeLink(origin, game.stadium)}
                                             />
                                         ),

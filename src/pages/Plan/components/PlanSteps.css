@@ -67,6 +67,14 @@
     font-weight: 700;
 }
 
+/* 제목 오른쪽 작은 글자 */
+.plan-steps__meta {
+    flex: none;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-400);
+}
+
 /* 마지막 단계(경기 관람)는 빨강이고 아래로 이어지는 선이 없다 */
 .plan-steps__item--last .plan-steps__number {
     background: var(--red-600);
