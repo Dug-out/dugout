@@ -6,6 +6,9 @@ const ENDPOINT = 'https://api.odsay.com/v1/api/searchPubTransPathT'
 const SUBWAY = 1
 const WALK = 3
 
+/** 역·정류장 이름 → 괄호 안 보충 설명을 뺀 짧은 이름 · '서울대입구(관악구청)' → '서울대입구' */
+const shortStop = (name) => name.replace(/\s*\(.*?\)/g, '').trim() || name
+
 /** 노선 이름 → 짧은 이름 · '수도권 2호선' → '2호선' */
 const shortLane = (name) => name.trim().split(/\s+/).pop()
 
@@ -31,7 +34,7 @@ export function parseRoute(data) {
             return {
                 type: 'subway',
                 name: shortLane(part.lane[0].name),
-                title: `${part.startName} → ${part.endName}`,
+                title: `${shortStop(part.startName)} → ${shortStop(part.endName)}`,
                 note: `${part.stationCount}개 역 이동`,
                 min,
             }
@@ -42,7 +45,7 @@ export function parseRoute(data) {
             return {
                 type: 'bus',
                 name: lane.busNo ?? shortLane(lane.name ?? '이동'),
-                title: `${part.startName} → ${part.endName}`,
+                title: `${shortStop(part.startName)} → ${shortStop(part.endName)}`,
                 note: `${part.stationCount}개 정류장 이동`,
                 min,
             }
@@ -51,7 +54,7 @@ export function parseRoute(data) {
         const index = parts.indexOf(part)
         const before = parts.slice(0, index).some((other) => other.trafficType !== WALK)
         const after = parts.slice(index + 1).find((other) => other.trafficType !== WALK)
-        const title = !before && after ? `${after.startName}까지` : !after ? '구장까지' : '환승 이동'
+        const title = !before && after ? `${shortStop(after.startName)}까지` : !after ? '구장까지' : '환승 이동'
         return {type: 'walk', name: null, title, note: null, min}
     })
 
