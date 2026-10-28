@@ -3,9 +3,11 @@ import {Link} from 'react-router'
 import {savePrediction} from '../../api/predictions.js'
 import {Button, EmptyState, Header, LoadState, NoticeDialog} from '../../components'
 import useCountdown from '../../hooks/useCountdown.js'
+import useGameBriefing from '../../hooks/load/useGameBriefing.js'
 import useGameStats from '../../hooks/load/useGameStats.js'
 import useMyTeam from '../../hooks/load/useMyTeam.js'
 import usePredictionGame from '../../hooks/load/usePredictionGame.js'
+import {BRIEFING_FAILED, BRIEFING_LOADING, briefingText} from '../../utils/briefing.js'
 import {CLOSE_BEFORE_MS, outcomeLabel, outcomeOf, teamOf} from '../../utils/predict.js'
 import FanStats from './components/FanStats.jsx'
 import PredictGameCard from './components/PredictGameCard.jsx'
@@ -71,6 +73,8 @@ function PredictContent({game, myPick, record}) {
 
     // 🔌 getGameStats · 불러오는 중이거나 실패하면 팬 비율 카드만 숨긴다
     const {status: statsStatus, stats, refresh: refreshStats} = useGameStats(game.id)
+    // 🔌 AI 브리핑 · 오늘 경기(없으면 이 경기)의 한 줄 브리핑과 예상 스코어 · 사용자마다 처음 받은 것으로 고정
+    const {status: briefingStatus, briefing} = useGameBriefing(game.id)
 
     // 점수 · 아직 안 정했으면 null, 예측해 둔 것이 있으면 그 점수로 시작
     const [score, setScore] = useState({my: myPick?.my ?? null, opp: myPick?.opp ?? null})
@@ -107,6 +111,13 @@ function PredictContent({game, myPick, record}) {
                     opp={score.opp}
                     onChange={(nextMy, nextOpp) => setScore({my: nextMy, opp: nextOpp})}
                     locked={done || closed || saving}
+                    aiText={
+                        briefingStatus === 'ready'
+                            ? briefingText(briefing, my.label)
+                            : briefingStatus === 'loading'
+                              ? BRIEFING_LOADING
+                              : BRIEFING_FAILED
+                    }
                 />
                 {statsStatus === 'ready' && <FanStats teamLabel={my.label} stats={stats} />}
             </main>
