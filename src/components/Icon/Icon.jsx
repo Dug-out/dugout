@@ -127,6 +127,12 @@ const PATHS = {
             <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
         </>
     ),
+    walk: (
+        <>
+            <circle cx="13" cy="4.5" r="1.8" />
+            <path d="M10 21l2-6-2.5-2.5 1-5 3 2 3 1M9.5 9.5L7 12M13.5 15.5l2.5 5.5" />
+        </>
+    ),
     external: <path d="M8 16L16 8M9.5 8H16v6.5" />,
     exit: (
         <>
@@ -136,7 +142,7 @@ const PATHS = {
     ),
 }
 
-/** name: back | plus | check | alert | calendar | pin | home | mate | plan | posts | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | more | exit | edit | trash | ticket | external | food | search | locate */
+/** name: back | plus | check | alert | calendar | pin | home | mate | plan | posts | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | more | exit | edit | trash | ticket | external | food | search | locate | walk */
 function Icon({name, size = 24, strokeWidth = 2, ...rest}) {
     return (
         <svg
