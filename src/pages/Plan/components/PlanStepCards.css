@@ -1,0 +1,278 @@
+.plan-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface);
+    color: var(--text-900);
+    text-decoration: none;
+}
+
+.plan-card--link:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: 2px;
+}
+
+.plan-card__icon {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--navy-50);
+    color: var(--navy-500);
+}
+
+.plan-card__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.plan-card__text strong {
+    font-size: 15px;
+}
+
+.plan-card__text span {
+    font-size: 12.5px;
+    color: var(--text-500);
+}
+
+.plan-card__action {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 4px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 10px;
+    background: var(--navy-500);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--surface);
+}
+
+/* 맛집 사진 자리 · 사진이 생기기 전까지 색 배경 */
+.plan-card__photo {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: linear-gradient(140deg, var(--gold), color-mix(in srgb, var(--red-500) 55%, var(--gold)));
+    color: var(--surface);
+}
+
+.plan-card--empty {
+    justify-content: center;
+    background: var(--gray-100);
+    text-align: center;
+}
+
+/* 출발 카드 */
+.plan-card--route {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.plan-route {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+}
+
+/* 이름표와 값이 한 줄에 놓이고, 값이 길면 값만 다음 줄로 이어진다 */
+.plan-route__row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.plan-route__row dt {
+    flex: none;
+    width: 56px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-400);
+}
+
+.plan-route__row dd {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.plan-route__note {
+    font-size: 12.5px;
+    font-weight: 400;
+    color: var(--text-500);
+}
+
+.plan-route__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--navy-50);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy-500);
+    text-decoration: none;
+}
+
+.plan-route__link:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: 2px;
+}
+
+/* 대중교통 경로 (출발·도착, 구간 막대, 구간 목록) */
+.plan-trip__partial {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-500);
+}
+
+.plan-trip__box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: var(--navy-500);
+    color: var(--surface);
+}
+
+.plan-trip__point {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+.plan-trip__point--end {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.plan-trip__label,
+.plan-trip__place {
+    font-size: 11.5px;
+    color: var(--on-navy-sub);
+}
+
+.plan-trip__time {
+    font-family: var(--font-number), sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.plan-trip__arrow {
+    flex: none;
+    color: var(--on-navy-sub);
+}
+
+/* 구간별 소요 시간 막대 · 구간 시간만큼 길이를 차지한다 */
+.plan-trip__bar {
+    display: flex;
+    gap: 3px;
+    height: 10px;
+}
+
+.plan-trip__seg {
+    border-radius: var(--radius-full);
+}
+
+.plan-trip__seg--walk,
+.plan-trip__pill--walk {
+    background: var(--on-navy-sub);
+}
+
+.plan-trip__seg--subway,
+.plan-trip__pill--subway {
+    /* 노선 색(--line)이 넘어오면 그 색, 아니면 남색 */
+    background: var(--line, var(--navy-500));
+}
+
+.plan-trip__seg--bus,
+.plan-trip__pill--bus {
+    background: var(--red-600);
+}
+
+.plan-trip__legs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.plan-trip__leg {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plan-trip__pill {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    /* 기본 폭은 '경의중앙선' 이 들어가는 크기고, 더 긴 이름은 알약이 늘어난다 */
+    min-width: 64px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: var(--radius-full);
+    font-size: 11.5px;
+    white-space: nowrap;
+    font-weight: 800;
+    color: var(--surface);
+}
+
+.plan-trip__pill--walk {
+    background: var(--navy-50);
+    color: var(--text-500);
+}
+
+.plan-trip__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+.plan-trip__text strong {
+    font-size: 14px;
+    line-height: 1.35;
+    /* 긴 역 · 정류장 이름이 잘리지 않고 다음 줄로 이어진다 */
+    overflow-wrap: anywhere;
+}
+
+.plan-trip__text span {
+    font-size: 12px;
+    color: var(--text-400);
+}
+
+.plan-trip__min {
+    flex: none;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy-500);
+}

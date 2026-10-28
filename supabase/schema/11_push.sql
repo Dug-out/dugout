@@ -123,6 +123,41 @@ create trigger on_mate_member_result_push
   when (old.status = 'pending' and new.status in ('accepted', 'rejected'))
   execute function public.push_applicant_result();
 
+------------------------------------------
+-- 6. 승부 예측 결과 → 맞힌 사람에게 알림 · 채점되어 점수가 채워지는 순간 한 번 · 누르면 내 기록 화면
+--  · 스코어 적중(11점 이상) / 승부 적중(10점) · 빗나간 사람(0점)에게는 보내지 않는다
+------------------------------------------
+create or replace function public.push_prediction_result()
+returns trigger language plpgsql security definer set search_path = public as $$
+declare
+  game record;
+  my_team text;
+  match text;
+begin
+  select home_team, away_team, game_at into game from public.games where id = new.game_id;
+  select team into my_team from public.profiles where id = new.user_id;
+
+  -- 경기 이름은 내 응원팀을 앞에 쓰고 날짜(한국 시간)를 붙인다 (예: 10.26 LG vs 두산)
+  match := to_char(game.game_at at time zone 'Asia/Seoul', 'MM.DD') || ' ' ||
+           case when game.away_team = my_team then game.away_team || ' vs ' || game.home_team
+                else game.home_team || ' vs ' || game.away_team end;
+
+  perform public.notify_push(
+    new.user_id,
+    case when new.points > 10 then '스코어 적중!' else '승부 적중!' end,
+    match || ' +' || new.points || '점을 얻었어요',
+    '/predict/history'
+  );
+  return null;
+end;
+$$;
+
+create trigger on_prediction_graded_push
+  after update of points on public.predictions
+  for each row
+  when (old.points is null and new.points > 0)
+  execute function public.push_prediction_result();
+
 -- 준비: 아래 두 값을 Vault 에 한 번 저장한다 (SQL Editor 에서 실행)
 --   select vault.create_secret('https://<프로젝트-ref>.supabase.co', 'project_url');
 --   select vault.create_secret('정한-비밀-문구', 'push_secret');   -- send-push 함수의 PUSH_SECRET 과 같은 값

@@ -1,0 +1,128 @@
+.planner-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 20px 18px 18px;
+    border-radius: 22px;
+    background: var(--navy-gradient-card);
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--navy-500) 22%, transparent);
+    color: var(--surface);
+}
+
+/* 오른쪽 아래 흐린 다이아몬드 */
+.planner-card__deco {
+    position: absolute;
+    right: -80px;
+    bottom: -96px;
+    opacity: 0.07;
+}
+
+/* 오른쪽 위 마스코트 */
+.planner-card__char {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    width: 104px;
+    height: 113px;
+    object-fit: contain;
+}
+
+.planner-card__head {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-right: 100px;
+}
+
+.planner-card__badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    align-self: flex-start;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.16);
+    font-size: 11.5px;
+    font-weight: 700;
+}
+
+.planner-card__title {
+    margin: 2px 0 0;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.planner-card__group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.planner-card__label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--on-navy-sub);
+}
+
+.planner-card__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 5px;
+}
+
+.planner-card__chip {
+    position: relative;
+    height: 32px;
+    padding: 0 11px;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.06);
+    color: color-mix(in srgb, var(--surface) 88%, var(--on-navy-sub));
+    font-family: var(--font-base), sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* 보이는 높이는 32px, 누르는 영역은 44px */
+.planner-card__chip::after {
+    position: absolute;
+    inset: -6px 0;
+    content: '';
+}
+
+.planner-card__chip[aria-checked='true'] {
+    border-color: var(--surface);
+    background: var(--surface);
+    color: var(--navy-500);
+    font-weight: 700;
+}
+
+.planner-card__chip:focus-visible,
+.planner-card__submit:focus-visible {
+    outline: 2px solid var(--surface);
+    outline-offset: 2px;
+}
+
+.planner-card__submit {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 52px;
+    border: 0;
+    border-radius: 14px;
+    background: var(--red-600);
+    color: var(--surface);
+    font-family: var(--font-base), sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}

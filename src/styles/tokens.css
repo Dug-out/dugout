@@ -67,6 +67,46 @@
   --dim: rgba(15, 26, 61, 0.55);
   --app-max-width: 430px;
   --tabbar-height: calc(57px + max(22px, env(safe-area-inset-bottom))); /* 하단 탭바 높이 (TabBar.css 와 같은 값) */
+
+  /* 지하철 노선 색 (플랜 결과의 출발하기 알약 · 막대) · 밝은 색 위에는 어두운 글자(-text)를 쓴다 */
+  --line-seoul-1: #0052A4;
+  --line-seoul-2: #00A84D;
+  --line-seoul-3: #EF7C1C;
+  --line-seoul-4: #00A5DE;
+  --line-seoul-5: #996CAC;
+  --line-seoul-6: #CD7C2F;
+  --line-seoul-7: #747F00;
+  --line-seoul-8: #E6186C;
+  --line-seoul-9: #BDB092;
+  --line-seoul-9-text: var(--text-900);
+  --line-gyeongui: #77C4A3;
+  --line-gyeongui-text: var(--text-900);
+  --line-airport: #0090D2;
+  --line-gyeongchun: #0C8E72;
+  --line-suin-bundang: #FABE00;
+  --line-suin-bundang-text: var(--text-900);
+  --line-sinbundang: #D4003B;
+  --line-ui-sinseol: #B0CE18;
+  --line-ui-sinseol-text: var(--text-900);
+  --line-seohae: #81A914;
+  --line-gyeonggang: #0054A6;
+  --line-incheon-1: #7CA8D5;
+  --line-incheon-2: #ED8B00;
+  --line-uijeongbu: #FDA600;
+  --line-uijeongbu-text: var(--text-900);
+  --line-everline: #56AD2D;
+  --line-gimpo: #A17E46;
+  --line-sillim: #6789CA;
+  --line-busan-1: #F06A00;
+  --line-busan-2: #81BF48;
+  --line-busan-3: #BB8C00;
+  --line-busan-4: #217DCB;
+  --line-daegu-1: #D93F5C;
+  --line-daegu-2: #00AA80;
+  --line-daegu-3: #FFB100;
+  --line-daegu-3-text: var(--text-900);
+  --line-daejeon-1: #007448;
+  --line-gwangju-1: #009088;
 }
 
 html, body { margin: 0; background: var(--navy-50); font-family: var(--font-base); color: var(--text-900); }

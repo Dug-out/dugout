@@ -1,0 +1,121 @@
+.plan-game {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    background: var(--navy-gradient-card);
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--navy-500) 22%, transparent);
+    color: var(--surface);
+}
+
+/* 가운데 흐린 다이아몬드 */
+.plan-game__deco {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -58%);
+    opacity: 0.06;
+}
+
+.plan-game__top {
+    position: relative;
+    display: flex;
+    gap: 6px;
+    padding: 16px 18px 0;
+}
+
+.plan-game__dday,
+.plan-game__day {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 9px;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+.plan-game__dday {
+    background: var(--surface);
+    font-weight: 800;
+    color: var(--navy-500);
+}
+
+.plan-game__day {
+    background: rgba(255, 255, 255, 0.14);
+    font-weight: 700;
+}
+
+.plan-game__teams {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px;
+}
+
+.plan-game__team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 96px;
+}
+
+.plan-game__logo {
+    display: block;
+    box-sizing: border-box;
+    width: 72px;
+    height: 72px;
+    border: 3px solid var(--surface);
+    border-radius: 50%;
+    background: var(--surface);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.plan-game__name {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.plan-game__side {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--on-navy-sub);
+}
+
+.plan-game__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.plan-game__time {
+    font-family: var(--font-number), sans-serif;
+    font-size: 34px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.plan-game__vs {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--gold);
+}
+
+.plan-game__foot {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 18px;
+    background: rgba(0, 0, 0, 0.16);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--on-navy-sub);
+}
+
+.plan-game__pin {
+    flex: none;
+    color: var(--red-500);
+}

@@ -1,10 +1,12 @@
 import {useState} from 'react'
 import {Link, useLocation, useNavigate, useParams} from 'react-router'
+import {getMyProfile} from '../../api/profiles.js'
 import {Button, Header, Icon, LoadState, NoticeDialog} from '../../components'
 import {MATE_POST, PROFILE} from '../../constants/policy.js'
 import useGoBack from '../../hooks/useGoBack.js'
 import useMatePost from '../../hooks/load/useMatePost.js'
 import useMyTeam from '../../hooks/load/useMyTeam.js'
+import {meetsApplyCondition} from '../../utils/applyCondition.js'
 import {formatDay, formatTime, matchLabel} from '../../utils/mateFormat.js'
 import {formatManner} from '../../utils/manner.js'
 import MateApplySheet from './components/MateApplySheet.jsx'
@@ -69,6 +71,15 @@ function MateDetail() {
     )
 }
 
+// 신청 조건(나이대 · 성별)에 맞지 않을 때의 안내
+const CONDITION_MESSAGE = (
+    <>
+        참여 조건에 맞지 않아 신청할 수 없어요.
+        <br />
+        나이대와 성별 조건을 확인해 주세요
+    </>
+)
+
 /** 불러온 글 · 이미지, 제목과 방장, 정보 카드, 소개, 함께 가는 메이트, 아래 신청 영역 */
 function PostContent({post, refresh}) {
     // 내 응원팀 · 경기 이름을 내 팀 먼저 쓸 때 쓴다
@@ -78,6 +89,24 @@ function PostContent({post, refresh}) {
     const [applyOpen, setApplyOpen] = useState(false)
     // 신청 결과 안내 창 · null(안 보임), {ok: true}(성공), {ok: false, message}(실패)
     const [result, setResult] = useState(null)
+
+    // 신청 조건을 확인하는 중인지 (중복 클릭 방지)
+    const [checking, setChecking] = useState(false)
+
+    // [참여 신청하기] · 내 프로필이 글의 나이대 · 성별 조건에 맞으면 신청 시트를 열고, 안 맞으면 안내 창을 띄운다
+    const startApply = async () => {
+        if (checking) return
+        setChecking(true)
+        try {
+            if (meetsApplyCondition(post, await getMyProfile())) setApplyOpen(true)
+            else setResult({ok: false, message: CONDITION_MESSAGE})
+        } catch {
+            // 프로필을 못 불러와도 신청은 막지 않는다 (신청은 방장이 보고 수락한다)
+            setApplyOpen(true)
+        } finally {
+            setChecking(false)
+        }
+    }
 
     // 신청이 끝났을 때 · 성공이든 실패든 시트를 닫고 결과를 안내하고, 마감 같은 변화를 반영하려고 글을 다시 불러온다
     const handleApplyDone = (applyResult) => {
@@ -196,7 +225,7 @@ function PostContent({post, refresh}) {
                 </section>
             </main>
 
-            <ApplyBar post={post} onApply={() => setApplyOpen(true)} />
+            <ApplyBar post={post} onApply={startApply} />
 
             {/* 참여 신청 시트 · 열 때마다 새로 만들어 입력이 비어 있다 */}
             {applyOpen && (
