@@ -11,14 +11,6 @@ import {getTransitRoute} from './route.js'
 
 const DAY_MS = 24 * 60 * 60 * 1000
 
-// AI 경기 포인트 · AI 를 붙이기 전까지 모든 경기에 같은 임시 문구를 쓴다 (나중에 경기마다 AI 가 만든 글로 바뀐다)
-const TEMP_AI = {
-    highlight: '직관 가기 딱 좋은 경기예요!',
-    point: '고른 조건에 잘 맞는 일정이라 응원하기 좋은 날이에요.',
-    tags: ['조건 일치', '응원 열기'],
-    sourceCount: 3,
-}
-
 /** 경기 시작 시각의 한국 시간 요일(Mon~Sun)과 시(0~23) */
 function kstDayAndHour(value) {
     const parts = new Intl.DateTimeFormat('en-US', {
@@ -117,6 +109,18 @@ async function getSeatMates(gameId, seat) {
 }
 
 /**
+ * 경기 관련 최근 뉴스를 요약한 AI 경기 포인트 (plan-ai-brief Edge Function · 뉴스는 NAVER API HUB, 요약은 Gemini)
+ * AI 포인트는 플랜에 꼭 필요한 정보가 아니라서, 조회가 실패하거나 관련 기사가 없으면 플랜 전체를 막지 않고 null 로 대신한다 (카드를 숨긴다)
+ */
+async function getAiBrief(home, away) {
+    const {data, error} = await supabase.functions.invoke('plan-ai-brief', {
+        body: {homeTeam: home, awayTeam: away},
+    })
+    if (error || !data) return null
+    return data
+}
+
+/**
  * 직관 플랜 만들기 · 조건에 맞는 경기 하나를 고른다 (AI 가 아니라 규칙)
  *  1) 오늘부터 PLAN_WINDOW_DAYS 일 안의 예정 경기 중 "언제" 조건에 맞는 것이 후보 (내 팀 경기만 오는 건 DB 규칙)
  *  2) 모집 중인 모집 글이 많은 경기 → 내 팀 홈 경기 → 날짜가 빠른 경기 순으로 가장 앞의 하나
@@ -166,10 +170,11 @@ export async function makePlan({conditions, origin}) {
 
     const {row, isHome} = ranked[0]
     const {id, game_at: gameAt, home_team: home, away_team: away, stadium} = row
-    const [foods, mates, route] = await Promise.all([
+    const [foods, mates, route, ai] = await Promise.all([
         getIndoorFoods(stadium, conditions.food),
         getSeatMates(id, conditions.seat),
         getRoute(origin, stadium),
+        getAiBrief(home, away),
     ])
     return {
         myTeam,
@@ -177,6 +182,6 @@ export async function makePlan({conditions, origin}) {
         foods,
         mates,
         route,
-        ai: TEMP_AI,
+        ...(ai ? {ai} : {}),
     }
 }
