@@ -1,17 +1,14 @@
 import {SCORE_MAX, SCORE_MIN, outcomeLabel, outcomeOf} from '../../../utils/predict.js'
 import './ScoreCard.css'
 
-// AI 브리핑 문구 · 실제 AI 없이 디자인 문구를 그대로 쓴다 (하드코딩)
-const AI_BRIEFING =
-    'LG 최근 5경기 4승 1패 상승세 · 두산은 3연패 탈출을 노려요 · 잠실 홈 6연승 도전 · AI 예상은 LG 4 : 3 승리 (58%)'
-
 /**
  * 스코어 예측 카드 · AI 브리핑 띠 + 팀마다 점수 상자와 [−][+] + 결과 배지
  * @param {{myLabel: string, oppLabel: string, my: number | null, opp: number | null,
- *          onChange: (my: number | null, opp: number | null) => void, locked: boolean}} props
+ *          onChange: (my: number | null, opp: number | null) => void, locked: boolean, aiText: string}} props
  *  my, opp: 아직 안 정했으면 null · locked: 예측 완료나 마감이면 true (점수를 바꿀 수 없다)
+ *  aiText: AI 브리핑 띠에 흐르는 글자 (준비 중 · 실패 문구 포함)
  */
-function ScoreCard({myLabel, oppLabel, my, opp, onChange, locked}) {
+function ScoreCard({myLabel, oppLabel, my, opp, onChange, locked, aiText}) {
     const ready = my !== null && opp !== null
     const outcome = ready ? outcomeOf(my, opp) : null
 
@@ -27,9 +24,9 @@ function ScoreCard({myLabel, oppLabel, my, opp, onChange, locked}) {
                 {/* 같은 문구를 두 번 이어 붙여 끊김 없이 흐르게 한다 · 두 번째는 화면 읽기에서 뺀다 */}
                 <span className="score-card__ai-window">
                     <span className="score-card__ai-tick">
-                        <span className="score-card__ai-text">{AI_BRIEFING}</span>
+                        <span className="score-card__ai-text">{aiText}</span>
                         <span className="score-card__ai-text" aria-hidden="true">
-                            {AI_BRIEFING}
+                            {aiText}
                         </span>
                     </span>
                 </span>
