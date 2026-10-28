@@ -1,0 +1,65 @@
+.plan-result {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background: var(--bg);
+}
+
+.plan-result__main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 16px;
+    padding: 12px 16px 28px;
+}
+
+.plan-result__heading {
+    margin: 4px 4px -6px;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text-900);
+}
+
+/* 헤더 제목은 다른 하위 화면과 달리 감성 글꼴(Jua) 남색 */
+.plan-result .header__title {
+    font-family: var(--font-emotion), sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--navy-500);
+}
+
+/* 나의 직관 플랜 */
+.plan-result__plan {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 6px;
+}
+
+.plan-result__plan-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 4px;
+}
+
+.plan-result__plan-title {
+    margin: 0;
+    font-family: var(--font-emotion), sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--navy-500);
+}
+
+.plan-result__end {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-400);
+}
+
+/* 구장 안 맛집 카드들 */
+.plan-result__foods {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {Link} from 'react-router'
-import {Button, EmptyState, Header, Icon, LoadState} from '../../components'
+import {EmptyState, Header, Icon, LoadState} from '../../components'
 import {MATE_POST} from '../../constants/policy.js'
 import useMyPosts from '../../hooks/load/useMyPosts.js'
 import useMyTeam from '../../hooks/load/useMyTeam.js'
@@ -14,31 +14,17 @@ const TABS = [
     {key: 'joined', label: '참여한 약속', match: (item) => item.role !== 'host'},
 ]
 
-/** 내 직관 약속 · 약속이 없으면 빈 화면을 보여 준다 */
+/** "내 직관" 탭 · 내가 연 약속과 참여한 약속 · 약속이 없으면 빈 화면을 보여 준다 */
 function MyPosts() {
     // status 는 loading | ready | error
     const {status, data, reload} = useMyPosts()
 
     return (
         <div className="my-posts">
-            <Header title="내 직관 약속" backTo="/my" />
+            <Header large title="내 직관" />
             <LoadState status={status} errorTitle="약속을 불러오지 못했어요" onRetry={reload} />
             {status === 'ready' && data.length === 0 && (
-                <EmptyState
-                    title="아직 잡힌 직관 약속이 없어요"
-                    description={
-                        <>
-                            모집 글에 참여하거나
-                            <br />
-                            직접 글을 올려 메이트를 모아 보세요
-                        </>
-                    }
-                    action={
-                        <Button as={Link} to="/mate">
-                            메이트 찾으러 가기
-                        </Button>
-                    }
-                />
+                <EmptyState title="아직 잡힌 직관 약속이 없어요" description="직접 글을 올려 메이트를 모아 보세요" />
             )}
             {status === 'ready' && data.length > 0 && <PostList items={data} />}
         </div>

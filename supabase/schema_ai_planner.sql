@@ -1,4 +1,4 @@
--- AI 직관 플래너 · 구장 참고 정보 + 저장한 플랜
+-- AI 직관 플래너 · 구장 참고 정보 (저장한 플랜 기능은 없앴다)
 -- 경기 일정은 더미(ai_games)를 따로 만들지 않고 팀원이 이미 만든 public.games(직관 기록 기능용)를
 -- 그대로 쓴다 — games.stadium은 코드가 아니라 짧은 이름 텍스트라, 코드 매핑은
 -- src/constants/planner.js STADIUM_CODE_BY_NAME에서 한다. 좌석(응원석/테이블석/내야석/외야석)은
@@ -25,33 +25,7 @@ create policy "stadiums_select_authenticated" on public.stadiums
 revoke insert, update, delete on public.stadiums from anon, authenticated;
 
 -- ─────────────────────────────────────────────
--- 2. 내가 저장한 AI 플랜 · 홈 "내 다음 직관" 카드 · 직관 준비 체크리스트
---    game_id는 public.games(id, bigint) 참조. seat_zone은 추천 좌석이 아니라 저장 시점에
---    고른 좌석 "조건"(예: '응원석') 텍스트 스냅샷이다.
--- ─────────────────────────────────────────────
-create table public.saved_plans (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references public.profiles (id) on delete cascade,
-  game_id bigint not null references public.games (id) on delete cascade,
-  companion_type text not null check (companion_type in ('메이트 구해요','친구랑','데이트','혼자')),
-  seat_zone text not null,
-  checklist jsonb not null default '{"ticket":false,"mate":false,"food":false,"transit":false}',
-  created_at timestamptz not null default now()
-);
-
-alter table public.saved_plans enable row level security;
-
-create policy "saved_plans_select_own" on public.saved_plans
-  for select to authenticated using (auth.uid() = user_id);
-create policy "saved_plans_insert_own" on public.saved_plans
-  for insert to authenticated with check (auth.uid() = user_id);
-create policy "saved_plans_update_own" on public.saved_plans
-  for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "saved_plans_delete_own" on public.saved_plans
-  for delete to authenticated using (auth.uid() = user_id);
-
--- ─────────────────────────────────────────────
--- 3. 구장 10곳 좌표 · 교통 (더미 데이터 예시)
+-- 2. 구장 10곳 좌표 · 교통 (더미 데이터 예시)
 -- ─────────────────────────────────────────────
 insert into public.stadiums (code, name, transit_minutes, transit_line, lat, lng) values
   ('JAMSIL', '잠실야구장', 40, '2호선 종합운동장역', 37.512150, 127.071976),

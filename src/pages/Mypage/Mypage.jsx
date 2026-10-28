@@ -1,31 +1,20 @@
 import {Link, useNavigate} from 'react-router'
 import {signOut} from '../../api/auth.js'
-import {getPendingApplicantCount} from '../../api/mateMembers.js'
-import {getReviewTodoCount} from '../../api/mateReviews.js'
 import {Button, Header, Icon, LoadState} from '../../components'
 import {PROFILE, SIGNUP} from '../../constants/policy.js'
-import useLoad from '../../hooks/useLoad.js'
 import useMyProfile from '../../hooks/load/useMyProfile.js'
 import {formatManner, mannerSummary} from '../../utils/manner.js'
+import PushSetting from './components/PushSetting.jsx'
 import './Mypage.css'
 
 // 내 활동 메뉴 · 눌렀을 때 이동할 화면
-const ACTIVITY_MENU = [
-    {label: '내 직관 약속', to: '/my/posts', count: 'pending'},
-    {label: '메이트 평가하기', to: '/my/reviews', count: 'waiting'},
-    {label: '직관 기록', to: '/record'},
-]
-// 내 활동 옆에 붙는 개수 이름
-const COUNT_LABEL = {pending: '새 신청', waiting: '평가 대기'}
-// 계정 메뉴 · 알림 설정은 아직 화면만 (로그아웃은 아래에서 따로 연결)
-const ACCOUNT_MENU = ['알림 설정']
+const ACTIVITY_MENU = [{label: '메이트 평가하기', to: '/my/reviews'}]
 
-/** 메뉴 한 줄 · 이름, 안내(선택), 오른쪽 화살표 · to 가 있으면 그 화면으로 이동, onClick 이 있으면 누를 때 실행 */
-function MenuRow({label, to, note, onClick}) {
+/** 메뉴 한 줄 · 이름, 오른쪽 화살표 · to 가 있으면 그 화면으로 이동, onClick 이 있으면 누를 때 실행 */
+function MenuRow({label, to, onClick}) {
     const content = (
         <>
             <span className="mypage__row-label">{label}</span>
-            {note && <span className="mypage__row-note">{note}</span>}
             <Icon name="chevronRight" size={18} />
         </>
     )
@@ -64,10 +53,6 @@ function MypageBody({profile}) {
     const team = SIGNUP.TEAMS.find((t) => t.code === teamCode)
     // 매너 타율 카드에 쓸 값 · 구간 이름, 막대 길이, 다음 구간까지 안내
     const summary = mannerSummary(manner)
-    // 내 활동 옆에 붙일 개수 (불러오기 전이나 실패하면 null → 보여 주지 않는다)
-    const {data: pending} = useLoad(getPendingApplicantCount, [])
-    const {data: waiting} = useLoad(getReviewTodoCount, [])
-    const counts = {pending, waiting}
 
     // 로그아웃 · 로그인 정보를 지우고 로그인 화면으로 (뒤로가기로 마이페이지에 돌아오지 않게 replace)
     // 서버 요청이 실패해도 기기의 로그인 정보는 지워지므로 로그인 화면으로 보낸다
@@ -133,20 +118,15 @@ function MypageBody({profile}) {
             {/* 내 활동 메뉴 */}
             <section className="mypage__card">
                 <h2 className="mypage__section">내 활동</h2>
-                {ACTIVITY_MENU.map(({label, to, count}) => {
-                    const n = counts[count]
-                    return (
-                        <MenuRow key={label} label={label} to={to} note={n > 0 ? `${COUNT_LABEL[count]} ${n}` : null} />
-                    )
-                })}
+                {ACTIVITY_MENU.map(({label, to}) => (
+                    <MenuRow key={label} label={label} to={to} />
+                ))}
             </section>
 
             {/* 계정 메뉴 */}
             <section className="mypage__card">
                 <h2 className="mypage__section">계정</h2>
-                {ACCOUNT_MENU.map((label) => (
-                    <MenuRow key={label} label={label} />
-                ))}
+                <PushSetting />
                 <MenuRow label="로그아웃" onClick={logout} />
                 <button type="button" className="mypage__row mypage__row--quiet">
                     회원 탈퇴

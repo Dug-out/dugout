@@ -1,0 +1,146 @@
+/* 연한 빨강에서 분홍으로 이어지는 테두리 · 왼쪽 위 모서리만 뾰족한 말풍선 */
+.plan-ai {
+    padding: 1px;
+    border-radius: 5px 22px 22px 22px;
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--red-500) 38%, var(--surface)),
+        color-mix(in srgb, var(--red-500) 14%, var(--surface))
+    );
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--red-500) 5%, transparent);
+}
+
+.plan-ai__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+    padding: 12px 14px 12px;
+    border-radius: 4px 21px 21px 21px;
+    background: linear-gradient(180deg, var(--surface) 40%, var(--red-25));
+}
+
+.plan-ai__deco {
+    position: absolute;
+    top: -14px;
+    right: -10px;
+    color: var(--red-500);
+    opacity: 0.07;
+}
+
+.plan-ai__head {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 남색에서 빨강으로 이어지는 동그란 AI 표시 */
+.plan-ai__badge {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--red-500), var(--red-600));
+    color: var(--surface);
+}
+
+.plan-ai__name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--red-text);
+}
+
+.plan-ai__source {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: auto;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: var(--radius-full);
+    background: var(--red-50);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red-text);
+}
+
+.plan-ai__headline {
+    position: relative;
+    margin: 2px 0 0;
+    font-family: var(--font-emotion), sans-serif;
+    font-size: 19px;
+    line-height: 1.35;
+    color: var(--navy-500);
+}
+
+.plan-ai__point {
+    position: relative;
+    margin: 0;
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--text-700);
+}
+
+.plan-ai__tags {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.plan-ai__tag {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 9px;
+    border: 1px solid color-mix(in srgb, var(--red-500) 28%, var(--surface));
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--red-text);
+}
+
+/* 분석 결과가 차례로 나타난다 · 한 번만 */
+.plan-ai__headline,
+.plan-ai__point,
+.plan-ai__tags {
+    animation: plan-ai-rise 0.5s ease-out both;
+}
+
+.plan-ai__headline {
+    animation-delay: 0.15s;
+}
+
+.plan-ai__point {
+    animation-delay: 0.4s;
+}
+
+.plan-ai__tags {
+    animation-delay: 0.65s;
+}
+
+@keyframes plan-ai-rise {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .plan-ai__headline,
+    .plan-ai__point,
+    .plan-ai__tags {
+        animation: none;
+    }
+}

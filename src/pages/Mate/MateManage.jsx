@@ -24,8 +24,8 @@ function MateManage() {
                 notFound={{
                     title: '신청자 관리를 열 수 없어요',
                     description: '내가 올린 모집 글에서만 볼 수 있어요',
-                    backTo: '/my/posts',
-                    backLabel: '내 직관 약속으로',
+                    backTo: '/posts',
+                    backLabel: '내 직관으로',
                 }}
             />
             {status === 'ready' && <ManageContent data={data} refresh={refresh} />}

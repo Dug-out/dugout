@@ -23,8 +23,10 @@ Claude Design 캔버스의 "간소화 버전" 페이지를 그대로 내보낸 �
 - `Signup-done.dc.html` — 가입 완료 · 멤버 카드 (애니메이션) → 자기소개 작성 / 나중에
 
 ### 홈 · AI 플랜
-- `Home.dc.html` — 홈 (로고 · 알림 / AI 직관 플래너 칩 선택 / 승부 예측 배너)
-- `Planner-Result.dc.html` — AI 직관 플랜 결과 (추천 경기 · 선택한 플랜 · AI 추천 이유 · 직관 타임라인 · 같이 갈 메이트 · 플랜 저장/모임 만들기)
+- `Home.dc.html` — 홈 (로고 · 알림 / 제목 / AI 직관 플래너: 언제 · 좌석 · 선호 음식 칩 / 승부 예측 배너)
+- `Plan.dc.html` — 출발 위치 고르기 (고른 조건 칩 · 지도 + 가운데 핀 · 주소 검색 · 현재 위치 · "이 위치에서 플랜 짜기"). 상태 `initialState`: map / loading
+- `Plan-loading.dc.html` — 플랜 짜는 중 (마스코트 · 진행 막대) ← `Plan` 래퍼
+- `Planner-Result.dc.html` — AI 직관 플랜 결과 (고른 조건 줄 · 추천 경기 카드 · AI 경기 포인트 말풍선 · 나의 직관 플랜 4단계: 티켓 예매 → 출발(이동 경로) → 구장 도착·구장 안 맛집 → 경기 관람 · 같은 좌석 직관 모임 · 모임 만들기 버튼)
 
 ### 메이트 찾기 · 모집 글 보기
 - `Mate.dc.html` — 모집 글 목록 (같은 팀만 · 날짜 · 모집 중만 · 정렬 · 무한 스크롤)
@@ -80,11 +82,11 @@ Claude Design 캔버스의 "간소화 버전" 페이지를 그대로 내보낸 �
 ## 화면 이동 (주요 흐름)
 - `Splash` → `Login` ↔ `Signup` → `Signup-done` → `Profile-edit` 또는 `Home`
 - `Mate` → `Mate-detail` → 신청 → (방장 수락) → `Mate-chat`
-- `Home` 플래너 → `Planner-Result` / `Home` 승부 예측 배너 → `Predict` ↔ `Predict-rank` ↔ `Predict-history`, 경기 끝나면 → `Predict-result`
+- `Home` 플래너 → `Plan`(출발 위치) → 로딩 → `Planner-Result` / `Home` 승부 예측 배너 → `Predict` ↔ `Predict-rank` ↔ `Predict-history`, 경기 끝나면 → `Predict-result`
 - `Mate` FAB → `Mate-write` → `Mate-detail`(내 글) / 내 직관 탭 `My-posts` → `Mate-manage` → `Mate-chat-host`
 - 채팅방·상세·신청자 관리의 프로필 사진 → `Profile-view` → `Profile-reviews`
 - `My` → 매너 타율 카드 → `Manner` / 메이트 평가하기 → `Review-list` → `Review` → `Review-done` / 내 예측 기록 → `Predict-history`
-- 탭바: 홈 `Home` · 플랜 `Plan`(화면 없음) · 메이트 찾기 `Mate` · 내 직관 `My-posts` · 마이 `My`
+- 탭바: 홈 `Home` · 플랜 `Plan` · 메이트 찾기 `Mate` · 내 직관 `My-posts` · 마이 `My`
 
 ## 이미지 (`assets/`)
 | 파일 | 쓰는 곳 |
@@ -99,7 +101,7 @@ Claude Design 캔버스의 "간소화 버전" 페이지를 그대로 내보낸 �
 | `pose-sad.png` | 채팅방 나가기 · 모임 삭제 확인 · 노쇼 안내 · 빈 화면 전체 (`Empty-*`) |
 | `pose-cheer.png`, `pose-love.png`, `pose-shy.png` | 예비 (스티커 · 신청 대기 등) |
 | `rate-up.png` / `rate-down.png` | 승부 예측 결과 점수 획득 / 0점 · 홈 승부 예측 배너(`rate-up`) |
-| `planner-pose.svg` | 홈 AI 직관 플래너 카드 마스코트 |
+| `planner-chat.png` | 홈 AI 직관 플래너 카드 · 플랜 로딩 마스코트 (`planner-pose.svg`는 더 안 씀) |
 | `rate-good.png` / `rate-soso.png` / `rate-bad.png` | 메이트 평가 점수 8↑ / 5~7 / 4↓ |
 | `rate-noshow.png` | 메이트 평가 · 노쇼로 평가했을 때 |
 | `loading.png` | 로딩 상태 (흔들림 + 통통 모션, 점 3개 깜빡임) |

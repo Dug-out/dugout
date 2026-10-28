@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react'
 import {Navigate, Route, Routes, useLocation} from 'react-router'
 import {onAuthChange} from './api/auth.js'
-import AiPlan from './pages/AiPlan/AiPlan.jsx'
 import ChatRoom from './pages/Chat/ChatRoom.jsx'
 import Home from './pages/Home/Home.jsx'
 import Login from './pages/Login/Login.jsx'
@@ -9,8 +8,9 @@ import Mate from './pages/Mate/Mate.jsx'
 import MateDetail from './pages/Mate/MateDetail.jsx'
 import MateManage from './pages/Mate/MateManage.jsx'
 import MateWrite from './pages/Mate/MateWrite.jsx'
-import MyPlans from './pages/MyPlans/MyPlans.jsx'
 import MyPosts from './pages/MyPosts/MyPosts.jsx'
+import Plan from './pages/Plan/Plan.jsx'
+import PlanResult from './pages/Plan/PlanResult.jsx'
 import Predict from './pages/Predict/Predict.jsx'
 import PredictHistory from './pages/Predict/PredictHistory.jsx'
 import PredictRank from './pages/Predict/PredictRank.jsx'
@@ -19,7 +19,6 @@ import SignupDone from './pages/Signup/SignupDone.jsx'
 import {TabLayout} from './components'
 import MannerReviews from './pages/Reviews/Received/MannerReviews.jsx'
 import Mypage from './pages/Mypage/Mypage.jsx'
-import Record from './pages/Record/Record.jsx'
 import ProfileReviews from './pages/Reviews/Received/ProfileReviews.jsx'
 import ReviewDone from './pages/Reviews/Give/ReviewDone.jsx'
 import ReviewList from './pages/Reviews/Give/ReviewList.jsx'
@@ -56,7 +55,6 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/signup/done" element={<SignupDone />} />
             <Route path="/profile/edit" element={<ProfileEdit />} />
-            <Route path="/my/posts" element={<MyPosts />} />
             <Route path="/my/manner" element={<MannerReviews />} />
             <Route path="/my/reviews" element={<ReviewList />} />
             <Route path="/reviews/done" element={<ReviewDone />} />
@@ -66,12 +64,12 @@ function App() {
             {/* 탭바가 붙는 화면들 */}
             <Route element={<TabLayout />}>
                 <Route path="/home" element={<Home />} />
-                <Route path="/plans" element={<MyPlans />} />
+                <Route path="/plans" element={<Plan />} />
+                <Route path="/plans/result" element={<PlanResult />} />
                 <Route path="/mate" element={<Mate />} />
                 <Route path="/my" element={<Mypage />} />
-                <Route path="/record" element={<Record />} />
+                <Route path="/posts" element={<MyPosts />} />
             </Route>
-            <Route path="/ai-plan" element={<AiPlan />} />
             <Route path="/predict" element={<Predict />} />
             <Route path="/predict/history" element={<PredictHistory />} />
             <Route path="/predict/rank" element={<PredictRank />} />

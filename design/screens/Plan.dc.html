@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>출발 위치 · 플랜 짜기</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
+input::placeholder,textarea::placeholder{color:#7A829C}
+
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.bob{animation:bob 1.6s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.bob{animation:none}}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<header style="flex: none; display: flex; align-items: center; gap: 4px; height: 52px; padding: 0 12px 0 6px; background: #FFFFFF">
+<a href="Home.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #141B33"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<h1 style="flex: 1; margin: 0; font-size: 17px; font-weight: 700">AI 직관 플랜</h1>
+
+</header>
+<div style="flex: none; padding: 14px 20px 14px; background: #FFFFFF; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid #EEF0F6">
+<h2 style="margin: 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 23px; font-weight: 400; line-height: 1.3; color: #1B2A5C">어디서 출발하세요?</h2>
+<div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap"><span style="height: 26px; padding: 0 10px; border-radius: 999px; background: #EEF1F9; color: #1B2A5C; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">평일 저녁 경기</span><span style="height: 26px; padding: 0 10px; border-radius: 999px; background: #EEF1F9; color: #1B2A5C; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">응원석</span><span style="height: 26px; padding: 0 10px; border-radius: 999px; background: #EEF1F9; color: #1B2A5C; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">치킨</span><a href="Home.dc.html" style="margin-left: auto; font-size: 12.5px; font-weight: 600; color: #6B7390">조건 수정</a></div>
+</div>
+<div aria-label="지도에서 출발 위치 선택" style="position: relative; flex: 1 1 auto; height: 560px; min-height: 0; background: #EEF2F7; overflow: hidden">
+<svg width="100%" height="100%" viewBox="0 0 390 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position: absolute; inset: 0">
+<rect width="390" height="520" fill="#EEF2F7"></rect>
+<rect x="24" y="30" width="90" height="70" rx="6" fill="#E2E8F0"></rect><rect x="150" y="20" width="70" height="90" rx="6" fill="#E2E8F0"></rect><rect x="270" y="40" width="96" height="60" rx="6" fill="#DDEBDD"></rect>
+<rect x="30" y="300" width="80" height="110" rx="6" fill="#E2E8F0"></rect><rect x="260" y="330" width="110" height="80" rx="6" fill="#E2E8F0"></rect><rect x="150" y="420" width="90" height="70" rx="6" fill="#DDEBDD"></rect>
+<path d="M0 140 H390 M0 270 H390 M0 450 H390 M130 0 V520 M245 0 V520" stroke="#FFFFFF" stroke-width="12"></path>
+<path d="M0 210 C120 190 210 300 390 240" stroke="#A9D3F5" stroke-width="22" fill="none"></path>
+<path d="M60 0 L330 520" stroke="#FFFFFF" stroke-width="7"></path>
+<text x="168" y="128" font-size="11" font-weight="700" fill="#8A93B0" font-family="IBM Plex Sans KR, sans-serif">강남역</text>
+<text x="290" y="226" font-size="10.5" font-weight="600" fill="#6E9CC6" font-family="IBM Plex Sans KR, sans-serif">한강</text>
+</svg>
+<div style="position: absolute; left: 14px; right: 14px; top: 14px; display: flex; align-items: center; gap: 8px; height: 46px; padding: 0 14px; border-radius: 14px; background: #FFFFFF; box-shadow: 0 4px 14px rgba(27,42,92,0.12); color: #6B7390"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg><input aria-label="주소 검색" placeholder="주소나 장소 이름으로 검색" style="flex: 1; min-width: 0; border: none; outline: none; font-size: 15px; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; background: transparent"></div>
+<span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center">
+<span style="margin-bottom: 6px; padding: 6px 11px; border-radius: 10px; background: #1B2A5C; color: #FFFFFF; font-size: 12px; font-weight: 700; white-space: nowrap; box-shadow: 0 4px 10px rgba(27,42,92,0.25)">여기서 출발</span>
+<svg width="38" height="48" viewBox="0 0 24 30" aria-hidden="true"><path d="M12 29s10-9.2 10-17A10 10 0 0 0 2 12c0 7.8 10 17 10 17z" fill="#D62839"></path><circle cx="12" cy="12" r="4" fill="#FFFFFF"></circle></svg>
+</span>
+<span aria-hidden="true" style="position: absolute; left: 50%; top: 50%; width: 16px; height: 6px; margin: -2px 0 0 -8px; border-radius: 50%; background: rgba(20,27,51,0.22)"></span>
+<button type="button" aria-label="현재 위치로" style="position: absolute; right: 14px; bottom: 16px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #E3E6F0; background: #FFFFFF; color: #1B2A5C; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(27,42,92,0.15); cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2" fill="currentColor"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg></button>
+</div>
+<div style="flex: none; position: relative; margin-top: -18px; padding: 18px 20px 30px; border-radius: 22px 22px 0 0; background: #FFFFFF; box-shadow: 0 -6px 20px rgba(27,42,92,0.08); display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="flex: none; width: 40px; height: 40px; border-radius: 12px; background: #FDECEE; color: #D62839; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"></path><circle cx="12" cy="10" r="2.6" fill="#FFFFFF"></circle></svg></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 16px; font-weight: 700">강남역 2번 출구 근처</strong><span style="font-size: 12.5px; color: #6B7390">서울 강남구 강남대로 396</span></span>
+</div>
+<button type="button" onClick="{{make}}" style="height: 54px; border: none; border-radius: 14px; background: #D62839; color: #FFFFFF; font-size: 16px; font-weight: 700; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer">이 위치에서 플랜 짜기</button>
+</div>
+
+<sc-if value="{{loading}}" hint-placeholder-val="{{false}}">
+<div role="status" aria-live="polite" style="position: absolute; inset: 0; background: linear-gradient(180deg, #F7F8FC 0%, #EEF1F9 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 0 36px">
+<span style="position: relative; display: flex; flex-direction: column; align-items: center">
+<img class="bob" src="assets/planner-chat.png" alt="" width="150" height="163" style="width: 150px; height: 163px; object-fit: contain">
+<span aria-hidden="true" style="width: 90px; height: 10px; margin-top: 4px; border-radius: 50%; background: rgba(27,42,92,0.1)"></span>
+</span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center">
+<strong style="font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 25px; font-weight: 400; color: #1B2A5C">플랜 짜는 중이에요</strong>
+<span style="font-size: 13.5px; color: #5A6380">{{nowLabel}}</span>
+</span>
+<span style="width: 100%; height: 8px; border-radius: 999px; background: #DDE2F0; overflow: hidden"><span style="display: block; width: 62%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #1B2A5C, #D62839)"></span></span>
+<a href="Planner-Result.dc.html" style="font-size: 13px; font-weight: 600; color: #6B7390">결과 보기 ›</a>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"initialState":{"editor":"enum","options":["map","loading"],"default":"map"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const P = this.props || {};
+    const loading = st.loading !== undefined ? st.loading : P.initialState === 'loading';
+    const S = [['조건에 맞는 경기 찾기', 'done'], ['경기 포인트 검색하기', 'done'], ['구장 안 맛집 고르기', 'now'], ['응원석 모임 찾기', 'wait']];
+    return {
+      loading: loading,
+      make: () => this.setState({ loading: true }),
+      nowLabel: '조건에 맞는 경기와 이동 경로를 찾고 있어요',
+      steps: S.map((x) => ({ label: x[0], done: x[1] === 'done',
+        bg: x[1] === 'done' ? '#1B2A5C' : '#FFFFFF', bd: x[1] === 'wait' ? '#D5DAE8' : (x[1] === 'now' ? '#D62839' : '#1B2A5C'),
+        color: x[1] === 'wait' ? '#8A93B0' : '#141B33', weight: x[1] === 'now' ? 700 : 500 }))
+    };
+  }
+}
+</script>
+</body>
+</html>

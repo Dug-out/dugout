@@ -30,12 +30,6 @@ const PATHS = {
             <path d="M16.5 14.6c2.6.2 4.4 2 5 5.4" />
         </>
     ),
-    record: (
-        <>
-            <rect x="4" y="3.5" width="16" height="17" rx="2" />
-            <path d="M8 8h8M8 12h8M8 16h5" />
-        </>
-    ),
     trade: (
         <>
             <path d="M5 8h14l-1 12H6z" />
@@ -87,7 +81,13 @@ const PATHS = {
             <circle cx="15" cy="9.5" r="0.8" fill="currentColor" />
         </>
     ),
-    bookmark: <path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4-6 4V5a1 1 0 0 1 1-1z" />,
+    plan: <path d="M12 3c.7 4.6 2.4 6.3 7 7-4.6.7-6.3 2.4-7 7-.7-4.6-2.4-6.3-7-7 4.6-.7 6.3-2.4 7-7z" />,
+    posts: (
+        <>
+            <rect x="5" y="3.5" width="14" height="17" rx="2.5" />
+            <path d="M9 8.5h6M9 12h6M9 15.5h4" />
+        </>
+    ),
     more: (
         <>
             <circle cx="5" cy="12" r="1.8" fill="currentColor" stroke="none" />
@@ -107,6 +107,27 @@ const PATHS = {
             <path d="M6 7l1 13h10l1-13M9 7V4h6v3" />
         </>
     ),
+    ticket: (
+        <>
+            <path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z" />
+            <path d="M14.5 7v2M14.5 11v2M14.5 15v2" />
+        </>
+    ),
+    food: <path d="M7 3v7M4.5 3v4.5a2.5 2.5 0 0 0 5 0V3M7 10v11M17 3c-2.2 1.6-3 4-3 7h3v11" />,
+    search: (
+        <>
+            <circle cx="11" cy="11" r="6.5" />
+            <path d="M16 16l4 4" />
+        </>
+    ),
+    locate: (
+        <>
+            <circle cx="12" cy="12" r="6" />
+            <circle cx="12" cy="12" r="2" fill="currentColor" />
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+        </>
+    ),
+    external: <path d="M8 16L16 8M9.5 8H16v6.5" />,
     exit: (
         <>
             <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3" />
@@ -115,7 +136,7 @@ const PATHS = {
     ),
 }
 
-/** name: back | plus | check | alert | calendar | pin | home | mate | record | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | bookmark | more | exit | edit | trash */
+/** name: back | plus | check | alert | calendar | pin | home | mate | plan | posts | trade | my | chevronRight | camera | info | close | seat | chat | send | chevron | sparkle | cloud | won | train | more | exit | edit | trash | ticket | external | food | search | locate */
 function Icon({name, size = 24, strokeWidth = 2, ...rest}) {
     return (
         <svg
