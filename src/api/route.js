@@ -2,9 +2,8 @@
 // 키(VITE_ODSAY_API_KEY)는 브라우저에 실리는 공개용 키이고, ODsay 콘솔에서 웹 플랫폼으로 쓰는 주소(localhost, 배포 주소)를 등록해 둔다
 const ENDPOINT = 'https://api.odsay.com/v1/api/searchPubTransPathT'
 
-// ODsay 구간 종류 (subPath.trafficType)
+// ODsay 구간 종류 (subPath.trafficType) · 1 지하철, 2 버스, 3 걷기 (그 밖은 버스처럼 보여 준다)
 const SUBWAY = 1
-const BUS = 2
 const WALK = 3
 
 /** 노선 이름 → 짧은 이름 · '수도권 2호선' → '2호선' */
@@ -17,8 +16,12 @@ const shortLane = (name) => name.trim().split(/\s+/).pop()
  *  total: 총 소요 시간(분) / legs: 구간 목록 (걷기 · 지하철 · 버스) · 소요 시간이 0분인 구간은 뺀다
  */
 export function parseRoute(data) {
+    // 오류는 {error: [{code, message}]} 또는 {error: {msg}} 로 온다
+    const error = Array.isArray(data?.error) ? data.error[0] : data?.error
     const path = data?.result?.path?.[0]
-    if (!path) throw new Error(data?.error?.msg ?? data?.error?.message ?? '경로를 찾지 못했어요')
+    if (!path) throw new Error(error?.message ?? error?.msg ?? '경로를 찾지 못했어요')
+    // 시외 이동(searchType 1)은 구간이 시내 경로와 달라서 다루지 않는다 · 호출하는 쪽이 링크로 대신한다
+    if (data.result.searchType === 1) throw new Error('시외 이동은 경로를 보여 주지 않아요')
 
     const parts = path.subPath.filter((part) => part.sectionTime > 0)
 
@@ -33,10 +36,12 @@ export function parseRoute(data) {
                 min,
             }
         }
-        if (part.trafficType === BUS) {
+        if (part.trafficType !== WALK) {
+            // 버스와 그 밖의 탈것(마을버스, 철도 등)은 같은 모양으로 보여 준다
+            const lane = part.lane?.[0] ?? {}
             return {
                 type: 'bus',
-                name: part.lane[0].busNo,
+                name: lane.busNo ?? shortLane(lane.name ?? '이동'),
                 title: `${part.startName} → ${part.endName}`,
                 note: `${part.stationCount}개 정류장 이동`,
                 min,
