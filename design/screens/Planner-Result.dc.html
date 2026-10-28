@@ -14,7 +14,7 @@ body{margin:0}
 a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
 </style>
 </helmet>
-<div style="position: relative; width: 390px; height: 1820px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
+<div style="position: relative; width: 390px; height: 1844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F7F8FC; font-family: 'IBM Plex Sans KR', sans-serif; color: #141B33; overflow: hidden">
 <header style="flex: none; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; padding: 8px 12px; background: #FFFFFF">
 <a href="Home.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #141B33"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a>
 <h1 style="margin: 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 22px; font-weight: 400; color: #1B2A5C">AI 직관 플랜</h1>
@@ -23,116 +23,115 @@ a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
 
 <main style="display: flex; flex-direction: column; gap: 16px; padding: 12px 16px 28px">
 
-<div style="display: flex; flex-wrap: wrap; gap: 6px">
-<span style="font-size: 12px; font-weight: 700; color: #FFFFFF; background: #D62839; padding: 4px 10px; border-radius: 999px">LG 트윈스</span>
-<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">이번 주</span>
-<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">친구랑</span>
-<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">응원석</span>
-<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">4만원 이하</span>
-</div>
+<section aria-label="고른 조건" style="display: grid; grid-template-columns: 0.8fr 1.3fr 1fr 0.9fr; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; box-shadow: 0 4px 12px rgba(27,42,92,0.05)"><span style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px;"><span style="font-size: 11px; font-weight: 600; color: #8A93B0">응원팀</span><strong style="font-size: 13.5px; font-weight: 700; color: #D62839; white-space: nowrap">LG</strong></span><span style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px; border-left: 1px solid #EEF0F6;"><span style="font-size: 11px; font-weight: 600; color: #8A93B0">언제</span><strong style="font-size: 13.5px; font-weight: 700; color: #1B2A5C; white-space: nowrap">평일 저녁</strong></span><span style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px; border-left: 1px solid #EEF0F6;"><span style="font-size: 11px; font-weight: 600; color: #8A93B0">좌석</span><strong style="font-size: 13.5px; font-weight: 700; color: #1B2A5C; white-space: nowrap">응원석</strong></span><span style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px; border-left: 1px solid #EEF0F6;"><span style="font-size: 11px; font-weight: 600; color: #8A93B0">음식</span><strong style="font-size: 13.5px; font-weight: 700; color: #1B2A5C; white-space: nowrap">치킨</strong></span></section>
 
-<section aria-label="추천 경기" style="display: flex; flex-direction: column; gap: 10px">
-<h2 style="margin: 0 4px; font-size: 19px; font-weight: 700">이번 주 추천 경기</h2>
-<div role="radiogroup" aria-label="추천 경기 선택" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
-<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
-<button type="button" role="radio" aria-checked="{{t.checked}}" onClick="{{t.pick}}" style="padding: 12px 6px; border-radius: 16px; border: 1.5px solid {{t.border}}; background: {{t.bg}}; color: {{t.fg}}; font-family: 'IBM Plex Sans KR', sans-serif; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px">
-<span style="font-size: 11px; font-weight: 700; opacity: 0.85">{{t.rank}}순위</span>
-<span style="font-family: 'Black Han Sans', sans-serif; font-size: 18px; line-height: 1.1">{{t.day}}</span>
-<span style="font-size: 12px; font-weight: 600">vs {{t.opp}}</span>
-<span style="font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px; background: {{t.scoreBg}}; color: {{t.scoreFg}}">추천 {{t.score}}</span>
-</button>
+<h2 style="margin: 4px 4px -6px; font-size: 19px; font-weight: 700">조건에 맞는 경기를 골랐어요</h2>
+
+<section aria-label="추천 경기" style="position: relative; border-radius: 24px; overflow: hidden; background: linear-gradient(160deg, #22346E 0%, #1B2A5C 60%, #162250 100%); color: #FFFFFF; box-shadow: 0 12px 28px rgba(27,42,92,0.22)">
+<svg width="220" height="220" viewBox="0 0 200 200" aria-hidden="true" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -58%); opacity: 0.06"><path d="M100 12 L188 100 L100 188 L12 100 Z" fill="none" stroke="#FFFFFF" stroke-width="10"></path><path d="M100 60 L140 100 L100 140 L60 100 Z" fill="#FFFFFF"></path></svg>
+<div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 16px 18px 0">
+<span style="display: flex; gap: 6px"><span style="height: 24px; padding: 0 9px; border-radius: 7px; background: #FFFFFF; color: #1B2A5C; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center">D-1</span><span style="height: 24px; padding: 0 9px; border-radius: 7px; background: rgba(255,255,255,0.14); font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">{{p.dayLabel}}</span></span>
+<sc-if value="{{p.hasTag}}" hint-placeholder-val="{{true}}"><span style="height: 24px; padding: 0 10px; border-radius: 999px; background: #E63946; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">{{p.tag}}</span></sc-if>
+</div>
+<div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 18px 18px 18px">
+<span style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 96px"><img src="assets/team-lg.png" alt="" width="72" height="72" style="display: block; width: 72px; height: 72px; border-radius: 50%; border: 3px solid #FFFFFF; box-sizing: border-box; background: #FFFFFF; box-shadow: 0 4px 12px rgba(0,0,0,0.2)"><strong style="font-size: 16px; font-weight: 700">LG</strong><span style="font-size: 11px; font-weight: 600; color: #AEB8D8">HOME</span></span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 4px"><span style="font-family: 'Black Han Sans', sans-serif; font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums">{{p.time}}</span><span style="font-size: 12px; font-weight: 700; color: #FFD58A; letter-spacing: 1px">VS</span></span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 96px"><img src="assets/team-doosan.png" alt="" width="72" height="72" style="display: block; width: 72px; height: 72px; border-radius: 50%; border: 3px solid #FFFFFF; box-sizing: border-box; background: #FFFFFF; box-shadow: 0 4px 12px rgba(0,0,0,0.2)"><strong style="font-size: 16px; font-weight: 700">{{p.opp}}</strong><span style="font-size: 11px; font-weight: 600; color: #AEB8D8">AWAY</span></span>
+</div>
+<div style="position: relative; display: flex; align-items: center; gap: 6px; padding: 12px 18px; background: rgba(0,0,0,0.16); font-size: 13px; font-weight: 600; color: #DCE2F2"><svg width="15" height="15" viewBox="0 0 24 24" fill="#E63946" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"></path><circle cx="12" cy="10" r="2.6" fill="#FFFFFF"></circle></svg>{{p.park}}<span style="margin-left: auto; color: #AEB8D8">모집 글 {{p.mateCount}}개</span></div>
+</section>
+
+<section aria-label="AI 경기 포인트" style="display: flex; align-items: flex-start; gap: 10px">
+
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; color: #1B2A5C">덕아웃 AI<span style="color: rgb(138, 147, 176); font-weight: 500">기사 3건 찾아봤어요</span></span>
+<div style="position: relative; background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 4px 18px 18px 18px; box-shadow: 0 6px 16px rgba(27,42,92,0.08); padding: 14px 14px 12px; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 15.5px; font-weight: 600; line-height: 1.6; color: #141B33"><b style="color: #C21F31">{{p.pointHl}}</b> {{p.pointRest}}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{p.pointTags}}" as="k" hint-placeholder-count="3"><span style="height: 24px; padding: 0 9px; border-radius: 999px; background: #EEF1F9; color: #1B2A5C; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">#{{k}}</span></sc-for></div>
+</div>
+</div>
+</section>
+
+
+
+<section aria-label="나의 직관 플랜" style="display: flex; flex-direction: column; gap: 14px; margin-top: 6px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; padding: 0 4px"><span style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-family: 'Jua', 'IBM Plex Sans KR', sans-serif; font-size: 22px; font-weight: 400; color: #1B2A5C">나의 직관 플랜</h2></span><span style="font-size: 12px; font-weight: 600; color: #6B7390">{{p.route.leave}} 출발 · 21:40 종료 예상</span></div>
+<ol style="list-style: none; margin: 0; padding: 0">
+<li style="display: grid; grid-template-columns: 30px minmax(0, 1fr); column-gap: 10px">
+<span style="display: flex; flex-direction: column; align-items: center"><span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: #1B2A5C; color: #FFFFFF; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 4px #E8ECF7">1</span><span style="flex: 1; width: 2px; margin-top: 6px; background: repeating-linear-gradient(#C9D1EA 0 4px, transparent 4px 8px)"></span></span>
+<div style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 20px">
+<div style="display: flex; align-items: center; gap: 8px; min-height: 30px"><span style="font-family: 'Black Han Sans', sans-serif; font-size: 16px; color: #1B2A5C">미리</span><strong style="flex: 1; min-width: 0; font-size: 15.5px; font-weight: 700">티켓 예매하기</strong></div>
+<a href="https://www.lgtwins.com/" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3E6F0; color: #141B33">
+<span style="flex: none; width: 42px; height: 42px; border-radius: 12px; background: #E8ECF7; color: #1B2A5C; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5V6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2.5a2.5 2.5 0 0 0 0 5V16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2.5a2.5 2.5 0 0 0 0-5z"></path><path d="M14 5v12" stroke-dasharray="2 2.2"></path></svg></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 15px">LG vs {{p.opp}} · {{p.seat}}</strong><span style="font-size: 12.5px; color: #5A6380">{{p.dayLabel}} {{p.time}}&nbsp;<br></span></span>
+<span style="flex: none; height: 34px; padding: 0 12px; border-radius: 10px; background: #1B2A5C; color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px">예매<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></span>
+</a>
+</div>
+</li>
+<li style="display: grid; grid-template-columns: 30px minmax(0, 1fr); column-gap: 10px">
+<span style="display: flex; flex-direction: column; align-items: center"><span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: #1B2A5C; color: #FFFFFF; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 4px #E8ECF7">2</span><span style="flex: 1; width: 2px; margin-top: 6px; background: repeating-linear-gradient(#C9D1EA 0 4px, transparent 4px 8px)"></span></span>
+<div style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 20px">
+<div style="display: flex; align-items: center; gap: 8px; min-height: 30px"><span style="font-family: 'Black Han Sans', sans-serif; font-size: 16px; color: #1B2A5C; font-variant-numeric: tabular-nums">{{p.route.leave}}</span><strong style="flex: 1; min-width: 0; font-size: 15.5px; font-weight: 700">출발하기</strong><span style="flex: none; font-size: 12px; font-weight: 600; color: #6B7390">대중교통 {{p.route.total}}분</span></div>
+<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; padding: 12px 14px; border-radius: 14px; background: #1B2A5C; color: #FFFFFF">
+<span style="flex: 1; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 11.5px; color: #C9D1EA">출발</span><strong style="font-family: 'Black Han Sans', sans-serif; font-size: 22px; font-weight: 400">{{p.route.leave}}</strong><span style="font-size: 11.5px; color: #C9D1EA">{{p.route.from}}</span></span>
+<svg width="28" height="14" viewBox="0 0 28 14" aria-hidden="true" style="flex: none; margin: 0 8px"><path d="M1 7h24M19 1l6 6-6 6" fill="none" stroke="#FFD58A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span style="flex: 1; display: flex; flex-direction: column; align-items: flex-end; gap: 1px; text-align: right"><span style="font-size: 11.5px; color: #C9D1EA">도착</span><strong style="font-family: 'Black Han Sans', sans-serif; font-size: 22px; font-weight: 400">{{p.route.arrive}}</strong><span style="font-size: 11.5px; color: #C9D1EA">경기 30분 전</span></span>
+</div>
+<div role="img" aria-label="구간별 소요 시간" style="display: flex; gap: 3px; height: 10px">
+<sc-for list="{{p.route.legs}}" as="l" hint-placeholder-count="3"><span style="flex: {{l.min}}; border-radius: 999px; background: {{l.bar}}"></span></sc-for>
+</div>
+<ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{p.route.legs}}" as="l" hint-placeholder-count="3">
+<li style="display: flex; align-items: center; gap: 10px">
+<sc-if value="{{l.isWalk}}" hint-placeholder-val="{{true}}"><span style="flex: none; width: 46px; height: 24px; border-radius: 999px; background: #EEF1F9; color: #5A6380; display: inline-flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4" r="2"></circle><path d="M10 21l2-7 3 3v4M8 11l3-3 3 2 3 1"></path></svg></span></sc-if>
+<sc-if value="{{l.isLine}}" hint-placeholder-val="{{false}}"><span style="flex: none; width: 46px; height: 24px; border-radius: 999px; background: {{l.bar}}; color: #FFFFFF; font-size: 11.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center">{{l.name}}</span></sc-if>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px"><strong style="font-size: 14px; font-weight: 700">{{l.title}}</strong><sc-if value="{{l.hasNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B7390">{{l.note}}</span></sc-if></span>
+<span style="flex: none; font-size: 13px; font-weight: 700; color: #1B2A5C">{{l.min}}분</span>
+</li>
+</sc-for>
+</ol>
+</div>
+</div>
+</li>
+<li style="display: grid; grid-template-columns: 30px minmax(0, 1fr); column-gap: 10px">
+<span style="display: flex; flex-direction: column; align-items: center"><span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: #1B2A5C; color: #FFFFFF; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 4px #E8ECF7">3</span><span style="flex: 1; width: 2px; margin-top: 6px; background: repeating-linear-gradient(#C9D1EA 0 4px, transparent 4px 8px)"></span></span>
+<div style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 20px">
+<div style="display: flex; align-items: center; gap: 8px; min-height: 30px"><span style="font-family: 'Black Han Sans', sans-serif; font-size: 16px; color: #1B2A5C; font-variant-numeric: tabular-nums">{{p.route.arrive}}</span><strong style="flex: 1; min-width: 0; font-size: 15.5px; font-weight: 700">구장 도착 · 먹거리 사기</strong><span style="flex: none; font-size: 12px; font-weight: 600; color: #6B7390">구장 안</span></div>
+<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{p.foods}}" as="f" hint-placeholder-count="2">
+<a href="Planner-Result.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 14px; background: #F7F8FC; color: #141B33">
+<span role="img" aria-label="{{f.name}} 사진" style="flex: none; width: 64px; height: 64px; border-radius: 12px; background: {{f.ph}}; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px"><strong style="font-size: 14.5px; font-weight: 700">{{f.name}}</strong><span style="font-size: 12px; color: #5A6380">{{f.where}}</span><span style="font-size: 12px; font-weight: 600; color: #1B2A5C">{{f.menu}}</span></span>
+<span style="flex: none; align-self: flex-start; height: 24px; padding: 0 8px; border-radius: 999px; background: #FDECEE; color: #C21F31; font-size: 11.5px; font-weight: 700; display: inline-flex; align-items: center">{{f.dist}}</span>
+</a>
 </sc-for>
 </div>
+</div>
+</li>
+<li style="display: grid; grid-template-columns: 30px minmax(0, 1fr); column-gap: 10px">
+<span style="display: flex; flex-direction: column; align-items: center"><span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background: #D62839; color: #FFFFFF; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 4px #FDECEE">4</span><span style="flex: 1; width: 2px; margin-top: 6px; background: transparent"></span></span>
+<div style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 0">
+<div style="display: flex; align-items: center; gap: 8px; min-height: 30px"><span style="font-family: 'Black Han Sans', sans-serif; font-size: 16px; color: #D62839; font-variant-numeric: tabular-nums">{{p.time}}</span><strong style="flex: 1; min-width: 0; font-size: 15.5px; font-weight: 700">경기 관람</strong></div>
+<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="flex: none; width: 42px; height: 42px; border-radius: 12px; background: #FDECEE; color: #D62839; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M7.5 4.8c1.6 2 2.3 4.4 2.3 7.2s-.7 5.2-2.3 7.2M16.5 4.8c-1.6 2-2.3 4.4-2.3 7.2s.7 5.2 2.3 7.2"></path></svg></span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 15px">LG vs {{p.opp}} 플레이볼</strong><span style="font-size: 12.5px; color: #5A6380">{{p.park}} · {{p.seat}}</span></span>
+</div>
+</div>
+</div>
+</li>
+</ol>
 </section>
-
-<section aria-label="선택한 플랜" style="position: relative; border-radius: 22px; overflow: hidden; background: linear-gradient(160deg, #22346E 0%, #1B2A5C 60%, #162250 100%); color: #FFFFFF; padding: 20px; box-shadow: 0 10px 24px rgba(27,42,92,0.22); display: flex; flex-direction: column; gap: 12px">
-<svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true" style="position: absolute; right: -80px; bottom: -96px; opacity: 0.07"><path d="M100 12 L188 100 L100 188 L12 100 Z" fill="none" stroke="#FFFFFF" stroke-width="10"></path><path d="M100 60 L140 100 L100 140 L60 100 Z" fill="#FFFFFF"></path></svg>
-<div style="position: relative; display: flex; align-items: center; gap: 8px">
-<span style="font-size: 12px; font-weight: 600; color: #C9D1EA">{{p.date}} · {{p.park}}</span>
-<span style="margin-left: auto; font-size: 11px; font-weight: 700; background: #FFD58A; color: #1B2A5C; padding: 2px 8px; border-radius: 6px">{{p.tag}}</span>
-</div>
-<span style="position: relative; font-family: 'Black Han Sans', sans-serif; font-size: 34px; line-height: 1.05">LG vs {{p.opp}}</span>
-<div style="position: relative; display: flex; flex-direction: column; gap: 6px">
-<span style="display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; font-weight: 700"><span>AI 예상 승률 <span style="font-size: 11px; font-weight: 500; color: #C9D1EA">· {{p.winBasis}}</span></span><span>LG {{p.win}}%</span></span>
-<span style="display: flex; height: 10px; border-radius: 10px; overflow: hidden; background: rgba(255,255,255,0.16)" role="img" aria-label="LG 예상 승률 {{p.win}}%"><span style="width: {{p.win}}%; background: #E63946; border-radius: 10px"></span></span>
-</div>
-<div aria-label="선발 투수" style="position: relative; display: flex; flex-direction: column; gap: 10px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.14)">
-<div style="display: flex; align-items: center; gap: 6px">
-<span style="font-size: 12px; font-weight: 700; color: #C9D1EA">선발 투수</span>
-<span style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: {{p.sp.badgeBg}}; color: {{p.sp.badgeFg}}; border: {{p.sp.badgeBorder}}">{{p.sp.badge}}</span>
-<span style="margin-left: auto; font-size: 11px; color: #C9D1EA">{{p.sp.note}}</span>
-</div>
-<sc-if value="{{p.sp.known}}" hint-placeholder-val="{{true}}">
-<div style="display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 8px">
-<span style="display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 12px; background: {{p.sp.boxBg}}"><span style="font-size: 11px; color: #C9D1EA">LG</span><strong style="font-size: 15px">{{p.sp.lg}}</strong><span style="font-size: 11px; color: #C9D1EA">ERA {{p.sp.lgEra}}</span></span>
-<span style="font-family: 'Black Han Sans', sans-serif; font-size: 14px; color: #C9D1EA">VS</span>
-<span style="display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 12px; background: {{p.sp.boxBg}}; text-align: right"><span style="font-size: 11px; color: #C9D1EA">{{p.opp}}</span><strong style="font-size: 15px">{{p.sp.op}}</strong><span style="font-size: 11px; color: #C9D1EA">ERA {{p.sp.opEra}}</span></span>
-</div>
-</sc-if>
-<sc-if value="{{p.sp.unknown}}" hint-placeholder-val="{{false}}">
-<div style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 12px; border: 1.5px dashed rgba(255,255,255,0.32)">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFD58A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
-<span style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 13px">{{p.sp.announce}} 발표 예정</strong><span style="font-size: 11px; color: #C9D1EA">플랜을 저장하면 발표될 때 알려드려요</span></span>
-</div>
-</sc-if>
-</div>
-</section>
-
-<section aria-label="AI 추천 이유" style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
-<h2 style="margin: 0; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1B2A5C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg>이 경기를 추천한 이유</h2>
-<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px">
-<sc-for list="{{p.reasons}}" as="r" hint-placeholder-count="3">
-<li style="display: flex; gap: 8px; align-items: flex-start; font-size: 14px; line-height: 1.45"><span style="flex: none; width: 20px; height: 20px; margin-top: 1px; border-radius: 50%; background: #E8ECF7; color: #1B2A5C; display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span><span>{{r}}</span></li>
-</sc-for>
-</ul>
-</section>
-
-<section aria-label="플랜 요약" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
-<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px">
-<span style="font-size: 12px; color: #5A6380; display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 19h10a3.5 3.5 0 0 0 .3-7 5 5 0 0 0-9.6 1.2A3 3 0 0 0 8 19z"></path></svg>날씨</span>
-<strong style="font-size: 15px">{{p.weather}}</strong>
-<span style="font-size: 12px; color: #5A6380">{{p.rain}}</span>
-</div>
-<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px">
-<span style="font-size: 12px; color: #5A6380; display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v5M3 11h18v5H3zM6 16v4M18 16v4"></path></svg>추천 좌석</span>
-<strong style="font-size: 15px">{{p.seat}}</strong>
-<span style="font-size: 12px; color: #5A6380">{{p.seatNote}}</span>
-</div>
-<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px">
-<span style="font-size: 12px; color: #5A6380; display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9 9.5h4.5a1.75 1.75 0 0 1 0 3.5h-3a1.75 1.75 0 0 0 0 3.5H15M12 7v2M12 16.5v1.5"></path></svg>예상 비용 (1인)</span>
-<strong style="font-size: 15px">[예상 금액]</strong>
-<span style="font-size: 12px; color: #5A6380">티켓 + 먹거리 기준</span>
-</div>
-<div style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px">
-<span style="font-size: 12px; color: #5A6380; display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="14" rx="3"></rect><path d="M5 11h14M8 21l1.5-4M16 21l-1.5-4"></path></svg>가는 길</span>
-<strong style="font-size: 15px">{{p.transit}}</strong>
-<span style="font-size: 12px; color: #5A6380">{{p.transitNote}}</span>
-</div>
-</section>
-
-<section aria-label="직관 타임라인" style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 4px">
-<h2 style="margin: 0 0 8px; font-size: 16px; font-weight: 700">직관 타임라인</h2>
-<sc-for list="{{p.timeline}}" as="s" hint-placeholder-count="4">
-<div style="display: grid; grid-template-columns: 52px 16px minmax(0, 1fr); gap: 8px; align-items: start">
-<span style="font-family: 'Black Han Sans', sans-serif; font-size: 15px; color: #1B2A5C; padding-top: 1px">{{s.time}}</span>
-<span style="display: flex; flex-direction: column; align-items: center; align-self: stretch"><span style="width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: {{s.dot}}; flex: none"></span><span style="flex: 1; width: 2px; background: {{s.line}}; min-height: 28px"></span></span>
-<span style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 14px"><strong style="font-size: 14px">{{s.title}}</strong><span style="font-size: 12px; color: #5A6380">{{s.note}}</span></span>
-</div>
-</sc-for>
-</section>
-
 <section aria-label="같이 갈 메이트" style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
-<div style="display: flex; align-items: center; justify-content: space-between">
-<h2 style="margin: 0; font-size: 16px; font-weight: 700">이 경기 같이 갈 메이트</h2>
-<span style="font-size: 12px; color: #5A6380">모집글 {{p.mateCount}}개</span>
-</div>
+<div style="display: flex; align-items: center; justify-content: space-between"><h2 style="margin: 0; font-size: 16px; font-weight: 700"><span style="color: #C21F31">{{p.seat}}</span>에서 같이 볼 직관 모임</h2><a href="Mate.dc.html" style="flex: none; font-size: 12.5px; font-weight: 600; color: #5A6380">전체 {{p.mateCount}}개 ›</a></div>
 <sc-if value="{{p.hasMates}}" hint-placeholder-val="{{true}}">
 <div style="display: flex; flex-direction: column; gap: 8px">
 <sc-for list="{{p.mates}}" as="m" hint-placeholder-count="2">
 <a href="Mate-detail.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 14px; background: #F7F8FC; color: #141B33">
 <img src="assets/profile-default.png" alt="" width="36" height="36" style="display: block; width: 36px; height: 36px; border-radius: 50%; flex: none">
-<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.title}}</strong><span style="font-size: 12px; color: #5A6380">{{m.host}} · {{m.seat}} · {{m.cur}}/{{m.max}}명</span></span>
-<span style="flex: none; font-size: 11px; font-weight: 700; color: #1B2A5C; background: #E8ECF7; padding: 3px 8px; border-radius: 999px">취향 {{m.match}}%</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.title}}</strong><span style="font-size: 12px; color: #5A6380">{{m.host}} · {{m.seat}}</span></span>
+<span style="flex: none; font-size: 12px; font-weight: 700; color: #1B2A5C; background: #E8ECF7; padding: 4px 9px; border-radius: 999px">{{m.cur}}/{{m.max}}명</span>
 </a>
 </sc-for>
 </div>
@@ -145,45 +144,32 @@ a{color:#1B2A5C;text-decoration:none}a:hover{color:#0F1A3D}
 </sc-if>
 </section>
 
-<section aria-label="플랜 저장 및 모임 만들기" style="background: #FFFFFF; border: 1px solid #E3E6F0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 14px rgba(27,42,92,0.06)">
-<div style="display: flex; flex-direction: column; gap: 6px">
-<span style="font-size: 12px; font-weight: 700; color: #5A6380">모임글에 자동으로 채워져요</span>
-<div style="display: flex; flex-wrap: wrap; gap: 6px">
-<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">{{p.date}}</span>
-<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">{{p.seat}}</span>
-<span style="font-size: 12px; font-weight: 600; color: #1B2A5C; background: #E8ECF7; padding: 4px 10px; border-radius: 999px">1인 4만원 이하</span>
-</div>
-</div>
-<div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); gap: 8px">
-<button type="button" onClick="{{save}}" aria-pressed="{{savedAttr}}" style="height: 54px; border-radius: 14px; border: 1.5px solid #1B2A5C; background: {{saveBg}}; color: {{saveFg}}; font-family: 'IBM Plex Sans KR', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px">
-<sc-if value="{{notSaved}}" hint-placeholder-val="{{true}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.5L5 21V4.5a1 1 0 0 1 1-1z"></path></svg>플랜 저장</sc-if>
-<sc-if value="{{saved}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>저장됨</sc-if>
-</button>
-<a href="Mate-write.dc.html" style="height: 54px; border-radius: 14px; background: #D62839; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 15px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5"></path><path d="M19 8v6M16 11h6"></path></svg>이 일정으로 모임 만들기</a>
-</div>
-<sc-if value="{{saved}}" hint-placeholder-val="{{false}}">
-<span role="status" style="font-size: 12px; color: #5A6380; text-align: center">저장했어요 · 홈의 '내 다음 직관'에서 준비 상황을 챙겨드려요</span>
-</sc-if>
+<section aria-label="모임 만들기" style="display: flex; flex-direction: column">
+<a href="Mate-write.dc.html" style="height: 54px; border-radius: 14px; background: #D62839; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 15px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5"></path><path d="M19 8v6M16 11h6"></path></svg>직관 모임 만들어 메이트 구하기</a>
 </section>
 </main>
 <nav aria-label="하단 메뉴" style="flex: none; margin-top: auto; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); background: #FFFFFF; border-top: 1px solid #E3E6F0; padding: 6px 4px 22px"><a href="Home.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #1B2A5C; font-size: 11px; font-weight: 700"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg>홈</a><a href="Plan.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c.7 4.6 2.4 6.3 7 7-4.6.7-6.3 2.4-7 7-.7-4.6-2.4-6.3-7-7 4.6-.7 6.3-2.4 7-7z"></path></svg>플랜</a><a href="Mate.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5"></path><circle cx="17" cy="9" r="2.8"></circle><path d="M16.5 14.6c2.6.2 4.4 2 5 5.4"></path></svg>메이트 찾기</a><a href="My-posts.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"></rect><path d="M9 8.5h6M9 12h6M9 15.5h4"></path></svg>내 직관</a><a href="My.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 50px; color: #6B7390; font-size: 11px; font-weight: 500"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c.8-4 4-6.5 8-6.5s7.2 2.5 8 6.5"></path></svg>마이</a></nav></div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1820}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1844}}'>
 class Component extends DCLogic {
   renderVals() {
     const st = this.state || {};
-    const idx = st.idx || 0;
+    const idx = 0;
     const plans = [
       {
-        day: '10.22', date: '10.22 (목) 18:30', opp: '두산', park: '잠실야구장', score: 92, tag: '플랜 조건 100% 일치', win: 58,
+        day: '10.22', date: '10.22 (목) 18:30', dayLabel: '10.22 (목)', time: '18:30', opp: '두산', oppImg: 'assets/team-doosan.png', park: '잠실야구장', score: 92, tag: '잠실 더비', win: 58,
         starters: { status: 'confirmed', lg: '임찬규', lgEra: '3.12', op: '곽빈', opEra: '3.45' },
-        reasons: ['LG 선발 임찬규가 최근 3경기 연속 호투, 예상 승률 58%', '퇴근 후 도착 가능한 18:30 홈 경기', '1루 응원석 잔여석 여유 · 예산 안'],
-        weather: '맑음 18°', rain: '강수 확률 10%', seat: '1루 응원석', seatNote: '2연석 가능',
+        point: '', pointHl: '시즌 마지막 잠실 더비!', pointRest: '두산과 순위 싸움 중이라 응원 열기가 가장 뜨거운 경기예요.', pointTags: ['잠실 더비', '순위 싸움'],
+        reasons: [],
+        weather: '맑음 18°', rain: '강수 확률 10%', seat: '응원석', seatNote: '2연석 가능',
         transit: '지하철 약 40분', transitNote: '2호선 종합운동장역',
-        timeline: [['17:30', '잠실 도착', '게이트 혼잡 전 입장 추천'], ['17:45', '먹거리 픽업', '구장 먹거리 추천 보기'], ['18:30', '플레이볼', '1루 응원석 응원 시작'], ['21:40', '경기 종료 예상', '막차까지 여유 있어요']],
+        route: { total: 40, leave: '17:20', arrive: '18:00', from: '강남역 2번 출구 근처', back: '종합운동장 → 강남 · 약 30분',
+          legs: [['walk', '', '강남역까지', '', 4], ['line', '2호선', '강남 → 종합운동장', '7개 역 이동', 25], ['walk', '', '6번 출구 → 1루 게이트', '', 5]] },
+        foods: [{ name: '잠실 치킨', where: '1루 3층', menu: '반반치킨 · 치즈볼', dist: '도보 1분', ph: 'linear-gradient(140deg, #F6B26B, #E07A3F)' }, { name: '1루 치킨 플러스', where: '1루 2층 매점 옆', menu: '순살치킨 · 감자튀김', dist: '도보 2분', ph: 'linear-gradient(140deg, #F49A8F, #D9534F)' }],
+        timeline: [['16:50', '출발', '강남역 2번 출구 근처 · 강남역까지 도보 4분', 'go'], ['16:55', '강남 → 종합운동장', '7정거장 · 25분 · 환승 없음', '2호선'], ['17:25', '종합운동장역 6번 출구', '1루 게이트까지 도보 5분', 'go'], ['17:30', '잠실 도착', '게이트 혼잡 전 입장 추천'], ['17:45', '먹거리 픽업', '응원석 근처 치킨 매장'], ['18:30', '플레이볼', '1루 응원석 응원 시작'], ['21:40', '경기 종료 예상', '막차까지 여유 있어요'], ['21:50', '종합운동장 → 강남', '7정거장 · 약 30분', '2호선']],
         mates: [
           { title: '목요일 퇴근 직관 같이 가요!', host: '직관요정', seat: '1루 응원석', cur: 2, max: 4, match: 92 },
-          { title: '치맥하면서 편하게 보실 분', host: '잠실치킨러', seat: '테이블석', cur: 1, max: 2, match: 78 }
+          { title: '응원가 같이 부를 엘린이 구해요', host: '잠실치킨러', seat: '1루 응원석', cur: 1, max: 3, match: 78 }
         ]
       },
       {
@@ -228,9 +214,12 @@ class Component extends DCLogic {
     const p = Object.assign({}, cur, {
       sp: Object.assign({}, s, spStyle, { known: s.status !== 'unknown', unknown: s.status === 'unknown' }),
       winBasis: spStyle.basis,
-      timeline: cur.timeline.map((s, i) => ({ time: s[0], title: s[1], note: s[2], dot: s[1] === '플레이볼' ? '#E63946' : '#1B2A5C', line: i === n - 1 ? 'transparent' : '#E3E6F0' })),
+      timeline: cur.timeline.map((s, i) => ({ time: s[0], title: s[1], note: s[2], hasLine: !!s[3] && s[3] !== 'go', lineName: s[3] || '', lineBg: '#3CB44A', dot: s[1] === '플레이볼' ? '#E63946' : (s[3] ? '#3CB44A' : '#1B2A5C'), line: i === n - 1 ? 'transparent' : '#E3E6F0' })),
       hasMates: cur.mates.length > 0,
       noMates: cur.mates.length === 0,
+      hasTag: !!cur.tag,
+      foods: cur.foods || [],
+      route: Object.assign({}, cur.route, { legs: cur.route.legs.map((l) => ({ isWalk: l[0] === 'walk', isLine: l[0] === 'line', name: l[1], title: l[2], note: l[3], hasNote: !!l[3], min: l[4], bar: l[0] === 'line' ? '#3CB44A' : '#D5DAE8' })) }),
       mateCount: cur.mates.length
     });
     const saved = !!st.saved;

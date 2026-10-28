@@ -1,0 +1,140 @@
+.plan-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface);
+    color: var(--text-900);
+    text-decoration: none;
+}
+
+.plan-card--link:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: 2px;
+}
+
+.plan-card__icon {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--navy-50);
+    color: var(--navy-500);
+}
+
+.plan-card__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.plan-card__text strong {
+    font-size: 15px;
+}
+
+.plan-card__text span {
+    font-size: 12.5px;
+    color: var(--text-500);
+}
+
+.plan-card__action {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 4px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 10px;
+    background: var(--navy-500);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--surface);
+}
+
+/* 맛집 사진 자리 · 사진이 생기기 전까지 색 배경 */
+.plan-card__photo {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: linear-gradient(140deg, var(--gold), color-mix(in srgb, var(--red-500) 55%, var(--gold)));
+    color: var(--surface);
+}
+
+.plan-card--empty {
+    justify-content: center;
+    background: var(--gray-100);
+    text-align: center;
+}
+
+/* 출발 카드 */
+.plan-card--route {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.plan-route {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+}
+
+/* 이름표와 값이 한 줄에 놓이고, 값이 길면 값만 다음 줄로 이어진다 */
+.plan-route__row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.plan-route__row dt {
+    flex: none;
+    width: 56px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-400);
+}
+
+.plan-route__row dd {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.plan-route__note {
+    font-size: 12.5px;
+    font-weight: 400;
+    color: var(--text-500);
+}
+
+.plan-route__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--navy-50);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy-500);
+    text-decoration: none;
+}
+
+.plan-route__link:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: 2px;
+}

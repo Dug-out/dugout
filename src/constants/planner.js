@@ -1,51 +1,92 @@
-// AI 직관 플래너 · 조건 칩 옵션
-
-export const WHEN_OPTIONS = ['평일', '저녁', '아무때나']
-export const WITH_OPTIONS = ['메이트 구해요', '친구랑', '데이트', '혼자']
-// games엔 좌석 잔여석 데이터가 없어서, 이 값은 화면·Gemini 문구에 쓰는 사용자 선호일 뿐 DB 조회는 안 한다.
-export const SEAT_OPTIONS = ['내야석', '외야석', '응원석', '테이블석']
-// stadium_food.category(supabase/schema_stadium_food.sql)와 같은 값 — 카카오 로컬 API 검색 키워드와도 맞춘다.
-export const FOOD_OPTIONS = ['치킨', '피자·버거', '카페·디저트', '분식·간식', '한식·고기·주류', '양식·아시안', '상관없음']
-
-export const DEFAULT_CONDITIONS = {
-    when: '아무때나',
-    with: '친구랑',
-    seat: '응원석',
-    food: '상관없음',
-}
-
-// 직관 준비 체크리스트 · 홈 "내 다음 직관" 카드와 "플랜" 탭 목록에서 같이 쓴다.
-export const PREP_ITEMS = [
-    {key: 'ticket', label: '티켓'},
-    {key: 'mate', label: '메이트'},
-    {key: 'food', label: '먹거리'},
-    {key: 'transit', label: '교통'},
+// 직관 플래너 · 조건 고르기 옵션 (홈 플래너 카드) · value 는 플랜 만들기에 넘기는 값, label 은 칩에 보이는 글자
+// short: 플랜 결과의 "고른 조건" 칸에 쓰는 짧은 글자
+export const WHEN_OPTIONS = [
+    {value: 'weekday', label: '평일 저녁 경기', short: '평일 저녁'},
+    {value: 'weekend', label: '주말 경기', short: '주말'},
+    {value: 'any', label: '상관 없음', short: '상관 없음'},
 ]
 
-// public.games.stadium(짧은 구장 이름 텍스트) → stadiums.code. games는 코드가 아니라 이 이름만 갖고 있어서
-// 날씨·대기질·맛집 조회에 필요한 위경도를 찾으려면 먼저 이 매핑으로 코드를 알아내야 한다.
-export const STADIUM_CODE_BY_NAME = {
-    '잠실야구장': 'JAMSIL',
-    'KT위즈파크': 'SUWON',
-    '고척스카이돔': 'GOCHEOK',
-    'SSG랜더스필드': 'INCHEON',
-    '한화생명 볼파크': 'DAEJEON',
-    '라이온즈파크': 'DAEGU',
-    '챔피언스필드': 'GWANGJU',
-    'NC파크': 'CHANGWON',
-    '사직야구장': 'BUSAN',
+// 좌석 이름은 모집 글(mate_posts.seat)과 같다
+export const SEAT_OPTIONS = [
+    {value: 'infield', label: '내야석'},
+    {value: 'outfield', label: '외야석'},
+    {value: 'cheer', label: '응원석'},
+    {value: 'table', label: '테이블석'},
+]
+
+// 음식 이름은 구장 안 맛집(stadium_food.category)과 같다
+export const FOOD_OPTIONS = [
+    {value: 'chicken', label: '치킨'},
+    {value: 'pizza', label: '피자·버거'},
+    {value: 'cafe', label: '카페·디저트'},
+    {value: 'snack', label: '분식·간식'},
+    {value: 'korean', label: '한식·고기·주류'},
+    {value: 'western', label: '양식·아시안'},
+]
+
+// 처음에 골라져 있는 조건
+export const DEFAULT_CONDITIONS = {when: 'any', seat: 'cheer', food: 'chicken'}
+
+// 플랜의 출발 위치 · 지도에서 고르는 화면이 생기기 전까지 항상 강남역이다
+export const DEFAULT_ORIGIN = {
+    lat: 37.498,
+    lng: 127.027,
+    label: '강남역 2번 출구 근처',
+    address: '서울 강남구 강남대로 396',
 }
 
-// 구장 10곳의 정적 참고 정보(위경도·교통) — supabase/schema_ai_planner.sql의 stadiums 테이블과 값을 맞춘다.
-// transit_minutes·transit_line이 'TODO'인 곳은 아직 실제 값 확인 전 (팀 확인 필요).
-export const MOCK_STADIUMS = {
-    JAMSIL: {name: '잠실야구장', transit_minutes: 40, transit_line: '2호선 종합운동장역', lat: 37.512150, lng: 127.071976},
-    SUWON: {name: '수원 KT위즈파크', transit_minutes: 65, transit_line: '분당선 수원시청역', lat: 37.299759, lng: 127.009781},
-    GOCHEOK: {name: '고척스카이돔', transit_minutes: 0, transit_line: 'TODO', lat: 37.498333, lng: 126.866667},
-    INCHEON: {name: '인천 SSG랜더스필드', transit_minutes: 0, transit_line: 'TODO', lat: 37.435139, lng: 126.690806},
-    DAEJEON: {name: '대전 한화생명볼파크', transit_minutes: 0, transit_line: 'TODO', lat: 36.317000, lng: 127.389100},
-    DAEGU: {name: '대구 삼성라이온즈파크', transit_minutes: 0, transit_line: 'TODO', lat: 35.841110, lng: 128.681670},
-    GWANGJU: {name: '광주 기아챔피언스필드', transit_minutes: 0, transit_line: 'TODO', lat: 35.168339, lng: 126.888992},
-    CHANGWON: {name: '창원NC파크', transit_minutes: 0, transit_line: 'TODO', lat: 35.222500, lng: 128.582200},
-    BUSAN: {name: '부산 사직야구장', transit_minutes: 0, transit_line: 'TODO', lat: 35.194077, lng: 129.061584},
+// 추천 경기를 찾는 기간 · 오늘부터 며칠 안의 경기를 후보로 본다
+export const PLAN_WINDOW_DAYS = 7
+
+// 경기 한 번에 걸리는 평균 시간(분) · "종료 예상" 시각에 쓴다 (3시간 10분)
+export const GAME_MINUTES = 190
+
+// 티켓 예매처 · 정규시즌은 홈팀이 쓰는 곳이 구단마다 다르다 (홈경기 표는 홈팀이 판다)
+// 예매처는 구단이 바꿀 수 있어서 시즌 전에 구단 공지로 다시 확인한다 · NC 는 예매처를 확인하지 못해 구단 공식 사이트로 둔다
+export const TICKET_SITES = {
+    LG: {name: '티켓링크', url: 'https://www.ticketlink.co.kr'},
+    한화: {name: '티켓링크', url: 'https://www.ticketlink.co.kr'},
+    삼성: {name: '티켓링크', url: 'https://www.ticketlink.co.kr'},
+    KT: {name: '티켓링크', url: 'https://www.ticketlink.co.kr'},
+    KIA: {name: '티켓링크', url: 'https://www.ticketlink.co.kr'},
+    두산: {name: '놀티켓', url: 'https://nol.yanolja.com/ticket'},
+    키움: {name: '놀티켓', url: 'https://nol.yanolja.com/ticket'},
+    롯데: {name: '롯데 자이언츠 예매', url: 'https://ticket.giantsclub.com'},
+    SSG: {name: 'SSG닷컴 티켓', url: 'https://ticket.ssg.com'},
+    NC: {name: 'NC 다이노스', url: 'https://www.ncdinos.com'},
+}
+
+// 포스트시즌(가을야구)은 어느 팀 경기든 놀티켓에서만 판다
+export const POSTSEASON_TICKET = {name: '놀티켓', url: 'https://nol.yanolja.com/ticket/genre/sports/postseason'}
+
+// 시즌별 포스트시즌 시작일(한국 시간) · 이 날부터의 경기는 포스트시즌으로 본다 · 시즌마다 추가한다
+export const POSTSEASON_START = {2026: '2026-10-14'}
+
+// 경기 시작 몇 분 전까지 구장에 도착할지
+export const ARRIVE_BEFORE_MINUTES = 30
+
+// games.stadium(구장 이름) → stadium_food.stadium_code · 구장 안 맛집을 찾을 때 쓴다 (이름은 supabase/functions/sync-games 의 구장 표와 같다)
+export const STADIUM_CODE_BY_NAME = {
+    잠실야구장: 'JAMSIL',
+    KT위즈파크: 'SUWON',
+    고척스카이돔: 'GOCHEOK',
+    SSG랜더스필드: 'INCHEON',
+    '한화생명 볼파크': 'DAEJEON',
+    라이온즈파크: 'DAEGU',
+    챔피언스필드: 'GWANGJU',
+    NC파크: 'CHANGWON',
+    사직야구장: 'BUSAN',
+}
+
+// 구장 위치(위도·경도) · 카카오맵 길찾기 링크의 도착지로 쓴다 · 키는 STADIUM_CODE_BY_NAME 의 코드 (supabase/schema_ai_planner.sql 의 stadiums 와 같은 값)
+export const STADIUM_COORDS = {
+    JAMSIL: {lat: 37.51215, lng: 127.071976},
+    SUWON: {lat: 37.299759, lng: 127.009781},
+    GOCHEOK: {lat: 37.498333, lng: 126.866667},
+    INCHEON: {lat: 37.435139, lng: 126.690806},
+    DAEJEON: {lat: 36.317, lng: 127.3891},
+    DAEGU: {lat: 35.84111, lng: 128.68167},
+    GWANGJU: {lat: 35.168339, lng: 126.888992},
+    CHANGWON: {lat: 35.2225, lng: 128.5822},
+    BUSAN: {lat: 35.194077, lng: 129.061584},
 }

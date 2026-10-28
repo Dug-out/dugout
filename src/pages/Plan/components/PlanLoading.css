@@ -1,0 +1,117 @@
+.plan-loading {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 0 36px;
+    background: linear-gradient(180deg, var(--bg) 0%, var(--navy-50) 100%);
+}
+
+.plan-loading__mascot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 마스코트가 위아래로 둥실거린다 */
+.plan-loading__image {
+    display: block;
+    width: 150px;
+    height: 163px;
+    object-fit: contain;
+    animation: plan-loading-bob 1.6s ease-in-out infinite;
+}
+
+.plan-loading__shadow {
+    width: 90px;
+    height: 10px;
+    margin-top: 4px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--navy-500) 10%, transparent);
+}
+
+.plan-loading__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.plan-loading__title {
+    font-family: var(--font-emotion), sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    color: var(--navy-500);
+}
+
+.plan-loading__desc {
+    font-size: 13.5px;
+    color: var(--text-500);
+}
+
+/* 진행 막대 */
+.plan-loading__track {
+    width: 100%;
+    height: 8px;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--navy-500) 14%, var(--surface));
+}
+
+/* 진행 막대는 화면이 보이는 시간(--plan-loading-ms)에 맞춰 끝까지 찬다 · 그라데이션은 그대로 두고 오른쪽부터 가려져 있다가 드러난다 */
+.plan-loading__bar {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--navy-500), var(--red-600));
+    animation: plan-loading-bar var(--plan-loading-ms, 2500ms) cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.plan-loading__skip {
+    min-height: 44px;
+    padding: 0 12px;
+    border: 0;
+    background: none;
+    font-family: var(--font-base), sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-400);
+    cursor: pointer;
+}
+
+.plan-loading__skip:focus-visible {
+    outline: 2px solid var(--navy-300);
+    outline-offset: 2px;
+}
+
+@keyframes plan-loading-bar {
+    0% {
+        clip-path: inset(0 100% 0 0);
+    }
+    60% {
+        clip-path: inset(0 28% 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+@keyframes plan-loading-bob {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .plan-loading__image,
+    .plan-loading__bar {
+        animation: none;
+    }
+}
