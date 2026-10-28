@@ -125,7 +125,7 @@ async function getSeatMates(gameId, seat) {
  *   opponent: string, isHome: boolean}, foods: {id: string, name: string, category: string, location: string | null}[],
  *   mates: {count: number, items: {id: string, title: string, seat: string, capacity: number, joined: number, host: string,
  *   avatarUrl: string | null}[]},
- *   route: null | {total: number, legs: {type: string, name: string | null, title: string, note: string | null, min: number}[]},
+ *   route: null | {total: number, legs: {type: string, name: string | null, title: string, to: string | null, note: string | null, min: number}[]},
  *   ai?: {highlight: string, point: string, tags: string[], sourceCount: number}}>}
  *  후보가 없으면 game 이 null · foods 는 구장 안 맛집 · mates 는 같은 경기·좌석의 모집 글 · route 는 대중교통 경로 · ai 는 AI 경기 포인트 (없으면 말풍선을 숨긴다)
  */

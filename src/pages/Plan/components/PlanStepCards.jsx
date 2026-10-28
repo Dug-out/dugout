@@ -77,7 +77,7 @@ const LEG_TONES = {walk: 'walk', subway: 'subway', bus: 'bus'}
  * 출발 카드 · 대중교통 경로를 받았으면 출발·도착 시각, 구간 막대, 구간 목록을 보여 주고
  * 못 받았으면(키 없음, 시외 이동 등) 출발지와 도착 목표 시각만 보여 준다. 둘 다 카카오맵 길찾기 링크가 아래에 있다.
  * @param {{origin: {label: string}, arriveTime: string, leaveTime: string | null,
- *   route: null | {total: number, legs: {type: string, name: string | null, title: string, note: string | null, min: number}[]},
+ *   route: null | {total: number, legs: {type: string, name: string | null, title: string, to: string | null, note: string | null, min: number}[]},
  *   link: string | null}} props
  */
 export function RouteCard({origin, arriveTime, leaveTime, route, link}) {
@@ -117,6 +117,7 @@ export function RouteCard({origin, arriveTime, leaveTime, route, link}) {
                                 </span>
                                 <span className="plan-trip__text">
                                     <strong>{leg.title}</strong>
+                                    {leg.to && <strong>→ {leg.to}</strong>}
                                     {leg.note && <span>{leg.note}</span>}
                                 </span>
                                 <span className="plan-trip__min">{leg.min}분</span>

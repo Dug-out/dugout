@@ -15,8 +15,9 @@ const shortLane = (name) => name.trim().split(/\s+/).pop()
 /**
  * ODsay 응답 → 화면에서 쓰는 경로 · 가장 추천하는 경로 하나만 쓴다
  * @param {any} data ODsay 응답
- * @returns {{total: number, legs: {type: 'walk' | 'subway' | 'bus', name: string | null, title: string, note: string | null, min: number}[]}}
+ * @returns {{total: number, legs:  {type: 'walk' | 'subway' | 'bus', name: string | null, title: string, to: string | null, note: string | null, min: number}[]}}
  *  total: 총 소요 시간(분) / legs: 구간 목록 (걷기 · 지하철 · 버스) · 소요 시간이 0분인 구간은 뺀다
+ *  title: 탑승지(걷기는 설명) / to: 내리는 곳(걷기는 null) · 두 줄로 나눠 보여 준다
  */
 export function parseRoute(data) {
     // 오류는 {error: [{code, message}]} 또는 {error: {msg}} 로 온다
@@ -34,7 +35,8 @@ export function parseRoute(data) {
             return {
                 type: 'subway',
                 name: shortLane(part.lane[0].name),
-                title: `${shortStop(part.startName)} → ${shortStop(part.endName)}`,
+                title: shortStop(part.startName),
+                to: shortStop(part.endName),
                 note: `${part.stationCount}개 역 이동`,
                 min,
             }
@@ -45,7 +47,8 @@ export function parseRoute(data) {
             return {
                 type: 'bus',
                 name: lane.busNo ?? shortLane(lane.name ?? '이동'),
-                title: `${shortStop(part.startName)} → ${shortStop(part.endName)}`,
+                title: shortStop(part.startName),
+                to: shortStop(part.endName),
                 note: `${part.stationCount}개 정류장 이동`,
                 min,
             }
@@ -55,7 +58,7 @@ export function parseRoute(data) {
         const before = parts.slice(0, index).some((other) => other.trafficType !== WALK)
         const after = parts.slice(index + 1).find((other) => other.trafficType !== WALK)
         const title = !before && after ? `${shortStop(after.startName)}까지` : !after ? '구장까지' : '환승 이동'
-        return {type: 'walk', name: null, title, note: null, min}
+        return {type: 'walk', name: null, title, to: null, note: null, min}
     })
 
     return {total: path.info.totalTime, legs}
