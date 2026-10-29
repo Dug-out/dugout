@@ -41,14 +41,18 @@ export function TicketCard({game, myTeam, seat, ticket}) {
 }
 
 /**
- * 구장 안 맛집 카드 · 사진 자리(아직 사진이 없어 색 배경), 매장 이름, 구장 안 위치(있을 때), 음식 종류
- * @param {{food: {name: string, category: string, location: string | null}}} props
+ * 구장 안 맛집 카드 · 매장 사진(있으면), 매장 이름, 구장 안 위치(있을 때), 음식 종류
+ * @param {{food: {name: string, category: string, location: string | null, photoUrl: string | null}}} props
  */
 export function FoodCard({food}) {
     return (
         <div className="plan-card">
             <span className="plan-card__photo">
-                <Icon name="food" size={22} />
+                {food.photoUrl ? (
+                    <img src={food.photoUrl} alt="" className="plan-card__photo-img" />
+                ) : (
+                    <Icon name="food" size={22} />
+                )}
             </span>
             <span className="plan-card__text">
                 <strong>{food.name}</strong>
