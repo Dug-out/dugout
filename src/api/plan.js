@@ -54,14 +54,20 @@ async function getIndoorFoods(stadium, food) {
 
     const {data, error} = await supabase
         .from('stadium_food')
-        .select('id, name, category, location')
+        .select('id, name, category, location, photo_url')
         .eq('stadium_code', code)
         .eq('category', category)
     if (error) return []
 
     return shuffle(data)
         .slice(0, 2)
-        .map(({id, name, category: foodCategory, location}) => ({id, name, category: foodCategory, location}))
+        .map(({id, name, category: foodCategory, location, photo_url: photoUrl}) => ({
+            id,
+            name,
+            category: foodCategory,
+            location,
+            photoUrl,
+        }))
 }
 
 /**
@@ -126,7 +132,8 @@ async function getAiBrief(home, away) {
  *  2) 모집 중인 모집 글이 많은 경기 → 내 팀 홈 경기 → 날짜가 빠른 경기 순으로 가장 앞의 하나
  * @param {{conditions: {when: string, food: string}, origin: {lat: number, lng: number}}} input
  * @returns {Promise<{myTeam: string, game: null | {id: number, gameAt: string, home: string, away: string, stadium: string,
- *   opponent: string, isHome: boolean}, foods: {id: string, name: string, category: string, location: string | null}[],
+ *   opponent: string, isHome: boolean}, foods: {id: string, name: string, category: string, location: string | null,
+ *   photoUrl: string | null}[],
  *   mates: {count: number, items: {id: string, title: string, seat: string, capacity: number, joined: number, host: string,
  *   avatarUrl: string | null}[]},
  *   route: null | {total: number, legs: {type: string, name: string | null, title: string, to: string | null, note: string | null, min: number}[]},
