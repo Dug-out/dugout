@@ -69,9 +69,13 @@ function PlanResult() {
                                     },
                                     {
                                         key: 'route',
-                                        time: route ? leaveAt(game.gameAt, route.total) : undefined,
+                                        time: route && !route.partial ? leaveAt(game.gameAt, route.total) : undefined,
                                         title: '출발하기',
-                                        meta: route ? `대중교통 ${route.total}분` : undefined,
+                                        meta: route
+                                            ? route.partial
+                                                ? `시외 이동 ${route.total}분`
+                                                : `대중교통 ${route.total}분`
+                                            : undefined,
                                         children: (
                                             <RouteCard
                                                 origin={origin}
