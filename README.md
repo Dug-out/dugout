@@ -160,47 +160,74 @@
 
 <a id="key-implementation-points"></a>
 ## 🔐 주요 구현 포인트 (Key Implementation Points)
-
-### 🔁 화면 → 훅 → api → Supabase
+ 
+### 1. 프론트엔드 데이터 흐름 · 화면 → 훅 → api
 ```
 pages (화면)  →  hooks (useLoad)  →  src/api 함수  →  supabase-js (fetch)  →  { data, error }
 ```
-- 모든 화면은 `src/api`에 정의한 함수만 호출하고, api 함수가 Supabase SDK로 REST 요청을 보냅니다.
-- `error`가 있으면 미리 정의한 한국어 메시지로 바꿔 던지고, RLS에 막혀 **0줄이 바뀐 경우**도 실패로 처리했습니다.
-
-### 🧩 공통 상태 관리 훅 `useLoad`
-| 상태 | 의미 | 화면 |
-| --- | --- | --- |
-| `loading` | 불러오는 중 | 로딩 화면 |
-| `ready` | 데이터 도착 | 내용 표시 |
-| `notfound` | 데이터 없음 | 빈 화면 |
-| `error` | 실패 | 오류 화면 · 다시 시도 |
-
-- `reload`는 로딩 화면을 보여 주고, `refresh`는 화면을 둔 채 조용히 다시 불러옵니다. (수락 같은 변경 뒤에는 `refresh`)
-- 화면을 떠나거나 조건이 바뀌면 `stale` 처리해, 늦게 도착한 옛 응답이 새 화면을 덮지 않게 했습니다.
-
-### ⚾ 경기 결과 자동 갱신 → 채점 → 알림
+- 모든 화면은 `src/api`에 정의한 함수만 호출하고, api 함수가 Supabase SDK로 REST 요청을 보내요.
+- 응답에 `error`가 있으면 미리 정해 둔 한국어 메시지로 바꾸고, RLS에 막혀 0줄이 바뀐 경우도 실패로 처리해요.
+- 조회는 공통 훅 `useLoad`가 감싸 **loading · ready · error · notfound** 네 가지 상태로 화면을 그려요.
+- 변경 후에는 `refresh`로 조용히 다시 불러오고, 늦게 도착한 옛 응답은 버려 새 화면을 덮지 않게 했어요.
+### 2. DB 단의 권한과 규칙 · RLS · 트리거
+| 구분 | 내용 |
+| --- | --- |
+| **RLS** | 같은 응원팀 팬의 모집 글만 조회 · 방장만 신청자를 수락 · 거절 |
+| **트리거** | 모집 글 작성 시 방장 자동 참여 · 정원이 차면 모집 마감 |
+| **트리거** | 경기 종료 시 승부 예측 자동 채점 · 신청 · 수락 · 예측 결과 알림 발송 |
+ 
+- 프론트에서 요청을 조작해도 DB가 권한과 규칙을 직접 검사해, 화면과 상관없이 항상 같은 기준으로 처리돼요.
+### 3. PWA 푸시 알림 흐름
 ```
-pg_cron (10분마다) → pg_net → Edge Function → API-Sports → games 저장
-                                                     └─ 경기 종료 → DB 트리거 → 예측 자동 채점 → 푸시 알림
+알림 허용 → 브라우저 구독 정보(endpoint · 키) → push_subscriptions 저장
+ 
+신청 · 수락 · 예측 결과 → DB 트리거 → pg_net → send-push (Edge Function)
+                                              → Web Push → Service Worker → 알림 표시
 ```
+- **Web App Manifest**로 홈 화면에 추가하면 앱처럼 실행되고, **Service Worker**가 앱이 닫혀 있어도 알림을 띄워요.
+- 서버는 저장해 둔 구독 정보로 **Web Push**를 보내요. (iOS는 홈 화면에 추가한 PWA에서 수신)
+### 4. Edge Functions와 예약 작업
+```
+pg_cron (10분마다) → pg_net → Edge Function → API-Sports → games 테이블 저장
+                                                        └─ 경기 종료 → 트리거 → 예측 채점 · 알림
+```
+| Edge Function | 역할 |
+| --- | --- |
+| 직관 플랜 관전 포인트 | NAVER 뉴스 검색 + Gemini로 경기 소개 문구 생성 |
+| 승부 예측 AI 브리핑 | DB의 경기 기록을 넘겨 Claude Haiku가 브리핑 · 예상 스코어 생성 |
+| 경기 결과 갱신 | API-Sports에서 KBO 경기 일정 · 점수를 받아 저장 |
+| 푸시 발송 | 구독 정보로 Web Push 알림 전송 |
+ 
+- AI · 외부 API 키는 브라우저에 두지 않고 **Edge Function Secrets**에만 저장해요.
 
 <a id="ui"></a>
 ## 🖥️ 화면 설계 (UI)
-
-| 로그인 · 회원가입 | 홈 · AI 직관 플랜 |
-| :---: | :---: |
-| ![로그인 회원가입](./docs/images/ui-01-auth.png) | ![홈 AI 플랜](./docs/images/ui-02-home-plan.png) |
-| **직관 메이트 모집** | **마이페이지 · 매너 평가** |
-| ![메이트 모집](./docs/images/ui-03-mate.png) | ![마이페이지 매너 평가](./docs/images/ui-04-mypage-review.png) |
-| **승부 예측** | |
-| ![승부 예측](./docs/images/ui-05-predict.png) | |
+ 
+#### 로그인 · 회원가입
+![로그인 · 회원가입](./docs/images/ui-01-auth.png)
+ 
+#### 홈 · AI 직관 플랜
+![홈 · AI 직관 플랜](./docs/images/ui-02-home-plan.png)
+ 
+#### 직관 메이트 모집
+![직관 메이트 모집](./docs/images/ui-03-mate.png)
+ 
+#### 마이페이지 · 매너 평가
+![마이페이지 · 매너 평가](./docs/images/ui-04-mypage-review.png)
+ 
+#### 승부 예측
+![승부 예측](./docs/images/ui-05-predict.png)
 
 <a id="project-demo"></a>
 ## 📽 프로젝트 시연 (Project Demo)
-
-<!-- 유튜브 영상 ID만 바꾸면 썸네일과 링크가 함께 바뀌어요 -->
-[![DUGOUT 시연 영상](https://img.youtube.com/vi/유튜브영상ID/maxresdefault.jpg)](https://youtu.be/유튜브영상ID)
+ 
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=uQPvetHl73E">
+    <img src="https://img.youtube.com/vi/uQPvetHl73E/maxresdefault.jpg" alt="DUGOUT 시연 영상" width="90%">
+  </a>
+  <br>
+  ⚾ <b>DUGOUT 시연 영상 보러가기</b>
+</p>
 
 <a id="documents"></a>
 ## 📂 프로젝트 자료 (Documents)
